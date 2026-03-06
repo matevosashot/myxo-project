@@ -62,13 +62,13 @@ Module[{dx, pts, qVals, gData,
     fHat, fGrid, eps, method, t0},
 
   method = OptionValue["Method"];
-  Print["═══════════════════════════════════════════════"];
+  Print["==============================================="];
   Print["  Biharmonic Fourier Solver"];
-  Print["═══════════════════════════════════════════════"];
+  Print["==============================================="];
   Print["  Grid size: ", n, "^4 = ", n^4, " points"];
   Print["  Domain: [-", L, ", ", L, "]^2 x [-", L, ", ", L, "]^2"];
   Print["  Method: ", method];
-  Print["───────────────────────────────────────────────"];
+  Print["-----------------------------------------------"];
 
   dx = 2.0 L / n;
   pts = N @ Range[-L, L - dx, dx];
@@ -100,16 +100,13 @@ Module[{dx, pts, qVals, gData,
   Print["  Memory for G components: ~",
     Round[4 * n^4 * 8 / 1024.^2, 0.1], " MB"];
 
-  (* --- Step 2: 4D FFT of each component (parallel) --- *)
-  Print["[Step 2/4] Computing 4D FFT of G components (4 parallel FFTs)..."];
+  (* --- Step 2: 4D FFT of each component --- *)
+  Print["[Step 2/4] Computing 4D FFT of G components..."];
   t0 = AbsoluteTime[];
-  {g11H, g12H, g21H, g22H} = WaitAll[{
-    ParallelSubmit[{g11}, Fourier[g11, FourierParameters -> {1, -1}]],
-    ParallelSubmit[{g12}, Fourier[g12, FourierParameters -> {1, -1}]],
-    ParallelSubmit[{g21}, Fourier[g21, FourierParameters -> {1, -1}]],
-    ParallelSubmit[{g22}, Fourier[g22, FourierParameters -> {1, -1}]]
-  }];
-  g11 = Null; g12 = Null; g21 = Null; g22 = Null;
+  g11H = Fourier[g11, FourierParameters -> {1, -1}]; g11 = Null;
+  g12H = Fourier[g12, FourierParameters -> {1, -1}]; g12 = Null;
+  g21H = Fourier[g21, FourierParameters -> {1, -1}]; g21 = Null;
+  g22H = Fourier[g22, FourierParameters -> {1, -1}]; g22 = Null;
   Print["  Done. (", Round[AbsoluteTime[] - t0, 0.01], " s)"];
 
   (* Regularization parameter *)
@@ -174,10 +171,10 @@ Module[{dx, pts, qVals, gData,
   fHat = Null;
   Print["  Done. (", Round[AbsoluteTime[] - t0, 0.01], " s)"];
 
-  Print["───────────────────────────────────────────────"];
+  Print["-----------------------------------------------"];
   Print["  Max |f| = ", ScientificForm[Max[Abs[fGrid]], 4]];
   Print["  Solution complete."];
-  Print["═══════════════════════════════════════════════"];
+  Print["==============================================="];
 
   (* --- Return solution --- *)
   <|
