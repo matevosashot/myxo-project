@@ -316,9 +316,9 @@ if __name__ == "__main__":
     parser.add_argument("--lM",       type=float, default=7.0/3)
     parser.add_argument("--lm",       type=float, default=0.7/3)
     parser.add_argument("--R",        type=float, default=10, help="Cutoff radius")
-    parser.add_argument("--N",        type=int,   default=100, help="Grid size per dimension")
+    parser.add_argument("--N",        type=int,   default=50, help="Grid size per dimension")
     parser.add_argument("--parallel", action="store_true",     help="Compute G in parallel using threads")
-    parser.add_argument("--workers",  type=int,   default=None, help="Number of worker threads (default: CPU count)")
+    parser.add_argument("--workers",  type=int,   default=-1, help="Number of worker threads (default: CPU count)")
     parser.add_argument("--dtype",    type=str,   default="float64", help="NumPy dtype for computation (e.g. float16, float32, float64)")
     args = parser.parse_args()
 
@@ -327,7 +327,13 @@ if __name__ == "__main__":
     print("O(N^4) memory is {:0.1f}GB".format(args.N**4 / 1024**3 * dtype.itemsize))
 
     G = Gcalc(grid=np.linspace(-5, 5, args.N, dtype=dtype), S0=args.S0, l=args.l, lM=args.lM, lm=args.lm, workers=args.workers, dtype=dtype)
+    G.precompute()
+    print(G.Sigma.mean())
+    print(G.pdf1[4,10:12,3,5:7])
+    print(G.on_grid(i=0, j=0).mean())
+    print(G.on_grid().mean())
 
+    exit(0)
     # Quick test: single point
     Gval = G(1.0, 0.0, 0.5, 0.3)
     Gval = G(G.grid[6], G.grid[7], G.grid[8], G.grid[9])

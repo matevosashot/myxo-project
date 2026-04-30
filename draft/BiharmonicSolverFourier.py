@@ -25,7 +25,7 @@ import time
 import argparse
 from typing import Callable, Optional
 
-from gdef_periodic import Gcalc  # Example G_{ij} function (not used in main code)
+from .gdef_periodic import Gcalc  # Example G_{ij} function (not used in main code)
 
 def _build_wavevectors_1d(n: int, dx: float) -> np.ndarray:
     return np.fft.fftfreq(n, d=dx / (2.0 * np.pi))
