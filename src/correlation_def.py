@@ -1,7 +1,9 @@
 import argparse
+import os
 from termios import PARODD
 import numpy as np
 import numexpr as ne
+from .utils import log
 
 def f(x):
     """f[x_] := x Sqrt[(0.34 + 0.07 x^2)/(1 + 0.41 x^2 + 0.07 x^4)]"""
@@ -30,29 +32,38 @@ def _mvn_pdf_2d(dx, dy, cov):
              +  cov[..., 0, 0] / det * dy**2 )
     return np.exp(dtype.type(-0.5) * maha2) / (dtype.type(2 * np.pi) * np.sqrt(det))
 
-def _mvn_pdf_2d_fast(dx, dy, cov):
-    c00 = cov[..., 0, 0]
-    c01 = cov[..., 0, 1]
-    c11 = cov[..., 1, 1]
-    t = cov.dtype.type
-    half = t(-0.5)
-    two = t(2)
-    inv_two_pi = t(1.0 / (2 * np.pi))
+def _mvn_pdf_2d_fast(dx, dy, cov, out=None, factor=1.0):
+    dtype = cov.dtype.type
     return ne.evaluate(
-        "exp(half * (c11 * dx**2 - two * c01 * dx * dy + c00 * dy**2) / (c00 * c11 - c01 * c01))"
-        " * inv_two_pi / sqrt(c00 * c11 - c01 * c01)"
+        "factor * exp(half * (c11 * dx**2 - two * c01 * dx * dy + c00 * dy**2) / (c00 * c11 - c01 * c01))"
+        " * inv_two_pi / sqrt(c00 * c11 - c01 * c01)",
+        local_dict=dict(
+            c00=cov[..., 0, 0], c01=cov[..., 0, 1], c11=cov[..., 1, 1],
+            half=dtype(-0.5), two=dtype(2), inv_two_pi=dtype(1.0 / (2 * np.pi)),
+            dx=dx, dy=dy,
+            factor=dtype(factor),
+        ),
+        out=out,
     )
 
 
 
 
 class Gcalc:
-    def __init__(self, grid_1d, S0=1.0, l=1.0, lM=7.0/3, lm=0.7/3, R=10, dtype=np.float64):
-        self.S0 = S0
-        self.l = l
-        self.lM = lM
-        self.lm = lm
-        self.R = R
+    def __init__(self, grid_1d, S0=1.0, l=1.0, lM=7.0/3, lm=0.7/3, R=10, sigma=6.0, dtype=np.float64,
+                 mmap=False, mmap_path="/scratch/phi_temp.mmap", 
+                 _debug_nofactor=False):
+        # Coerce numeric model params to Python float so that callers
+        # passing np.float64 scalars (e.g. from np.linspace) don't
+        # accidentally promote downstream float32 computations to float64
+        # via NEP 50 scalar promotion.
+        self.S0 = float(S0)
+        self.l = float(l)
+        self.lM = float(lM)
+        self.lm = float(lm)
+        self.R = float(R)
+        self.sigma = float(sigma)
+        self._debug_nofactor = _debug_nofactor
 
         self.grid = grid_1d.astype(dtype)
         self.x1 = self.grid[:, None, None, None]
@@ -60,11 +71,19 @@ class Gcalc:
         self.x2 = self.grid[None, None, :, None]
         self.y2 = self.grid[None, None, None, :]
 
-        dx = grid_1d[1] - grid_1d[0]
-        self.L_grid = grid_1d[-1] - grid_1d[0] + dx  # total length of the periodic box
-    
-        self.dtype = dtype
+        dx = self.grid[1] - self.grid[0]
+        self.L_grid = self.grid[-1] - self.grid[0] + dx  # total length of the periodic box
 
+        self.dtype = dtype
+        self.mmap = mmap
+        self.mmap_path = mmap_path
+
+        self._validate_dtype(self.grid)
+
+
+    def _validate_dtype(self, value):
+        if value.dtype != self.dtype:
+            raise ValueError(f"Expected dtype {self.dtype}, got {value.dtype}")
 
     def calcQ(self):
         """
@@ -92,24 +111,30 @@ class Gcalc:
 
         self.Q = out
 
+        self._validate_dtype(self.Q)
+
     def calcP(self):
         """P = 1/2 (I + Q)  — shape (..., 2, 2)"""
         Q = self.Q
         eye = np.eye(2, dtype=self.dtype)
         self.P = self.dtype.type(0.5) * (eye + Q)
 
+        self._validate_dtype(self.P)
+
     def calcSigma(self):
         """
-        Σ = 1/2 I (lM² + lm²) + 1/2 Q (lM² - lm²)
+        Σ = 1/(2σ) I (lM² + lm²) + 1/(2σ) Q (lM² - lm²)
         Returns shape (..., 2, 2) covariance matrix.
         """
         dtype = self.dtype
         Q = self.Q
         eye = np.eye(2, dtype=dtype)
-        self.Sigma = 0.5 * eye * (self.lM**2 + self.lm**2) + 0.5 * Q * (self.lM**2 - self.lm**2)
+        self.Sigma = (eye * (self.lM**2 + self.lm**2) + Q * (self.lM**2 - self.lm**2)) / dtype.type(2 * self.sigma)
+
+        self._validate_dtype(self.Sigma)
    
     def calc_phi(self):
-        Q = self.Q 
+        Q = self.Q
         Sigma = self.Sigma
 
         dx = self.x2 - self.x1
@@ -118,11 +143,28 @@ class Gcalc:
         dy = self.y2 - self.y1
         dy = dy - self.L_grid * np.round(dy / self.L_grid)  # periodic boundary conditions
 
-        self.phi = _mvn_pdf_2d_fast(dx, dy, Sigma[:, :, None, None])
+        factor = self.lm * self.lM if not self._debug_nofactor else 1.0
 
+        if self.mmap:
+            N = len(self.grid)
+            log(f"Memmap-backing phi at {self.mmap_path}", notime=True)
+            self.phi = np.memmap(self.mmap_path, dtype=self.dtype, mode="w+", shape=(N,) * 4)
+            # Linux: unlink immediately; the kernel keeps the inode alive as
+            # long as the mmap exists, and the file is reclaimed when the
+            # memmap is garbage-collected.
+            try:
+                os.unlink(self.mmap_path)
+            except OSError:
+                pass
+            _mvn_pdf_2d_fast(dx, dy, Sigma[:, :, None, None], out=self.phi, factor=factor)
+            self.phi.flush()
+        else:
+            self.phi = _mvn_pdf_2d_fast(dx, dy, Sigma[:, :, None, None], factor=factor)
+
+        self._validate_dtype(self.phi)
         self.phi_transpose = self.phi.transpose(2, 3, 0, 1)
 
-    def calc_C_P_index(self, a, b):
+    def calc_C_P_index(self, a, b, out=None):
         """
         Calculate the C_Q tensor (2x2) at positions (x, y).
         x, y can be arrays of shape (...).
@@ -137,9 +179,10 @@ class Gcalc:
             "half * ( phi * P_ab + phi_T * PT_ab)",
             local_dict={
                 'half': self.dtype.type(0.5),
-                'phi': phi, 'phi_T': phi_T, 
+                'phi': phi, 'phi_T': phi_T,
                 'P_ab': P[..., a, b], 'PT_ab': PT[..., a, b]
-            })
+            },
+            out=out)
 
     def calc_C_P(self):
         """
@@ -164,16 +207,18 @@ class Gcalc:
         #             'P_right': self.P[None, None, :, :, i, j], 'phi_right': self.phi_transpose
         #         })
 
+        self._validate_dtype(values)
+
         return values
 
 
-    def calc_C_Q_index(self, a, b, m, n):
+    def calc_C_Q_index(self, a, b, m, n, out=None):
         phi = self.phi                                    # N x N x N x N
         phi_T = self.phi_transpose                        # N x N x N x N
         P = self.P[:, :, None, None]                      # N x N x 1 x 1 x 2 x 2
         PT = P.transpose(2, 3, 0, 1, 4, 5)                # 1 x 1 x N x N x 2 x 2
 
-        return ne.evaluate(
+        out = ne.evaluate(
             "half * phi   * (P_ab  * P_mn  + P_am  * P_bn  + P_an  * P_bm  - P_ab * PT_mn)"
             " + "
             "half * phi_T * (PT_ab * PT_mn + PT_am * PT_bn + PT_an * PT_bm - P_ab * PT_mn)",
@@ -186,7 +231,11 @@ class Gcalc:
                 'PT_ab': PT[..., a, b], 'PT_mn': PT[..., m, n],
                 'PT_am': PT[..., a, m], 'PT_bn': PT[..., b, n],
                 'PT_an': PT[..., a, n], 'PT_bm': PT[..., b, m],
-            })
+            },
+            out=out)
+
+        self._validate_dtype(out)
+        return out
 
     def calc_C_Q(self, a=None, b=None, m=None, n=None):
         """
@@ -237,17 +286,21 @@ class Gcalc:
                 'part_right': part_right
             }) # N x N x N x N x 2 x 2 x 2 x 2
 
-
+        self._validate_dtype(value)
 
         return value
 
         
     def precompute(self):
+        log("Precomputing Gcalc. Calculating Q", notime=True)
         self.calcQ()
+        log("Calculating P")
         self.calcP()
+        log("Calculating Sigma")
         self.calcSigma()
+        log("Calculating phi")
         self.calc_phi()
-
+        log("Done precomputing Gcalc")
     
 
 if __name__ == "__main__":
