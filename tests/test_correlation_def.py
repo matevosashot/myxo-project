@@ -98,7 +98,7 @@ def test_Sigma_far_from_origin_isotropic():
     # At grid points outside the cutoff R the order parameter S is exponentially
     # damped, so Q ≈ 0 and Sigma collapses to 0.5*(lM^2 + lm^2)*I.
     grid = np.linspace(-50.0, 50.0, 4, dtype=DTYPE)
-    g = Gcalc(grid, S0=1.0, l=1.0, lM=2.0, lm=0.5, R=5.0, dtype=DTYPE)
+    g = Gcalc(grid, S0=1.0, l=1.0, lM=2.0, lm=0.5, R=5.0, dtype=DTYPE, sigma=1.0)
     g.precompute()
     expected_diag = 0.5 * (g.lM**2 + g.lm**2)
     # S has a soft Gaussian cutoff exp(-r/R); at r=50, R=5 the residual is
