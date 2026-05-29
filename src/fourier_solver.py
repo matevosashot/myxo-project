@@ -9,6 +9,7 @@ from scipy.fft import irfftn, rfftn, set_workers
 
 from . import _NWORKERS
 from .correlation_def import Gcalc
+from .correlation_def_v2 import GcalcForQ
 from .saving_utils import HDF5Saver
 from .utils import log
 
@@ -42,11 +43,13 @@ def apply_ifft(q_rank4):
 
 class FourierSolver(HDF5Saver):
     def __init__(self, n, L,  model_params, dtype="float32", eps=None, verbose=False,
-                 mmap=False, mmap_path="/scratch/phi_temp.mmap"):
+                 mmap=False, mmap_path="/scratch/phi_temp.mmap", drop_phi=False,
+                 gcalc_Q_cls=None):
         self.n = n
         self.L = L
         self.model_params = model_params
         self.dtype = np.dtype(dtype)
+        self.drop_phi = drop_phi
 
         self.dx = 2.0 * L / n
         if eps is None:
@@ -56,8 +59,19 @@ class FourierSolver(HDF5Saver):
 
         self.grid_1d = np.linspace(-L, L - self.dx, n)
 
+        # P side: always the default Gcalc.
         self.gcalc = Gcalc(self.grid_1d, **self.model_params, dtype=self.dtype,
                            mmap=mmap, mmap_path=mmap_path)
+        # Q side: optionally a different Gcalc subclass (e.g. correlation_def_v2)
+        # so the C_Q computation can use a different phi formula. When not
+        # provided, it aliases to self.gcalc so memory and behaviour are
+        # unchanged. When provided, the second instance gets its own mmap
+        # path so the two phi buffers don't collide.
+        if gcalc_Q_cls is None or gcalc_Q_cls is Gcalc:
+            self.gcalc_Q = self.gcalc
+        else:
+            self.gcalc_Q = gcalc_Q_cls(self.grid_1d, **self.model_params, dtype=self.dtype,
+                                       mmap=mmap, mmap_path=mmap_path + ".Q")
 
         self.logger = logging.getLogger("main")
 
@@ -68,9 +82,34 @@ class FourierSolver(HDF5Saver):
 
         self.logger.info(f"Required memory: {self.n**4 * self.dtype.itemsize / 1024**3:.2f} GB for N^4 {self.dtype}")
 
+    def _ensure_phi(self, gcalc):
+        if self.drop_phi and gcalc.phi is None:
+            log("Re-materializing phi")
+            gcalc.calc_phi()
+
+    def _maybe_drop_phi(self, gcalc):
+        if self.drop_phi:
+            gcalc.drop_phi()
+
+    def _drop_inactive_phi(self, active):
+        # Each solve_* uses exactly one of (gcalc, gcalc_Q). If they're
+        # distinct instances and the inactive one is holding an N^4 phi
+        # (any Gcalc subclass that inherits v1's calc_phi will), free it
+        # for the duration of this solve so we don't pay 4*N^4 peak.
+        # No-op when the two are aliased, or when drop_phi=False.
+        if not self.drop_phi:
+            return
+        other = self.gcalc_Q if active is self.gcalc else self.gcalc
+        if other is not active:
+            log(f"Dropping inactive {type(other).__name__}.phi")
+            other.drop_phi()
+
     def precompute(self):
         log("Precomputing Gcalc", notime=True)
         self.gcalc.precompute()
+        if self.gcalc_Q is not self.gcalc:
+            log("Precomputing Gcalc (Q-side)", notime=True)
+            self.gcalc_Q.precompute()
         log("Building wavevectors")
         self.qfull = _build_wavevectors_1d(self.n, self.dx).astype(self.dtype)
         self.qhalf = _build_rfft_wavevectors_1d(self.n, self.dx).astype(self.dtype)
@@ -86,9 +125,6 @@ class FourierSolver(HDF5Saver):
 
         self.component = {0: self.qx, 1: self.qy}
         self.component_prime = {0: self.qxp, 1: self.qyp}
-
-        log("Allocating reusable c buffer")
-        self._c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         log("Done precomputing")
 
 
@@ -110,11 +146,15 @@ class FourierSolver(HDF5Saver):
 
     def solve_P_contribution(self):
         log("Solving P contribution", notime=True)
+        self._drop_inactive_phi(self.gcalc)
+        c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         s_pressure = None
         for a in range(2):
             for b in range(2):
                 log(f"Calculating C_P_index({a}, {b})")
-                c = self.gcalc.calc_C_P_index(a, b, out=self._c_buffer)
+                self._ensure_phi(self.gcalc)
+                c = self.gcalc.calc_C_P_index(a, b, out=c_buffer)
+                self._maybe_drop_phi(self.gcalc)
                 log(f"calculating fft (c dtype {c.dtype})")
                 s_hat = apply_fft(c)
                 del c
@@ -139,6 +179,7 @@ class FourierSolver(HDF5Saver):
                 log(f"done (s_pressure dtype {s_pressure.dtype})")
         s_pressure[0, 0, 0, 0] = 0.0
 
+        del c_buffer
         log("calculating ifft")
         c_pressure = apply_ifft(s_pressure)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
@@ -153,6 +194,7 @@ class FourierSolver(HDF5Saver):
         instead of 4. The (0,1) class folds the kernels for (0,1) and (1,0).
         """
         log("Solving P contribution (symmetry-optimized)", notime=True)
+        self._drop_inactive_phi(self.gcalc)
 
         pair_factor_expr = {
             (0, 0): "(qx * qxp)",
@@ -161,10 +203,13 @@ class FourierSolver(HDF5Saver):
         }
         canonical_classes = [(0, 0), (0, 1), (1, 1)]
 
+        c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         s_pressure = None
         for (a, b) in canonical_classes:
             log(f"Calculating C_P_index({a},{b}) [class ({a}{b})]")
-            c = self.gcalc.calc_C_P_index(a, b, out=self._c_buffer)
+            self._ensure_phi(self.gcalc)
+            c = self.gcalc.calc_C_P_index(a, b, out=c_buffer)
+            self._maybe_drop_phi(self.gcalc)
             log(f"calculating fft (c dtype {c.dtype})")
             s_hat = apply_fft(c)
             log(f"applying kernel (s_hat dtype {s_hat.dtype} {s_hat.shape})")
@@ -197,6 +242,7 @@ class FourierSolver(HDF5Saver):
 
         s_pressure[0, 0, 0, 0] = 0.0
 
+        del c_buffer
         log("calculating ifft")
         c_pressure = apply_ifft(s_pressure)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
@@ -205,13 +251,17 @@ class FourierSolver(HDF5Saver):
 
     def solve_Q_contribution(self):
         log("Solving Q contribution", notime=True)
+        self._drop_inactive_phi(self.gcalc_Q)
+        c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         s_pressure = None
         for a in range(2):
             for b in range(2):
                 for m in range(2):
                     for n in range(2):
                         log(f"Calculating C_Q_index({a}, {b}, {m}, {n})")
-                        c = self.gcalc.calc_C_Q_index(a, b, m, n, out=self._c_buffer)
+                        self._ensure_phi(self.gcalc_Q)
+                        c = self.gcalc_Q.calc_C_Q_index(a, b, m, n, out=c_buffer)
+                        self._maybe_drop_phi(self.gcalc_Q)
                         log(f"calculating fft (c dtype {c.dtype})")
                         s_hat = apply_fft(c)
                         del c
@@ -236,13 +286,15 @@ class FourierSolver(HDF5Saver):
                                         out=s_pressure)
                             del s_hat
                         log(f"done (s_pressure dtype {s_pressure.dtype})")
+        s_pressure[0, 0, 0, 0] = 0.0
+        del c_buffer
         log("calculating ifft")
         c_pressure = apply_ifft(s_pressure)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
         log("Done solving Q contribution", notime=True)
         return c_pressure
 
-        
+
     def solve_Q_contribution__symmetry_optimized(self):
         """
         Same result as solve_Q_contribution but exploits the three index
@@ -266,6 +318,7 @@ class FourierSolver(HDF5Saver):
         and similarly for mn_part, by commutativity of the kernel product.
         """
         log("Solving Q contribution (symmetry-optimized)", notime=True)
+        self._drop_inactive_phi(self.gcalc_Q)
 
         pair_factor_expr = {
             (0, 0): "(qx * qxp)",
@@ -282,31 +335,23 @@ class FourierSolver(HDF5Saver):
             ((0, 1), (1, 1)),
         ]
 
+        c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         s_pressure = None
         for ab, mn in canonical_classes:
             a, b = ab
             m, n = mn
             log(f"Calculating C_Q_index({a},{b},{m},{n}) "
                 f"[class ({a}{b})x({m}{n})]")
+            self._ensure_phi(self.gcalc_Q)
             if ab == mn:
-                c = self.gcalc.calc_C_Q_index(a, b, m, n, out=self._c_buffer)
+                c = self.gcalc_Q.calc_C_Q_index(a, b, m, n, out=c_buffer)
             else:
-                # Off-diagonal: must symmetrize via c.transpose(2,3,0,1),
-                # which aliases c and so forbids writing the calc result
-                # directly into the buffer. Allocate raw, symmetrize into
-                # the buffer, then drop the raw alloc before the FFT.
-                c_raw = self.gcalc.calc_C_Q_index(a, b, m, n)
-                log("symmetrizing under r1<->r2")
-                ne.evaluate(
-                    "c_raw + c_raw_T",
-                    local_dict={
-                        "c_raw": c_raw,
-                        "c_raw_T": c_raw.transpose(2, 3, 0, 1),
-                    },
-                    out=self._c_buffer,
-                )
-                del c_raw
-                c = self._c_buffer
+                # Off-diagonal: compute c[r1,r2] + c[r2,r1] in a single
+                # fused ne.evaluate that writes directly into c_buffer,
+                # avoiding the un-symmetrised intermediate that would push
+                # peak from 3*N^4 to 4*N^4.
+                c = self.gcalc_Q.calc_C_Q_index_symmetrized(a, b, m, n, out=c_buffer)
+            self._maybe_drop_phi(self.gcalc_Q)
 
             log(f"calculating fft (c dtype {c.dtype})")
             s_hat = apply_fft(c)
@@ -340,6 +385,8 @@ class FourierSolver(HDF5Saver):
                 del s_hat
             log(f"done (s_pressure dtype {s_pressure.dtype})")
 
+        s_pressure[0, 0, 0, 0] = 0.0
+        del c_buffer
         log("calculating ifft")
         c_pressure = apply_ifft(s_pressure)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
@@ -396,6 +443,10 @@ def _build_arg_parser():
                         help="Memory-map phi to disk instead of holding it in RAM.")
     solver.add_argument("--mmap-path", type=str,   default="/scratch/phi_temp.mmap",
                         help="Path used when --mmap is set (default: %(default)s).")
+    solver.add_argument("--drop_phi",  action="store_true",
+                        help="Recompute phi each iteration instead of caching it. "
+                             "Cuts inner-loop peak from 4*N^4 to 3*N^4 at the cost "
+                             "of recomputing phi N_iter times per solve.")
 
     save = parser.add_argument_group(
         "output fields",
@@ -438,6 +489,14 @@ def _build_arg_parser():
 def main(argv=None):
     args = _build_arg_parser().parse_args(argv)
 
+    import toolbox
+    toolbox.setup_loggers(
+        base_path="./myxo.log",
+        debug=False,
+        stdout=True,
+        train_logger=False,
+    )
+
     logger = logging.getLogger("main")
     logger.setLevel(logging.DEBUG if args.verbose else logging.INFO)
 
@@ -468,6 +527,7 @@ def main(argv=None):
         eps=args.eps,
         mmap=args.mmap,
         mmap_path=args.mmap_path,
+        drop_phi=args.drop_phi,
         verbose=args.verbose,
     )
 

@@ -1,0 +1,222 @@
+import argparse
+import os
+from termios import PARODD
+import numpy as np
+import numexpr as ne
+from .utils import log
+from .correlation_def import Gcalc
+
+
+class GcalcForQ(Gcalc):
+    """
+    Gcalc variant for the Q-side of FourierSolver. Uses an isotropic
+    Gaussian kernel  G(r1, r2) = exp(-|r2-r1|^2 / (2 * lm^2))  in place
+    of v1's `phi` / `phi_T`, evaluated inline by calc_C_Q_index,
+    calc_C_Q_index_symmetrized, and calc_C_Q. The per-index formula has
+    the same P-product structure as v1's calc_C_Q_index but drops the
+    `half` factor (since phi == phi_T here, the v1 half * (... + ...)
+    collapses into the single unhalved sum):
+
+        c[r1,r2; a,b,m,n] = G(r1,r2) * (
+              P_ab*P_mn   + P_am*P_bn   + P_an*P_bm   - P_ab*PT_mn
+            + PT_ab*PT_mn + PT_am*PT_bn + PT_an*PT_bm - P_ab*PT_mn
+        )
+
+    where P_xy = P(r1)_{x,y} and PT_xy = P(r2)_{x,y}. The two `-P_ab*PT_mn`
+    cross-terms break the r1<->r2 symmetry that the earlier draft enjoyed:
+    in general c[r1,r2] != c[r2,r1].
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._el = self.lm
+
+    def calc_phi(self):
+        # v2 computes the exp kernel inline; there's no stored phi buffer.
+        # Set a non-None sentinel so FourierSolver._ensure_phi treats this
+        # Gcalc as "phi already materialised" and skips the no-op rebuild.
+        self.phi = True
+
+    def drop_phi(self):
+        # No buffer to release; keep the sentinel so _ensure_phi continues
+        # to see phi as "materialised".
+        pass
+
+    def _periodic_displacements(self):
+        dx = self.x2 - self.x1
+        dx = dx - self.L_grid * np.round(dx / self.L_grid)
+        dy = self.y2 - self.y1
+        dy = dy - self.L_grid * np.round(dy / self.L_grid)
+        return dx, dy
+
+    def calc_C_Q_index(self, a, b, m, n, out=None):
+        P = self.P[:, :, None, None]                      # N x N x 1 x 1 x 2 x 2
+        PT = P.transpose(2, 3, 0, 1, 4, 5)                # 1 x 1 x N x N x 2 x 2
+        el = self.dtype.type(self._el)
+        dx, dy = self._periodic_displacements()
+
+
+        P = self.P[:, :, None, None]                      # N x N x 1 x 1 x 2 x 2
+        PT = P.transpose(2, 3, 0, 1, 4, 5)                # 1 x 1 x N x N x 2 x 2
+
+        out = ne.evaluate(
+            "exp(-(dx * dx + dy * dy) / two_el_squared) * "
+            "( (P_ab  * P_mn  + P_am  * P_bn  + P_an  * P_bm  - P_ab * PT_mn) + "
+            "(PT_ab * PT_mn + PT_am * PT_bn + PT_an * PT_bm - P_ab * PT_mn) )",
+            local_dict={
+                'two_el_squared': 2 * el * el,
+                'dx': dx, 'dy': dy,
+                'P_ab': P[..., a, b], 'P_mn': P[..., m, n],
+                'P_am': P[..., a, m], 'P_bn': P[..., b, n],
+                'P_an': P[..., a, n], 'P_bm': P[..., b, m],
+                'PT_ab': PT[..., a, b], 'PT_mn': PT[..., m, n],
+                'PT_am': PT[..., a, m], 'PT_bn': PT[..., b, n],
+                'PT_an': PT[..., a, n], 'PT_bm': PT[..., b, m],
+            },
+            out=out)
+
+
+        self._validate_dtype(out)
+        return out
+
+    def calc_C_Q_index_symmetrized(self, a, b, m, n, out=None):
+        """
+        c[r1,r2] + c[r2,r1] for the v2.1 form. Swapping r1<->r2 swaps
+        P<->PT (and leaves the Gaussian kernel invariant). Adding the
+        swapped expression to the original doubles the symmetric P-product
+        terms and produces the symmetric cross-term `P_ab*PT_mn + PT_ab*P_mn`:
+
+            c[r1,r2] + c[r2,r1] = 2 * G * (
+                  P_ab*P_mn  + P_am*P_bn  + P_an*P_bm
+                + PT_ab*PT_mn + PT_am*PT_bn + PT_an*PT_bm
+                - P_ab*PT_mn - PT_ab*P_mn
+            )
+        """
+        P = self.P[:, :, None, None]
+        PT = P.transpose(2, 3, 0, 1, 4, 5)
+        el = self.dtype.type(self._el)
+        dx, dy = self._periodic_displacements()
+
+        out = ne.evaluate(
+            "two * exp(-(dx * dx + dy * dy) / two_el_squared)"
+            " * (P_ab * P_mn + P_am * P_bn + P_an * P_bm"
+            "    + PT_ab * PT_mn + PT_am * PT_bn + PT_an * PT_bm"
+            "    - P_ab * PT_mn - PT_ab * P_mn)",
+            local_dict={
+                'two': self.dtype.type(2),
+                'two_el_squared': 2 * el * el,
+                'dx': dx, 'dy': dy,
+                'P_ab': P[..., a, b], 'P_mn': P[..., m, n],
+                'P_am': P[..., a, m], 'P_bn': P[..., b, n],
+                'P_an': P[..., a, n], 'P_bm': P[..., b, m],
+                'PT_ab': PT[..., a, b], 'PT_mn': PT[..., m, n],
+                'PT_am': PT[..., a, m], 'PT_bn': PT[..., b, n],
+                'PT_an': PT[..., a, n], 'PT_bm': PT[..., b, m],
+            },
+            out=out)
+
+        self._validate_dtype(out)
+        return out
+
+    def calc_C_Q(self, a=None, b=None, m=None, n=None):
+        """
+        Full rank-4 C_Q tensor of shape (N, N, N, N, 2, 2, 2, 2). The
+        (a, b, m, n) keyword arguments are accepted for signature parity
+        with v1 but ignored -- this method always returns the full tensor.
+        Trailing axes are (a, b, m, n) so that out[..., a, b, m, n] equals
+        calc_C_Q_index(a, b, m, n) element-wise.
+
+        Assembled via the same outer-product/transpose split as v1's
+        calc_C_Q: build the r1-only `part_left` (which carries the
+        `(P_ab*P_mn + P_am*P_bn + P_an*P_bm - P_ab*PT_mn)` half), then
+        get the r2-only `part_right` by index-transposing it; sum.
+        The leading `half` of v1 is dropped because here phi == phi_T = G.
+        """
+        el = self.dtype.type(self._el)
+        dx, dy = self._periodic_displacements()
+
+        # Gaussian kernel on (r1, r2), broadcast over the 2x2x2x2 trailing axes.
+        G = ne.evaluate(
+            "exp(-(dx * dx + dy * dy) / two_el_squared)",
+            local_dict={
+                'two_el_squared': 2 * el * el,
+                'dx': dx, 'dy': dy,
+            })  # (N, N, N, N)
+
+        P = self.P[:, :, None, None]                       # (N, N, 1, 1, 2, 2)
+        P_transpose = P.transpose(2, 3, 0, 1, 4, 5)         # (1, 1, N, N, 2, 2)
+
+        # P_outer_rr_abmn[..., a, b, m, n] = P(r1)_{a,b} * P(r1)_{m,n}
+        P_outer_rr_abmn = ne.evaluate(
+            "P_left * P_right",
+            local_dict={
+                'P_left': P[..., :, :, None, None],
+                'P_right': P[..., None, None, :, :],
+            })  # (N, N, 1, 1, 2, 2, 2, 2)
+        P_outer_rr_ambn = P_outer_rr_abmn.transpose(0, 1, 2, 3, 4, 6, 5, 7)
+        P_outer_rr_anbm = P_outer_rr_abmn.transpose(0, 1, 2, 3, 4, 6, 7, 5)
+
+        # Cross term P(r1)_{a,b} * P(r2)_{m,n}, full (N,N,N,N) on the grid axes.
+        P_outer_rr1_abmn = ne.evaluate(
+            "P_left * P_right",
+            local_dict={
+                'P_left': P[..., :, :, None, None],
+                'P_right': P_transpose[..., None, None, :, :],
+            })  # (N, N, N, N, 2, 2, 2, 2)
+
+        part_left = ne.evaluate(
+            "G * (P_outer_rr_abmn + P_outer_rr_ambn + P_outer_rr_anbm - P_outer_rr1_abmn)",
+            local_dict={
+                'G': G[..., None, None, None, None],
+                'P_outer_rr_abmn': P_outer_rr_abmn,
+                'P_outer_rr_ambn': P_outer_rr_ambn,
+                'P_outer_rr_anbm': P_outer_rr_anbm,
+                'P_outer_rr1_abmn': P_outer_rr1_abmn,
+            })  # (N, N, N, N, 2, 2, 2, 2)
+        # part_right = part_left evaluated at swapped (r1, r2) and swapped
+        # (a, b) <-> (m, n): grid axes 0,1,2,3 -> 2,3,0,1 ; index axes
+        # 4,5,6,7 -> 6,7,4,5. P is symmetric so the index swap matches the
+        # r2-half of calc_C_Q_index term-for-term.
+        part_right = part_left.transpose(2, 3, 0, 1, 6, 7, 4, 5)
+
+        value = ne.evaluate(
+            "part_left + part_right",
+            local_dict={'part_left': part_left, 'part_right': part_right})
+
+        self._validate_dtype(value)
+        return value
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="Compute G_{ij} on a 4D grid")
+    parser.add_argument("--S0",       type=float, default=1.0)
+    parser.add_argument("--l",        type=float, default=1.0)
+    parser.add_argument("--lM",       type=float, default=7.0/3)
+    parser.add_argument("--lm",       type=float, default=0.7/3)
+    parser.add_argument("--R",        type=float, default=10, help="Cutoff radius")
+    parser.add_argument("--N",        type=int,   default=50, help="Grid size per dimension")
+    parser.add_argument("--parallel", action="store_true",     help="Compute G in parallel using threads")
+    parser.add_argument("--workers",  type=int,   default=None, help="Number of worker threads (default: CPU count)")
+    parser.add_argument("--dtype",    type=str,   default="float64", help="NumPy dtype for computation (e.g. float16, float32, float64)")
+    args = parser.parse_args()
+
+    dtype = np.dtype(args.dtype)
+
+    print("O(N^4) memory is {:0.1f}GB".format(args.N**4 / 1024**3 * dtype.itemsize))
+
+    grid_1d = np.linspace(-5, 5, args.N, dtype=dtype)
+    gcalc = GcalcForQ(grid_1d, S0=args.S0, l=args.l, lM=args.lM, lm=args.lm, R=args.R, dtype=dtype)
+    gcalc.precompute()
+    print(gcalc.Sigma.mean())
+
+    value = gcalc.calc_C_Q()
+    value_2 = np.empty_like(value)
+    for a in range(2):
+        for b in range(2):
+            for m in range(2):
+                for n in range(2):
+                    value_2[..., a, b, m, n] = gcalc.calc_C_Q_index(a, b, m, n)
+
+    print("absdiff", np.abs(value - value_2).mean())
+    exit(0)

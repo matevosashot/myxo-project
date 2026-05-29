@@ -162,7 +162,14 @@ class Gcalc:
             self.phi = _mvn_pdf_2d_fast(dx, dy, Sigma[:, :, None, None], factor=factor)
 
         self._validate_dtype(self.phi)
-        self.phi_transpose = self.phi.transpose(2, 3, 0, 1)
+
+    def drop_phi(self):
+        self.phi = None
+
+    @property
+    def phi_transpose(self):
+        #                         0  1  2  3
+        return self.phi.transpose(2, 3, 0, 1) if self.phi is not None else None
 
     def calc_C_P_index(self, a, b, out=None):
         """
@@ -171,7 +178,7 @@ class Gcalc:
         Returns shape (..., 2, 2).
         """
         phi = self.phi # N x N x N x N
-        phi_T = self.phi.transpose(2, 3, 0, 1)
+        phi_T = self.phi_transpose
         P = self.P[:, :, None, None] # N x N x 1 x 1 x 2 x 2
         PT = P.transpose(2, 3, 0, 1, 4, 5) # 1 x 1 x N x N x 2 x 2
 
@@ -222,6 +229,45 @@ class Gcalc:
             "half * phi   * (P_ab  * P_mn  + P_am  * P_bn  + P_an  * P_bm  - P_ab * PT_mn)"
             " + "
             "half * phi_T * (PT_ab * PT_mn + PT_am * PT_bn + PT_an * PT_bm - P_ab * PT_mn)",
+            local_dict={
+                'half': self.dtype.type(0.5),
+                'phi': phi, 'phi_T': phi_T,
+                'P_ab': P[..., a, b], 'P_mn': P[..., m, n],
+                'P_am': P[..., a, m], 'P_bn': P[..., b, n],
+                'P_an': P[..., a, n], 'P_bm': P[..., b, m],
+                'PT_ab': PT[..., a, b], 'PT_mn': PT[..., m, n],
+                'PT_am': PT[..., a, m], 'PT_bn': PT[..., b, n],
+                'PT_an': PT[..., a, n], 'PT_bm': PT[..., b, m],
+            },
+            out=out)
+        self._validate_dtype(out)
+        return out
+
+    def calc_C_Q_index_symmetrized(self, a, b, m, n, out=None):
+        """
+        Compute calc_C_Q_index(a,b,m,n)(r1,r2) + calc_C_Q_index(a,b,m,n)(r2,r1)
+        in a single ne.evaluate, writing directly into `out`. Equivalent to
+        `c + c.transpose(2, 3, 0, 1)` where `c = calc_C_Q_index(a,b,m,n)`,
+        but never materialises the un-symmetrised intermediate.
+
+        Derivation: swapping (r1, r2) in calc_C_Q_index swaps phi <-> phi_T
+        and P_xy <-> PT_xy. Adding the swapped expression to the original
+        cancels the half-factor on the diagonal P-products and leaves a
+        coupled cross-term:
+
+            phi   * (P_ab*P_mn + P_am*P_bn + P_an*P_bm)
+          + phi_T * (PT_ab*PT_mn + PT_am*PT_bn + PT_an*PT_bm)
+          - 0.5 * (phi + phi_T) * (P_ab*PT_mn + PT_ab*P_mn)
+        """
+        phi = self.phi
+        phi_T = self.phi_transpose
+        P = self.P[:, :, None, None]
+        PT = P.transpose(2, 3, 0, 1, 4, 5)
+
+        return ne.evaluate(
+            "phi * (P_ab * P_mn + P_am * P_bn + P_an * P_bm)"
+            " + phi_T * (PT_ab * PT_mn + PT_am * PT_bn + PT_an * PT_bm)"
+            " - half * (phi + phi_T) * (P_ab * PT_mn + PT_ab * P_mn)",
             local_dict={
                 'half': self.dtype.type(0.5),
                 'phi': phi, 'phi_T': phi_T,

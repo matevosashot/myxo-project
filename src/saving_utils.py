@@ -9,7 +9,7 @@ attributes/methods. ``FourierSolver`` mixes it in via
 
 Expected host attributes
 ------------------------
-    n, L, dx, eps, dtype, model_params, grid_1d, gcalc, _c_buffer
+    n, L, dx, eps, dtype, model_params, grid_1d, gcalc
 
 Expected host methods
 ---------------------
@@ -175,8 +175,8 @@ class HDF5Saver:
             self._write_h5_attrs(f, method=method)
             f.create_dataset("grid_1d", data=self.grid_1d)
 
-            # Cheap on-disk writes first: each component only needs the
-            # already-allocated _c_buffer in RAM.
+            # Cheap on-disk writes first: each component only needs a single
+            # N^4 c_buffer in RAM (allocated inside the helper).
             if save_C_P:
                 self._save_C_P_components(f)
             if save_C_Q:
@@ -223,39 +223,41 @@ class HDF5Saver:
 
     @staticmethod
     def _write_h5_dataset(group, name, data):
-        return group.create_dataset(
-            name, data=data, compression="gzip", compression_opts=4,
-        )
+        return group.create_dataset(name, data=data)
 
     def _save_C_P_components(self, f):
         """Save all 4 components of C_P as ``C_P/{a}{b}`` datasets.
 
-        Each component is computed into the shared ``_c_buffer`` and then
+        Each component is computed into a shared local buffer and then
         copied (synchronously, by h5py) into the file before the next
         component overwrites the buffer.
         """
         log("Saving C_P components", notime=True)
         g = f.create_group("C_P")
+        c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         for a in range(2):
             for b in range(2):
                 log(f"Calculating C_P_index({a}, {b})")
-                self.gcalc.calc_C_P_index(a, b, out=self._c_buffer)
-                self._write_h5_dataset(g, f"{a}{b}", self._c_buffer)
+                self.gcalc.calc_C_P_index(a, b, out=c_buffer)
+                log(f"Writing C_P_index({a}, {b}) to h5")
+                self._write_h5_dataset(g, f"{a}{b}", c_buffer)
+                
 
     def _save_C_Q_components(self, f):
         """Save all 16 components of C_Q as ``C_Q/{a}{b}{m}{n}`` datasets."""
         log("Saving C_Q components", notime=True)
         g = f.create_group("C_Q")
+        c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         for a in range(2):
             for b in range(2):
                 for m in range(2):
                     for n in range(2):
                         log(f"Calculating C_Q_index({a}, {b}, {m}, {n})")
                         self.gcalc.calc_C_Q_index(
-                            a, b, m, n, out=self._c_buffer
+                            a, b, m, n, out=c_buffer
                         )
                         self._write_h5_dataset(
-                            g, f"{a}{b}{m}{n}", self._c_buffer
+                            g, f"{a}{b}{m}{n}", c_buffer
                         )
 
     def _compute_P_contribution(self, method):
