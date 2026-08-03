@@ -1,0 +1,88 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2415,         80]
+NotebookOptionsPosition[      1850,         62]
+NotebookOutlinePosition[      2247,         78]
+CellTagsIndexPosition[      2204,         75]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{"\[Del]", "p"}]}], "+", 
+     RowBox[{"\[Eta]", 
+      RowBox[{
+       SuperscriptBox["\[Del]", "2"], "v"}]}], "-", 
+     RowBox[{
+      RowBox[{"\[Xi]", "(", 
+       RowBox[{"I", "-", 
+        RowBox[{"\[Epsilon]", " ", "Q"}]}], ")"}], "v"}], "-", 
+     RowBox[{"\[Zeta]c", " ", 
+      RowBox[{"\[Del]", "Q"}]}], "+", 
+     RowBox[{"\[Zeta]s", " ", "P"}]}], "=", "0"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "a0df124c-6925-4a57-b28b-086baf123f9c"],
+ "\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Del]", "v"}], "=", "0"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "81d30585-87fd-41d4-9fbb-9ad27d988cd0"]
+}], "Text",
+ CellChangeTimes->{{3.9827326604167624`*^9, 
+  3.982732771781417*^9}},ExpressionUUID->"e3ed126e-32c2-40ce-99e4-\
+ec589aaf5c97"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$Machine"], "Input",
+ CellChangeTimes->{{3.983956009245215*^9, 3.9839560109939957`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"7f1e70ae-c408-461b-a6ad-32d2676f9484"],
+
+Cell[BoxData["$Machine"], "Output",
+ CellChangeTimes->{3.983956026589059*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"f78a61ba-c9f6-4095-9cf8-132b68dd6435"]
+}, Open  ]]
+},
+WindowSize->{969, 662},
+WindowMargins->{{Automatic, 182}, {Automatic, 0}},
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"471de35b-5126-4dd3-bbc6-2ba92dcdfce8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 913, 29, 67, "Text",ExpressionUUID->"e3ed126e-32c2-40ce-99e4-ec589aaf5c97"],
+Cell[CellGroupData[{
+Cell[1496, 53, 180, 2, 37, "Input",ExpressionUUID->"7f1e70ae-c408-461b-a6ad-32d2676f9484"],
+Cell[1679, 57, 155, 2, 42, "Output",ExpressionUUID->"f78a61ba-c9f6-4095-9cf8-132b68dd6435"]
+}, Open  ]]
+}
+]
+*)
+
