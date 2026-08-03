@@ -17,7 +17,7 @@ $(VENV)/bin/activate: make_environment.sh requirements.txt
 	touch $@
 
 test:
-	python -m pytest tests/ -v
+	python3 -m pytest tests/ -v
 
 clean:
 	rm -rf $(VENV) src/*.egg-info build dist
