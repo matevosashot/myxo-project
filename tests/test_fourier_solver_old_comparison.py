@@ -15,6 +15,7 @@ REFERENCE_H5 = Path(__file__).parent / "biharmonic_solution.h5"
 # reference output in biharmonic_solution.h5 (produced by the old
 # draft.BiharmonicSolverFourier code) is the ground truth here.
 N = 10
+os.environ["MYXO_TESTING"] = "1"
 L = 5
 MODEL_PARAMS = dict(S0=1.0, l=1.0, lM=7.0 / 3, lm=0.7 / 3, R=10,sigma=1.0, _debug_nofactor=True)
 

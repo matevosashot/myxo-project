@@ -52,7 +52,7 @@ def _mvn_pdf_2d_fast(dx, dy, cov, out=None, factor=1.0):
 class Gcalc:
     def __init__(self, grid_1d, S0=1.0, l=1.0, lM=7.0/3, lm=0.7/3, R=10, sigma=6.0, dtype=np.float64,
                  mmap=False, mmap_path="/scratch/phi_temp.mmap", 
-                 _debug_nofactor=False):
+                 _debug_nofactor=False, **kwargs):
         # Coerce numeric model params to Python float so that callers
         # passing np.float64 scalars (e.g. from np.linspace) don't
         # accidentally promote downstream float32 computations to float64
@@ -71,6 +71,8 @@ class Gcalc:
         self.x2 = self.grid[None, None, :, None]
         self.y2 = self.grid[None, None, None, :]
 
+        self.phi = None
+
         dx = self.grid[1] - self.grid[0]
         self.L_grid = self.grid[-1] - self.grid[0] + dx  # total length of the periodic box
 
@@ -80,6 +82,8 @@ class Gcalc:
 
         self._validate_dtype(self.grid)
 
+        if len(kwargs) > 0:
+            print("extra kwargs: ", kwargs)
 
     def _validate_dtype(self, value):
         if value.dtype != self.dtype:
@@ -164,6 +168,7 @@ class Gcalc:
         self._validate_dtype(self.phi)
 
     def drop_phi(self):
+        del self.phi
         self.phi = None
 
     @property
@@ -264,7 +269,7 @@ class Gcalc:
         P = self.P[:, :, None, None]
         PT = P.transpose(2, 3, 0, 1, 4, 5)
 
-        return ne.evaluate(
+        out = ne.evaluate(
             "phi * (P_ab * P_mn + P_am * P_bn + P_an * P_bm)"
             " + phi_T * (PT_ab * PT_mn + PT_am * PT_bn + PT_an * PT_bm)"
             " - half * (phi + phi_T) * (P_ab * PT_mn + PT_ab * P_mn)",
@@ -344,8 +349,8 @@ class Gcalc:
         self.calcP()
         log("Calculating Sigma")
         self.calcSigma()
-        log("Calculating phi")
-        self.calc_phi()
+        # log("Calculating phi")
+        # self.calc_phi()
         log("Done precomputing Gcalc")
     
 

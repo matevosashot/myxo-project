@@ -1,17 +1,20 @@
 import argparse
+import gc
 import logging
 import os
 import sys
+import time
+import json 
 
 import numexpr as ne
 import numpy as np
-from scipy.fft import irfftn, rfftn, set_workers
+from scipy.fft import irfftn, rfftn, set_workers, fftn, ifftn
 
 from . import _NWORKERS
 from .correlation_def import Gcalc
 from .correlation_def_v2 import GcalcForQ
 from .saving_utils import HDF5Saver
-from .utils import log
+from .utils import log, diag_large_ndarrays, clear_numexpr_last_cache
 
 
 
@@ -23,28 +26,66 @@ def _build_rfft_wavevectors_1d(n: int, dx: float) -> np.ndarray:
     return np.fft.rfftfreq(n, d=dx / (2.0 * np.pi))
 
 
-def apply_fft(x_rank4):
+def apply_fft(x_rank4, fft_type="rfft", overwrite_x=True):
     # log(f"apply_fft: C-contig={x_rank4.flags['C_CONTIGUOUS']}, "
     #     f"F-contig={x_rank4.flags['F_CONTIGUOUS']}, "
     #     f"aligned={x_rank4.flags['ALIGNED']}, "
     #     f"strides={x_rank4.strides}, dtype={x_rank4.dtype}")
+    fn = rfftn if fft_type == "rfft" else fftn
     with set_workers(_NWORKERS):
-        return rfftn(x_rank4, axes=(0, 1, 2, 3), overwrite_x=True)
+        return fn(x_rank4, axes=(0, 1, 2, 3), overwrite_x=overwrite_x)
 
-def apply_ifft(q_rank4):
+def apply_ifft(q_rank4, fft_type="rfft", overwrite_x=True, s=None):
     # log(f"apply_ifft: C-contig={q_rank4.flags['C_CONTIGUOUS']}, "
     #     f"F-contig={q_rank4.flags['F_CONTIGUOUS']}, "
     #     f"aligned={q_rank4.flags['ALIGNED']}, "
     #     f"strides={q_rank4.strides}, dtype={q_rank4.dtype}")
+    # `s` is the (full) output shape on the transformed axes. Required for
+    # rfft mode when the original last-axis length is odd, because
+    # irfftn defaults to 2*(M-1) which is off-by-one for odd n. fft mode
+    # ignores `s`: ifftn never has a shape ambiguity since the input
+    # already carries the full spectrum.
     with set_workers(_NWORKERS):
-        return irfftn(q_rank4, axes=(0, 1, 2, 3), overwrite_x=True)
-    
+        if fft_type == "rfft":
+            return irfftn(q_rank4, s=s, axes=(0, 1, 2, 3), overwrite_x=overwrite_x)
+        # ifftn returns a complex array; copying .real gives a fresh
+        # contiguous real buffer to match irfftn's dtype/shape semantics.
+        out = ifftn(q_rank4, axes=(0, 1, 2, 3), overwrite_x=overwrite_x)
+        return out.real.copy()
+
+
+_SPATIAL_AXES_2D = (0, 1)
+
+
+def apply_fft_spatial(x, fft_type="rfft", overwrite_x=True):
+    fn = rfftn if fft_type == "rfft" else fftn
+    with set_workers(_NWORKERS):
+        return fn(x, axes=_SPATIAL_AXES_2D, overwrite_x=overwrite_x)
+
+
+def apply_ifft_spatial(x, fft_type="rfft", overwrite_x=True, s=None):
+    with set_workers(_NWORKERS):
+        if fft_type == "rfft":
+            return irfftn(x, s=s, axes=_SPATIAL_AXES_2D, overwrite_x=overwrite_x)
+        out = ifftn(x, axes=_SPATIAL_AXES_2D, overwrite_x=overwrite_x)
+        return out.real.copy()
 
 
 class FourierSolver(HDF5Saver):
     def __init__(self, n, L,  model_params, dtype="float32", eps=None, verbose=False,
                  mmap=False, mmap_path="/scratch/phi_temp.mmap", drop_phi=False,
-                 gcalc_Q_cls=None):
+                 gcalc_Q_cls=None, fft_type="rfft", ):
+
+        if n % 2 == 0 and not os.environ.get("MYXO_TESTING", "0") == "1":
+            raise ValueError(
+                f"n must be odd, got {n!r}"
+            )
+
+        if fft_type not in ("rfft", "fft"):
+            raise ValueError(
+                f"fft_type must be 'rfft' or 'fft', got {fft_type!r}"
+            )
+        self.fft_type = fft_type
         self.n = n
         self.L = L
         self.model_params = model_params
@@ -107,18 +148,28 @@ class FourierSolver(HDF5Saver):
     def precompute(self):
         log("Precomputing Gcalc", notime=True)
         self.gcalc.precompute()
+        if not self.drop_phi:
+            log("Calculating phi")
+            self.gcalc.calc_phi()
         if self.gcalc_Q is not self.gcalc:
             log("Precomputing Gcalc (Q-side)", notime=True)
             self.gcalc_Q.precompute()
+            if not self.drop_phi:
+                log("Calculating phi (Q-side)")
+                self.gcalc_Q.calc_phi()
+                
         log("Building wavevectors")
         self.qfull = _build_wavevectors_1d(self.n, self.dx).astype(self.dtype)
-        self.qhalf = _build_rfft_wavevectors_1d(self.n, self.dx).astype(self.dtype)
+        if self.fft_type == "rfft":
+            self.qhalf = _build_rfft_wavevectors_1d(self.n, self.dx).astype(self.dtype)
+            qyp_axis = self.qhalf
+        else:
+            qyp_axis = self.qfull
 
-        
         self.qx  = self.qfull[:, None, None, None]
         self.qy  = self.qfull[None, :, None, None]
         self.qxp = self.qfull[None, None, :, None]
-        self.qyp = self.qhalf[None, None, None, :]
+        self.qyp = qyp_axis[None, None, None, :]
      
         self.q1_inv_sq = 1.0 / (self.qx ** 2 + self.qy ** 2 + self.eps)
         self.q2_inv_sq = 1.0 / (self.qxp ** 2 + self.qyp ** 2 + self.eps)
@@ -147,6 +198,7 @@ class FourierSolver(HDF5Saver):
     def solve_P_contribution(self):
         log("Solving P contribution", notime=True)
         self._drop_inactive_phi(self.gcalc)
+        
         c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         s_pressure = None
         for a in range(2):
@@ -155,8 +207,10 @@ class FourierSolver(HDF5Saver):
                 self._ensure_phi(self.gcalc)
                 c = self.gcalc.calc_C_P_index(a, b, out=c_buffer)
                 self._maybe_drop_phi(self.gcalc)
+
+                
                 log(f"calculating fft (c dtype {c.dtype})")
-                s_hat = apply_fft(c)
+                s_hat = apply_fft(c, fft_type=self.fft_type)
                 del c
                 ne.evaluate(
                     "- s_hat * k1 * k2 * q1 * q2",
@@ -167,8 +221,7 @@ class FourierSolver(HDF5Saver):
                         "q1": self.q1_inv_sq,
                         "q2": self.q2_inv_sq,
                     },
-                    out=s_hat,
-                )
+                    out=s_hat                )
                 if s_pressure is None:
                     s_pressure = s_hat
                 else:
@@ -181,7 +234,7 @@ class FourierSolver(HDF5Saver):
 
         del c_buffer
         log("calculating ifft")
-        c_pressure = apply_ifft(s_pressure)
+        c_pressure = apply_ifft(s_pressure, fft_type=self.fft_type, s=(self.n,) * 4)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
 
         return c_pressure
@@ -210,10 +263,12 @@ class FourierSolver(HDF5Saver):
             self._ensure_phi(self.gcalc)
             c = self.gcalc.calc_C_P_index(a, b, out=c_buffer)
             self._maybe_drop_phi(self.gcalc)
+
+
             log(f"calculating fft (c dtype {c.dtype})")
-            s_hat = apply_fft(c)
-            log(f"applying kernel (s_hat dtype {s_hat.dtype} {s_hat.shape})")
+            s_hat = apply_fft(c, fft_type=self.fft_type)
             del c
+            log(f"applying kernel (s_hat dtype {s_hat.dtype} {s_hat.shape})")
 
             expr = f"- s_hat * {pair_factor_expr[(a, b)]} * q1 * q2"
             ne.evaluate(
@@ -227,24 +282,25 @@ class FourierSolver(HDF5Saver):
                     "q1": self.q1_inv_sq,
                     "q2": self.q2_inv_sq,
                 },
-                out=s_hat,
-            )
+                out=s_hat)
             if s_pressure is None:
                 s_pressure = s_hat
             else:
+                
                 ne.evaluate(
                     "s_pressure + s_hat",
                     local_dict={"s_pressure": s_pressure, "s_hat": s_hat},
-                    out=s_pressure,
+                    out=s_pressure
                 )
+                
                 del s_hat
             log(f"done (s_pressure dtype {s_pressure.dtype})")
-
+        del c_buffer
+        clear_numexpr_last_cache()
         s_pressure[0, 0, 0, 0] = 0.0
 
-        del c_buffer
         log("calculating ifft")
-        c_pressure = apply_ifft(s_pressure)
+        c_pressure = apply_ifft(s_pressure, fft_type=self.fft_type, s=(self.n,) * 4)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
         log("Done solving P contribution (symmetry-optimized)", notime=True)
         return c_pressure
@@ -263,15 +319,15 @@ class FourierSolver(HDF5Saver):
                         c = self.gcalc_Q.calc_C_Q_index(a, b, m, n, out=c_buffer)
                         self._maybe_drop_phi(self.gcalc_Q)
                         log(f"calculating fft (c dtype {c.dtype})")
-                        s_hat = apply_fft(c)
+                        s_hat = apply_fft(c, fft_type=self.fft_type)
                         del c
                         ne.evaluate(
                             "s_hat * k1 * k2 * k3 * k4 * q1 * q2",
                             local_dict={
                                 "s_hat": s_hat,
                                 "k1": self.component[a],
-                                "k2": self.component_prime[b],
-                                "k3": self.component[m],
+                                "k2": self.component[b],
+                                "k3": self.component_prime[m],
                                 "k4": self.component_prime[n],
                                 "q1": self.q1_inv_sq,
                                 "q2": self.q2_inv_sq,
@@ -288,8 +344,9 @@ class FourierSolver(HDF5Saver):
                         log(f"done (s_pressure dtype {s_pressure.dtype})")
         s_pressure[0, 0, 0, 0] = 0.0
         del c_buffer
+        clear_numexpr_last_cache()
         log("calculating ifft")
-        c_pressure = apply_ifft(s_pressure)
+        c_pressure = apply_ifft(s_pressure, fft_type=self.fft_type, s=(self.n,) * 4)
         log(f"done (c_pressure dtype {c_pressure.dtype})")
         log("Done solving Q contribution", notime=True)
         return c_pressure
@@ -297,39 +354,49 @@ class FourierSolver(HDF5Saver):
 
     def solve_Q_contribution__symmetry_optimized(self):
         """
-        Same result as solve_Q_contribution but exploits the three index
-        symmetries of C_Q:
-            c[a,b,m,n]      = c[b,a,m,n]            (P symmetric)
-            c[a,b,m,n]      = c[a,b,n,m]
-            c[a,b,m,n][r1,r2] = c[m,n,a,b][r2,r1]
-        This collapses the 16 (a,b,m,n) tuples into 6 canonical classes,
-        so calc_C_Q_index and the FFT each run 6 times instead of 16.
+        Same result as solve_Q_contribution but exploits the three C_Q
+        symmetries:
+            c[a,b,m,n]        = c[b,a,m,n]               (P symmetric)
+            c[a,b,m,n]        = c[a,b,n,m]
+            c[a,b,m,n](r1,r2) = c[m,n,a,b](r2,r1)
+        With kernel K(a,b,m,n)(q1,q2) = q1_a q1_b q2_m q2_n / (|q1|^2|q2|^2),
+        the kernel respects the same symmetries in Fourier space (the last
+        one with a q1<->q2 swap), so the 16 tuples collapse into 6 canonical
+        classes -> calc_C_Q_index runs 6 times instead of 16.
 
-        The third symmetry is folded in by adding c.transpose(2,3,0,1) to c
-        in real space before the FFT (rfft makes the same swap in Fourier
-        space awkward because axis 3 is half-sized).
-
-        For each canonical class the per-class kernel factorises as
-            ab_part * mn_part * q1_inv_sq * q2_inv_sq
+        Each class's kernel-sum factorises as
+            f_q1[ab](q1) * f_q2[mn](q2) / (|q1|^2|q2|^2)
         with
-            ab_part = qx*qxp                   if (a,b) = (0,0)
-                    = qx*qyp + qy*qxp          if (a,b) = (0,1)
-                    = qy*qyp                   if (a,b) = (1,1)
-        and similarly for mn_part, by commutativity of the kernel product.
+            f_q1[ab] in {qx^2,   2*qx*qy,    qy^2}   (q1 uses full grid)
+            f_q2[mn] in {qxp^2,  2*qxp*qyp,  qyp^2}  (q2 uses rfft grid)
+
+        Off-diagonal classes (ab != mn) come in (A, B=A-mirror) pairs related
+        by the third symmetry. ĉ_B(q1,q2) = ĉ_A(q2,q1) but K_A != K_B (only
+        K_A(q1,q2) = K_B(q2,q1)), so the symmetrised-c trick that worked
+        with the old k1*k2*k3*k4 = q1_a q2_b q1_m q2_n kernel is no longer
+        valid. Instead, one calc_C_Q_index call feeds two FFTs: the second
+        FFT runs on c.transpose(2,3,0,1), which by the third symmetry is the
+        mirror-class c in real space, and yields ĉ_B(q1,q2) in Fourier space.
         """
         log("Solving Q contribution (symmetry-optimized)", notime=True)
         self._drop_inactive_phi(self.gcalc_Q)
 
-        pair_factor_expr = {
-            (0, 0): "(qx * qxp)",
-            (0, 1): "(qx * qyp + qy * qxp)",
-            (1, 1): "(qy * qyp)",
+        f_q1 = {
+            (0, 0): "(qx * qx)",
+            (0, 1): "(2 * qx * qy)",
+            (1, 1): "(qy * qy)",
         }
-        # 6 canonical (ab, mn) classes: 3 diagonal + 3 unordered off-diagonal.
-        canonical_classes = [
+        f_q2 = {
+            (0, 0): "(qxp * qxp)",
+            (0, 1): "(2 * qxp * qyp)",
+            (1, 1): "(qyp * qyp)",
+        }
+        diagonal_classes = [
             ((0, 0), (0, 0)),
             ((0, 1), (0, 1)),
             ((1, 1), (1, 1)),
+        ]
+        off_diagonal_pairs = [
             ((0, 0), (0, 1)),
             ((0, 0), (1, 1)),
             ((0, 1), (1, 1)),
@@ -337,41 +404,21 @@ class FourierSolver(HDF5Saver):
 
         c_buffer = np.empty((self.n,) * 4, dtype=self.dtype)
         s_pressure = None
-        for ab, mn in canonical_classes:
-            a, b = ab
-            m, n = mn
-            log(f"Calculating C_Q_index({a},{b},{m},{n}) "
-                f"[class ({a}{b})x({m}{n})]")
-            self._ensure_phi(self.gcalc_Q)
-            if ab == mn:
-                c = self.gcalc_Q.calc_C_Q_index(a, b, m, n, out=c_buffer)
-            else:
-                # Off-diagonal: compute c[r1,r2] + c[r2,r1] in a single
-                # fused ne.evaluate that writes directly into c_buffer,
-                # avoiding the un-symmetrised intermediate that would push
-                # peak from 3*N^4 to 4*N^4.
-                c = self.gcalc_Q.calc_C_Q_index_symmetrized(a, b, m, n, out=c_buffer)
-            self._maybe_drop_phi(self.gcalc_Q)
 
-            log(f"calculating fft (c dtype {c.dtype})")
-            s_hat = apply_fft(c)
-            del c
+        kernel_locals = {
+            "qx": self.component[0],
+            "qy": self.component[1],
+            "qxp": self.component_prime[0],
+            "qyp": self.component_prime[1],
+            "q1": self.q1_inv_sq,
+            "q2": self.q2_inv_sq,
+        }
 
-            expr = (
-                f"s_hat * {pair_factor_expr[ab]} "
-                f"* {pair_factor_expr[mn]} * q1 * q2"
-            )
+        def _apply_kernel_and_accumulate(s_hat, ab_class, mn_class):
+            nonlocal s_pressure
             ne.evaluate(
-                expr,
-                local_dict={
-                    "s_hat": s_hat,
-                    "qx": self.component[0],
-                    "qy": self.component[1],
-                    "qxp": self.component_prime[0],
-                    "qyp": self.component_prime[1],
-                    "q1": self.q1_inv_sq,
-                    "q2": self.q2_inv_sq,
-                },
+                f"s_hat * {f_q1[ab_class]} * {f_q2[mn_class]} * q1 * q2",
+                local_dict={"s_hat": s_hat, **kernel_locals},
                 out=s_hat,
             )
             if s_pressure is None:
@@ -382,16 +429,105 @@ class FourierSolver(HDF5Saver):
                     local_dict={"s_pressure": s_pressure, "s_hat": s_hat},
                     out=s_pressure,
                 )
+
+        for ab, mn in diagonal_classes:
+            a, b = ab
+            m, n = mn
+            log(f"Calculating C_Q_index({a},{b},{m},{n}) "
+                f"[diag class ({a}{b})x({m}{n})]")
+            self._ensure_phi(self.gcalc_Q)
+            c = self.gcalc_Q.calc_C_Q_index(a, b, m, n, out=c_buffer)
+            self._maybe_drop_phi(self.gcalc_Q)
+            log(f"calculating fft (c dtype {c.dtype})")
+            s_hat = apply_fft(c, fft_type=self.fft_type)
+
+            _apply_kernel_and_accumulate(s_hat, ab, mn)
+            if s_pressure is not s_hat:
+                del s_hat
+            del c
+            log(f"done (s_pressure dtype {s_pressure.dtype})")
+
+        for ab, mn in off_diagonal_pairs:
+            a, b = ab
+            m, n = mn
+            log(f"Calculating C_Q_index({a},{b},{m},{n}) "
+                f"[off-diag pair ({a}{b}),({m}{n})]")
+            self._ensure_phi(self.gcalc_Q)
+            c = self.gcalc_Q.calc_C_Q_index(a, b, m, n, out=c_buffer)
+            c_T = c.transpose(2, 3, 0, 1)
+
+            self._maybe_drop_phi(self.gcalc_Q)
+
+            # FFT of c -> ĉ_A. overwrite_x=False so c stays live for the
+            # second FFT below.
+            log(f"calculating fft for ({a}{b})x({m}{n})")
+            s_hat = apply_fft(c, fft_type=self.fft_type, overwrite_x=False)
+            del c
+            _apply_kernel_and_accumulate(s_hat, ab, mn)
+            if s_pressure is not s_hat:
+                del s_hat
+
+            # c.transpose(2,3,0,1) is, by the third C_Q symmetry, the
+            # mirror class's c in real space; its FFT gives ĉ_A(q2,q1)
+            # = ĉ_B(q1,q2). rfftn/fftn internally materialise a
+            # contiguous copy of the non-contiguous view, so we leave
+            # the underlying c_buffer untouched and reuse it on the
+            # next iteration.
+            log(f"calculating fft for mirror ({m}{n})x({a}{b})")
+            s_hat = apply_fft(c_T, fft_type=self.fft_type, overwrite_x=False)
+            del c_T
+            _apply_kernel_and_accumulate(s_hat, mn, ab)
+            if s_pressure is not s_hat:
                 del s_hat
             log(f"done (s_pressure dtype {s_pressure.dtype})")
 
         s_pressure[0, 0, 0, 0] = 0.0
         del c_buffer
+        clear_numexpr_last_cache()
+        
         log("calculating ifft")
-        c_pressure = apply_ifft(s_pressure)
+        c_pressure = apply_ifft(s_pressure, fft_type=self.fft_type, s=(self.n,) * 4)
+
         log(f"done (c_pressure dtype {c_pressure.dtype})")
         log("Done solving Q contribution (symmetry-optimized)", notime=True)
         return c_pressure
+
+
+
+    def solve_pressure_field(self):
+        r"""
+        0 = grad p + \xi v + \zeta_c div Q
+
+        p = - k_a k_b / |k|^2 * Q_ab  (\zeta_c = 1)  in fourier space
+        """
+        Q = self.gcalc_Q.Q  # shape (N, N, 2, 2)
+        Q_fourier = apply_fft_spatial(Q, fft_type=self.fft_type)
+
+        if self.fft_type == "rfft":
+            k_comp = (self.qfull[:, None], self.qhalf[None, :])
+        else:
+            k_comp = (self.qfull[:, None], self.qfull[None, :])
+
+        k_inv_squared = 1.0 / (k_comp[0] ** 2 + k_comp[1] ** 2 + self.eps)
+
+        k_outer = np.empty(k_inv_squared.shape + (2, 2), dtype=self.dtype)
+        for a in range(2):
+            for b in range(2):
+                k_outer[..., a, b] = k_comp[a] * k_comp[b]
+
+        kernel = k_outer * k_inv_squared[..., None, None]
+        p_fourier = -np.sum(kernel * Q_fourier, axis=(2, 3))
+        p_fourier[0, 0] = 0.0
+
+        return apply_ifft_spatial(
+            p_fourier, fft_type=self.fft_type, s=(self.n, self.n),
+        )
+
+
+
+
+
+
 
 
 # ---------------------------------------------------------------------------

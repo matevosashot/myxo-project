@@ -59,8 +59,12 @@ class GcalcForQ(Gcalc):
     """
 
     def __init__(self, *args, **kwargs):
+        l_nematic = kwargs.pop("l_nematic", None)
         super().__init__(*args, **kwargs)
-        self._el = self.lm
+        if l_nematic is not None:
+            self._el = l_nematic
+        else:
+            self._el = self.lm
 
     def calcQ(self):
         """

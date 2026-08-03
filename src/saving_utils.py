@@ -203,7 +203,8 @@ class HDF5Saver:
                         f, "Q_contrib_diag", self._diagonal_ijij(Q)
                     )
                 del Q
-
+        
+        log(f"Saved {path}")
         return os.path.abspath(path)
 
     # ------------------------------------------------------------------
