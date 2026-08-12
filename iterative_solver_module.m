@@ -205,3 +205,66 @@ Block[
      "Q2"  -> Q2Sol,
      "mesh"-> mesh |>
 ];
+
+
+(* ::Section:: *)
+(*Steady-state visualization*)
+
+Clear[visualizeSteadyState];
+
+visualizeSteadyState::usage =
+  "visualizeSteadyState[steadyState, outputDir, plotBox] returns " <>
+  "{\[Rho] density plot, Q plot} over [-plotBox, plotBox]^2 -- the Q panel is the " <>
+  "strength |Q|^2 as a density with the director field overlaid as headless " <>
+  "arrows -- and writes them as steady_rho.png and steady_Q.png in outputDir. " <>
+  "outputDir = None plots without saving.";
+
+(* Everything below is private.  lyapunov_solver_module.m opens the SAME private
+   context, so prepareDir and savePlot are shared with it by bare name; that file
+   is loaded after this one. *)
+Begin["ActiveNematic`Private`"];
+
+prepareDir[outputDir_] := Which[
+  outputDir === None, None,
+  !StringQ[outputDir],
+    Print["ERROR: outputDir must be a string or None; got ", outputDir]; Abort[],
+  True, Quiet @ CreateDirectory[outputDir, CreateIntermediateDirectories -> True];
+        If[!DirectoryQ[outputDir],
+           Print["ERROR: cannot create outputDir ", outputDir]; Abort[]];
+        ExpandFileName[outputDir]];
+
+savePlot[dir_, name_, plot_] :=
+  If[dir === None, None,
+     With[{p = FileNameJoin[{dir, name}]},
+       Export[p, plot, ImageResolution -> 150]; Print["Saved: ", p]; p]];
+
+visualizeSteadyState[steadyState_Association, outputDir_, plotBox_?NumericQ] :=
+Module[{dir, rhoSs, Q1Ss, Q2Ss, rhoPlot, QPlot, plots, x, y},
+  dir = prepareDir[outputDir];
+  {rhoSs, Q1Ss, Q2Ss} = steadyState /@ {"rho", "Q1", "Q2"};
+
+  rhoPlot = DensityPlot[rhoSs[x, y], {x, -plotBox, plotBox}, {y, -plotBox, plotBox},
+     PlotPoints -> 100, MaxRecursion -> 0, PlotLegends -> Automatic,
+     FrameLabel -> {"x", "y"}, PlotLabel -> "\[Rho]_ss(r)",
+     ColorFunction -> "SunsetColors"];
+
+  (* W = {{Q1,Q2},{Q2,-Q1}}: strength W:W/2 = |Q|^2 as density, director
+     {Cos,Sin}[ArcTan[Q1,Q2]/2] as headless arrows.  Same convention as
+     plot_bc_comparison.wls. *)
+  QPlot = Show[
+     DensityPlot[Q1Ss[x, y]^2 + Q2Ss[x, y]^2,
+        {x, -plotBox, plotBox}, {y, -plotBox, plotBox},
+        PlotRange -> {Full, Full, All}, PlotLegends -> Automatic,
+        PlotPoints -> 60, MaxRecursion -> 0, FrameLabel -> {"x", "y"},
+        PlotLabel -> "|Q_ss|^2  (+ director)", ColorFunction -> "SunsetColors"],
+     VectorPlot[{Cos[ArcTan[Q1Ss[x, y], Q2Ss[x, y]]/2],
+                 Sin[ArcTan[Q1Ss[x, y], Q2Ss[x, y]]/2]},
+        {x, -plotBox, plotBox}, {y, -plotBox, plotBox},
+        VectorStyle -> Arrowheads[0], PlotLegends -> None],
+     PlotLegends -> {True, False}];
+
+  plots = {rhoPlot, QPlot};
+  MapThread[savePlot[dir, #1, #2] &, {{"steady_rho.png", "steady_Q.png"}, plots}];
+  plots];
+
+End[];

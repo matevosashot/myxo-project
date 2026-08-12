@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 
-wolframscript -file claude_experiments/fluctuations_dirichlet.wls "{fbox->10, Nint->21, plotBox->9, saveData->True, outputPath->\"./output\"}"
+# Every named list is updated key-by-key; unmentioned keys keep their default.
+wolframscript -file fluctuations.wls \
+  "lyapunovSolverParams={Nint->19, fbox->10}; \
+   otherParams={outputDir->\"./output\", saveData->True, plotBox->9}"
