@@ -1,7 +1,7 @@
 #!/usr/bin/env wolframscript
 (* ::Package:: *)
 
-$ProcessorCount;
+
 
 
 (* Fluctuations around the Dirichlet steady state of the rho-Q active nematic:
@@ -12,6 +12,7 @@ $ProcessorCount;
 
 Needs["NDSolve`FEM`"];
 SetSystemOptions["ParallelOptions" -> "ParallelThreadNumber" -> $ProcessorCount];
+Print["ProcessorCount: ", $ProcessorCount];
 
 (* Timing ledger; O(n^3) stages are Eigensystem, back-substitute, refinement,
    and EACH of the three residual evaluations.  n = 3 Nint^2. *)

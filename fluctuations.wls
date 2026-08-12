@@ -37,18 +37,22 @@ upd[name_String, defaults_] :=
   MergeParams[defaults, Lookup[cliParams, name, {}], name];
 
 (* --- Model & solver parameters (defaults) --------------------------- *)
+paramRelations={ell==Sqrt[(L+(\[Zeta] \[Xi]r)/(4 \[Xi]0))/(-a-\[CapitalLambda] \[Xi]r)],S0==Sqrt[(-a-\[CapitalLambda] \[Xi]r)/(2b)],\[Gamma]==8 b / \[Xi]r};
+knownParams={ell->2.5,S0->0.9,\[Xi]0->5.,\[Zeta]->10,\[Rho]0->0.3};
 
-preParams = upd["preParams",
-  {ell -> 2.5, S0 -> 0.9, A -> -1}];
+guessedParams={B->1000.,b->1,\[Gamma]->1,\[CapitalLambda]->1};
 
-modelParams = upd["modelParams",
-  {B -> 1000., a -> A, b -> -A/(2 S0^2), \[Xi]0 -> 5.,
-   \[Xi]r -> 0.1, \[Zeta] -> 10., \[Rho]0 -> 1.,
-   L -> ell^2 (-A), \[CapitalLambda] -> 0.1} /. preParams];
+inferedParams=First@Solve[paramRelations/.Join[knownParams,guessedParams],{\[Xi]r,a,L}];
+
+modelParamsNames={B,a,b,L,\[Zeta],\[Xi]0,\[Xi]r,\[Rho]0,\[CapitalLambda]};
+
+modelParams=Thread[modelParamsNames->(modelParamsNames/.Join[knownParams,guessedParams,inferedParams])];
+
+
 
 solverParams = upd["solverParams",
   {\[Delta]mesh -> 0.061, hMax -> 3, box -> 20,
-   maxSteps -> 8, relativeDiff -> 1.*^-4}];
+   maxSteps -> 8, relativeDiff -> 1.*^-5}];
 
 lyapunovSolverParams = upd["lyapunovSolverParams",
   {Nint -> 21, fbox -> 10}];
@@ -77,6 +81,9 @@ Print["    done in ", tSS, " s"];
 
 correlations = SolveFluctuationsLyapunov[lyapunovSolverParams, modelParams,
                                          steadyState];
+
+(* so the meta file can report a wall time that includes the FEM steady state *)
+correlations = Append[correlations, "steadyStateTime" -> tSS];
 
 (* Trailing ";" is load-bearing: a bare plot would make wolframscript print
    the whole Graphics expression -- every mesh vertex -- to stdout. *)

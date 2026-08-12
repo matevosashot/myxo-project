@@ -62,7 +62,10 @@ exportData::usage =
   "exportData[correlations, outputDir, saveCovariance] writes sigma_rho_<tag>.m " <>
   "(grid + Var(\[Delta]\[Rho]) + spectrum) into outputDir and, when saveCovariance is " <>
   "True, the full covariance as row-major Real64 covariance_<tag>.bin plus a meta " <>
-  "file. Returns the list of written paths; outputDir = None writes nothing.";
+  "file carrying the layout and the timings (lyapunovTime, steadyStateTime, " <>
+  "totalTime, and the per-stage breakdown; steadyStateTime is None unless the " <>
+  "caller added it to correlations). " <>
+  "Returns the list of written paths; outputDir = None writes nothing.";
 
 MergeParams::usage =
   "MergeParams[defaults, overrides] returns defaults with the keys given in " <>
@@ -517,7 +520,8 @@ Module[{dir, gridInt, sigRhoFn, xLo, xHi, plotPts, lbl, plot2D, plot3D, tag, x, 
   {plot2D, plot3D}];
 
 exportData[correlations_Association, outputDir_, saveCovariance_ : False] :=
-Module[{dir, tag, out, dumpPath, binPath, metaPath, Cmat, n, paths = {}},
+Module[{dir, tag, out, dumpPath, binPath, metaPath, Cmat, n, lyapTime, ssTime,
+        paths = {}},
   dir = prepareDir[outputDir];
   If[dir === None, Return[{}]];
   tag = runTag[correlations];
@@ -545,11 +549,17 @@ Module[{dir, tag, out, dumpPath, binPath, metaPath, Cmat, n, paths = {}},
      binPath = out["covariance_", ".bin"];
      metaPath = out["covariance_", "_meta.m"];
      Export[binPath, Cmat, {"Binary", "Real64"}];
+     lyapTime = Total[correlations["timings"][[All, 2]]];
+     ssTime = Lookup[correlations, "steadyStateTime", None];
      Export[metaPath,
         <|"n" -> n, "Nint" -> correlations["Nint"], "fbox" -> correlations["fbox"],
           "h" -> correlations["h"], "gridInt" -> correlations["gridInt"],
           "blocks" -> {"rho", "Q1", "Q2"},
-          "ordering" -> "row-major Real64; grid index k = i + (j-1) Nint, x fastest"|>];
+          "ordering" -> "row-major Real64; grid index k = i + (j-1) Nint, x fastest",
+          "lyapunovTime" -> lyapTime,
+          "steadyStateTime" -> ssTime,
+          "totalTime" -> If[NumericQ[ssTime], ssTime + lyapTime, lyapTime],
+          "timings" -> correlations["timings"]|>];
      Print["Saved: ", binPath, "  (",
            ToString@NumberForm[N[FileByteCount[binPath]/2^20], {6, 1}], " MiB)"];
      Print["Saved: ", metaPath];
