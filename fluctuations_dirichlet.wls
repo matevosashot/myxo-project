@@ -441,9 +441,9 @@ lbl = ("Var(\[Delta]\[Rho])(r)  [Dirichlet BC, h="
 
 (* Displayed in the notebook only.  A bare "plot3D" would make wolframscript
    print the whole Graphics expression -- every mesh vertex -- to stdout. *)
-If[inNotebook, plot3D]
+If[inNotebook, plot3D];
 
-If[inNotebook, plot2D]
+If[inNotebook, plot2D];
 
 
 tPlot = rec["[7] plot + export", First @ AbsoluteTiming[

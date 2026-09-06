@@ -87,6 +87,12 @@ correlations = Append[correlations, "steadyStateTime" -> tSS];
 
 (* Trailing ";" is load-bearing: a bare plot would make wolframscript print
    the whole Graphics expression -- every mesh vertex -- to stdout. *)
-visualizeSteadyState[steadyState, outDir, plotBoxV];
+(* TAGGED, because the steady state depends on solverParams box: an untagged
+   steady_rho.png would be overwritten whenever a box-20 and a box-40 sweep share
+   one outputDir.  Nint is in the tag too so no two concurrent array tasks Export
+   to the same path. *)
+visualizeSteadyState[steadyState, outDir, plotBoxV,
+  "_box" <> ToString[box /. solverParams] <>
+  "_N"   <> ToString[Nint /. lyapunovSolverParams]];
 visualizeFluctuations[correlations, outDir, plotBoxV];
 exportData[correlations, outDir, saveDataV];

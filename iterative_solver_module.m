@@ -217,7 +217,13 @@ visualizeSteadyState::usage =
   "{\[Rho] density plot, Q plot} over [-plotBox, plotBox]^2 -- the Q panel is the " <>
   "strength |Q|^2 as a density with the director field overlaid as headless " <>
   "arrows -- and writes them as steady_rho.png and steady_Q.png in outputDir. " <>
-  "outputDir = None plots without saving.";
+  "outputDir = None plots without saving.\n" <>
+  "visualizeSteadyState[steadyState, outputDir, plotBox, tag] appends the string " <>
+  "tag to both stems instead: steady_rho<tag>.png, steady_Q<tag>.png.  The steady " <>
+  "state depends on solverParams box, so a sweep that varies box MUST tag, or the " <>
+  "two runs silently overwrite each other's figures in a shared outputDir; adding " <>
+  "Nint as well also stops concurrent array tasks from Exporting to one path.  " <>
+  "The default tag \"\" reproduces the untagged names exactly.";
 
 (* Everything below is private.  lyapunov_solver_module.m opens the SAME private
    context, so prepareDir and savePlot are shared with it by bare name; that file
@@ -238,7 +244,8 @@ savePlot[dir_, name_, plot_] :=
      With[{p = FileNameJoin[{dir, name}]},
        Export[p, plot, ImageResolution -> 150]; Print["Saved: ", p]; p]];
 
-visualizeSteadyState[steadyState_Association, outputDir_, plotBox_?NumericQ] :=
+visualizeSteadyState[steadyState_Association, outputDir_, plotBox_?NumericQ,
+                     tag_String : ""] :=
 Module[{dir, rhoSs, Q1Ss, Q2Ss, rhoPlot, QPlot, plots, x, y},
   dir = prepareDir[outputDir];
   {rhoSs, Q1Ss, Q2Ss} = steadyState /@ {"rho", "Q1", "Q2"};
@@ -264,7 +271,8 @@ Module[{dir, rhoSs, Q1Ss, Q2Ss, rhoPlot, QPlot, plots, x, y},
      PlotLegends -> {True, False}];
 
   plots = {rhoPlot, QPlot};
-  MapThread[savePlot[dir, #1, #2] &, {{"steady_rho.png", "steady_Q.png"}, plots}];
+  MapThread[savePlot[dir, #1, #2] &,
+            {{"steady_rho" <> tag <> ".png", "steady_Q" <> tag <> ".png"}, plots}];
   plots];
 
 End[];
