@@ -30,8 +30,8 @@
 #SBATCH --job-name="s22b40hi"
 
 #SBATCH --mem=1600G
-#SBATCH --partition=medium,long
-#SBATCH --time=2-0:00:00 # expected maximum runtime of job
+#SBATCH --partition=long
+#SBATCH --time=3-0:00:00 # expected maximum runtime of job
 
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
