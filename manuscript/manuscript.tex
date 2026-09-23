@@ -43,7 +43,7 @@
 \newcommand{\skel}[1]{\textcolor{gray!70!black}{\itshape #1}}
 
 \newcommand{\prompt}[1]{\textcolor{blue!90!black}{[ #1 ]}}
-
+\newcommand{\placeholder}[1]{\textcolor{purple}{[\textit{placeholder}] #1 }}
 % Caption-safe bullet: \caption{} is a "moving argument" (also read by
 % hyperref for PDF bookmarks and by \listoffigures), and an itemize
 % environment inside it breaks with "Incomplete \iffalse" -- confirmed
@@ -182,12 +182,12 @@ We start from Langevin equations for $N$ overdamped, self-propelled rods
     \frac{\d\theta_i}{\d t} &= \frac{\rho_0}{\xir}\Gamma_i + \lambda_i,
 \end{align}
 \end{subequations}
-with $\p_i=(\cos\theta_i,\sin\theta_i)$. Here $\xi_0/\rho_0$ and $\xir/\rho_0$ are
+with $\p(\theta)=(\cos\theta,\sin\theta)$ the unit vector along the rod axis and
+$\p_i\equiv\p(\theta_i)$. Here $\xi_0/\rho_0$ and $\xir/\rho_0$ are
 translational and rotational friction coefficients ($\rho_0$ a reference density
-carried along for later convenience), and $\lambda_i$ is Gaussian white rotational
-noise, $\la\lambda_i(t)\lambda_j(t')\ra=2\Lambda\delta_{ij}\delta(t-t')$. 
-\prompt{$\Lambda$ is the rotational diffusion coefficient}
-The rods
+carried along for later convenience), and $\lambda_i$ is Gaussian white
+noise, $\la\lambda_i(t)\lambda_j(t')\ra=2\Lambda\delta_{ij}\delta(t-t')$, with $\Lambda$
+the rotational diffusion coefficient. The rods
 interact through a pairwise potential $V(\r-\r',\theta,\theta')$, so that
 $V_\mathrm{tot}=\tfrac12\sum_{i,j}V(\r_i-\r_j,\theta_i,\theta_j)$ and the force and
 torque on rod $i$ are the values at $(\r_i,\theta_i)$ of the fields
@@ -197,13 +197,10 @@ torque on rod $i$ are the values at $(\r_i,\theta_i)$ of the fields
     \nonumber\\
     \Gamma(\r,\theta) &= -\pd{}{\theta}\sum_j V(\r-\r_j,\theta,\theta_j),
 \end{align}
-which depend on the other rods only through where they are and how they point. 
-\prompt{for notational convenience, we assume $\nabla V(0,\theta,\theta')=0$.}
-
-
-% This is what makes the coarse-graining of \cref{sec:model-coarse} possible at all.
-%\prompt{no, this is not}
-
+which depend on the other rods only through where they are and how they point. For
+notational convenience we take $\partial_\r V(\bs0,\theta,\theta')=0$, so that the sums
+in \cref{eq:force-torque} may be left unrestricted: a rod exerts no force and no torque
+on itself.
 
 The second term of \cref{eq:langevin-position} is self-propulsion at speed $v_0$ along
 the rod axis, and it carries the feature that sets this model apart: $k_i$ is not a
@@ -215,31 +212,23 @@ $\frev$,
 \end{equation}
 This is how the periodic reversal of \textit{Myxococcus xanthus} gliding motility
 enters the model. On timescales long compared with $\frev^{-1}$ the reversal noise is
-well approximated as Gaussian white noise, $\la k_i(t)k_j(t')\ra \approx
-\frev^{-1}\delta_{ij}\delta(t-t')$, the approximation used throughout the
-coarse-graining of \cref{sec:model-coarse}.
-\prompt{This approximation is essential for the coarse-graining}
+well approximated as Gaussian and white, $\la k_i(t)k_j(t')\ra \approx
+\frev^{-1}\delta_{ij}\delta(t-t')$. This approximation is not a convenience but a
+prerequisite: the coarse-graining of \cref{sec:model-coarse} proceeds by It\^o calculus,
+which requires the driving noises to be Gaussian and delta-correlated, and it is the only
+approximation made there.
 
 Reversing at a finite rate does more than randomize the direction of self-propulsion.
-\prompt{DO not define $\zeta$ here, instead just mention that this active noise contributes to a deterministic active force term, and point to the relevant section/equation}
-Expanding \cref{eq:langevin-position} to the order at which the fast reversal noise
-contributes a finite effect (an It\^o-type term, using $(k_i\,\d t)^2=\frev^{-1}\d t$;
-\cref{app:dean-microscopic}) generates a systematic active-stress contribution with
-coefficient
-\begin{equation}
-    \label{eq:zeta}
-    \zeta = \frac{\xi_0v_0^2}{4\frev}.
-\end{equation}
-\prompt{too early to talk about $\zeta$ and $\Q$}
-This is the coefficient of the term $\tfrac\zeta{\xi_0}\nabla\nabla\!:\!\Q$ in the
-coarse-grained density equation \cref{eq:model-rho} below, the active coupling between
-orientation and density. The same fast-reversal expansion that produces
-\cref{eq:zeta} also fixes the amplitude of the noise term that survives coarse-graining
-(\cref{sec:model-coarse}), so one measured biological parameter, $\frev$, ends up
-controlling both the mean active stress and its fluctuations.
+Because $k_i$ is fast and multiplies a state-dependent vector, expanding
+\cref{eq:langevin-position} to the order at which it contributes a finite effect (an
+It\^o-type term, using $(k_i\,\d t)^2=\frev^{-1}\d t$; \cref{app:dean-microscopic})
+leaves behind a systematic drift alongside the fluctuation. After coarse-graining, that
+drift becomes the deterministic active force density in \cref{eq:model-rho}, and the
+leftover fluctuation becomes the density noise of the same equation. Both turn out to be
+controlled by one coefficient, which we define in \cref{eq:zeta} once the fields it acts
+on have been introduced.
 
-\prompt{I updated the title, improve if needed}
-\subsection{Coarse-graining preserving fluctuations}
+\subsection{Coarse-graining that preserves fluctuations}
 \label{sec:model-coarse}
 % dean.tex 174-359 ("Dean's approach").
 Dean's equation \cite{dean1996} is an \emph{exact} field-theoretic Langevin equation
@@ -247,9 +236,10 @@ for the density of a system of interacting Langevin processes. We apply the same
 derivation to the microscopic model \eqref{eq:model}, which differs from
 Dean's original setting in carrying an orientation, a self-propulsion, and a reversal
 noise; the result is an exact equation for the joint density in position and
-orientation, with no approximation beyond the Gaussian \prompt{also white} reversal-noise limit already
-taken in \cref{sec:model-micro}.
+orientation, with no approximation beyond the Gaussian white-noise limit for the
+reversals already taken in \cref{sec:model-micro}.
 
+\prompt{joint density over state space ($\r$, $\theta$) is a better terminology}
 Write the single-particle density $\varrho^{(i)}_t(\r,\theta) =
 \delta(\r-\r_i(t))\,\delta(\theta-\theta_i(t))$, and let
 $\varrho_t(\r,\theta)=\rho_0^{-1}\sum_i\varrho^{(i)}_t(\r,\theta)$ be the
@@ -280,48 +270,41 @@ alone (\cref{app:dean-approach}),
     &- \pd{}{\theta}\!\left(\sqrt{\varrho_t}\,\lambda(\r,\theta,t)\right).
     \end{aligned}
 \end{equation}
-\prompt{$p(\theta)$ is not defined. maybe define it in \eqref{eq:model}}
-The two noise fields in the last line are not modelled; they are what the particle sums
-become. Summing the reversal and rotational noises against the single-particle densities
-defines
-% \prompt{do not need this}
-% \begin{align}
-%     \label{eq:noise-sums}
-%     \f &= \frac{v_0}{\rho_0}\sum_i\varrho^{(i)}_t(\r,\theta)\,\p(\theta)\,k_i(t),
-%     \nonumber\\
-%     g &= \frac1{\rho_0}\sum_i\varrho^{(i)}_t(\r,\theta)\,\lambda_i(t).
-% \end{align}
-Their correlators follow from \cref{eq:k-dichotomous} and from
-$\la\lambda_i\lambda_j\ra$, and are \emph{linear} rather than quadratic in $\varrho_t$,
-because a product of two single-particle densities at different points collapses,
-$\delta(\r-\r_i)\delta(\r'-\r_i)=\delta(\r-\r_i)\delta(\r-\r')$:
-% \prompt{do not need this}
+The last line of \cref{eq:final-langevin} carries two noise fields,
+$k(\r,\theta,t)$ and $\lambda(\r,\theta,t)$, and the point to make about them is that
+they are not modelled. They are what the particle-level reversal and rotational noises
+become once summed against the single-particle densities, and that sum can be carried
+out in closed form. Because a product of two single-particle densities at different
+points collapses,
+$\delta(\r-\r_i)\delta(\r'-\r_i)=\delta(\r-\r_i)\delta(\r-\r')$, the correlators that
+result are \emph{linear} in $\varrho_t$ rather than quadratic. A correlator linear in
+$\varrho_t$ is the correlator of $\sqrt{\varrho_t}$ times a field of
+$\varrho_t$-independent weight, which is why the noise enters
+\cref{eq:final-langevin} multiplicatively through $\sqrt{\varrho_t}$ and leaves behind
+two Gaussian fields with fixed statistics (\cref{app:dean-approach}),
+\begin{align}
+    \label{eq:noise-correlators}
+    \la k(\r,\theta,t)\,k(\r',\theta',t')\ra &= \frac{v_0^2}{\frev\rho_0}\;\Delta,
+    \nonumber\\
+    \la \lambda(\r,\theta,t)\,\lambda(\r',\theta',t')\ra &= \frac{2\Lambda}{\rho_0}\;\Delta,
+\end{align}
+with $\Delta\equiv\delta(t-t')\delta(\r-\r')\delta(\theta-\theta')$, i.e. uncorrelated at different times and states.
 
-% \begin{align}
-%     \label{eq:k-correlator}
-%     \la f_\alpha f'_\beta\ra &= \frac{4\zeta}{\xi_0\rho_0}\,
-%     \varrho_t\,p_\alpha p_\beta\;\Delta,
-%     \\
-%     \label{eq:lambda-correlator}
-%     \la g\,g'\ra &= \frac{2\Lambda}{\rho_0}\,\varrho_t\;\Delta,
-% \end{align}
-where primes denote evaluation at $(\r',\theta',t')$ and $\Delta\equiv
-\delta(t-t')\delta(\r-\r')\delta(\theta-\theta')$. A correlator linear in $\varrho_t$
-is the correlator of $\sqrt{\varrho_t}$ times a field of unit amplitude, which is
-exactly how the multiplicative noise of \cref{eq:final-langevin} arises:
-\prompt{Directly define f and g in terms of noise fields and profice noise field correlations}
-$\f=\sqrt{\varrho_t}\,\p(\theta)\,k(\r,\theta,t)$ and
-$g=\sqrt{\varrho_t}\,\lambda(\r,\theta,t)$, with $k$ and $\lambda$ delta-correlated and
-carrying the amplitudes $4\zeta/(\xi_0\rho_0)$ and $2\Lambda/\rho_0$ of
-\cref{eq:k-correlator,eq:lambda-correlator}.
+\prompt{This discussion is wrong. at this point we do not have active nematic equations. Just put a placeholder <discussion of dean's equation with bullet points what will be discussed>, we will do it later.}
 
+\placeholder{
+  Discussion of dean's equation:
+\begin{itemize}
+  \item ...
+\end{itemize}
+}
 Two things distinguish \cref{eq:final-langevin} from a hydrodynamic active-nematic
 theory written down directly at the continuum level, e.g.
-\cite{marchetti2013hydrodynamics}. First, it is a genuine Langevin equation for a
-stochastic field, not an equation for an ensemble average: the last line is a noise
-term, not a correction to one, and it is multiplicative, its amplitude set by
-$\varrho_t$ itself. 
-\prompt{"not a correction to one" -- I do not understand this}
+\cite{marchetti2013hydrodynamics}. First, $\varrho_t$ is itself a stochastic field and
+\cref{eq:final-langevin} is a Langevin equation for it. It is not an evolution equation
+for the ensemble-averaged density with a fluctuation correction added afterwards: the
+last line is a bona fide noise, and it is multiplicative, its amplitude set by
+$\varrho_t$ itself.
 Second, that noise term is not put in by hand. It is what remains,
 after coarse-graining, of the same particle-level reversal noise of
 \cref{sec:model-micro}: nothing is added at the continuum level, and nothing beyond the
@@ -333,15 +316,19 @@ since there is then no microscopic noise source left to carry through. Either ro
 removes precisely the ingredient \cref{sec:intro} argued cannot be reconstructed
 afterward by an equilibrium (FDT) argument.
 
-Note finally that \cref{eq:k-correlator} carries the same coefficient $\zeta$ that
-fixed the mean active stress in \cref{sec:model-micro}: one measured biological
-parameter, the reversal rate $\frev$, controls the mean active stress \emph{and} the
-amplitude of the fluctuations around it.
+Note finally which quantities the reversal noise arrives with. Its amplitude in
+\cref{eq:noise-correlators} is $v_0^2/\frev$, built from the same two microscopic
+numbers, and in the same combination, as the systematic drift the same expansion
+produced in \cref{sec:model-micro}. One measured biological parameter, the reversal
+rate $\frev$, controls the mean active stress \emph{and} the amplitude of the
+fluctuations around it; \cref{sec:model-closure} collects both into a single
+coefficient.
 
-\subsection{Stochastic dry active matter equations}
+\prompt{I made changes in this section. Rewrite it according to my changes.}
+\subsection{Free energy, closure, and the stochastic field equations}
 \label{sec:model-closure}
 The angular density $\varrho_t$ carries far more information than we need. What the rest
-of the paper works with are its first two angular moments, the fluctuating density and
+of the paper works with are its moments, the fluctuating density and
 nematic order parameter,
 \begin{align}
   \label{eq:density-definition}
@@ -353,17 +340,14 @@ with $\hat\Q(\theta)=2\p(\theta)\p(\theta)-\I$ the single-rod nematic tensor.%
 \footnote{%
 The conventional nematic order parameter is normalized by the local density,
 $\Q=\rho^{-1}\!\int\!\d\theta\,\varrho\hat\Q$, and is bounded by unity. We use the
-unnormalized moment \cref{eq:density-definition} instead. The two coincide in the
-incompressible limit $\rho\to1$ taken throughout, 
-\prompt{The reasoning why we do this move to the appendix}
-and the unnormalized choice is what
-keeps the chain rule \cref{eq:chain-rule} free of an extra $-\Q/\rho$ term. The nematic
-scalar order parameter is then $S=|\Q|/\rho$ rather than $|\Q|$. See
-\cref{app:dean-normalisation}.}
+unnormalized moment \cref{eq:density-definition} instead; the two coincide in the
+incompressible limit $\rho\to1$ taken throughout, and the nematic scalar order parameter
+is then $S=|\Q|/\rho$ rather than $|\Q|$. \Cref{app:dean-normalisation} gives the reason
+for the choice and the bookkeeping it entails.}
 In this subsection we reduce \cref{eq:final-langevin} to a closed pair of stochastic
-equations for these two fields.
+equations for these two fields. Note that the first moment $\int \d\theta\varrho \p(\theta)$does not appear in the system of the equations.
 
-\paragraph{Fixing the free energy.} We do not know the interbacterial potential
+We do not know the interbacterial potential
 $V(\r-\r',\theta,\theta')$ in any detail, so we do not attempt to evaluate
 \cref{eq:pair-free-energy} from it. Instead we assume that the free energy depends on
 $\varrho$ only through the two moments \cref{eq:density-definition},
@@ -399,6 +383,70 @@ free energy, in which the splay and bend moduli of the two-dimensional nematic a
 equal, so that the
 elastic cost becomes the isotropic form written here.
 
+Integrating \cref{eq:final-langevin} over $\theta$ gives us an equation (keeping onlye $1/B$ terms)for the density:
+\begin{align}
+  \partial_t\rho\!=\!-\frac1{\xi_0}\nabla\!\cdot\!\Bigl[
+    B\nabla\rho - \Q\!:\!\nabla\H -\fa + \bEta_{\rho}(\r,t)\Bigr]
+    \label{eq:model-rho}
+\end{align}
+The first two terms are the passive terms coming from the interaction potential. Here, $\H(\r)=-\delta F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$ is the nematic force field.
+The third term is the active force field
+\begin{align}
+  f^a_\alpha(\r) = -\zeta\,\partial_\beta Q_\ab(\r) \quad\text{with}\quad \zeta = \frac{\xi_0v_0^2}{4\frev}
+\end{align}
+which is the divergence of the active nematic stress $ - \zeta\Q$.
+The origin of the active stress coefficient $\zeta$ is purely from the active process of self-propulsion and the cell reversal. Positive $\zeta$ corresponds to extencile active stress.
+
+The final term in \cref{eq:model-rho} is the noise term $\bEta_{\rho}(\r,t)$ with autocorrelation given by
+\begin{multline}
+  \label{eq:eta-rho-autocorrelation}
+  \la \eta^{\rho}_\alpha(\r,t) \,\eta^{\rho}_\beta(\r',t') \ra =
+  \\
+  =
+  \frac{2\zeta}{\xi_0\rho_0} 
+  \left[Q_\ab(\r)+\rho(\r) \delta_\ab\right]
+ \delta(\r-\r')\delta(t-t') 
+\end{multline}
+Note that the noise is inside the divergence, i.e. conservative noise.
+
+
+\Cref{eq:model-rho} is a continuity equation,
+$\partial_t\rho=-\nabla\!\cdot\!\bs J$. If we write $\bs J = \rho \v$, where $\v(\r,t)$ is the velocity field and $\rho\approx1$ in the incompressible limit, we get
+\begin{align}
+  \xi_0\v = -B\nabla\rho + \Q\!:\!\nabla\H - \fa + \bEta_{\rho}
+\end{align}
+\prompt{interpretation follows}
+
+We also need a dynamical equation for the nematic order parameter $\Q$ in order to close the system of equations. Multiplying \cref{eq:final-langevin} by $\hat\Q(\theta)$, then integrating over $\theta$ gives us an equation for the nematic order parameter.
+\prompt{higher order moments and closure}
+However, higher order moments of the nematic order parameter appear. For simplicity, we use the lowest order maximum entriopy closure 
+$\la\hat\Q\hat\Q\ra_\varrho \simeq \rho\,\J$ and $\la\hat\Q'\hat\Q'\ra_\varrho \simeq 4\rho\,\J$.
+with $\J$ the rank-four identity on symmetric traceless tensors. More details and extensions on this in \cref{app:closure}.
+We obtain the following equation for the nematic order parameter:
+\begin{align}
+  \label{eq:model-Q}
+  \partial_t \Q \!=&-\frac{1}{\xi_0} \nabla\cdot\Bigr(\!\!-\!\Q B \nabla\rho
+  + \nabla \H\Bigl) + \frac4{\xir} \Ha \!+ \f^Q(\r,t),
+\end{align}
+The first two terms inside the divergence are the conjugate terms of the density equation sattisfying Onsager symmetry relations. The third term is the nematic force field $\H$ with renormalized parameters coming from the activity:
+\begin{align}
+  \Ha = -a'\Q - b(\Q\!:\!\Q)\Q + K'\nabla^2\Q
+  \\
+  a'=a+\Lambda\xir, \quad K'=K+{\zeta\xir}/({4\xi_0})
+\end{align}
+\prompt{refine the following statement}
+Minimisation of the $\Ha$ defines the shape of the defect, while flux terms translate and deform the defect.
+
+Finally, the expression of thenoise term $\f^Q(\r,t)$ is given in Appedix ??.
+$\f^Q$ depends both on the reversal noise $k(\r,\theta,t)$ and rotational diffusion noise $\lambda(\r,\theta,t)$. It is also correlated with the density noise $\eta^{\rho}(\r,t)$.
+
+
+In the rest of the paper, we will ignore terms proportional to $\nabla\H$ from \cref{eq:model-rho} and \cref{eq:model-Q}. These terms introduce forth order derivatives in both equations and we need to discard them for analytical and numerical tractability. 
+
+\todo{We need to understand what physics we are missing by discarding these terms.}
+
+\prompt{Rewrite what follows in this section}
+
 \paragraph{Closing the moment hierarchy.} Integrating the $\rho$ moment of
 \cref{eq:final-langevin} over $\theta$ is exact, term by term. Integrating the $\Q$
 moment is not: it leaves angular averages $\langle\hat\Q\hat\Q\rangle_\varrho$ and
@@ -415,18 +463,17 @@ with $\J$ the rank-four identity on symmetric traceless tensors
 (\cref{app:closure}). It is accurate to $O(S^2)$ in the nematic order $S=|\Q|$, and
 its limits, which bite on the noise covariance rather than on the deterministic terms,
 are a question for the numerics and are treated in
-\cref{app:realizability,app:lyapunov}.
+\cref{app:realizability-failure,app:lyapunov}.
 
 \paragraph{The equations.} With the closure applied, integrating \cref{eq:final-langevin}
 over $\theta$ and retaining terms to leading order in $1/B$ gives the coupled Langevin
 equations
-\prompt{Write the first equation line $\frac{1}{\xi_0} \text{div}$}
 \begin{subequations}
     \label{eq:model-equations}
 \begin{align}
-    \partial_t\rho ={}& \frac B{\xi_0}\nabla^2\rho
-    - \frac1{\xi_0}\nabla\!\cdot\!\left(\Q\!:\!\nabla\H\right)
-    + \frac\zeta{\xi_0}\nabla\nabla\!:\!\Q + f_\rho(\r,t),
+    \partial_t\rho ={}& \frac1{\xi_0}\nabla\!\cdot\!\Bigl[
+    B\nabla\rho - \Q\!:\!\nabla\H + \zeta\,\nabla\!\cdot\!\Q\Bigr]
+    + f_\rho(\r,t),
     \label{eq:model-rho}
     \\
     \partial_t\Q ={}& \frac B{\xi_0}\nabla\!\cdot\!(\Q\nabla\rho)
@@ -436,27 +483,58 @@ equations
     \label{eq:model-Q}
 \end{align}
 \end{subequations}
-\prompt{This is the place we define the coefficient $\zeta$ with discussion}
 with $\H(\r)=-\delta F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$ the nematic force
 field, and the noises $f_\rho$, $\f^Q$ the angular moments of the last line of
-\cref{eq:final-langevin}, inheriting their statistics from
-\cref{eq:k-correlator,eq:lambda-correlator} (\cref{app:dean-angle}).
+\cref{eq:final-langevin}, inheriting their statistics from \cref{eq:noise-correlators}
+(\cref{app:dean-angle}).
 
-\todo{I do not like this paragraph. I feel it is in the wrong place. But we indeed need a discussion over this equation}
-These are the stochastic dry active matter equations this paper solves. The activity
-enters them twice under one coefficient: as the deterministic active stress
-$\tfrac\zeta{\xi_0}\nabla\nabla\!:\!\Q$ in \cref{eq:model-rho}, and as the amplitude of
-$f_\rho$, both fixed by $\zeta$ and hence by the reversal rate. The density and the
-nematic field are coupled in both directions, through $\nabla\nabla\!:\!\Q$ in one
-equation and $\nabla\!\cdot\!(\Q\nabla\rho)$ in the other, which is what sets the defect
-in motion in \cref{sec:defect-steady}. The rotational noise enters the two equations
-differently. It drops out of \cref{eq:model-rho} entirely, every term it produces being a
-$\theta$ derivative with $\int\!\d\theta\,\partial_\theta(\cdot)=0$. In
-\cref{eq:model-Q} it appears twice: its Fokker-Planck part supplies the relaxation
-$-4\Lambda\Q$, which only renormalizes the free energy
+\paragraph{The activity coefficient.} The reversal noise of \cref{sec:model-micro}
+reaches \cref{eq:model-equations} through a single coefficient,
+\begin{equation}
+    \label{eq:zeta}
+    \zeta = \frac{\xi_0v_0^2}{4\frev} = \frac14\,\xi_0v_0\,\ell_\mathrm{run},
+\end{equation}
+written on the right in terms of the run length \prompt{do not use $\ell_\mathrm{run}$ } $\ell_\mathrm{run}=v_0/\frev$, the
+distance a cell glides between reversals. This is the active stress coefficient in the
+usual sense: the term $\zeta\,\nabla\!\cdot\!\Q$ inside the bracket of
+\cref{eq:model-rho} is the divergence of an active stress proportional to $\Q$, and it
+is what drives cells along the nematic texture. A colony that reverses more slowly is
+more active, because its cells travel further before turning around. The same $\zeta$
+also fixes the amplitude of $f_\rho$, through
+\cref{eq:noise-correlators} and the identity $v_0^2/\frev=4\zeta/\xi_0$. Mean active
+stress and noise amplitude are therefore not independent quantities in this theory. One
+measured biological parameter, $\frev$, sets both, and neither can be adjusted without
+the other.
+
+\paragraph{Reading the equations.} \Cref{eq:model-equations} is the fluctuating active
+nematic theory this paper solves, and three of its features matter for what follows.
+
+The first is conservation. \Cref{eq:model-rho} is a continuity equation,
+$\partial_t\rho=-\nabla\!\cdot\!\bs J$, with three contributions to the cell flux: an
+osmotic flux $-B\nabla\rho/\xi_0$ resisting compression, a nematic flux
+$\Q\!:\!\nabla\H/\xi_0$ carrying cells along gradients of orientational stress, and the
+active flux $-\zeta\,\nabla\!\cdot\!\Q/\xi_0$. The noise $f_\rho$ is a flux divergence
+too, so cells are conserved fluctuation by fluctuation and not merely on average. That
+constraint fixes the wavevector dependence of the density fluctuations in
+\cref{sec:defect-fluct}, and it is what lets the drift argument of
+\cref{sec:defect-steady} be made in terms of fluxes alone.
+
+The second is that density and nematic order are coupled in both directions, through
+$\nabla\!\cdot\!\Q$ in \cref{eq:model-rho} and through $\nabla\!\cdot\!(\Q\nabla\rho)$ in
+\cref{eq:model-Q}. Neither field is slaved to the other, and it is the round trip
+between them, activity pumping cells along the texture and the density gradient that
+builds up transporting the texture back, that sets a $+1/2$ defect in motion in
+\cref{sec:defect-steady}.
+
+The third concerns the rotational noise, which enters the two channels asymmetrically. It
+drops out of \cref{eq:model-rho} entirely, every term it produces being a $\theta$
+derivative with $\int\!\d\theta\,\partial_\theta(\cdot)=0$: reorienting a cell moves no
+mass. In \cref{eq:model-Q} it appears twice. Its Fokker-Planck part supplies the
+relaxation $-4\Lambda\Q$, which only renormalizes the free energy
 ($a\to a+\Lambda\xir$, \cref{eq:H-active}), while the noise itself survives as the
 isotropic part of $\f^Q$, of amplitude $8\Lambda\rho/\rho_0$, the one piece of the noise
 covariance that is local rather than a flux divergence.
+
 Everything that follows, the defect steady state and its fluctuations
 (\cref{sec:defect}) and the nucleation argument (\cref{sec:nucleation}), is obtained by
 solving \cref{eq:model-equations} at a $+1/2$ defect, with the parameters collected in
@@ -469,22 +547,104 @@ solving \cref{eq:model-equations} at a $+1/2$ defect, with the parameters collec
 % ============================================================
 Solving \cref{eq:model-equations} at a $+1/2$ defect proceeds in three steps, in this
 order: find the deterministic steady state $\rho_\ss(\r)$, $\Q_\ss(\r)$ of the noiseless
-equations (\cref{sec:defect-steady}); linearize the stochastic equations around it
-(\cref{sec:defect-fluct}); and solve the resulting linear field theory for the covariance of the fluctuations(\cref{sec:defect-fluct}).
+equations (\cref{sec:defect-steady}); linearize the stochastic equations around it; and
+solve the resulting linear field theory for the equal-time covariance of the
+fluctuations (\cref{sec:defect-fluct}).
 
-Both the steady state and the fluctuation covariance are obtained twice, analytically on
-a simplified equations and numerically on the full one, and the two agree qualitatively
-and quantitatively. \st{For the fluctuations}\prompt{Not only fluctuations, steady state too. In the main text we will show analytical results} we present the analytic result and plot the
-numerical one alongside it (\cref{fig:hero}a). For the steady state the drift speed is
-not determined analytically, so the converged numerical solve is quoted and the
-closed-form route serves as the check. \prompt{No need for this much detail here. Just point where are the numerical solutions} 
-% The numerical methods, a comoving-frame Newton
-% solver for the steady state and a Lyapunov solver for the covariance, are described in
-% \cref{app:comoving,app:lyapunov}.
+We solved \cref{eq:model-rho,eq:model-Q} numerically \cref{app:comoving,app:lyapunov}. In the main text, we provide the analytical solutions for the simplified equations, which turn out to be in good agreement with the numerical solutions. 
+
+
 
 \subsection{The steady state}
 \label{sec:defect-steady}
 % Pages ~1.5. dean.tex 705-747, 819-894, 2460-2597 (solver moved to appendix, results summarised here).
+
+First let's solve the simplified system of equations.
+
+
+Because of the cross-coupling between density and nematic order, the $+1/2$ defect moves. We drop the cross-coupling term in the $\Q$ equation:
+\begin{align}
+  \label{simplified-noiseless}
+  0 = \nabla\cdot\left[B\nabla\rho - \fa\right] \qquad \Ha = 0
+\end{align}
+The solution of the second equation is approximated by Pade
+\begin{align}
+  \label{eq:pade-approximation}
+  \Q(r,\phi) = S(r)\hat\Q(\phi/2)
+  \qquad
+  S(r) = S_0 f_\pade(r/\elld)
+  \\
+  f_\pade(x) = x \sqrt{\frac{0.34 + 0.07 x^2}{1 + 0.41 x^2+0.07 x^4}}
+\end{align}
+\prompt{define $\elld$ and $S_0$}
+see Appendix and Ref.~\cite{copenhagen2021,han2025local}.
+
+
+Now, the first equation in \cref{simplified-noiseless} is a Poisson equation for the density
+with an exact solution:
+\begin{align}
+  \rho(r,\phi) = 1 - \frac{\zeta}{B}\left[ S(r) - \frac{r}{R}S(R)\right]\cos \phi
+\end{align}
+where ($r$, $\phi$) are the polar coordinates and we impose $\rho(R,\phi) = 1$ on the boundary $r=R$.
+
+Note that the variation of $\rho$ over space is $1/B$.
+
+In Appendix ?? we also ontain a numerical solution to noiseless versions of \cref{eq:model-rho,eq:model-Q}. Because of cross-coupling between density and nematic order, the defect moves. Therefore, the steady-state solution is obtained in the comoving frame.
+
+In \cref{fig:rho1d-dirichlet} we visualize the section of the density field at $y=0$ and compare it with the numerical solution. While on \cref{fig:rhodensity,fig:rho3d} we visualize the 2d density field from the numerical solution.
+
+\prompt{Improve the following paragraph}
+The defect moves to the opposite direction of the active force. This is counterintuitive, because it is expected that the defect moves because of the active force. 
+In order to see this ...
+ In steady state, the density gradient compensates the active force, with $B\nabla \rho\simeq \fa$. The $Q$-field flux in \cref{eq:model-Q} is $\J_\Q = -B \Q \nabla \rho \simeq -\Q\fa$, which is in the opposite direction of the active force.
+In other words, the active force on the particles is compensated by the density gradient, while the $Q$-field is translated down the density gradient, which is opposite to the active force. 
+
+In our case, using \cref{eq:pade-approximation} we get
+\begin{align}
+  f^\text{a}_x(r, \phi) = -\zeta \left(S'(r) +S(r)/r\right)
+  \qquad f^\text{a}_y = 0
+\end{align}
+so the force field is along $-x$ direction, towards the head of the defect (see \cref{fig:rhodensity} for the defect shape) and the defect moves in $+x$ direction with velocity $u_x = ??$ which we found numerically (see Appendix ??).
+
+
+
+
+
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet.png}
+  \caption{%
+\capitem Linearized density-field section at $y=0$ from the fluctuation solver,
+      Dirichlet (reservoir) boundary condition. Moved here from
+      \cref{sec:defect-fluct}: it is one half of a boundary-condition comparison and
+      carries no meaning apart from \cref{fig:rho1d-dirichlet-neumann}.
+}
+  \label{fig:rho1d-dirichlet}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{rhodensity.png}
+  \caption{Plan view of the converged steady-state density field, the same solution
+    shown as a surface in \cref{fig:rho3d}. Moved here from \cref{sec:defect-steady},
+    where one rendering of the field is enough.}
+  \label{fig:rhodensity}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{rho3d.png}
+  \caption{Converged $+1/2$ defect steady-state density field $\rho_\ss(\r)$,
+    comoving-frame numerical solution (\cref{sec:defect-steady}), Dirichlet
+    (reservoir) boundary condition. The core is pinned at the origin by construction
+    (\cref{app:comoving}); the sealed-wall solution is visually indistinguishable at
+    this scale, since the two boundary conditions differ in the far field, and hence in
+    $\u$, not in the core structure shown here. \Cref{fig:rhodensity} shows the same
+    field as a plan view.}
+  \label{fig:rho3d}
+\end{figure}
+
 
 \paragraph{Why the defect drifts.} A $+1/2$ defect in this model does not sit still, and
 the reason is the two-way coupling between $\rho$ and $\Q$ in \cref{eq:model-equations}.
@@ -570,6 +730,7 @@ the defect core size $\elld=\sqrt{K'/(-a')}$ and the far-field order
 $S_0=\sqrt{-a'/(2b)}$ used throughout the rest of the paper
 (\cref{app:parameters-choice}). With these two simplifications the comoving-frame
 equations solved for the steady state are
+\prompt{comoving frame equations should be in the appendix}
 \begin{subequations}
     \label{eq:comoving-equations}
 \begin{align}
@@ -582,6 +743,7 @@ We solve \cref{eq:comoving-equations} by finite differences on a graded, non-uni
 grid, fourth order in the local spacing and refined toward the defect core
 (\cref{app:comoving-disc}). At the production resolution the comoving-frame speed is
 $u=0.28~\micron/\minute$.
+\prompt{there is an updated value in dean.tex}
 \todo{this value is from the comoving solver at the previous parameter generation
 ($B=10^4$, $\zeta=10$, $\elld=0.8$); re-run at $B=2\times10^5$, $\zeta=8$, $\elld=1$
 before submission.}
@@ -600,25 +762,6 @@ enters only the \emph{mean} pressure at a point, and \cref{sec:nucleation-theory
 the mean to be far below the fluctuations, this agreement matters more for consistency
 than for the final result.
 
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=0.85\linewidth]{rho3d.png}
-  \caption{Converged $+1/2$ defect steady-state density field $\rho_\ss(\r)$,
-    comoving-frame numerical solution (\cref{sec:defect-steady}), Dirichlet
-    (reservoir) boundary condition. The core is pinned at the origin by construction
-    (\cref{app:comoving}); the sealed-wall solution is visually indistinguishable at
-    this scale, since the two boundary conditions differ in the far field, and hence in
-    $\u$, not in the core structure shown here.}
-  \label{fig:rho3d}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=0.85\linewidth]{rhodensity.png}
-  \caption{Companion visualization of the same steady-state density field as
-    \cref{fig:rho3d}.}
-  \label{fig:rhodensity}
-\end{figure}
 
 \subsection{Linearization and the fluctuation spectrum}
 \label{sec:defect-fluct}
@@ -627,6 +770,7 @@ Let $\delta\rho(\r,t)=\rho(\r,t)-\rho_\ss(\r)$ and $\delta\Q(\r,t)=\Q(\r,t)-\Q_\
 Linearizing the comoving-frame equations \cref{eq:comoving-equations} around the
 steady state of \cref{sec:defect-steady}, and restoring the noise dropped there, gives
 (\cref{app:dean-angle})
+\prompt{rewrit these equations with new notation}
 \begin{subequations}
     \label{eq:linearized}
 \begin{align}
@@ -644,7 +788,51 @@ steady state of \cref{sec:defect-steady}, and restoring the noise dropped there,
 with $\bs w_\ss\equiv\u+(B/\xi_0)\nabla\rho_\ss$ the steady advection velocity and
 $\delta\H_\mathrm{active}$ the linearization of \cref{eq:H-active} at $\Q_\ss$. This is
 a linear stochastic field theory on the spatially varying background
-$(\rho_\ss,\Q_\ss)$, and its equal-time covariance solves a Lyapunov equation. The
+$(\rho_\ss,\Q_\ss)$, and its equal-time covariance solves a Lyapunov equation (see Appendix ??). 
+
+In the main text we present the analytically tractable case, where we consider only the density fluctuations and set $\delta\Q=0$.
+The only dependence on the defect shape comes from the autocorrelation of the noise $\bEta_\rho(\r,t)$ in \cref{eq:eta-rho-autocorrelation}.
+Additionally, because the noise is conserved, the equal time voariance $\la \delta\rho(\r,t)\delta\rho(\r',t)\ra_\ss$ diverges as $\r$ and $\r'$ approach each other (see Appendix ?? for more details). We regularize this divergence by introducing the physical short length scale cutoff $\elln=0.5~\micron$, the width of an \textit{M.\ xanthus} cell.
+
+
+
+Taking the Fourier transform of \cref{eq:linearized-rho} over time and space we get
+\begin{align}
+  \delta\tilde\rho(\k,\omega) = \frac{\k\cdot\tilde \bEta_\rho(\k,\omega)}{\ii\omega+\gamma_0 k^2}\times \ee^{-k^2\elln^2/4} \qquad \gamma_0 \equiv B/\xi_0
+\end{align}
+Hier, the phycisal cutoff $\elln$ is introduced as exponential suppression at larger wavevectors.
+
+First, consider the isotropic case, when $\Q_\ss = 0$. Then, Applying an inverse Fourier transform over space and time we get
+\begin{align}
+  \label{eq:rho-autocorrelation-isotropic}
+  \la\delta\rho(\r,t)\delta\rho(\r',t')\ra =
+  \frac{\zeta}{2\pi \xi_0\rho_0\gamma_0 \elln^2}   
+  \frac{
+      \exp\left(-\frac{|\r-\r'|^2}{2 \elln^2+4 \gamma_0 |t-t'|}\right)
+      }{1 + 2 \gamma_0 |t-t'| / \elln^2}
+\end{align}
+specifically, the equal point and time variance is given by
+\begin{align}
+  \Var[\rho(\r)] = \Var[\rho]_\text{pedestal} = \frac{\zeta}{2\pi \xi_0\rho_0\gamma_0 \elln^2}
+\end{align}
+From \cref{eq:rho-autocorrelation-isotropic} we infere the corerlation length matching the cutoff $\elln$ and correlation time
+\begin{align}
+ \tau_c = \frac{\elln^2}{2 \gamma_0}
+\end{align}
+
+Taking into account the anisotropic piece in \cref{eq:eta-rho-autocorrelation} depending on the nematic order $\Q_\ss$, we get the total variance (Appendix ??):
+\begin{align}
+  \label{eq:total-gauss}
+  \Var[\rho(\r)] = \Var[\rho]_\text{pedestal}\left(1 + \frac{\elln^2}{4}\bigl(\kappa\star\partial_i\partial_jQ^\ss_{ij}\bigr)(\r)\right)
+\end{align}
+a convolution of the double divergence of the steady nematic texture against the
+isotropic real-space kernel
+\begin{equation}
+  \label{eq:kappa-real}
+  \kappa(w) = \frac{1-\ee^{-2w^2/\elln^2}}{2\pi\,w^2}.
+\end{equation}
+\prompt{I rewrote this paragraph untill this point. Improve what I wrote and rewrite the remaining part}
+The
 density noise is the angular moment of the translational noise of
 \cref{eq:final-langevin},
 \begin{equation}
@@ -652,8 +840,8 @@ density noise is the angular moment of the translational noise of
     f_\rho(\r,t) = -\pd{}{\r}\!\cdot\!\int\!\d\theta\,
     \sqrt{\varrho_t(\r,\theta)}\;\p(\theta)\,k(\r,\theta,t),
 \end{equation}
-the rotational noise integrating to zero, and it inherits from \cref{eq:k-correlator}
-the correlator
+the rotational noise integrating to zero, and it inherits from
+\cref{eq:noise-correlators} the correlator
 \begin{align}
     \label{eq:f-rho-correlator}
     \la f_\rho(\r,t)f_\rho(\r',t')\ra = {}&
@@ -713,19 +901,24 @@ to $4\ee^{-p^2\elln^2/8}/p^2\elln^2$ at $p\elln\simeq1$ (\cref{app:lyapunov-fini
 \Cref{eq:total-gauss} is exact at leading order in $1/B$ and contains exactly one length
 not already fixed by the parameters of \cref{sec:defect-steady}, the cutoff $\elln$. It
 is the analytic backbone of \cref{sec:nucleation}, and its validity rests on the
-$\delta\Q=0$ truncation made above. \Cref{sec:nucleation-results} and
-\cref{fig:hero}a compare it directly against the full numerical solution of
-\cref{eq:linearized}, retaining $\delta\Q\ne0$, from the Lyapunov solver of
-\cref{app:lyapunov}.
+$\delta\Q=0$ truncation made above. \Cref{fig:variance} compares it directly against the
+full numerical solution of \cref{eq:linearized}, retaining $\delta\Q\ne0$, from the
+Lyapunov solver of \cref{app:lyapunov}. The modulation is dipolar, strongly suppressed at
+the core itself and peaking about $1.5~\micron$ away, where it reaches
+$\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=3.1\%$ at the cutoff
+$\elln=0.5~\micron$. Three percent is the entire signal, and \cref{sec:nucleation} is the
+argument for why so small a modulation is nonetheless decisive.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet.png}
-  \caption{Fluctuation-solver sensitivity to the boundary condition: linearized
-    density-field section at $y=0$ (\cref{app:lyapunov-bc}), Dirichlet (reservoir)
-    condition. See \cref{fig:rho1d-dirichlet-neumann} for the comparison with the
-    Neumann (sealed) condition.}
-  \label{fig:rho1d-dirichlet}
+  \includegraphics[width=\linewidth]{varrho.png}
+  \caption{Equal-point density variance around a $+1/2$ defect, normalized by the
+    isotropic pedestal of \cref{eq:total-gauss}, along and across the defect axis.
+    Dashed: the analytic result at $\delta\Q=0$, \cref{eq:total-gauss}. Solid: the full
+    numerical Lyapunov solution retaining $\delta\Q\ne0$ (\cref{app:lyapunov}). At the
+    cutoff $\elln=0.5~\micron$ the peak modulation is $\nu_0=3.1\%$, about
+    $1.5~\micron$ off the core.}
+  \label{fig:variance}
 \end{figure}
 
 % ============================================================
@@ -792,7 +985,8 @@ up. The identification $p=B\,\delta\rho$ is what connects this section to
 \cref{sec:defect-fluct}: the pressure appearing in \cref{eq:dEe} is the same field whose
 variance was computed there.
 
-Two idealizations bound the result rather than change its structure. First, we assumed
+Two idealizations bound the result rather than change its structure
+(\cref{app:extrusion-idealizations}). First, we assumed
 the parent layer holds its area fixed and dilutes. If instead it contracts so as to hold
 its density fixed, it loses substrate contact both under the nucleus and at its own
 periphery, so the area peeled off is $2A$ rather than $A$ while the work done against the
@@ -804,7 +998,7 @@ This is an argument for an effective $\gammaw$ below the clean-water value that 
 independent of, and additional to, the surfactant argument below.
 
 \Cref{tab:used-values} lists the values used here;
-\cref{app:parameters-extrusion} gives the full literature ranges and a one-at-a-time
+\cref{app:extrusion} gives the full literature ranges and a one-at-a-time
 sensitivity analysis.
 
 \begin{table}[tbp]
@@ -924,7 +1118,7 @@ threshold, and the probability of that at a point $\r$ is the Gaussian tail
 Evaluating this probability, and comparing it with the measured layering rate, is the
 subject of \cref{sec:nucleation-results}.
 
-\subsection{Nucleation probability: results and comparison with experiment}
+\subsection{Layering probability and comparison with experiment}
 \label{sec:nucleation-results}
 % dean.tex 1392-1487 (remainder). Hero figure lives here.
 The comparison with experiment is not to an absolute rate but to a \emph{ratio}:
@@ -945,18 +1139,16 @@ modulation of only a few percent produces an enhancement of two orders of magnit
 the sense in which layer formation is exponentially sensitive to the defect texture.
 
 At the parameters of \cref{tab:used-values}, $\sigma_{p,\infty}=1.8\times10^3~
-\Pa\cdot\micron$ and $z_\infty=19.1$. \Cref{fig:hero}a shows the resulting variance
-modulation, $\sigmarho(\r)/\sigmarho(\infty)$ from \cref{eq:total-gauss}: a dipolar
-pattern, strongly suppressed at the core itself and peaking about $1.5~\micron$ away, at
-$\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=3.1\%$ at the cutoff
-$\elln=0.5~\micron$. \Cref{eq:R-ratio} then gives a predicted enhancement
+\Pa\cdot\micron$ and $z_\infty=19.1$. The variance modulation of \cref{fig:variance}
+peaks at $\nu_0=3.1\%$, about $1.5~\micron$ off the core, and \cref{eq:R-ratio} then
+gives a predicted enhancement
 \begin{equation}
     \label{eq:R-value}
     \frac{p_\text{layer}(\r_\mathrm{max})}{p_\text{layer}(\infty)}
     = \exp\!\left[\frac{z_\infty^2}2\,\frac{\nu_0}{1+\nu_0}\right] \simeq 2.3\times10^2,
 \end{equation}
 against a first-bin value of $\simeq2\times10^2$ in Fig.~3f of Ref.~\cite{copenhagen2021},
-whose reported error bar spans $40$--$500$ (\cref{fig:hero}b). The two agree within
+whose reported error bar spans $40$--$500$ (\cref{fig:match}). The two agree within
 that error bar.
 
 \textbf{What this match is, and is not.} It is a one-parameter fit. Every quantity in
@@ -965,53 +1157,36 @@ governing group $\pcrit^2\elln^2\nu_0(\elln)/(B\zeta)$ only as $1/B$ and which
 \cref{sec:nucleation-energetics} has already declared to be a model parameter rather
 than a measured constant. In particular $\elln$ is not a second knob: it is the lower
 length cutoff of \cref{eq:cutoff}, set by the width of a cell, below which the
-continuum description has no content. The agreement in \cref{fig:hero}b should be read
+continuum description has no content. The agreement in \cref{fig:match} should be read
 as a fit of $B$, and not as an independent prediction of the amplitude; the predicted
 ratio is exponentially sensitive to the fixed inputs as well, most acutely to $\elln$
-and $h$, and \cref{app:parameters-extrusion} gives the full one-at-a-time sensitivity.
-What \emph{is} free of fitting is the \emph{shape} of the curves in \cref{fig:hero}. The
-spatial profile of $\sigmarho(\r)$ is the filtered double divergence of
+and $h$, and \cref{app:extrusion-sensitivity} gives the full one-at-a-time sensitivity.
+What \emph{is} free of fitting is the \emph{shape} of the curve in \cref{fig:variance}.
+The spatial profile of $\sigmarho(\r)$ is the filtered double divergence of
 \cref{eq:total-gauss}, fixed with no adjustable parameter once $\Q_\ss$ is known: the
 decay over several micrometers, the peak at $r\simeq1.5~\micron$, and the strong
 suppression at the core itself. This is what a competing mechanism for the same
 observation would also have to reproduce, and it is the paper's falsifiable content,
 not the fitted amplitude of \cref{eq:R-value}.
 
-One normalization ambiguity in \cref{fig:hero}b is left open rather than resolved:
+One normalization ambiguity in \cref{fig:match} is left open rather than resolved:
 distance can be measured from the point of maximum pressure variance, where layering
 events are most probable, or from the defect core itself, which is how the experimental
 histogram is binned but where the anisotropic contribution to the variance is
 suppressed. The two curves shown bracket these two readings.
 
-\begin{figure*}[tbp]
+\begin{figure}[tbp]
   \centering
-  \begin{minipage}{0.48\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{varrho.png}
-    \textbf{(a)}
-  \end{minipage}
-  \hfill
-  \begin{minipage}{0.48\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{final.png}
-    \textbf{(b)}
-  \end{minipage}
-  \caption{\textbf{(a) Mechanism.} Equal-point density variance around a $+1/2$ defect,
-    normalized by the isotropic pedestal, along and across the defect axis
-    (\cref{eq:total-gauss}). Dashed: analytic result, $\delta\Q=0$
-    (\cref{sec:defect-fluct}). Solid: full numerical Lyapunov solution, $\delta\Q\ne0$
-    (\cref{app:lyapunov}). At the cutoff $\elln=0.5~\micron$ the peak modulation is
-    $\nu_0=3.1\%$, about $1.5~\micron$ off the core. \textbf{(b) Match.} Predicted
-    layering-probability enhancement, \cref{eq:R-ratio}, against the distance-binned
-    ratio of Fig.~3f in Ref.~\cite{copenhagen2021} (error bar $40$--$500$). Two curves:
-    distance from the point of maximum pressure variance, and distance from the defect
-    core itself, bracketing the two readings of the experimental binning convention
-    (\cref{sec:nucleation-results}). Computed with $B=2\times10^5~\Pa\cdot\micron$ and
-    $\elln=0.5~\micron$, all other parameters as in \cref{tab:used-values}.
-    \todo{a third panel from \texttt{figures/varrho3D.png} was considered and is not
-    included here; confirm this is the final call.}}
-  \label{fig:hero}
-\end{figure*}
+  \includegraphics[width=\linewidth]{final.png}
+  \caption{Predicted layering-probability enhancement, \cref{eq:R-ratio}, against the
+    distance-binned ratio of Fig.~3f in Ref.~\cite{copenhagen2021} (error bar
+    $40$--$500$). Two curves are shown: distance measured from the point of maximum
+    pressure variance, and distance measured from the defect core itself, bracketing the
+    two readings of the experimental binning convention. Computed with
+    $B=2\times10^5~\Pa\cdot\micron$ and $\elln=0.5~\micron$, all other parameters as in
+    \cref{tab:used-values}.}
+  \label{fig:match}
+\end{figure}
 
 % ============================================================
 \section{Discussion}
@@ -1050,11 +1225,7 @@ value we obtain, $B=2\times10^5~\Pa\cdot\micron$, lands close to the effective c
 modulus fitted to the monolayer-to-multilayer transition of \textit{E.\ coli}
 \cite{grant2014}, a different organism undergoing the same kind of transition. Two fits
 of the same kind of transition agreeing is a coincidence worth recording and not a
-corroboration. What the fit does not touch is the spatial profile of
-\cref{fig:hero}: the decay length, the position of the peak at $r\simeq1.5~\micron$ and
-the suppression at the core follow from the filtered double divergence of $\Q_\ss$ in
-\cref{eq:total-gauss} with nothing adjustable in them, and they are what a competing
-mechanism would also have to produce.
+corroboration.
 
 Several approximations limit how far the numbers should be pushed. The translational flux
 of nematic order is dropped from both field equations, throughout the defect calculation
@@ -1066,11 +1237,11 @@ checked against the coupled numerical solution rather than against a bound. The
 small-order-parameter closure limits the nematic order over which the implied noise
 covariance stays positive semi-definite, and the defect steady state exceeds that limit
 over much of its domain, which constrains the numerical solver rather than the analytic
-result (\cref{app:realizability,app:lyapunov}). The drift speed $u$ is not converged in
+result (\cref{app:realizability-failure,app:lyapunov}). The drift speed $u$ is not converged in
 box size (\cref{app:comoving-results}). None of the adhesion or tension parameters of
 \cref{sec:nucleation-energetics} has been measured for \textit{M.\ xanthus}, and the
 predicted ratio is exponentially sensitive to several of them, most sharply to $\elln$
-and to the layer height $h$ (\cref{app:parameters-extrusion}). Finally, the monolayer is
+and to the layer height $h$ (\cref{app:extrusion-sensitivity}). Finally, the monolayer is
 treated as dry throughout, with no momentum conservation and therefore no backflow.
 
 Two tests would go further than the one made here. A $-1/2$ defect generates no net
@@ -1092,18 +1263,30 @@ profile.
 \appendix
 \crefalias{section}{appendix}
 \crefalias{subsection}{appendix}
-% Six appendices, reordered to follow the main-text order after the
-% structure.md restructure (2026-09-21): A (model derivation) feeds
-% \cref{sec:model}; B-C (closure, realizability) feed \cref{sec:model-closure};
-% D (comoving solver) feeds \cref{sec:defect-steady}; E (Lyapunov solver)
-% feeds \cref{sec:defect-fluct}; F (parameters) is the cross-cutting
-% reference table for all three main-text sections. Every cross-reference
-% goes through \cref, so appendix letters are never typed by hand.
+% Appendices restructured 2026-09-22 to sit one-for-one under the main-text
+% sections, in main-text order, so that every appendix has exactly one home:
+%   A  -> \cref{sec:model-micro,sec:model-coarse,sec:model-closure}
+%   B  -> \cref{sec:model-closure}   (the closure, and where it breaks)
+%   C  -> parameters, first needed in \cref{sec:defect-steady}
+%   D  -> \cref{sec:defect-steady}
+%   E  -> \cref{sec:defect-fluct}
+%   F  -> \cref{sec:nucleation}
+% The realizability material, formerly a standalone appendix between B and D,
+% is now B.5-B.7: it is a statement about the closure of appendix B and is
+% never cited independently of it. The old cross-cutting "Parameters and
+% supporting derivations" appendix is split, its model-parameter half becoming
+% C and its extrusion half becoming F, so that \cref{sec:nucleation} gains the
+% dedicated appendix it previously lacked.
+% Every cross-reference goes through \cref, so appendix letters are never
+% typed by hand.
 % ============================================================
 
-\section{The Dean equation for reversing self-propelled rods, in full}
+\section{Coarse-graining in full: from reversing rods to the field equations}
 \label{app:dean}
 % dean.tex 109-526.
+This appendix gives in full the derivation compressed into
+\cref{sec:model-micro,sec:model-coarse,sec:model-closure}, from the $N$-rod Langevin
+system \cref{eq:model} to the stochastic field equations \cref{eq:model-equations}.
 
 \subsection{Microscopic equations of motion}
 \label{app:dean-microscopic}
@@ -1128,10 +1311,13 @@ profile.
   \item The pair free energy \cref{eq:pair-free-energy} and the identification
     $\F=-\rho_0^{-1}\partial_\r\,\delta\calF/\delta\varrho$,
     $\Gamma=-\rho_0^{-1}\partial_\theta\,\delta\calF/\delta\varrho$.
-  \item The noise sums \cref{eq:noise-sums}, the delta-function collapse that makes
-    their correlators linear in $\varrho_t$, and the resulting $\sqrt{\varrho_t}$
-    multiplicative form. State explicitly that matching second moments defines the
-    fields $k$, $\lambda$ only because the underlying noises have been taken Gaussian.
+  \item The noise sums, $\f=\rho_0^{-1}v_0\sum_i\varrho^{(i)}_t\p(\theta)k_i(t)$ and
+    $g=\rho_0^{-1}\sum_i\varrho^{(i)}_t\lambda_i(t)$; the delta-function collapse that
+    makes their correlators linear in $\varrho_t$; and the resulting
+    $\sqrt{\varrho_t}$ multiplicative form, which is what lets the correlators be
+    quoted as \cref{eq:noise-correlators} for $\varrho_t$-independent fields $k$,
+    $\lambda$. State explicitly that matching second moments defines those fields only
+    because the underlying noises have been taken Gaussian.
   \item State explicitly, since it is the crux, why the noise survives this
     coarse-graining where a naive continuum limit would drop it.
 \end{itemize}
@@ -1189,9 +1375,15 @@ profile.
     term is negligible in the $\rho$ equation but retained in the $\Q$ equation.
 \end{itemize}
 
-\section{Maximum-entropy closure approximation}
+\section{Closure of the angular moment hierarchy, and its limits}
 \label{app:closure}
-% dean.tex 2090-2262.
+% dean.tex 2090-2262 (B.1-B.4), 2263-2450 (B.5-B.7).
+This appendix supports the closure step of \cref{sec:model-closure}. The first four
+subsections construct the maximum-entropy closure \cref{eq:closure}; the last three
+establish where it stops being admissible, a limitation that constrains the numerical
+solver of \cref{app:lyapunov} rather than the physics of \cref{eq:model-equations}.
+The two halves were separate appendices in earlier drafts and are joined here because
+the second is a statement about the first and is never used without it.
 
 \subsection{The angular moments in integral form}
 \label{app:closure-moments-integral}
@@ -1221,14 +1413,6 @@ profile.
     \cref{sec:model-closure}, and states its $O(S^2)$ accuracy.
 \end{itemize}
 
-\section{Realizability of the closure, and a positivity-preserving alternative}
-\label{app:realizability}
-% dean.tex 2263-2450.
-% This appendix and \cref{app:lyapunov} carry the whole positivity/realizability
-% discussion. It was removed from the main text at the author's request
-% (2026-09-22): it is a constraint on the numerics, not on the physics of
-% \cref{sec:model-closure}.
-
 \subsection{The noise covariance is a Gram matrix}
 \label{app:realizability-gram}
 \begin{itemize}
@@ -1236,7 +1420,7 @@ profile.
     physically realizable.
 \end{itemize}
 
-\subsection{The closure moments are not realizable at strong nematic order}
+\subsection{Where the closure ceases to be realizable}
 \label{app:realizability-failure}
 \begin{itemize}
   \item Where and how the closure of \cref{app:closure} fails at strong $S$: the noise
@@ -1260,9 +1444,43 @@ profile.
     or is offered as a fallback. It currently reads as the latter; confirm.
 \end{itemize}
 
+\section{Model parameters}
+\label{app:parameters}
+% dean.tex 543-680 (C.1), 2451-2459 (C.2, folded in).
+% Formerly the first two thirds of a cross-cutting "Parameters and supporting
+% derivations" appendix; its extrusion third is now \cref{app:extrusion}.
+The parameters of \cref{eq:model-equations} are first needed in
+\cref{sec:defect-steady} and are used unchanged from there on. The separate set of
+adhesion, tension and geometry parameters that enters the nucleation argument of
+\cref{sec:nucleation} is collected in \cref{app:extrusion}.
+
+\subsection{Parameter choice}
+\label{app:parameters-choice}
+\begin{itemize}
+  \item Full model-parameter table: ``known'' group from experiment
+    (\cite{copenhagen2021,han2025local} and project estimates), ``guessed'' group
+    ($B$, nematic relaxation $\gamma$, $\Lambda$), derived group ($\xir$, bare $a,b,K$).
+  \item State the bare-vs.-activity-renormalised distinction carefully: $a'=a+\Lambda\xir$
+    and $K'=K+\zeta\xir/(4\xi_0)$ are what set $\elld$ and $S_0$, not the bare $a$, $K$.
+  \item \todo{this table has moved at least three times during the project (see
+    project memory: canonical-model-parameters); pull the values fresh from dean.tex
+    at time of writing, do not copy from an earlier draft or a jobscript.}
+\end{itemize}
+
+\subsection{Relaxation rate of the nematic order parameter}
+\label{app:parameters-relaxation}
+\begin{itemize}
+  \item Short, self-contained derivation of $\gamma = 8b/\xir$ (dean.tex
+    app-Q-relaxation). It feeds \cref{app:parameters-choice} only, and is kept as a
+    subsection here rather than a standalone appendix since nothing else cites it.
+\end{itemize}
+
 \section{Comoving-frame defect solver}
 \label{app:comoving}
 % dean.tex 2460-2597.
+This appendix supports \cref{sec:defect-steady}: it is the numerical route to the
+deterministic steady state $\rho_\ss$, $\Q_\ss$ and to the drift speed $u$, together
+with the closed-form companion solution quoted there.
 
 \subsection{Discretisation}
 \label{app:comoving-disc}
@@ -1353,14 +1571,16 @@ profile.
   \label{fig:activeforce}
 \end{figure}
 
-% rho3d.png / rhodensity.png live in \cref{sec:defect-steady} (\cref{fig:rho3d},
-% \cref{fig:rhodensity}); figure_description.md's own suggestion was main text or
-% appendix, resolved there to main text since that subsection needed a steady-state
-% figure and these are the only approved ones that fit it.
 
-\section{Numerical validation: the Lyapunov solver for coupled fluctuations}
+
+\section{Lyapunov solver for the coupled fluctuations}
 \label{app:lyapunov}
 % dean.tex 1521-2089.
+This appendix supports \cref{sec:defect-fluct}: it is the numerical route to the
+equal-time covariance of $(\delta\rho,\delta\Q)$ on the steady background of
+\cref{app:comoving}, retaining the coupling to $\delta\Q$ that the analytic result
+\cref{eq:total-gauss} drops, and it derives the short-length regularisation
+\cref{eq:cutoff} that both routes share.
 
 \subsection{Steady-state covariance via the Lyapunov equation}
 \label{app:lyapunov-eq}
@@ -1408,6 +1628,7 @@ profile.
     wall is loud.
 \end{itemize}
 
+
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.png}
@@ -1416,9 +1637,6 @@ profile.
       $y=0$ section as \cref{fig:rho1d-dirichlet}. Per the original figure note, this
       pair exists specifically to explain the two boundary conditions to the reader, so
       caption both curves explicitly.
-    \capitem The Dirichlet-only member of this pair, \cref{fig:rho1d-dirichlet}, moved
-      to \cref{sec:defect-fluct} at the author's request; this figure stays here since
-      it is the comparison, not a single boundary condition on its own.
 }
   \label{fig:rho1d-dirichlet-neumann}
 \end{figure}
@@ -1465,32 +1683,18 @@ profile.
   \label{fig:fyfy}
 \end{figure}
 
-\section{Parameters and supporting derivations}
-\label{app:parameters}
-% dean.tex 543-680 (F.1), 2451-2459 (F.2, folded in), 1329-1360 (F.3, new).
+\section{Extrusion energetics: parameters, ranges and sensitivity}
+\label{app:extrusion}
+% dean.tex 1329-1360, plus the sensitivity material moved out of
+% \cref{sec:nucleation-results}. Split out of the former cross-cutting
+% "Parameters and supporting derivations" appendix so that
+% \cref{sec:nucleation} has an appendix of its own; the model parameters
+% it left behind are \cref{app:parameters}.
+This appendix supports \cref{sec:nucleation}. The main text quotes one value per
+parameter in \cref{tab:used-values} and one sensitivity claim; everything behind both
+is here.
 
-\subsection{Parameter choice}
-\label{app:parameters-choice}
-\begin{itemize}
-  \item Full model-parameter table: ``known'' group from experiment
-    (\cite{copenhagen2021,han2025local} and project estimates), ``guessed'' group
-    ($B$, nematic relaxation $\gamma$, $\Lambda$), derived group ($\xir$, bare $a,b,K$).
-  \item State the bare-vs.-activity-renormalised distinction carefully: $a'=a+\Lambda\xir$
-    and $K'=K+\zeta\xir/(4\xi_0)$ are what set $\elld$ and $S_0$, not the bare $a$, $K$.
-  \item \todo{this table has moved at least three times during the project (see
-    project memory: canonical-model-parameters); pull the values fresh from dean.tex
-    at time of writing, do not copy from an earlier draft or a jobscript.}
-\end{itemize}
-
-\subsection{Relaxation rate of the nematic order parameter}
-\label{app:parameters-relaxation}
-\begin{itemize}
-  \item Short, self-contained derivation of $\gamma = 8b/\xir$ (dean.tex
-    app-Q-relaxation). It feeds \cref{app:parameters-choice} only, and is kept as a
-    subsection here rather than a standalone appendix since nothing else cites it.
-\end{itemize}
-
-\subsection{Extrusion parameters and their ranges}
+\subsection{Literature ranges for the extrusion parameters}
 \label{app:parameters-extrusion}
 \begin{itemize}
   \item Full literature table for $\gammaw$, $\Wc$, $\Ws$, $B$, $\elln$, $h$, $\Acell$:
@@ -1504,6 +1708,11 @@ profile.
     \sqrt3~\micron$ is an upper bound only, that the scale-separation requirement
     $\elln\ll\elld$ would be violated by it, and that $\elln$ and the layer height $h$
     are numerically the same length but enter the result through different physics.
+\end{itemize}
+
+\subsection{Sensitivity of the predicted ratio}
+\label{app:extrusion-sensitivity}
+\begin{itemize}
   \item Full one-at-a-time sensitivity analysis for the predicted enhancement ratio,
     moved here from \cref{sec:nucleation-results}: each parameter varied about its
     used value, with multipliers currently spanning $\times0.013$ to
@@ -1517,6 +1726,11 @@ profile.
     $0.7~\micron$ takes it past $10^6$. State plainly that this is sensitivity to a
     fixed input, not a second fitted parameter, and that it is a genuine weakness of
     the comparison either way.
+\end{itemize}
+
+\subsection{The bulk modulus as the single fitted parameter}
+\label{app:extrusion-B}
+\begin{itemize}
   \item State the fit argument in full here (the compressed version lives in
     \cref{sec:nucleation-results}): the single governing group
     $\ln(\text{ratio}) = \tfrac{\pcrit^2}{2}\cdot\tfrac{2\pi\rho_0\elln^2}{B\zeta}\cdot
@@ -1528,9 +1742,18 @@ profile.
     the apparent $B$ obtainable from Ref.~\cite{copenhagen2021} is circular, since
     their velocity fit constrains only the product of $B$ with the extrusion flux this
     paper is computing.
-  \item The energetics idealizations of \cref{sec:nucleation-energetics} in full: the
+  \item Cross-reference \cref{app:parameters-choice}, where the same $B$ enters the
+    field equations, so that the reader meets one fitted number and not two.
+\end{itemize}
+
+\subsection{The energetics idealizations in full}
+\label{app:extrusion-idealizations}
+\begin{itemize}
+  \item The two bounding idealizations of \cref{sec:nucleation-energetics} in full: the
     $A$-vs.-$2A$ substrate-detachment bracket and its renormalisation of $\Ws$ and $B$,
     and the partial-wetting bound on $\gammaw$.
+  \item The subleading terms of \cref{eq:dEe-full} that \cref{eq:dEe} drops, and the
+    size of the correction at the operating compression $\epsilon=\pcrit/B$.
 \end{itemize}
 
 \bibliographystyle{apsrev4-2}
