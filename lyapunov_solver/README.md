@@ -24,7 +24,10 @@ profile is refused.
 | file | what it is |
 |---|---|
 | `lyapunov_solver.m` | the module — `SolveFluctuationsLyapunov`, `visualizeFluctuationsComoving`, `exportDataComoving` |
+| `lyapunov_solver_optimized.m` | optional Python backend for the solve, ~3.5× faster and ~5× smaller in RAM ([Part 5](#part-5--the-python-backend)) |
+| `lyap_solve.py` | the backend itself — real Schur + recursive Bartels–Stewart |
 | `verify.wls` | small-grid verification; appends to `verify_results.csv` |
+| `verify_optimized.wls` | proves the Python backend reproduces the reference kernel |
 | `README.md` | this file |
 
 Self-contained: it does **not** load `../iterative_solver_module.m`, and it opens its own
@@ -72,6 +75,7 @@ exceed the steady state's own `box` or the steady interpolant is extrapolated at
 |---|---|---|
 | `rescaleCutoff` | `True` | calibrate `lNoise` against `eq:lattice-bz` |
 | `advection` | `True` | include $\nabla\cdot(\delta Q\,\mathbf w_{\mathrm{ss}})$; `False` reproduces the superseded modules |
+| `scratchDir` | `Automatic` | where the Python backend stages `A`/`Q`/`C`. `Automatic` picks `$TMPDIR`, then `/scratch/$SLURM_JOB_ID`, then `/scratch`. Ignored by the default kernel. |
 
 ### What comes back
 
@@ -356,8 +360,122 @@ never established — three plausible explanations were measured and ruled out i
 one inherits from.
 
 **Cost is the `Eigensystem`**, $O((3N^2)^3)$. `Nint = 33` is about a second; `Nint = 61` is
-already minutes. That is what keeps `verify.wls` on small grids.
+already minutes. That is what keeps `verify.wls` on small grids. The Python backend of
+[Part 5](#part-5--the-python-backend) cuts it by ~3.5× but does not change the exponent.
 
 **$u$ is not converged in box size** — that is a property of the steady state, not of this
 module. Doubling the comoving solver's `box` from 8 to 16 μm moves $u$ by ~11%; the reservoir and
 sealed walls bracket the answer from opposite sides. See `../comoving_defect/README.md`.
+
+---
+
+# Part 5 — The Python backend
+
+Optional. It replaces **only** block [6] — the dense Lyapunov solve, which is ~98% of the
+runtime. Everything else (stencils, closure, cutoff congruence, boundary conditions,
+extraction, tags, export) stays in `lyapunov_solver.m` and is *shared, not copied*.
+
+```mathematica
+Get[FileNameJoin[{repoRoot, "lyapunov_solver", "lyapunov_solver.m"}]];            (* first  *)
+Get[FileNameJoin[{repoRoot, "lyapunov_solver", "lyapunov_solver_optimized.m"}]];  (* second *)
+```
+
+**Load order matters**: loading the base module resets `$LyapunovSolveKernel` to the reference
+implementation, so the override must come after. Nothing else in a driver changes — same call,
+same returned association, same exports, same tags.
+
+## Why it is faster
+
+The reference kernel diagonalizes $\tilde A$. That is nonsymmetric, so the eigenvectors are
+complex and the whole back-substitution runs in Complex128. This backend takes the **real Schur
+form** and solves the triangular Lyapunov equation by a recursive Bartels–Stewart that bottoms
+out in LAPACK `?trsyl` on small leaves, leaving the bulk of the flops in GEMM. Real64 throughout.
+
+Measured on one exclusive EPYC 9655 node, both runtimes with a working BLAS:
+
+| $n$ | Mathematica eigen route | this backend | speedup |
+|---|---|---|---|
+| 2000 | 6.41 s | 1.71 s | 3.7× |
+| 3000 | 12.10 s | 3.46 s | 3.5× |
+| 4000 | 23.53 s | 5.99 s | 3.9× |
+
+Two routes that look obvious and are not: `scipy.linalg.solve_continuous_lyapunov` calls the
+serial, unblocked LAPACK `?trsyl` and is *slower* than the eigen route it would replace (8.9 s
+against 2.9 s at $n=2000$); and Mathematica's own `LyapunovSolve` is slower still (74 s at
+$n = 4000$, 3.3× the eigen route) and scales worse than cubic.
+
+## Why the memory matters more
+
+Peak RAM in the Mathematica kernel, measured as multiples of one dense $n\times n$ Real64:
+
+| route | peak |
+|---|---|
+| reference (eigendecomposition) | **15.5×** |
+| `LyapunovSolve` | 7.0× |
+| this backend | $A + Q + C$, i.e. **3×** |
+
+The reference route has `eigvecs`, `Pev`, `lamSum`, `num`, `num/lamSum` and `Transpose[Pev]` all
+live at once and all Complex128. This backend never forms a complex matrix. At `Nint = 151`
+($n = 68403$, one dense $n\times n$ = 37.4 GiB) that is ~580 GiB against ~112 GiB — the
+difference between the 2000G queue class, which reserves for days, and something that starts now.
+
+Note the printed estimate in block [6] counts only `Adense` + `Qdense` and so understates the
+reference route's peak by about 8×.
+
+## Scope: Dirichlet only
+
+Under Neumann the drift is singular **by design** — the conserved uniform mode — so
+Bartels–Stewart would need an explicit null-mode deflation in the Schur basis that is not
+implemented. Neumann therefore delegates to `LyapunovReferenceKernel`: unchanged, still correct,
+just not accelerated. This is scope, not a failure path, and it is announced on every call.
+
+## Failure policy: abort
+
+Any backend failure — interpreter missing, numpy/scipy missing, scratch full, a non-finite
+residual — **aborts the run**. It does not silently fall back, so every file in a sweep is known
+to have come from one numerical path. The abort names the cause and leaves the scratch directory
+in place for inspection.
+
+## Choosing the interpreter
+
+Handled automatically; you do **not** need `module load python/3.14.7` in a jobscript. Candidates
+are tried in order and each is probed for numpy *and* scipy before use:
+
+1. `$LYAPUNOV_PYTHON` (environment) or `$LyapunovPython` (a path you set)
+2. the `python/3.14.7`, `python/3.13.9`, `python/3.12.11` module interpreters
+3. a bare `python3` on `PATH`
+
+Running a module interpreter by absolute path is **not** sufficient on its own — it dies with
+`error while loading shared libraries: libpython3.14.so.1.0`, because `PYTHONHOME`,
+`LD_LIBRARY_PATH` and `PYTHONPATH` come from the modulefile and `libpython` lives in `lib64`, not
+`lib`. The backend reconstructs that environment itself. If a jobscript *has* done `module load`,
+candidate 3 picks it up and inherits a correct environment anyway.
+
+**Do not point it at `anaconda3`.** On this cluster that resolves to `/usr/bin/python3`, whose
+numpy is linked against reference netlib BLAS: GEMM at 6.4 GFLOPS against ~4000 for the module
+build, flat in thread count. The numpy/scipy probe is what rejects it. Nor is MKL the right
+choice here — the nodes are AMD, and `anaconda/2022.10`'s MKL takes 6.6 s on the $n=3000$
+eigensolve against OpenBLAS's 3.5 s.
+
+## Scratch
+
+`A`, `Q` and `C` are staged through `scratchDir` as row-major Real64, so the directory needs
+$3\cdot 8n^2$ bytes free — 112 GiB at `Nint = 151`. This is checked *before* the solve, because
+running out of scratch three hours in is the expensive way to discover it. Prefer the node-local
+NVMe (`$TMPDIR` under SLURM, 28 TB on these nodes) over shared GPFS. `A.bin`/`Q.bin`/`C.bin` are
+deleted on success unless `$LyapunovKeepScratch = True`, and always kept on failure.
+
+`$LyapunovPythonThreads` defaults to `SLURM_CPUS_PER_TASK` when set, else `$ProcessorCount` — the
+allocation, not the node, is what the job is entitled to.
+
+## Verification
+
+```
+wolframscript -file lyapunov_solver/verify_optimized.wls
+```
+
+20 checks in two groups: kernel-level (same $A$, $Q$ through both kernels) and end-to-end (the
+full `SolveFluctuationsLyapunov` on a synthetic comoving steady state). Agreement with the
+reference is ~1e-15 on `C`, `sigmaRho`, `sigmaQ1`, `sigmaQ2` and every exported scalar, with an
+identical `runTag`. `verify.wls` still passes 25/25 against the refactored base module, which is
+what establishes that the kernel seam changed nothing.

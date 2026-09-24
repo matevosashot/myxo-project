@@ -228,7 +228,8 @@
 SetSystemOptions["ParallelOptions" -> "ParallelThreadNumber" -> $ProcessorCount];
 
 Clear[SolveFluctuationsLyapunov, visualizeFluctuationsComoving,
-      exportDataComoving, MergeParams, ScriptParamOverrides];
+      exportDataComoving, MergeParams, ScriptParamOverrides,
+      LyapunovReferenceKernel];
 
 
 SolveFluctuationsLyapunov::usage =
@@ -317,6 +318,54 @@ SolveFluctuationsLyapunov::norefine =
   "Refinement did not improve the residual (`1` -> `2`); consider LyapunovSolve.";
 SolveFluctuationsLyapunov::kappa =
   "\[Kappa](S) root-find did not converge at some grid points (max |I1/I0 - S| = `1`).";
+SolveFluctuationsLyapunov::badkernel =
+  "The Lyapunov solve kernel returned `1` instead of an association carrying the \
+keys `2`.  $LyapunovSolveKernel is set to a backend that does not honour the \
+kernel contract; see LyapunovReferenceKernel::usage.";
+
+
+(* ---------------------------------------------------------------------------
+   The solve kernel seam.
+
+   Block [6] -- the O(n^3) part, and ~98% of the runtime -- is reached through
+   the function held in $LyapunovSolveKernel rather than inlined, so an
+   alternative backend can replace it WITHOUT a second copy of the physics in
+   blocks [1]-[5].  Everything upstream (stencils, closure, cutoff congruence,
+   boundary conditions) and downstream (extraction, tagging, export) is shared.
+
+   Loading lyapunov_solver.m always resets the kernel to the reference
+   implementation, so a file that installs another backend must be loaded
+   AFTER this one.
+   --------------------------------------------------------------------------- *)
+
+$LyapunovKernelWantsDense::usage =
+  "$LyapunovKernelWantsDense -> False tells block [6] NOT to build the dense " <>
+  "Adense/Qdense copies, and to hand the kernel the assembled Atilde (a " <>
+  "SparseArray) and Qtilde directly instead.  An out-of-core backend that " <>
+  "streams them to disk sets this to save 2 x 8 n^2 bytes.  Default True.";
+
+$LyapunovSolveKernel::usage =
+  "$LyapunovSolveKernel holds the function used for the dense Lyapunov solve, " <>
+  "block [6] of SolveFluctuationsLyapunov.  Defaults to LyapunovReferenceKernel; " <>
+  "set it to install another backend (see lyapunov_solver_optimized.m).  Reset " <>
+  "to the default every time lyapunov_solver.m is loaded.";
+
+LyapunovReferenceKernel::usage =
+  "LyapunovReferenceKernel[Adense, Qdense, meta] solves " <>
+  "A \[CapitalSigma] + \[CapitalSigma] A^T + Q = 0 by dense eigendecomposition " <>
+  "plus one refinement step, and is the default value of $LyapunovSolveKernel.\n\n" <>
+  "This is the KERNEL CONTRACT that any replacement backend must honour.\n" <>
+  "  Adense, Qdense : packed Real64 n x n matrices, n = 3 Nint^2; Q symmetric\n" <>
+  "  meta           : <|\"neumann\", \"nInt\", \"n\", \"vCons\", \"scratchDir\", " <>
+  "\"bcType\"|>\n" <>
+  "Returns <|\"C\" (Real n x n), \"eigenvalues\", \"maxReLambda\", \"residual\", " <>
+  "\"residualRefined\", \"nullIndex\", \"nullLambdaRel\", \"nullLambda2Rel\", " <>
+  "\"nullOverlap\", \"timings\" ({{label, seconds}, ...}), \"backend\" (a " <>
+  "string)|>.\n\n" <>
+  "Under Neumann the drift is singular by design (the conserved uniform mode), " <>
+  "so the kernel must project that mode out of the transformed right-hand side " <>
+  "(dean.tex eq:canonical) and report the four null-* diagnostics; under " <>
+  "Dirichlet those four come back Missing[\"Dirichlet\"].";
 
 visualizeFluctuationsComoving::usage =
   "visualizeFluctuationsComoving[correlations, outputDir, plotBox] returns " <>
@@ -497,12 +546,31 @@ numTag[x_] := Module[
    The previous set2_2_comove driver did rebuild it, with a comment reading
    "KEEP THE TWO IN STEP"; when they drift the steady dump silently stops
    pairing with its covariance. *)
+(* B and ssBox are appended only when supplied, so a tag built without them is
+   byte-identical to the pre-2026-09 form and old output stays parseable.  They
+   MUST be supplied whenever either is swept: neither enters elld (K' absorbs
+   zeta, and B enters no derived length at all), so without them a run at
+   B = 10^4 and one at 3*10^5 collide on one filename and the second silently
+   overwrites the first.  Same for the steady state's own box, now that it is
+   varied independently of fbox. *)
 runTag[corr_] := "box" <> numTag[corr["fbox"]] <>
                  "_N"  <> ToString[corr["Nint"]] <>
                  If[corr["bcType"] === "Neumann", "_Neu", "_Dir"] <>
                  "_lN" <> numTag[corr["lNoise"]] <>
                  "_z"  <> numTag[corr["zeta"]] <>
-                 "_ld" <> numTag[corr["elld"]];
+                 "_ld" <> numTag[corr["elld"]] <>
+                 If[NumericQ @ Lookup[corr, "B", Missing[]],
+                    "_B" <> numTag[corr["B"]], ""] <>
+                 If[NumericQ @ Lookup[corr, "ssBox", Missing[]],
+                    "_ss" <> numTag[corr["ssBox"]], ""] <>
+                 (* Last, so the numeric fields above still parse by prefix.
+                    A run with max Re(lambda) >= 0 is NOT a covariance: the
+                    Lyapunov equation has no stable solution there and the
+                    variances can come out negative.  Marking it in the FILENAME
+                    means such a run cannot be swept up by a glob and averaged in
+                    by accident -- the diagnostic is in the meta file either way,
+                    but nobody reads that before plotting. *)
+                 If[TrueQ @ Lookup[corr, "unstable", False], "_unstable", ""];
 
 (* Plain text: Grid/NumberForm do not render under wolframscript. *)
 fmtSeconds[x_] := StringPadLeft[ToString@NumberForm[N@x, {7, 2}], 8];
@@ -538,6 +606,134 @@ consCheck[lbl_, val_, scale_] := (
 
 
 (* ::Subsection:: *)
+(*Solve kernel -- reference (dense eigendecomposition) backend*)
+
+(* LyapunovSolve is single-threaded; diagonalize instead: A = P D P^-1 =>
+   C = P Y P^T, Y_ij = -(P^-1 Q P^-T)_ij/(lam_i + lam_j).  A is NOT self-adjoint
+   (dropped Onsager partners, and now the advection too), but the error is set
+   by kappa(P)^2 eps ~ 1e-10; one refinement step then reaches ~1e-14.
+
+   Lifted verbatim out of block [6] when the kernel seam was introduced -- the
+   arithmetic is unchanged, so this remains the reference every other backend is
+   validated against. *)
+LyapunovReferenceKernel[Adense_, Qdense_, meta_Association] :=
+Module[
+  {neuQ, vCons, tim, rc, eigvals, eigvecs, tEs, lamMax, iNull, nullRel,
+   lam2Rel, vUnit, nullOverlap, maxReLam, Pev, lamSum, eigLyapSolve,
+   Cmat, tSol, resid, tRes1, tRef, residRef, tRes3},
+
+  neuQ  = TrueQ @ meta["neumann"];
+  vCons = meta["vCons"];
+  tim   = {};
+  rc[lbl_, t_] := (AppendTo[tim, {lbl, t}]; t);
+
+  {tEs, {eigvals, eigvecs}} = AbsoluteTiming @ Eigensystem[Adense];
+  rc["[6] Eigensystem (dense, nonsymmetric)", tEs];
+  Print["    [a] Eigensystem        ", tEs, " s"];
+
+  lamMax = Max @ Abs @ eigvals;
+  If[neuQ,
+     (* identify the conserved mode and check it is the only one *)
+     iNull = First @ Ordering[Abs[eigvals], 1];
+     nullRel = Abs[eigvals[[iNull]]]/lamMax;
+     lam2Rel = Sort[Abs @ eigvals][[2]]/lamMax;
+     vUnit = Normalize @ vCons;
+     nullOverlap = Abs[Normalize[eigvecs[[iNull]]] . vUnit];
+     Print["    conserved mode: index ", iNull, ",  |\[Lambda]|/max|\[Lambda]| = ",
+           nullRel, ",  2nd smallest = ", lam2Rel];
+     Print["    overlap of its eigenvector with uniform \[Delta]\[Rho] = ", nullOverlap,
+           If[nullRel < 1.*^-8 && lam2Rel > 1.*^-6 && nullOverlap > 0.99,
+              "   (a single, clean null mode)", "   *** UNEXPECTED NULL STRUCTURE ***"]];
+     If[!(nullRel < 1.*^-8 && lam2Rel > 1.*^-6 && nullOverlap > 0.99),
+        Message[SolveFluctuationsLyapunov::nullmode, nullRel, lam2Rel, nullOverlap]];
+     maxReLam = Max @ Re @ Delete[eigvals, iNull],
+  (* else *)
+     iNull = None; nullRel = lam2Rel = nullOverlap = Missing["Dirichlet"];
+     maxReLam = Max @ Re @ eigvals];
+
+  Print["    max Re(\[Lambda])", If[neuQ, " off the null mode", ""], " = ", maxReLam,
+        If[maxReLam < 0, "  (stable)", "  (UNSTABLE!)"]];
+  If[maxReLam >= 0, Message[SolveFluctuationsLyapunov::unstable, maxReLam]];
+  Print["    min |\[Lambda]_i+\[Lambda]_j|",
+        If[neuQ, " off the null mode", ""], " = ",
+        2 Min @ Abs @ Re @ If[neuQ, Delete[eigvals, iNull], eigvals],
+        ",  complex fraction = ",
+        N[100 Count[eigvals, z_ /; Abs[Im[z]] > 1.*^-8 Abs[z]]/Length[eigvals]], "%"];
+
+  Pev = Developer`ToPackedArray @ Transpose @ eigvecs;
+  lamSum = Developer`ToPackedArray @ Outer[Plus, eigvals, eigvals];
+  If[neuQ,
+     (* lam_null is 0 BY DESIGN, so lamSum[[iNull,iNull]] can come back EXACTLY 0.,
+        and then 0./0. is Indeterminate -- not 0 -- and a single such entry is
+        smeared over all of Cmat by the two matmuls.  Shift that one denominator
+        off zero; the numerator there is exactly 0., so the quotient is 0 either
+        way and the canonical projection is untouched.  ADD rather than assign,
+        and add lamMax (a machine Real): the sum keeps the element type, so a
+        packed Complex stays packed Complex. *)
+     lamSum[[iNull, iNull]] = lamSum[[iNull, iNull]] + lamMax];
+
+  (* Solve A X + X A^T = -Rhs in the eigenbasis; reused by the refinement.  Under
+     Neumann the conserved mode is projected out by zeroing row and column iNull
+     of the transformed right-hand side (dean.tex eq:canonical); doing it INSIDE
+     eigLyapSolve makes the refinement step safe too.  Multiply by 0. rather than
+     ASSIGNING 0.: assigning a real into a packed COMPLEX array unpacks it. *)
+  eigLyapSolve[Rhs_] := Module[{num},
+     num = -LinearSolve[Pev, Transpose @ LinearSolve[Pev, Transpose[Rhs]]];
+     If[neuQ,
+        num[[iNull]] = num[[iNull]] 0.;
+        num[[All, iNull]] = num[[All, iNull]] 0.];
+     Re[Pev . (num / lamSum) . Transpose[Pev]]];
+
+  {tSol, Cmat} = AbsoluteTiming @ eigLyapSolve[Qdense];
+  rc["[6] back-substitute", tSol];
+  Print["    [b] back-substitute    ", tSol, " s"];
+
+  (* Each residual is two dense n x n matmuls, same O(n^3) as the Eigensystem. *)
+  {tRes1, resid} = AbsoluteTiming[
+     Max @ Abs[Adense . Cmat + Cmat . Transpose[Adense] + Qdense]];
+  rc["[6] residual eval #1 (unrefined)", tRes1];
+  Print["    residual (unrefined)   = ", resid, "   [", tRes1, " s]"];
+  (* Non-numeric here means the solve produced Indeterminate/NaN entries.  Stop:
+     the refinement step and exportDataComoving would otherwise write the whole
+     unevaluated expression to disk (measured on the old modules: 3.8 GB of .m
+     and 12.3 GB of log).  Every other gate tests the INPUTS; this is the only
+     one that tests that a number came out. *)
+  If[!NumberQ[resid],
+     Print["    ABORT: residual is ", resid,
+           " -- the Lyapunov solve returned non-numeric entries."];
+     Abort[]];
+
+  {tRef, Cmat} = AbsoluteTiming[
+     Cmat + eigLyapSolve[Adense . Cmat + Cmat . Transpose[Adense] + Qdense]];
+  rc["[6] refinement step (incl. residual eval #2)", tRef];
+  {tRes3, residRef} = AbsoluteTiming[
+     Max @ Abs[Adense . Cmat + Cmat . Transpose[Adense] + Qdense]];
+  rc["[6] residual eval #3 (verification)", tRes3];
+  Print["    [c] refinement step    ", tRef, " s"];
+  Print["    residual (refined)     = ", residRef, "   [", tRes3, " s]",
+        "   (improved ", ToString@NumberForm[N[resid/residRef], 4], "x)"];
+  If[residRef > resid,
+     Message[SolveFluctuationsLyapunov::norefine, resid, residRef]];
+  Print["    total solve time = ", tEs + tSol + tRef, " s"];
+
+  <| "C" -> Cmat,
+     "eigenvalues" -> eigvals,
+     "maxReLambda" -> maxReLam,
+     "residual" -> resid,
+     "residualRefined" -> residRef,
+     "nullIndex" -> iNull,
+     "nullLambdaRel" -> nullRel,
+     "nullLambda2Rel" -> lam2Rel,
+     "nullOverlap" -> nullOverlap,
+     "timings" -> tim,
+     "backend" -> "Mathematica/eigendecomposition" |>
+];
+
+$LyapunovSolveKernel = LyapunovReferenceKernel;
+$LyapunovKernelWantsDense = True;
+
+
+(* ::Subsection:: *)
 (*Main solver*)
 
 SolveFluctuationsLyapunov[
@@ -547,7 +743,8 @@ SolveFluctuationsLyapunov[
     bcType_String : "Dirichlet"] :=
 Module[
   {
-    nInt, fboxV, neuQ, rescaleQ, advectQ, timings = {}, rec,
+    nInt, fboxV, neuQ, rescaleQ, advectQ, scratchV, timings = {}, rec,
+    kernelOut, kernelKeys,
     Bv, xi0, xir, zet, rho0v, Lam, av, bv, Lv, cL, kapQ,
     aPrime, elldV, S0V, alphaV, derived, tagStr,
     rhoSs, Q1Ss, Q2Ss, uVec, ux, uy, ssBox,
@@ -594,7 +791,16 @@ Module[
     fboxV    = Lookup[lp, Global`fbox, Missing[]];
     rescaleQ = TrueQ @ Lookup[lp, Global`rescaleCutoff, True];
     advectQ  = TrueQ @ Lookup[lp, Global`advection, True];
+    (* Only the out-of-core backends read this; the reference kernel ignores it.
+       Default to the node-local scratch SLURM hands out (TMPDIR), which on these
+       nodes is NVMe under /scratch -- NOT the shared GPFS the output lands on. *)
+    scratchV = Lookup[lp, Global`scratchDir, Automatic];
   ];
+  If[scratchV === Automatic,
+     scratchV = SelectFirst[
+        {Environment["TMPDIR"], "/scratch/" <> ToString @ Environment["SLURM_JOB_ID"],
+         "/scratch", $TemporaryDirectory},
+        StringQ[#] && DirectoryQ[#] &, $TemporaryDirectory]];
   If[!IntegerQ[nInt] || !IntegerQ[fboxV] || nInt <= 0 || fboxV <= 0,
     Message[SolveFluctuationsLyapunov::badgrid, {fboxV, nInt}]; Return[$Failed]];
 
@@ -1170,111 +1376,65 @@ Module[
      Print["    assembled Q min eig: skipped (n = ", 3 nInt^2, " > 20000)"]];
 
   (* --- Lyapunov solve --------------------------------------------------
-     LyapunovSolve is single-threaded; diagonalize instead: A = P D P^-1 =>
-     C = P Y P^T, Y_ij = -(P^-1 Q P^-T)_ij/(lam_i + lam_j).  A is NOT self-adjoint
-     (dropped Onsager partners, and now the advection too), but the error is set
-     by kappa(P)^2 eps ~ 1e-10; one refinement step then reaches ~1e-14. *)
-  Print["[6] Lyapunov solve via eigendecomposition + refinement ..."];
+     Dispatched through $LyapunovSolveKernel (see the kernel contract at
+     LyapunovReferenceKernel::usage) so a faster backend can be swapped in
+     without duplicating blocks [1]-[5]. *)
+  Print["[6] Lyapunov solve ..."];
   (* ToPackedArray is load-bearing.  G1, L1, D1 are built from EXACT RATIONALS so
      the adjoint-pair identity can be tested with "== 0"; if any of that
      exactness survives into the dense arrays they come back unpacked, every BLAS
      path is lost, and the back-substitute runs ~600x slower. *)
-  tDense = rec["[6] densify A, Q (Normal[])", First @ AbsoluteTiming[
-     Adense = Developer`ToPackedArray @ N @ Normal @ Atilde;
-     Qdense = Developer`ToPackedArray @ N @ Normal @ Qtilde;]];
-  Print["    [0] densify A,Q        ", tDense, " s   (",
-        ToString @ NumberForm[N[2 * 8 * Length[Adense]^2/2^30], 3], " GiB)",
-        "   packed: A ", Developer`PackedArrayQ[Adense],
-        ", Q ", Developer`PackedArrayQ[Qdense]];
+  (* An out-of-core backend streams A and Q to disk itself, so materialising
+     dense copies here would cost 2 x 8 n^2 bytes for nothing -- and Qtilde is
+     ALREADY dense (densified in [5b] for the cutoff congruence), so Qdense was
+     a second full copy of it.  Hand the assembled matrices straight through. *)
+  If[TrueQ[$LyapunovKernelWantsDense],
+     tDense = rec["[6] densify A, Q (Normal[])", First @ AbsoluteTiming[
+        Adense = Developer`ToPackedArray @ N @ Normal @ Atilde;
+        Qdense = Developer`ToPackedArray @ N @ Normal @ Qtilde;]];
+     Print["    [0] densify A,Q        ", tDense, " s   (",
+           ToString @ NumberForm[N[2 * 8 * Length[Adense]^2/2^30], 3], " GiB)",
+           "   packed: A ", Developer`PackedArrayQ[Adense],
+           ", Q ", Developer`PackedArrayQ[Qdense]],
+  (* else: pass through, no copy *)
+     Adense = Atilde; Qdense = Qtilde;
+     Print["    [0] densify A,Q        skipped (kernel streams them itself)"]];
 
-  {tEs, {eigvals, eigvecs}} = AbsoluteTiming @ Eigensystem[Adense];
-  rec["[6] Eigensystem (dense, nonsymmetric)", tEs];
-  Print["    [a] Eigensystem        ", tEs, " s"];
+  (* "release" lets an out-of-core kernel drop the inputs the moment they are on
+     disk, BEFORE it allocates C.  Without it A, Q and C are all live at the read
+     and the peak is 3 x 8 n^2 instead of 1.  It closes over this Module's locals,
+     which is the only way to clear a caller's binding from inside the callee;
+     calling it is optional and the reference kernel never does. *)
+  kernelOut = $LyapunovSolveKernel[Adense, Qdense,
+     <| "neumann" -> neuQ, "bcType" -> bcType, "nInt" -> nInt, "n" -> 3 nInt^2,
+        "vCons" -> vCons, "scratchDir" -> scratchV,
+        "release" -> Function[Null,
+           Adense =.; Qdense =.; Atilde =.; Qtilde =.;
+           ClearSystemCache[];] |>];
 
-  lamMax = Max @ Abs @ eigvals;
-  If[neuQ,
-     (* identify the conserved mode and check it is the only one *)
-     iNull = First @ Ordering[Abs[eigvals], 1];
-     nullRel = Abs[eigvals[[iNull]]]/lamMax;
-     lam2Rel = Sort[Abs @ eigvals][[2]]/lamMax;
-     vUnit = Normalize @ vCons;
-     nullOverlap = Abs[Normalize[eigvecs[[iNull]]] . vUnit];
-     Print["    conserved mode: index ", iNull, ",  |\[Lambda]|/max|\[Lambda]| = ",
-           nullRel, ",  2nd smallest = ", lam2Rel];
-     Print["    overlap of its eigenvector with uniform \[Delta]\[Rho] = ", nullOverlap,
-           If[nullRel < 1.*^-8 && lam2Rel > 1.*^-6 && nullOverlap > 0.99,
-              "   (a single, clean null mode)", "   *** UNEXPECTED NULL STRUCTURE ***"]];
-     If[!(nullRel < 1.*^-8 && lam2Rel > 1.*^-6 && nullOverlap > 0.99),
-        Message[SolveFluctuationsLyapunov::nullmode, nullRel, lam2Rel, nullOverlap]];
-     maxReLam = Max @ Re @ Delete[eigvals, iNull],
-  (* else *)
-     iNull = None; nullRel = lam2Rel = nullOverlap = Missing["Dirichlet"];
-     maxReLam = Max @ Re @ eigvals];
-
-  Print["    max Re(\[Lambda])", If[neuQ, " off the null mode", ""], " = ", maxReLam,
-        If[maxReLam < 0, "  (stable)", "  (UNSTABLE!)"]];
-  If[maxReLam >= 0, Message[SolveFluctuationsLyapunov::unstable, maxReLam]];
-  Print["    min |\[Lambda]_i+\[Lambda]_j|",
-        If[neuQ, " off the null mode", ""], " = ",
-        2 Min @ Abs @ Re @ If[neuQ, Delete[eigvals, iNull], eigvals],
-        ",  complex fraction = ",
-        N[100 Count[eigvals, z_ /; Abs[Im[z]] > 1.*^-8 Abs[z]]/Length[eigvals]], "%"];
-
-  Pev = Developer`ToPackedArray @ Transpose @ eigvecs;
-  lamSum = Developer`ToPackedArray @ Outer[Plus, eigvals, eigvals];
-  If[neuQ,
-     (* lam_null is 0 BY DESIGN, so lamSum[[iNull,iNull]] can come back EXACTLY 0.,
-        and then 0./0. is Indeterminate -- not 0 -- and a single such entry is
-        smeared over all of Cmat by the two matmuls.  Shift that one denominator
-        off zero; the numerator there is exactly 0., so the quotient is 0 either
-        way and the canonical projection is untouched.  ADD rather than assign,
-        and add lamMax (a machine Real): the sum keeps the element type, so a
-        packed Complex stays packed Complex. *)
-     lamSum[[iNull, iNull]] = lamSum[[iNull, iNull]] + lamMax];
-
-  (* Solve A X + X A^T = -Rhs in the eigenbasis; reused by the refinement.  Under
-     Neumann the conserved mode is projected out by zeroing row and column iNull
-     of the transformed right-hand side (dean.tex eq:canonical); doing it INSIDE
-     eigLyapSolve makes the refinement step safe too.  Multiply by 0. rather than
-     ASSIGNING 0.: assigning a real into a packed COMPLEX array unpacks it. *)
-  eigLyapSolve[Rhs_] := Module[{num},
-     num = -LinearSolve[Pev, Transpose @ LinearSolve[Pev, Transpose[Rhs]]];
-     If[neuQ,
-        num[[iNull]] = num[[iNull]] 0.;
-        num[[All, iNull]] = num[[All, iNull]] 0.];
-     Re[Pev . (num / lamSum) . Transpose[Pev]]];
-
-  {tSol, Cmat} = AbsoluteTiming @ eigLyapSolve[Qdense];
-  rec["[6] back-substitute", tSol];
-  Print["    [b] back-substitute    ", tSol, " s"];
-
-  (* Each residual is two dense n x n matmuls, same O(n^3) as the Eigensystem. *)
-  {tRes1, resid} = AbsoluteTiming[
-     Max @ Abs[Adense . Cmat + Cmat . Transpose[Adense] + Qdense]];
-  rec["[6] residual eval #1 (unrefined)", tRes1];
-  Print["    residual (unrefined)   = ", resid, "   [", tRes1, " s]"];
-  (* Non-numeric here means the solve produced Indeterminate/NaN entries.  Stop:
-     the refinement step and exportDataComoving would otherwise write the whole
-     unevaluated expression to disk (measured on the old modules: 3.8 GB of .m
-     and 12.3 GB of log).  Every other gate tests the INPUTS; this is the only
-     one that tests that a number came out. *)
-  If[!NumberQ[resid],
-     Print["    ABORT: residual is ", resid,
-           " -- the Lyapunov solve returned non-numeric entries."];
+  (* A backend that returns anything else would otherwise surface far downstream
+     as a cascade of Missing[] inside the export.  Fail here, where the cause is
+     still legible. *)
+  kernelKeys = {"C", "eigenvalues", "maxReLambda", "residual", "residualRefined",
+                "nullIndex", "nullLambdaRel", "nullLambda2Rel", "nullOverlap",
+                "timings", "backend"};
+  If[!AssociationQ[kernelOut] || !AllTrue[kernelKeys, KeyExistsQ[kernelOut, #] &],
+     Message[SolveFluctuationsLyapunov::badkernel,
+             If[AssociationQ[kernelOut], Keys[kernelOut], Head[kernelOut]],
+             kernelKeys];
      Abort[]];
 
-  {tRef, Cmat} = AbsoluteTiming[
-     Cmat + eigLyapSolve[Adense . Cmat + Cmat . Transpose[Adense] + Qdense]];
-  rec["[6] refinement step (incl. residual eval #2)", tRef];
-  {tRes3, residRef} = AbsoluteTiming[
-     Max @ Abs[Adense . Cmat + Cmat . Transpose[Adense] + Qdense]];
-  rec["[6] residual eval #3 (verification)", tRes3];
-  Print["    [c] refinement step    ", tRef, " s"];
-  Print["    residual (refined)     = ", residRef, "   [", tRes3, " s]",
-        "   (improved ", ToString@NumberForm[N[resid/residRef], 4], "x)"];
-  If[residRef > resid,
-     Message[SolveFluctuationsLyapunov::norefine, resid, residRef]];
-  Print["    total solve time = ", tEs + tSol + tRef, " s"];
+  Cmat        = kernelOut["C"];
+  eigvals     = kernelOut["eigenvalues"];
+  maxReLam    = kernelOut["maxReLambda"];
+  resid       = kernelOut["residual"];
+  residRef    = kernelOut["residualRefined"];
+  iNull       = kernelOut["nullIndex"];
+  nullRel     = kernelOut["nullLambdaRel"];
+  lam2Rel     = kernelOut["nullLambda2Rel"];
+  nullOverlap = kernelOut["nullOverlap"];
+  timings     = Join[timings, kernelOut["timings"]];
+  Print["    backend = ", kernelOut["backend"]];
 
   (* --- extract --------------------------------------------------------- *)
   Print["[7] Extracting diagonal blocks ..."];
@@ -1302,7 +1462,11 @@ Module[
   (* runTag needs only these six fields, so it can be built before the full
      result exists.  Returned below so drivers never rebuild it. *)
   tagStr = runTag[<|"fbox" -> fboxV, "Nint" -> nInt, "bcType" -> bcType,
-                   "lNoise" -> lNoiseV, "zeta" -> zet, "elld" -> elldV|>];
+                   "lNoise" -> lNoiseV, "zeta" -> zet, "elld" -> elldV,
+                   "B" -> Bv,
+                   "ssBox" -> If[NumericQ[ssBox], ssBox, fboxV],
+                   (* same test as the ::unstable message above *)
+                   "unstable" -> TrueQ[NumericQ[maxReLam] && maxReLam >= 0]|>];
   Print["    runTag = ", tagStr];
 
   printTimings[timings, nInt];
