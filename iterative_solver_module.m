@@ -50,7 +50,7 @@ Block[
     mesh, \[Rho]Sol, Q1Sol, Q2Sol,
     \[Rho]Step, QStep, iter, residual,
     (* renormalized parameters *)
-    a1, L1
+    a1, L1, b1
   },
 
   (* --- validate bcType up front ------------------------------------- *)
@@ -94,6 +94,7 @@ Block[
     -a QM - b ddot[QM, QM] QM];
 
   (* --- Q equation (per-component tensor equation) ------------------- *)
+
   eqQ =
     Table[
       Inactive[Div][
@@ -105,16 +106,16 @@ Block[
         {{(4 L)/\[Xi]r + \[Zeta]/\[Xi]0, 0},
          {0, (4 L)/\[Xi]r + \[Zeta]/\[Xi]0}} .
           Inactive[Grad][Q[x, y][[i, j]], {x, y}],
-        {x, y}] -
-      Activate@Inactive[Grad][B/\[Xi]0 \[Rho][x, y], {x, y}] .
-        Inactive[Grad][Q[x, y][[i, j]], {x, y}],
+        {x, y}] 
+      (* -{B/\[Xi]0 Derivative[1, 0][\[Rho]][x,y],B/\[Xi]0 Derivative[0, 1][\[Rho]][x,y]}.Inactive[Grad][Q[x, y][[i, j]], {x, y}] *)
+      ,
       {i, 2}, {j, 2}
     ] + (4/\[Xi]r) Hp1[x, y] - 4 \[CapitalLambda] Q[x, y];
 
   (* --- Pade profile: sets initial Q and its Dirichlet outer BC ------ *)
-  {a1, L1} = {a+\[CapitalLambda] \[Xi]r, L+(\[Zeta] \[Xi]r)/(4 \[Xi]0) };
-  Print["a1 = ", a1/.modelParams, ", L1 = ", L1/.modelParams];
-  S0PadeOverR[r2_] := Sqrt[-a1/(2 b)] Sqrt[-a1/L1] Sqrt[
+  {a1, L1, b1} = {a + \[CapitalLambda] \[Xi]r, L + (\[Zeta] \[Xi]r)/(4 \[Xi]0), b};
+
+  S0PadeOverR[r2_] := Sqrt[-a1/(2 b1)] Sqrt[-a1/L1] Sqrt[
       (0.34 + 0.07 (-r2 a1/L1)) /
       (1 + 0.41 (-r2 a1/L1) + 0.07 (-r2 a1/L1)^2)
     ];
@@ -133,6 +134,8 @@ Block[
     MeshRefinementFunction -> Function[{vertices, area},
       area > (targetCellSize @@ Mean[vertices])^2]
   ];
+  (* print the size of the mesh *)
+  Print["Mesh size: ", First@Dimensions[mesh["Coordinates"]]];
 
   (* --- boundary-condition bundle for the \[Rho] sub-problem --------- *)
   \[Rho]System = Switch[bcType,
@@ -193,7 +196,13 @@ Block[
   iter = 0;
   residual = Infinity;
   While[iter < maxSteps && residual > relativeDiff,
-    residual = Max[\[Rho]Step, QStep];
+    Print["Iteration ", iter, " residual: ", residual];
+    \[Rho]StepResidual = \[Rho]Step;
+    (* Print[eqQ/.{\[Rho] -> \[Rho]Sol}]; *)
+    Print["\[Rho]StepResidual: ", \[Rho]StepResidual];
+    QStepResidual = QStep;
+    Print["QStepResidual: ", QStepResidual];
+    residual = Max[\[Rho]StepResidual, QStepResidual];
     iter++
   ];
   If[residual > relativeDiff,

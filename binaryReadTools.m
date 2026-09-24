@@ -162,7 +162,17 @@ parseTag[s_String] := Module[{t = tagString[s], g},
                       True, Missing["absent"]],
     "lNoise" -> g["_lN" ~~ x : NumberString :> x],
     "zeta"   -> g["_z" ~~ x : NumberString :> x],
-    "elld"   -> g["_ld" ~~ x : NumberString :> x]|>];
+    "elld"   -> g["_ld" ~~ x : NumberString :> x],
+    (* Appended 2026-09 for the set2_2_comove_optimized sweep, which varies both.
+       Absent from every earlier tag, so these come back Missing there -- which is
+       correct: those runs are all B = 10^4 with the steady state on the SAME box
+       as the solver, but the tag never recorded it and we do not invent it. *)
+    "B"      -> g["_B" ~~ x : NumberString :> x],
+    "ssBox"  -> g["_ss" ~~ x : NumberString :> x],
+    (* True when the solver found max Re(lambda) >= 0.  Such a run is not a
+       covariance -- Sigma_Q1/Q2 can be negative -- so filter on this before
+       averaging anything over a directory. *)
+    "unstable" -> StringContainsQ[t, "_unstable"]|>];
 
 (* The steady state the fluctuations were linearised about.  It is written by
    the DRIVER (jobscripts/set2_2_comove/fluctuations.wls), not by a module, and
