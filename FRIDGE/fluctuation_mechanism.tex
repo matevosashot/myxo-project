@@ -1,0 +1,143 @@
+
+
+\subsection{Energy source: free energy density}
+\label{sec-extrusion-free-energy}
+Say when the local energy density $\mathfrak{f}$ (defined in \cref{free-energy-choice-2}) is above the critical dreshold level $\ecrit$, the monolayer will extrude a new layer. More on this treshold at the end of the section.
+For simplicity, we will consider only the density part of the free energy density.
+The condition reads:
+\begin{align}
+    P_\text{layer}(\r) = P\left(\tfrac{1}{2}B (\rho(\r,t) - 1)^2 > \ecrit\right) 
+\end{align}
+Note that $\rho(\r,t) = \la \rho(\r,t) \ra + \delta\rho(\r,t)$, where $\delta\rho(\r,t)$ has gaussian distribution and we already determined it's variance. Note that both $\left(\la \rho(\r,t) \ra-1\right)$ and $\Var[\delta\rho(\r,t)]$ are proportional to $B^{-1}$. Therefore, for large $B$, the mean does not survive and the above condition is simplified to:
+\begin{align}
+    P_\text{layer}(\r) = P\left(\delta\rho(\r,t)^2 > 2\ecrit/ B\right) 
+\end{align}
+For Gaussian distribution, the above probability is given by can be calculated analytically (see \cref{appendix-gaussian-distribution}), however, in the case of rare events, when the $\ecrit$ is large, we can use the approximation of the tail probability:
+\begin{align}
+    P_\text{layer}(\r)
+    = \sqrt{\frac{B \sigmarho}{\pi \ecrit}}\exp\left(
+    -\frac{\ecrit}{B \sigmarho}
+    \right),
+    \qquad
+    \sigmarho \equiv \Var[\delta\rho(\r)] .
+\end{align}
+Note that $B\sigmarho$ remains finite at large $B$ (incompressibility) limit.
+
+It is convenient to name the reduced threshold
+\begin{align}
+    \label{eq:u-def}
+    u^2(\r) \equiv \frac{2\ecrit}{B\sigmarho},
+    \qquad\text{so}\qquad
+    P_\text{layer}(\r) \equiv p_0 = \sqrt{\frac{2}{\pi}}\,\frac{\ee^{-u^2/2}}{u},
+\end{align}
+the rare-event regime being $u\gg1$. Both $\ecrit$ and $B\sigmarho$ are finite as $B\to\infty$, so $u$ is.
+
+$p_0$ is the \emph{stationary} probability of being above threshold, not a rate. The rate follows from it by
+\begin{align}
+    \label{eq:rate-occupation}
+    \lambda = \frac{p_0}{\bar t_\mathrm{exc}},
+\end{align}
+$\bar t_\mathrm{exc}$ being the mean duration of a single excursion above $\ecrit$: the process spends a fraction $p_0$ of its time above threshold, in visits of mean length $\bar t_\mathrm{exc}$, so it must start $p_0/\bar t_\mathrm{exc}$ of them per unit time.
+
+Both ingredients come from the temporal correlator of \cref{sec-iso}. Writing $Y_t = \delta\rho(\r,t)/\sqrt{\sigmarho}$ for the normalised field,
+\begin{align}
+    \label{eq:r-of-s}
+    \la Y_tY_{t+s}\ra = r(s) = \frac{1}{1+|s|/\tau_c},
+    \qquad
+    \tau_c = \frac{\elln^2}{2\gamma_0},
+\end{align}
+and the threshold condition is $|Y_t|>u$. Two facts about \eqref{eq:r-of-s} at short lags are all that is needed. First, $\la(Y_{t+s}-Y_t)^2\ra = 2(1-r(s)) \simeq 2|s|/\tau_c$, so on times $\ll\tau_c$ the field diffuses with $D=1/\tau_c$. Second, regression to the mean, $\la Y_{t+s}\,|\,Y_t=u\ra = u\,r(s) \simeq u(1-s/\tau_c)$, gives a restoring drift $v = u/\tau_c$ at the threshold.
+
+An excursion is therefore a biased random walk started at the level $u$ and pushed back at speed $v$. It rises to the height at which the two balance, $\Delta \sim D/v = 1/u$, and is pushed back through it in
+\begin{align}
+    \label{eq:t-exc}
+    \bar t_\mathrm{exc} \sim \frac{\Delta}{v} = \frac{\tau_c}{u^2}.
+\end{align}
+Inserting \eqref{eq:t-exc} and $p_0$ into \eqref{eq:rate-occupation} --- the exact calculation fixes the $O(1)$ constant in \eqref{eq:t-exc} to unity --- gives the extrusion rate
+\begin{align}
+    \label{eq:clump-rate}
+    \boxed{\;
+    \lambda(\r) = \frac{p_0\,u^2}{\tau_c} = \sqrt{\frac{2}{\pi}}\,\frac{u}{\tau_c}\,\ee^{-u^2/2}
+    = \frac{4\gamma_0}{\elln^2}\sqrt{\frac{\ecrit}{\pi B\sigmarho}}\;
+      \exp\left(-\frac{\ecrit}{B\sigmarho}\right).
+    \;}
+\end{align}
+Since excursions separated by more than $\tau_c$ are independent and each is rare, they form a Poisson process, and the probability that a patch has extruded by time $T$ is
+\begin{align}
+    \label{eq:h-of-T}
+    h(T) = 1-(1-p_0)\,\ee^{-\lambda T} \simeq 1 - \ee^{-\lambda T}.
+\end{align}
+
+The prefactor of \eqref{eq:clump-rate} is $\gamma_0/\elln^2 = 1/2\tau_c$: the attempt frequency is set by the microscopic correlation time, short in the incompressibility limit, while all the dependence on the texture sits in $\sigmarho$ of \eqref{eq:iso-gauss} and \eqref{eq:aniso-kernel} inside the exponential. Extrusion is therefore exponentially sensitive to the anisotropic modulation of the variance, even though that modulation is only a few percent of the pedestal. The derivation assumes $u\gg1$, i.e.\ $\ecrit\gg B\sigmarho/2$, with relative corrections $O(1/u^2)$ in the prefactor.
+
+
+
+In the begining of the section, we defined a critical energy density $\ecrit$. In \cref{eq:virtual-work}, we use $\Delta E_e = \mathfrak{f}(\r) A$, i.e. we assume that the patch of size $A$ has the same energy density. Thus, the shape of the \cref{eq:virtual-work} defines the $\ecrit$ as the critical energy density when the nucleation happens.
+
+
+
+\subsection{Energy source: work done by pressure}
+\label{sec-extrusion-work}
+
+The pressure in the monolayer is given by the relation $p=\rho \mathfrak{f}'-\mathfrak{f}$ (here, $\rho$ has units of $\micron^{-2}$). Using the quadratic form of the free energy density, and expressing in terms of dimensionless density, we have
+\begin{align}
+    \label{eq:pressure-of-rho}
+    p = \frac{B}{2} (\rho^2 - 1) \approx B (\rho-1).
+\end{align}
+The energy that the monolayer delivers to the nucleus is the work done by this pressure in closing the patch of area $A$. In contrast to \cref{sec-extrusion-free-energy}, we do not assume that $p$ is uniform across the patch; the work is the \emph{extensive} quantity
+\begin{align}
+    \label{eq:work-extensive}
+    \Delta E_e = W = \int_A \d^2\r\; p(\r) .
+\end{align}
+This distinction matters, because $W$ is a sum of many partly independent contributions and therefore has a different statistics from the local $p$.
+
+\paragraph{Statistics of the work.} Writing $p = \la p\ra + \delta p$ with $\delta p = B\,\delta\rho$, the mean is $\la W\ra = \la p\ra A$ and the variance is
+\begin{align}
+    \label{eq:var-work}
+    \Var[W] = \int_A\!\d^2\r \int_A\!\d^2\r'\; C_p(\r,\r')
+    \;\simeq\; A \int\!\d^2\bs w\; C_p(\bs w),
+\end{align}
+the last step holding when the patch is large compared with the correlation length of the noise. The equal-time correlator of \cref{sec-iso} is $C_\rho(\bs w) = \sigmarho \exp(-w^2/2\elln^2)$, whose integral is $\sigmarho\,2\pi\elln^2$, so the correlation area is $2\pi\elln^2$ and
+\begin{align}
+    \label{eq:var-work-2}
+    \Var[W] = A\,B^2\sigmarho\,2\pi\elln^2
+    = A\,B^2\,\frac{\zeta}{2\pi B\rho_0\elln^2}\,2\pi\elln^2
+    = \frac{A\,B\,\zeta}{\rho_0} .
+\end{align}
+\emph{The resolution scale $\elln$ cancels.} This is the central structural difference between the two models. In \cref{sec-extrusion-free-energy} the threshold is placed on a field resolved at a scale $\elln$ that has to be supplied from outside; here the observable is an integral over the nucleus, its variance is fixed by the integral of the noise correlator rather than by its width, and no such scale survives. Equivalently: the variance of the \emph{area-averaged} density, $\Var[\delta\rho_A] = \Var[W]/(A^2B^2) = \zeta/(B\rho_0 A)$, is exactly what \eqref{eq:iso-gauss} returns if the smoothing scale is set to the nucleus scale,
+\begin{align}
+    \label{eq:ell-A}
+    \ell_A \equiv \sqrt{A/2\pi},
+    \qquad\text{so that}\qquad
+    \Var[\delta\rho_A] = \frac{\zeta}{2\pi B\rho_0\ell_A^2} .
+\end{align}
+The whole calculation of \cref{sec-rho-only} may therefore be carried out unchanged with $\elln\to\ell_A$: the nucleus size replaces the noise correlation length, and the latter is irrelevant as long as $\elln\ll\ell_A$. This is the regime we expect, the noise correlation length plausibly being a fraction of a cell diameter.
+
+\paragraph{The threshold.} Nucleation of a patch of area $A$ becomes possible when $\Delta E\le0$ in \eqref{eq:virtual-work}. For a circular patch, $\ell = 2\sqrt{\pi A}$, this reads $W \ge \Delta E_0(A)$ with
+\begin{align}
+    \label{eq:barrier-of-A}
+    \Delta E_0(A) = 2(\gamma+W_c)\,h\sqrt{\pi A} \;+\; (W_s-W_c)\,A .
+\end{align}
+Neglecting $\la W\ra$ against its fluctuation (justified below), the reduced threshold is
+\begin{align}
+    \label{eq:u-model2}
+    \boxed{\;
+    u(A) = \frac{\Delta E_0(A)}{\sqrt{\Var[W]}}
+    = \underbrace{2(\gamma+W_c)\,h\sqrt{\frac{\pi\rho_0}{B\zeta}}}_{\text{independent of }A}
+    \;+\;(W_s-W_c)\sqrt{\frac{A\rho_0}{B\zeta}} .
+    \;}
+\end{align}
+The leading term does not depend on the nucleus size at all: the barrier grows as $\sqrt A$ through the perimeter and so does the typical work fluctuation, and the two cancel. The nucleus size is therefore selected by the sub-leading term, and if the extruded cell gains adhesion ($W_s<W_c$) then $u$ decreases with $A$ and large nuclei are favoured. Inverting the leading term,
+\begin{align}
+    \label{eq:gamma-from-u}
+    \gamma + W_c = \frac{u}{2h}\sqrt{\frac{B\zeta}{\pi\rho_0}} ,
+\end{align}
+which contains neither $\elln$ nor $A$. With the parameters of \cref{sec-parameter-choice} and $h = 0.5~\micron$ this is $\gamma+W_c = 326\,u~\Pa\cdot\micron$.
+
+\paragraph{Contrast with the first model.} Repeating the same step for \cref{sec-extrusion-free-energy}, where the threshold is $\tfrac12B\,\delta\rho_A^2 > \ecrit$ with $\ecrit = \Delta E_0(A)/A$, gives
+\begin{align}
+    \label{eq:u-model1}
+    u^2 = \frac{2\ecrit}{B\Var[\delta\rho_A]}
+    = \frac{4\rho_0(\gamma+W_c)h\sqrt{\pi A}}{\zeta} + \frac{2\rho_0 A\,(W_s-W_c)}{\zeta} .
+\end{align}
+Here $u$ grows as $A^{1/4}$, so the first model is always driven to the smallest admissible nucleus, one cell. The two models thus differ in three ways that can be checked: the first retains $\elln$ and the second does not; the first selects a one-cell nucleus and the second does not fix the size at leading order; and, as \eqref{eq:u-model1} and \eqref{eq:gamma-from-u} show, $\ecrit$ of the first model is independent of $B$ whereas the tension required by the second scales as $\sqrt B$.

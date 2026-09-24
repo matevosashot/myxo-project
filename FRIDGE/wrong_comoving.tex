@@ -1,0 +1,89 @@
+
+
+\subsection{Noiseless dynamics}
+\label{sec-noiseless-dynamics}
+In this section we will drop the noise terms $f_\rho(\r, t)$ and $\f^Q(\r, t)$ from \cref{rho-equation,Q-equation}. As we assume almost incomtressible system (large bulk modulus $B\gg 1$), we can neglect couple of terms in \cref{rho-equation,Q-equation}: all the terms having a single factor $\nabla^n \rho$ can be neglected, except when $B$ is also a factor. For example, we keep $B \nabla^2 \rho$ but neglect $B \nabla \rho \cdot \nabla \rho$ or $\zeta \nabla^2 \rho$.
+With this approximation, we get 
+\begin{subequations}
+    \label{equations-2}
+\begin{align}
+    \label{rho-equation-2}
+    \partial_t \rho =& \frac{B}{\xi_0}\nabla^2 \rho - \frac{1}{\xi_0} \nabla\cdot \left(\Q:\nabla \H\right) + \frac{\zeta}{\xi_0} \nabla\nabla:\Q + f_\rho(\r, t)
+    \\
+    \label{Q-equation-2}
+    \partial_t \Q =& \frac{B}{\xi_0} \nabla\cdot \left(\Q \nabla \rho\right) 
+    -\frac{1}{\xi_0} \nabla^2 \H + \frac{4}{\xir}\H - 4\Lambda \Q
+    +\frac{\zeta}{\xi_0}\nabla^2\Q + \f^Q(\r, t)
+\end{align}
+\end{subequations}
+where we defined the nematic force field as:
+\begin{align}
+    \label{nematic-force-field}
+    \H(\r) = -\frac{\delta F}{\delta \Q(\r)} = -a \Q - b (\Q:\Q) \Q + K \nabla^2 \Q
+\end{align}
+
+Next, we will drop the translational flux due to the nematic force field. $\frac{1}{\xi_0} \nabla\cdot \left(\Q:\nabla \H\right)$ in \cref{rho-equation-2} and $\frac{1}{\xi_0} \nabla^2 \H$ are conjugate to each other and satisfy the Onsager symmetry. We drom them because they introduce 4th order derivatives of $\Q$, which is infeasible to solve numerically.
+
+However, if we fix the nematic order parameter, we can find a solution for the density equation. Below we show that the rotational flux terms in \cref{rho-equation-2} is negligible for the parameters of interest.
+
+\begin{figure}[h!]
+    \centering
+    % \includegraphics[width=0.5\textwidth]{media/rho_compare_slice.pdf}
+    \caption{Solution of $\rho$ with fixed nematic order parameter $Q(\r)$}
+    \label{fig:steady_state}
+\end{figure}
+
+Additionally, due to the translational flux from density and nematic order parameter coupling, the defect core displaces or moves with constant velocity, depending on boundary conditions. In order to stabilize the position of the defect core, we write down the equations in the comoving frame.
+In the comoving frame, we replace $\rho(t,\r)\to\rho(\r-\u t)$ and $Q(t,\r)\to Q(\r-\u t)$. 
+So insead of time derivatives, we have $\partial_t-(\u \cdot \nabla)$. Let's consider the \cref{Q-equation-2} first:
+\begin{align}
+    \partial_t-(\u \cdot \nabla) \Q =& \frac{B}{\xi_0} (\nabla \rho \cdot\nabla)\Q +\frac{B}{\xi_0}\Q \nabla^2 \rho
+   + \frac{4}{\xir}\H - 4\Lambda \Q
+    +\frac{\zeta}{\xi_0}\nabla^2\Q
+\end{align}
+At the core of the defect, $\Q=0$ and $\nabla^2\Q=0$, therefore, only the first term on the right-hand side survives.
+From the condition that the defect core does not move because of the density field coupling, we read off the comoving frame velocity $\u = -\frac{B}{\xi_0} \nabla \rho$.
+Returning to the density equation \eqref{rho-equation-2}, $\u \cdot \nabla \rho \sim O((\nabla\rho)^2)$, thus we neglect it. Finally, we introduce an active nematic force field tensor
+\begin{align}
+    \label{active-nematic-force-field}
+    \H_\text{active} =- (a+\Lambda \xir) \Q - b (\Q:\Q) \Q + \left(K+\frac{\zeta\xir}{4\xi_0}\right) \nabla^2 \Q
+\end{align}
+which is \cref{nematic-force-field} with renormalized parameters due to activity. This means, instead of \cref{dcsos} we have to use the following relations:
+\begin{align}
+    \label{dcsos-renormalized}
+    \elld = \sqrt{(K+\zeta\xir/(4\xi_0))/(-a-\Lambda \xir)} \qquad S_0 = \sqrt{-(a+\Lambda \xir)/(2b)}
+\end{align}
+
+Active nematic equations in the comoving frame are:
+\begin{align}
+    \label{rho-comoving}
+    \partial_t \rho =& 
+    \frac{B}{\xi_0}\nabla^2 \rho
+     + \frac{\zeta}{\xi_0} \nabla\nabla:\Q 
+    \\
+    \label{Q-comoving}
+    \partial_t \Q =& \frac{B}{\xi_0}\Q \nabla^2 \rho
+   + \frac{4}{\xir}\H_\text{active}
+\end{align}
+In the steady state ($\partial_t \rho = 0$ and $\partial_t \Q = 0$), we solve the system of equations interatively and get the following solution:
+
+<Figure Here>
+
+\subsection{Stationary Defect}
+I want to solve
+\begin{align}
+    \partial_t Q_{ij} = -\partial_\alpha \left( Q_{ij} \frac{\zeta}{\xi_0}\partial_\beta Q_\ab \right) + \frac{4}{\xi_r} H_{ij}
+    \\
+    H_{ij} = -a' Q_{ij} - b' (Q_\ab Q_\ab) Q_{ij} + K' \nabla^2 Q_{ij}
+\end{align}
+Hier, $Q$ is a traceless and symmetric, so $Q_1 = Q_{11}$ and $Q_2 = Q_{22}$ are the independent components.
+Note that due to the first term on the right-hand side, the defect core moves. We want to view the system in the comoving frame, so that the defect core is at the origin.
+
+If we consider a defect along the x-axis, then the velocity is along the x-axis. So the velocity of the core is $u=\partial_t Q_1 / \partial_x Q_1$ evaluated at the core. In the comoving frame of velocity $\u$ along x-axis, the equation reads
+
+
+\begin{align}
+    \partial_t Q_{ij} = \partial_\alpha \left( Q_{ij} \left(u_\alpha - \frac{\zeta}{\xi_0}\partial_\beta Q_\ab \right) \right) + \frac{4}{\xi_r} H_{ij}
+\end{align}
+
+
