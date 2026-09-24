@@ -24,8 +24,8 @@
 
 
 
-% \usepackage[inline]{showlabels}
-% \renewcommand{\showlabelfont}{\small\ttfamily\color{lightgray}} % Custom label appearance
+\usepackage[inline]{showlabels}
+\renewcommand{\showlabelfont}{\small\ttfamily\color{lightgray}} % Custom label appearance
 
 % Ricard's edits
 \newcommand{\raz}{\textcolor{purple}}
@@ -607,26 +607,26 @@ First, the ``known'' parameters that we get from the experimental data:
     \quad
     \xi_0 = 5 ~\Pa \cdot \minute / \micron,
     \quad
-    \zeta = 10 ~\Pa \cdot \micron,
+    \zeta = 8 ~\Pa \cdot \micron,
     \\
     \quad
-    \elld = 0.8 ~\micron,
+    \elld = 1 ~\micron,
     \quad
     S_0 = 0.9,
     \quad
     \epsilon = 0,
 \end{gather}
 We do not consider unisotropic friction in our model, setting $\epsilon = 0$.
-For the defect core size we follow Ref.~\cite{han2025local}, which gives $\elld = 0.8~\micron$, rather than the larger $\elld = 2.5 \pm 0.1~\micron$ of Ref.~\cite{copenhagen}; the remaining entries of this group are taken from Ref.~\cite{copenhagen} and from our own estimates, so the set is deliberately mixed.
+For the defect core size we follow Ref.~\cite{han2025local}, which gives $\elld \simeq 1~\micron$, rather than the larger $\elld = 2.5 \pm 0.1~\micron$ of Ref.~\cite{copenhagen}; the remaining entries of this group are taken from Ref.~\cite{copenhagen} and from our own estimates, so the set is deliberately mixed.
 The next group is the parameters that we guess:
 \begin{gather}
-    B = 10000 ~\Pa \cdot \micron,
+    B = 2\cdot10^{5} ~\Pa \cdot \micron,
     \quad
     \gamma = 8 ~\minute^{-1},
     \quad
     \Lambda = 0.1 ~\minute^{-1},
 \end{gather}
-Here, $\gamma$ is the relaxation rate of the nematic order parameter.
+Here, $\gamma$ is the relaxation rate of the nematic order parameter. (Not to be confused with the surface tension of \cref{sec-extrusion}, for which we reserve $\gamma_{\rm w}$, nor with $\gamma_0 = B/\xi_0 = 4\cdot10^{4}~\micron^2/\minute$, the density relaxation coefficient of \eqref{eq:sde}.)
 If we impose Fluctuation-Dissipation Theorem on the rotational diffusion coefficient $\Lambda$ in \cref{langevin-equations-angle}, then
 \begin{align}
     \Lambda = \frac{\kB T}{(\xir/\rho_0)}
@@ -644,16 +644,16 @@ Then, for the model parameters we infer the following values:
 \begin{gather}
     \rho_0 = 0.3 ~\micron^{-2},
     \qquad
-    B = 10000 ~\Pa \cdot \micron,
+    B = 2\cdot10^{5} ~\Pa \cdot \micron,
     \qquad
     \\
     a = -0.172 ~\Pa \cdot \micron,
     \qquad
     b = 0.1 ~\Pa \cdot \micron,
     \qquad
-    K = 0.0537 ~\Pa \cdot \micron^3,
+    K = 0.122 ~\Pa \cdot \micron^3,
     \\
-    \zeta = 10 ~\Pa \cdot \micron,
+    \zeta = 8 ~\Pa \cdot \micron,
     \qquad
     \xi_0 = 5 ~\Pa \cdot \minute / \micron,
     \qquad
@@ -668,9 +668,9 @@ These are the \emph{bare} free-energy parameters, i.e.\ the $a$, $b$, $K$ that s
     \qquad
     b' = b,
     \qquad
-    K' = K + \frac{\zeta\xir}{4\xi_0} = 0.1037 ~\Pa \cdot \micron^3,
+    K' = K + \frac{\zeta\xir}{4\xi_0} = 0.162 ~\Pa \cdot \micron^3,
 \end{align}
-from which $\elld = \sqrt{K'/(-a')} = 0.8~\micron$ and $S_0 = \sqrt{-a'/(2b')} = 0.9$ as required. It is worth keeping the primes visible: $a'$ is fixed by $S_0$ and $b$ alone and so does not move when $\elld$ is changed, whereas $K$ and $K'$ both do.
+from which $\elld = \sqrt{K'/(-a')} = 1~\micron$ and $S_0 = \sqrt{-a'/(2b')} = 0.9$ as required. It is worth keeping the primes visible: $a'$ is fixed by $S_0$ and $b$ alone and so does not move when $\elld$ is changed, whereas $K$ and $K'$ both do.
 
 
 $k_B T = 4.1 \cdot 10^{-3} ~\Pa \cdot \micron^3$
@@ -744,6 +744,7 @@ Active nematic equations in the comoving frame are:
 \end{align}
 In the steady state ($\partial_t \rho = 0$ and $\partial_t \Q = 0$), we solve the system of equations interatively and get the following solution:
 
+We obtain numerically $u_x=0.2033~\micron/\minute$ and $u_y=4.2\times10^{-5}~\micron/\minute$.
 
 \subsection{Fluctuations around the steady state}
 Let the steady state solution be $\rho_\ss(\r)$ and $Q_\ss(\r)$. We perturb the solution around the steady state as $\rho(\r,t) = \rho_\ss(\r) + \delta\rho(\r,t)$ and $Q(\r,t) = Q_\ss(\r) + \delta Q(\r,t)$. We linearize the comoving-frame equations \cref{rho-comoving,Q-comoving} around the steady state, restoring the noise dropped in \cref{sec-noiseless-dynamics}:
@@ -830,6 +831,14 @@ We will use the Pade approximation of the solution:
     \\
     &S_\pade(r) = S_0 f_\pade(r/\elld)  \qquad f_\pade(x) = x \sqrt{\frac{0.34 + 0.07 x^2}{1 + 0.41 x^2+0.07 x^4}}
 \end{align}
+Here is better pade approximation:
+% fPade[z_] := 
+%   Sqrt[(0.34010999 + 0.04516965 z + 0.00233656 z^2)/(1 + 
+%       0.38387160 z + 0.04750621 z^2 + 0.00233656 z^3)];
+\begin{align}
+    f_\pade(x) = x \sqrt{\frac{0.34010999 + 0.04516965 x + 0.00233656 x^2}{1 + 0.38387160 x + 0.04750621 x^2 + 0.00233656 x^3}}
+\end{align}
+
 where $(r, \phi)$ are the polar coordinates. In this section, to simplify the notation, we will drop the subscript $\pade$ and write $\Q(\r) = \Q_\pade(\r)$.
 
 Then we solve \cref{rho-comoving} with the nematic field $\Q(\r)$:
@@ -1100,6 +1109,14 @@ Summing \eqref{eq:iso-gauss} and \eqref{eq:aniso-kernel}:
 This is the central result of this section: exact at leading order in $1/B$, and containing exactly one length that is not a model parameter already fixed in \cref{sec-noiseless-dynamics} --- the cutoff $\elln$, which is a property of the material rather than of the calculation.
 
 Let $\kappa(w)$ be the inverse Fourier transform of $\hat\Phi_{\elln}(p)$:
+\begin{align}
+    \label{eq:total-gauss-2}
+    &\la\delta\rho(\r)^2\ra_\ss =\frac{\zeta}{2\pi B\rho_0\,\elln^2}\left(1 + \delta(\r)\right)
+    \\
+    &\delta(\r) = \frac{\elln^2}{4}\bigl(\kappa\star\partial_i\partial_jQ^\ss_{ij}\bigr)(\r),
+    \qquad 
+    \kappa(w) \;=\; \frac{1-\ee^{-2w^2/\elln^2}}{2\pi w^2},
+\end{align}
 \begin{equation}
     \label{eq:total-gauss-2}
     \kappa(w) \;=\; \frac{1-\ee^{-2w^2/\elln^2}}{2\pi w^2},
@@ -1107,6 +1124,10 @@ Let $\kappa(w)$ be the inverse Fourier transform of $\hat\Phi_{\elln}(p)$:
     \la\delta\rho(\r)^2\ra_\ss =\frac{\zeta}{2\pi B\rho_0\,\elln^2} +  \frac{\zeta}{8\pi B\rho_0}\,\bigl(\kappa\star\partial_i\partial_jQ^\ss_{ij}\bigr)(\r),
 \end{equation}
 
+\begin{figure}[h!]
+    \includegraphics[width=0.6\textwidth]{figures/ln_curve}
+    \caption{Dependence of the maximum variation of the density variance on the cutoff length $\elln$. At $\elln=0.5\micron$ we have $4\%$ variation of the density variance.}
+\end{figure}
 \paragraph{The regime $\elld\gg\elln$.} The steady nematic texture varies on the defect scale, so $\tilde\Q^\ss(\bs p)$ is supported on $p\lesssim1/\elld$. Under \eqref{eq:scale-separation} we then have $p\,\elln\lesssim\elln/\elld\ll1$ over the whole support, and the filter may be replaced by its logarithmic branch \eqref{eq:K-asymptotics} throughout. Since $\ln(1/p\elln) = \ln(\elld/\elln) + \ln(1/p\elld)$ and the second term contributes at $O(1)$, the $\bs p$-integral returns the local double divergence times the logarithm:
 \begin{equation}
     \label{eq:total-gauss-asym}
@@ -1267,84 +1288,200 @@ First note that the mean active stress in the steady state is
 
 
 \section{Extrusion rate}
+\label{sec-extrusion}
 
-Say when the local energy density $\mathfrak{f}$ (defined in \cref{free-energy-choice-2}) is above the critical dreshold level $\ecrit$, the monolayer will extrude a new layer. 
-For simplicity, we will consider only the density part of the free energy density.
-The condition reads:
-\begin{align}
-    P_\text{layer}(\r) = P\left(\tfrac{1}{2}B (\rho(\r,t) - 1)^2 > \ecrit\right) 
-\end{align}
-Note that $\rho(\r,t) = \la \rho(\r,t) \ra + \delta\rho(\r,t)$, where $\delta\rho(\r,t)$ has gaussian distribution and we already determined it's variance. Note that both $\left(\la \rho(\r,t) \ra-1\right)$ and $\Var[\delta\rho(\r,t)]$ are proportional to $B^{-1}$. Therefore, for large $B$, the mean does not survive and the above condition is simplified to:
-\begin{align}
-    P_\text{layer}(\r) = P\left(\delta\rho(\r,t)^2 > 2\ecrit/ B\right) 
-\end{align}
-For Gaussian distribution, the above probability is given by can be calculated analytically (see \cref{appendix-gaussian-distribution}), however, in the case of rare events, when the $\ecrit$ is large, we can use the approximation of the tail probability:
-\begin{align}
-    P_\text{layer}(\r)
-    = \sqrt{\frac{B \sigmarho}{\pi \ecrit}}\exp\left(
-    -\frac{\ecrit}{B \sigmarho}
-    \right),
-    \qquad
-    \sigmarho \equiv \Var[\delta\rho(\r)] .
-\end{align}
-Note that $B\sigmarho$ remains finite at large $B$ (incompressibility) limit.
+\subsection{Virtual work}
 
-It is convenient to name the reduced threshold
+Let's calculate the energy required to extrude a new layer. To form a second layer, cells need to
+\begin{itemize}
+    \item detach from the substrate,
+    \item detach from neighboring cells, and
+    \item work against the surface tension of water,
+\end{itemize}
+but, at the same time, they may
+\begin{itemize}
+    \item adhere to cells in the bottom layer, and
+    \item get energy from the tension of the monolayer.
+\end{itemize}
+Thus, the energy cost of forming a second layer of cells of area $A$ and perimeter $\ell$ reads
 \begin{align}
-    \label{eq:u-def}
-    u^2(\r) \equiv \frac{2\ecrit}{B\sigmarho},
-    \qquad\text{so}\qquad
-    P_\text{layer}(\r) \equiv p_0 = \sqrt{\frac{2}{\pi}}\,\frac{\ee^{-u^2/2}}{u},
+    \label{eq:virtual-work}
+    \Delta E=W_s A+W_c \ell h+\gamma_{\rm w} \ell h-W_c A+\Delta E_e,
 \end{align}
-the rare-event regime being $u\gg1$. Both $\ecrit$ and $B\sigmarho$ are finite as $B\to\infty$, so $u$ is.
+where $W_s$ and $W_c$ are the cell-substrate and cell-cell adhesion energies, respectively, $h$ is the height of a cell layer, $\gamma_{\rm w}$ is the surface tension of water, and $\Delta E_e$ is the change in elastic strain energy of the colony due to the formation of the new layer.
 
-$p_0$ is the \emph{stationary} probability of being above threshold, not a rate. The rate follows from it by
-\begin{align}
-    \label{eq:rate-occupation}
-    \lambda = \frac{p_0}{\bar t_\mathrm{exc}},
-\end{align}
-$\bar t_\mathrm{exc}$ being the mean duration of a single excursion above $\ecrit$: the process spends a fraction $p_0$ of its time above threshold, in visits of mean length $\bar t_\mathrm{exc}$, so it must start $p_0/\bar t_\mathrm{exc}$ of them per unit time.
+In the following subsections we will consider two models for the $\Delta E_e$. Before that, we present our numerical estimates of the parameters.
 
-Both ingredients come from the temporal correlator of \cref{sec-iso}. Writing $Y_t = \delta\rho(\r,t)/\sqrt{\sigmarho}$ for the normalised field,
+\paragraph{Units.} Throughout this section energies are measured in $\Pa\cdot\micron^3 = 10^{-18}~\mathrm{J}$, so that $\kB T = 4.1\cdot10^{-3}~\Pa\cdot\micron^3$, and energies \emph{per unit area} --- which is what $W_s$, $W_c$, $\gamma_{\rm w}$, $B$ and $\ecrit$ all are --- in $\Pa\cdot\micron = 10^{-6}~\mathrm{J/m^2}$. Note the conversion
 \begin{align}
-    \label{eq:r-of-s}
-    \la Y_tY_{t+s}\ra = r(s) = \frac{1}{1+|s|/\tau_c},
-    \qquad
-    \tau_c = \frac{\elln^2}{2\gamma_0},
+    1~\mathrm{mN/m} = 1~\mathrm{mJ/m^2} = 10^{3}~\Pa\cdot\micron ,
 \end{align}
-and the threshold condition is $|Y_t|>u$. Two facts about \eqref{eq:r-of-s} at short lags are all that is needed. First, $\la(Y_{t+s}-Y_t)^2\ra = 2(1-r(s)) \simeq 2|s|/\tau_c$, so on times $\ll\tau_c$ the field diffuses with $D=1/\tau_c$. Second, regression to the mean, $\la Y_{t+s}\,|\,Y_t=u\ra = u\,r(s) \simeq u(1-s/\tau_c)$, gives a restoring drift $v = u/\tau_c$ at the threshold.
+which must be applied to every adhesion or surface-tension value quoted in the soft-matter literature.
 
-An excursion is therefore a biased random walk started at the level $u$ and pushed back at speed $v$. It rises to the height at which the two balance, $\Delta \sim D/v = 1/u$, and is pushed back through it in
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c|l}
+        \hline
+        Parameter & Estimate & Plausible range & Origin \\
+        \hline
+        $\gamma_{\rm w}~(\Pa\cdot\micron)$ & $7.2\cdot10^{4}$ & $10^{3}$--$7.2\cdot10^{4}$ & air--water, $25^\circ$C; reduced by surfactant \\
+        $W_c~(\Pa\cdot\micron)$ & $4\cdot10^{3}$ & $3\cdot10^{3}$--$4.5\cdot10^{4}$ & tissue surface tension, by analogy \\
+        $W_s~(\Pa\cdot\micron)$ & $2\cdot10^{3}$ & $10^{-3}$--$4\cdot10^{4}$ & bacterial adhesion thermodynamics \\
+        $B~(\Pa\cdot\micron)$ & $10^{4}$ & $10^{2}$--$2\cdot10^{4}$ & guessed; see \cref{sec-parameter-choice} \\
+        $h~(\micron)$ & $0.5$ & $0.4$--$0.7$ & cell diameter \\
+        \hline
+    \end{tabular}
+    \caption{Estimates of the parameters entering \eqref{eq:virtual-work}, in the units of this section. The ranges are wide and are discussed below; only the combinations $(\gamma_{\rm w}+W_c)$ and $(W_s-W_c)$ enter the results.}
+    \label{tab:extrusion-parameters}
+\end{table}
+
+\subsection{Parameter estimates and their ranges}
+\label{sec-extrusion-parameters}
+
+None of the quantities in \eqref{eq:virtual-work} has been measured for \emph{M.\ xanthus}. Since the conclusion of this section rests on them, we record here what each rests on, and how far it may plausibly move.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c|l}
+        \hline
+        Parameter & Used here & Plausible range & Origin \\
+        \hline
+        $\gamma_{\rm w}~(\Pa\cdot\micron)$ & $6.5\cdot10^{4}$ & $2.5\cdot10^{4}$--$7.2\cdot10^{4}$ & air--water, reduced by surfactant \\
+        $W_c~(\Pa\cdot\micron)$ & $0$ & $0$--$4.5\cdot10^{4}$ & tissue surface tension, by analogy \\
+        $W_s~(\Pa\cdot\micron)$ & $2\cdot10^{3}$ & $0$--$4\cdot10^{4}$ & bacterial adhesion thermodynamics \\
+        $h~(\micron)$ & $0.5$ & $0.4$--$0.7$ & cell diameter \\
+        $A_\cell~(\micron^2)$ & $3$ & $3$--$3.5$ & $\simeq1/\rho_0$ \\
+        $\elln~(\micron)$ & $0.5$ & $0.2$--$1$ & noise correlation length \\
+        $B~(\Pa\cdot\micron)$ & $2\cdot10^{5}$ & --- & model parameter, not measured \\
+        \hline
+    \end{tabular}
+    \caption{Parameters entering \eqref{eq:virtual-work} and \eqref{eq:pcrit}, in the units of this section. Only the combinations $(\gamma_{\rm w}+W_c)$ and $(W_s-W_c)$ appear in the result.}
+    \label{tab:extrusion-parameters}
+\end{table}
+
+\paragraph{Surface tension $\gamma_{\rm w}$.} The air--water value is $72~\mathrm{mN/m} = 7.2\cdot10^{4}~\Pa\cdot\micron$. \emph{M.\ xanthus} excretes surfactant --- this is the basis of the surface-tension model of gliding motility, in which motility is inhibited by exogenous surfactant and non-motile mutants excrete less (Dworkin \emph{et al.}, J.\ Bacteriol.\ \textbf{155}, 1358 and 1367, 1983) --- and typical biosurfactants bring water to $25$--$35~\mathrm{mN/m}$, so the free-surface value is an upper bound. The value used here is within $10\%$ of clean water. It is worth stressing that this is only possible because the criterion of \cref{sec-nucleation-threshold} asks the barrier \emph{maximum} to descend to one cell, not the barrier itself to vanish: the latter would demand $\gamma_{\rm w}$ some three orders of magnitude smaller, which no interfacial tension between a cell and a wetting layer can be made to supply.
+
+\paragraph{Adhesion energies $W_c$ and $W_s$.} Neither has been measured for bacteria. For $W_c$ the closest analogue is the surface tension of eukaryotic cell aggregates, which satisfies $\gamma_\mathrm{tissue}\simeq W_c/2$ and runs from $1.6~\mathrm{mN/m}$ (chick embryonic neural retina) to $22.8~\mathrm{mN/m}$ (CHO), i.e.\ $W_c \lesssim 4.5\cdot10^{4}~\Pa\cdot\micron$. For $W_s$, thermodynamic (contact-angle) estimates of the adhesion free energy give $1$--$40~\mathrm{mJ/m^2}$, while single-cell measurements give $2$--$3\,\kB T$ per cell, i.e.\ $\sim3\cdot10^{-6}~\mathrm{mN/m}$ over a $3~\micron^2$ footprint; neither applies cleanly to a gliding cell with focal-adhesion complexes. We nevertheless set $W_c = 0$, on the experimental grounds that \emph{M.\ xanthus} cells show essentially no cohesive interaction with one another: the monolayer is held together by packing and by the substrate, not by cell--cell adhesion. The tissue values above are then an upper bound on how far $W_c$ could be pushed, not an estimate of it. They enter \eqref{eq:pcrit} very differently, however: $(W_c+\gamma_{\rm w})$ is multiplied by the geometric factor $\sqrt{\pi h^2/A_\cell}\simeq0.51$, whereas $(W_s-W_c)$ enters bare, and with $\gamma_{\rm w}$ of order $10^{4}$ the first term dominates. Setting $W_c$ to its upper bound instead of zero changes $p_\crit$ by $+60\%$, and setting $W_s$ to zero changes it by $-6\%$.
+
+\paragraph{Bulk modulus $B$.} We do not attempt to constrain $B$ from the literature, and we do not treat it as a measured material constant. It is a \emph{model parameter}: the quadratic term $\tfrac{B}{2}(\rho-1)^2$ in \eqref{free-energy-choice-2} is how the incompressibility of the monolayer is imposed, and $B$ is the stiffness with which that constraint is enforced. There is in any case no direct measurement of the compressibility of a bacterial monolayer; the available proxies --- colony shear and compressive rheology, $\sim10^{2}$--$5\cdot10^{3}~\Pa\cdot\micron$ once converted to two dimensions; gram-negative turgor, $5\cdot10^{3}$--$2\cdot10^{4}$; the effective cell modulus fitted to the mono-to-multilayer transition in \emph{E.\ coli}, $\sim2\cdot10^{5}$; the cell-envelope Young's modulus, $\gtrsim10^{6}$ --- span four orders of magnitude and measure different things. Note also that Ref.~\cite{copenhagen} introduces the same equation of state but does not determine $B$ either: their velocity fit constrains only the product $BJ/(\xi_0\rho_0) = -0.32\pm0.04~\micron^3/\mathrm{min}^2$, with the cell flux $J$ an undetermined integration constant, so the apparent value $B\approx5\cdot10^{3}~\Pa\cdot\micron$ obtained by inserting their assumed $J=10^{-4}~(\micron\cdot\mathrm{min})^{-1}$ presupposes the extrusion flux that is being computed here. We therefore fix $B$ by the comparison of \cref{sec-layering-probability}, and report below how the result moves with it.
+
+\paragraph{Noise correlation length $\elln$.} This is the scale at which the density, and hence the pressure, is resolved; it was introduced in \cref{sec-cutoff} and is a property of the material rather than of the calculation. The estimate from matching the second moment of a rod, $\ell_\mathrm{rod}/\sqrt{12}\simeq\sqrt3~\micron$, is an upper bound: the noise correlation length may well be considerably shorter than a cell, and the scale-separation assumption \eqref{eq:scale-separation}, $\elln\ll\elld$, requires that it be. We use $\elln = 0.5~\micron$, which with $\elld = 1~\micron$ satisfies that assumption --- unlike the rod estimate, which violates it. As \cref{sec-layering-probability} shows, this is the parameter the result is most sensitive to.
+
+\subsection{The nucleation threshold}
+\label{sec-nucleation-threshold}
+
+\Cref{eq:virtual-work} has the structure of classical nucleation theory: a line cost proportional to the perimeter and a bulk gain proportional to the area. For a circular patch, $\ell = \sqrt{4\pi A}$, and writing the elastic release as the work done by the monolayer pressure, $\Delta E_e = -pA$,
 \begin{align}
-    \label{eq:t-exc}
-    \bar t_\mathrm{exc} \sim \frac{\Delta}{v} = \frac{\tau_c}{u^2}.
+    \label{eq:dE-of-A}
+    \Delta E(A) = \bigl(W_s - W_c - p\bigr)A \;+\; (W_c+\gamma_{\rm w})\,h\,\sqrt{4\pi A},
 \end{align}
-Inserting \eqref{eq:t-exc} and $p_0$ into \eqref{eq:rate-occupation} --- the exact calculation fixes the $O(1)$ constant in \eqref{eq:t-exc} to unity --- gives the extrusion rate
+which rises as $\sqrt A$ at small $A$, turns over, and falls once the area term wins. The turning point is the critical nucleus.
+
+Requiring $\Delta E(A) \le 0$ --- that the barrier be abolished outright --- is far too strong: at the surface tensions of \cref{sec-extrusion-parameters} it would need $p$ of order $10^{5}~\Pa\cdot\micron$, and the corresponding single-cell barrier is $\sim10^{8}\kB T$. The correct condition is weaker, and follows from the discreteness of the system. There is no way to assemble a nucleus of a fraction of a cell, so the continuum barrier of \eqref{eq:dE-of-A} is only meaningful down to $A\simeq A_\cell$. Once the maximum of $\Delta E$ has descended to that size, growth is downhill from the smallest object that can exist, and ordinary single-cell perturbations --- thermal motion, substrate roughness, a division event --- will complete the extrusion. The nucleation condition is therefore
 \begin{align}
-    \label{eq:clump-rate}
+    \label{eq:nucleation-condition}
+    \Delta E'(A)\big|_{A = A_\cell} = 0
+    \qquad\text{rather than}\qquad
+    \Delta E(A_\cell) = 0 .
+\end{align}
+This is the essential point of the mechanism: the fluctuating quantity is not the nucleus size but the \emph{height and position of the barrier}. Differentiating \eqref{eq:dE-of-A} and solving,
+\begin{align}
+    \label{eq:pcrit}
     \boxed{\;
-    \lambda(\r) = \frac{p_0\,u^2}{\tau_c} = \sqrt{\frac{2}{\pi}}\,\frac{u}{\tau_c}\,\ee^{-u^2/2}
-    = \frac{4\gamma_0}{\elln^2}\sqrt{\frac{\ecrit}{\pi B\sigmarho}}\;
-      \exp\left(-\frac{\ecrit}{B\sigmarho}\right).
+    p_\crit = (W_s-W_c) + \sqrt{\frac{\pi h^2}{A_\cell}}\,(W_c+\gamma_{\rm w}) .
     \;}
 \end{align}
-Since excursions separated by more than $\tau_c$ are independent and each is rare, they form a Poisson process, and the probability that a patch has extruded by time $T$ is
+With the parameters of \cref{tab:extrusion-parameters} the geometric factor is $\sqrt{\pi h^2/A_\cell} = 0.51$ and
 \begin{align}
-    \label{eq:h-of-T}
-    h(T) = 1-(1-p_0)\,\ee^{-\lambda T} \simeq 1 - \ee^{-\lambda T}.
+    \label{eq:pcrit-value}
+    p_\crit = 3.5\cdot10^{4}~\Pa\cdot\micron .
+\end{align}
+Note that $p_\crit$ involves no property of the fluctuations: it is fixed entirely by adhesion, surface tension and cell geometry. All the physics of \cref{sec-rho-only} enters through the statistics of $p$, to which we now turn.
+
+\subsection{Layering probability}
+\label{sec-layering-probability}
+
+The pressure follows from the free energy density as $p = \rho\,\mathfrak{f}' - \mathfrak{f}$, which for the quadratic form of \eqref{free-energy-choice-2} and $\rho$ close to unity is
+\begin{align}
+    \label{eq:pressure-of-rho}
+    p = \frac{B}{2}\left(\rho^2-1\right) \simeq B\,(\rho-1) = B\,\delta\rho + O(\delta\rho^2).
+\end{align}
+The density fluctuation is Gaussian with the variance computed in \cref{sec-total}, so the pressure is Gaussian with
+\begin{align}
+    \label{eq:sigma-p}
+    \sigma_p^2(\r) = B^2\,\sigmarho(\r),
+    \qquad
+    \sigma_{p,\infty}^2 = \frac{B\zeta}{2\pi\rho_0\elln^2},
+\end{align}
+the second expression being the far-field pedestal \eqref{eq:iso-gauss}. The mean is negligible against this: $\rho_\ss - 1 = O(\zeta/B)$, some two orders of magnitude below $\sqrt{\sigmarho}$, so the signal is carried by the fluctuations and not by the mean compression. With the parameters of \cref{tab:extrusion-parameters},
+\begin{align}
+    \sigma_{p,\infty} = 1.8\cdot10^{3}~\Pa\cdot\micron,
+    \qquad
+    u_\infty \equiv \frac{p_\crit}{\sigma_{p,\infty}} = 19.1 .
+\end{align}
+The layering probability at a point is then the Gaussian tail
+\begin{align}
+    \label{eq:p-layer}
+    p_\text{layer}(\r) = \mathbb{P}\bigl(p(\r) > p_\crit\bigr)
+    \simeq \frac{1}{\sqrt{2\pi}\,u(\r)}\exp\left(-\frac{u^2(\r)}{2}\right),
+    \qquad
+    u(\r) = \frac{p_\crit}{\sigma_p(\r)} .
 \end{align}
 
-The prefactor of \eqref{eq:clump-rate} is $\gamma_0/\elln^2 = 1/2\tau_c$: the attempt frequency is set by the microscopic correlation time, short in the incompressibility limit, while all the dependence on the texture sits in $\sigmarho$ of \eqref{eq:iso-gauss} and \eqref{eq:aniso-kernel} inside the exponential. Extrusion is therefore exponentially sensitive to the anisotropic modulation of the variance, even though that modulation is only a few percent of the pedestal. The derivation assumes $u\gg1$, i.e.\ $\ecrit\gg B\sigmarho/2$, with relative corrections $O(1/u^2)$ in the prefactor.
+\paragraph{What is compared with experiment.} The measurement of Ref.~\cite{copenhagen} is a \emph{ratio}: the distribution of distances between defects and new layers, normalised by the same distribution for random points in the monolayer. The absolute rate does not enter, and neither does the attempt frequency. Since $\lambda \propto p_\text{layer}/\tau_c$ with $\tau_c$ position-independent, the ratio of rates equals the ratio of probabilities up to the slowly varying prefactor $u(\r_\mathrm{ref})/u(\r)$, and
+\begin{align}
+    \label{eq:R-ratio}
+    \frac{p_\text{layer}(\r)}{p_\text{layer}(\infty)}
+    \;\simeq\;
+    \exp\left(
+        -\frac{p_\crit^2}{2\sigma_p^2(\r)}
+        +\frac{p_\crit^2}{2\sigma_{p,\infty}^2}
+    \right)
+    = \exp\left[\frac{u_\infty^2}{2}\left(1 - \frac{\sigma_{p,\infty}^2}{\sigma_p^2(\r)}\right)\right].
+\end{align}
+Everything therefore depends on the \emph{relative} modulation of the variance around the defect, amplified by the large factor $u_\infty^2/2$. This is why a modulation of a few percent produces an enhancement of two orders of magnitude, and it is the sense in which extrusion is exponentially sensitive to the defect texture.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/varrho.png}
+    \caption{\footnotesize Equal-point density variance around a $+1/2$ defect, normalised by the isotropic pedestal \eqref{eq:iso-gauss}, along the defect axis ($y=0$) and across it ($x=0$). Shown at $\elln=\sqrt3~\micron$, where the modulation is $\pm10.9\%$; at the operating point $\elln=0.5~\micron$ the shape is the same and the amplitude is $\pm3.1\%$. Dashed, the analytic result \eqref{eq:total-gauss}; solid, the Lyapunov solver of \cref{sec-ou}, which retains $\delta\Q\ne0$.}
+    \label{fig:varrho}
+\end{figure}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.62\textwidth]{figures/ln_curve.png}
+    \caption{\footnotesize Peak relative modulation $\nu_0$ of the density variance around a $+1/2$ defect, as a function of the resolution scale $\elln$, from \eqref{eq:total-gauss}. Dashed, the small-$\elln$ behaviour $\nu_0\propto\elln^2$ inherited from the logarithmic branch of the filter \eqref{eq:K-asymptotics}; the curve falls below it and saturates as $\elln$ approaches and exceeds $\elld = 1~\micron$. The gridlines mark the operating point, $\elln = 0.5~\micron$ and $\nu_0 = 3.1\%$.}
+    \label{fig:nu0}
+\end{figure}
 
+\paragraph{The variance modulation.} \Cref{fig:varrho} shows $\sigmarho(\r)/\sigmarho(\infty)$ from \eqref{eq:total-gauss}. It is a dipole: the anisotropic term vanishes at the core by symmetry, and the maximum sits about $2~\micron$ away on one side with the minimum the same distance on the other. Writing the peak modulation as $1+\nu_0$, the filter of \eqref{eq:aniso-kernel} makes $\nu_0$ grow with the resolution scale,
+as shown in \cref{fig:nu0}. For $\elln$ well below the defect scale the filter \eqref{eq:K-asymptotics} is logarithmic and $\nu_0\propto\elln^2$ up to that logarithm; the growth then slows and saturates once $\elln$ exceeds $\elld$ and the filter begins to average the dipole over more than its own structure. At the operating point $\elln = 0.5~\micron$ we have $\nu_0 = 3.1\%$, with the peak at $r\simeq1.5~\micron$, and \eqref{eq:R-ratio} gives
+\begin{align}
+    \label{eq:R-value}
+    \frac{p_\text{layer}(\r_\mathrm{max})}{p_\text{layer}(\infty)}
+    = \exp\left[\frac{u_\infty^2}{2}\,\frac{\nu_0}{1+\nu_0}\right] \simeq 2.3\cdot10^{2},
+\end{align}
+against a first-bin value of $\simeq2\cdot10^{2}$ in Fig.~3f of Ref.~\cite{copenhagen}, whose error bar spans $40$--$500$.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/final.png}
+    \caption{\footnotesize Layering probability around a $+1/2$ defect, normalised by its far-field value, against the experimental distribution of Fig.~3f of Ref.~\cite{copenhagen}. Blue: distance measured from the point of maximum pressure variance. Orange: distance measured from the defect core, where the anisotropic contribution vanishes by symmetry and the probability is consequently suppressed. The experimental histogram bins by distance from the core, but the layering events themselves occur at the maximum; the two curves bracket the two readings of that normalisation. Computed with $B = 2\cdot10^{5}~\Pa\cdot\micron$ and $\elln = 0.5~\micron$, all other parameters as in \cref{tab:extrusion-parameters}.}
+    \label{fig:final}
+\end{figure}
 
+\paragraph{Sensitivity.} \Cref{eq:R-ratio} depends on the parameters only through the single group
+\begin{align}
+    \label{eq:R-group}
+    \ln\frac{p_\text{layer}(\r_\mathrm{max})}{p_\text{layer}(\infty)}
+    = \frac{p_\crit^2}{2}\,\frac{2\pi\rho_0\elln^2}{B\zeta}\,\frac{\nu_0(\elln)}{1+\nu_0(\elln)} ,
+\end{align}
+so that $B$ enters only as $1/B$ and always in the combination $p_\crit^2\elln^2\nu_0(\elln)/(B\zeta)$. It is that combination, not $B$ by itself, that the comparison fixes --- and since $\elln$ appears in it both explicitly and through $\nu_0$, it is doing at least as much work as $B$. The fit should be described as having two adjustable parameters, $B$ and $\elln$, not one. Because $\nu_0$ is itself close to linear in $\elln$, the logarithm of the ratio scales roughly as $\elln^{3}$, and the sensitivity is severe:
+Since $u_\infty\propto\elln$ and, at small $\elln$, $\nu_0\propto\elln^2$, the exponent grows as $\elln^{4}$ up to the logarithm; over the range of \cref{fig:nu0} around the operating point the effective power is closer to $\elln^{3.3}$, $u_\infty$ running from $7.7$ at $\elln = 0.2~\micron$ to $26.8$ at $\elln=0.7~\micron$. Halving $\elln$ from the operating point takes the ratio from $2.3\cdot10^{2}$ to below $2$; raising it to $0.7~\micron$ takes it past $10^{6}$.
+Varying the other entries of \cref{tab:extrusion-parameters} one at a time about the quoted fit changes the ratio by: $\zeta = 10$ instead of $8$, $\times0.34$; $\gamma_{\rm w} = 7.2\cdot10^{4}$, $\times3.2$; $\gamma_{\rm w} = 4\cdot10^{4}$, $\times0.04$; $W_c = 4\cdot10^{3}$, $\times0.56$; $W_s = 0$, $\times0.55$; $A_\cell = 3.5~\micron^2$, $\times0.48$; $h = 0.4$, $\times0.16$; $h = 0.6$, $\times9.4$; $B = 10^{5}$, $\times2.3\cdot10^{2}$; $B = 10^{6}$, $\times0.013$.
 
-
-
-
-
+Two conclusions follow, and they should be stated plainly. The agreement in \cref{fig:final} is a fit of the group \eqref{eq:R-group} --- in practice of $B$ and $\elln$ --- and not a prediction; the remaining entries of \cref{tab:extrusion-parameters} are literature estimates, but the result is exponentially sensitive to several of them, most acutely to $\elln$ and $h$. What is genuinely free of fitting is the \emph{shape} of the curves in \cref{fig:final}: the spatial profile of $\sigmarho(\r)$ comes from the $E_1$-filtered $\partial_i\partial_jQ^\ss_{ij}$ of \eqref{eq:aniso-kernel} with no freedom at all, and it is the decay over $\sim5~\micron$, the position of the peak at $r\simeq1.5~\micron$,, and the dipolar structure that suppresses the probability at the core itself, that a competing mechanism would also have to reproduce.
 
 
 
