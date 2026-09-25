@@ -189,18 +189,33 @@ collects what is fitted, what is not, and what would falsify the mechanism.
 * Formation of a new layer of cells requires energy. 
 We assume that
 cells adhere both to the substrate and to other cells. In addition, we assume that water
-completely wets the colony, see \cref{fig:nucleation}(a). Let $\Wc$ and $\Ws$ and $\gammaw$ are 
-In orderto form a second layer, cells need to: (1) detach from the substrate, 
-• detach from neighboring cells, and
-• work against the surface tension of water,
-but, at the same time, they may
-• adhere to cells in the bottom layer, and
-• release pressure in the colony.
-Thus, the energy cost of forming a second layer of cells of area Aand perimeter preads
+completely wets the colony, see \cref{fig:nucleation}(a). Let $\Wc$ and $\Ws$ be cell-cell and cell-substrate adhesion energies, respectively, and $\gammaw$ be the surface tension of water.
 
-* energy breakdown:
+Suppose a patch of cells of area $A$ and perimeter $\ell$ formes a new layer.
+In orderto form a second layer, cells need to (see \cref{fig:nucleation}(a) for illustration) (1) detach from the substrate, 
+(2) detach from neighboring cells,
+(3) work against the surface tension of water. This requires energy $\Ws A + \Wc \ell h + \gammaw \ell h$, where $h$ is the height of the monolayer, $\ell$ is the perimeter of the patch.
+At the same time, the bottom layer relaxes to fill the space left by the new layer. The energy gain is from (4) adhering to the bottom layer, (5) work done by the pressure, $\Ws A + p A$, where $p$ is the 2-dimensional pressure of the monolayer.
+Thus, the energy cost of forming a second layer of cells of area $A$ and perimeter $\ell$ is 
+\begin{align}
+    \label{eq:virtual-work-0}
+    \Delta E = \Ws A + \Wc\ell h + \gammaw\ell h - \Wc A - p A,
+\end{align}
+Assuming that the path is of circular shape, the perimeter reads $\ell = \sqrt{4\pi A}$. Thus the energy cost becomes function of patch area $A$ and monolayer pressure $p$.
 
 
+\prompt{in addition to the above, this section should also include this:}
+* define the criticality condition
+* pressure in the monolayer fluctuates
+* barier fluctuates (see \cref{fig:nucleation}(b))
+* Probability(layer formation) $\sim$ probability($p > p_\crit$)
+* motivate the calculation of pressure fluctuations that happens in the following sections, starting from microscopic model.
+* we revisit this in section \cref{sec:nucleation-2} with calculation of the probability. The results are already shown in \cref{fig:main}(c)
+
+\prompt{Section sec:nucleation-old should be deleted, its content should be partially here, and partially in sec:nucleation-2}
+
+
+\prompt{Below is a content from section nucleation/Report 9.pdf. This is usefull to use as a discussion of this section and in formulating and explaining the criticality condition}
 In this report, I present a physical picture for the nucleation of cell layers in bacterial
 colonies. In Report 1, I showed that there is an energy barrier for the formation of a
 new cell layer. Hence, a layer larger than a critical radius needs to be assembled by
@@ -388,7 +403,7 @@ ${V(\r-\r',\theta,\theta')}$ in any detail, so we do not attempt to evaluate
 $\varrho$ only through the two moments \cref{eq:density-definition},
 \begin{align}
     \label{eq:free-energy-parametrisation}
-    \calF[\varrho] = F[\rho,\Q] = \int\!\d\r\;\mathfrak f\bigl(\rho(\r),\Q(\r)\new{,\partial_\r\Q(\r)}\bigr),
+    \calF[\varrho] = F[\rho,\Q] = \int\!\d\r\;\mathfrak f\bigl(\rho(\r),\Q(\r),\partial_\r\Q(\r)\bigr),
 \end{align}
 which is both a physical assumption and a choice of parametrization. It gives a chain
 rule,
@@ -405,7 +420,7 @@ For the free energy density $\mathfrak f$ we take the sum of an incompressibilit
 nematic term,
 \begin{align}
     \label{eq:free-energy-choice}
-    \mathfrak f(\rho,\Q\new{,\partial_\r\Q}) = {}& \frac B2(\rho-1)^2 + \frac a2(\Q\!:\!\Q)
+    \mathfrak f(\rho,\Q,\partial_\r\Q) = {}& \frac B2(\rho-1)^2 + \frac a2(\Q\!:\!\Q)
     + \frac b4(\Q\!:\!\Q)^2
     \nonumber\\
     &+ \frac K2(\partial_\r\Q)\!:\!(\partial_\r\Q).
@@ -455,7 +470,7 @@ an isotropic piece proportional to $\rho$ and an anisotropic piece proportional 
 Both scale with $\zeta$ of \cref{eq:active-force}, so the noise strength is set by the
 same reversal rate $\frev$ and self-propulsion speed $v_0$ as the active force. The
 rotational noise does not appear: every term it produces is a $\theta$ derivative, and
-$\int\!\d\theta\,\partial_\theta(\cdot)=0$. \new{The n}oise $\bEta_{\rho}$ sits inside the
+$\int\!\d\theta\,\partial_\theta(\cdot)=0$. The noise $\bEta_{\rho}$ sits inside the
 divergence, so $\int\!\d\r\,\rho$ is constant in every realization of the noise, not only
 in the mean.
 
@@ -466,7 +481,7 @@ is the velocity field, and set $\rho\approx1$ in the incompressible limit, we ge
   \label{eq:velocity}
   \xi_0 \v = -B\nabla\rho + \Q\!:\!\nabla\H + \fa + \xi_0 \bEta_{\rho},
 \end{align}
-where the friction force density $\xi_0 \v$ on the cell is balanced by the passive interactions, \new{the} active nematic force and the noise. $B\nabla\rho$ acts like a pressure gradient.
+where the friction force density $\xi_0 \v$ on the cell is balanced by the passive interactions, the active nematic force and the noise. $B\nabla\rho$ acts like a pressure gradient.
 The elastic force $\Q\!:\!\nabla\H$ redistributes
 cells to relieve orientational stress. Only $\fa$ does not derive from the free energy $F$. Since $\fa\propto\nabla\!\cdot\!\Q$, it vanishes in a
 uniform texture and is largest where the texture bends fastest, at a defect core
@@ -478,8 +493,8 @@ the system: angular averages like $\la\hat\Q\hat\Q\ra_\varrho$ appear, and $\rho
 the lowest-order maximum-entropy closure,
 $\langle\hat\Q\hat\Q\rangle_\varrho \simeq \rho\,\J$
 with $\J$ the rank-four identity on symmetric traceless tensors. It is accurate to
-\new{relative} $O(S^2)$ in the strength of the nematic order \new{$S=\sqrt{(\Q\!:\!\Q)/2}$}. \Cref{app:closure} derives the
-higher-order terms and \new{the limitations of this closure}.
+relative $O(S^2)$ in the strength of the nematic order $S=\sqrt{(\Q\!:\!\Q)/2}$. \Cref{app:closure} derives the
+higher-order terms and the limitations of this closure.
 
 With the closure in place we obtain
 \begin{align}
@@ -498,12 +513,15 @@ nematic force field with coefficients renormalized by the rotational noise and t
   \nonumber\\
   a' &= a+\Lambda\xir, \qquad K' = K+{\zeta\xir}/({4\xi_0}).
 \end{align}
+It is $a'$ and $K'$, not the bare $a$ and $K$, that set the defect profile solved for in
+\cref{sec:defect-steady}.
 
 The relaxational and the transport terms of \cref{eq:model-Q} do different jobs. The
 relaxational term $\tfrac4{\xir}\Ha$ carries no flux divergence. It relaxes $\Q$ toward a
-\new{minimizer} of the effective free energy and fixes the shape of the defect. The transport
+minimizer of the effective free energy and fixes the shape of the defect. The transport
 terms leave that shape almost unchanged, but through $\Q B\nabla\rho$ they couple the
-texture to the density field and translate the defect.
+texture to the density field and translate the
+defect. 
 
 The two noises of \cref{eq:model-Q} enter differently. $\bEta^\Q$ is a flux, the
 rank-three tensor $\eta^Q_{\ab i}=\int\!\d\theta\,\sqrt{\varrho_t}\,\hat
@@ -519,21 +537,24 @@ which we cannot treat either analytically or numerically. The two terms must
 go together, because they are Onsager conjugates: dropping one alone would break
 reciprocity. They are also the smaller of the two channels by which orientational order
 relaxes. Rods can turn in place, at a rate set by the rotational friction $\xir$, or rods
-of different orientation can be exchanged between \new{neighboring} regions, at a rate set by
+of different orientation can be exchanged between neighboring regions, at a rate set by
 the translational friction $\xi_0$. The second channel is a flux divergence and costs two
-extra powers of wavevector, so the ratio of the two rates is \new{$(k\ell_\star)^2/4$} with
+extra powers of wavevector, so the ratio of the two rates is $(k\ell_\star)^2/4$ with
 $\ell_\star=\sqrt{\xir/\xi_0}=0.14~\micron$ (\cref{app:parameters-choice}). At the defect
 core this suppresses the discarded channel by
-\new{$(\ell_\star/\elld)^2/4\simeq5\times10^{-3}$}.
+$(\ell_\star/\elld)^2/4\simeq5\times10^{-3}$.
 
 \todo{We need to understand what physics we are missing by discarding these terms.}
 
 \Cref{eq:model-rho,eq:model-Q} are the fluctuating active nematic equations this paper
 solves. Activity enters them in three places: the force $\fa$,
-the amplitude of the reversal noises $\bEta_\rho$ and $\bEta^\Q$, and the \new{renormalization} of the nematic force field $\Ha$ in \cref{eq:H-active}. The
+the amplitude of the reversal noises $\bEta_\rho$ and $\bEta^\Q$, and the renormalization of the nematic force field $\Ha$ in \cref{eq:H-active}. The
 density and the nematic field are coupled in both directions, through
 $\fa\propto\nabla\!\cdot\!\Q$ in one equation and through $\Q B\nabla\rho$ in the other.
 That coupling sets a $+1/2$ defect in motion in \cref{sec:defect-steady}.
+
+Everything that follows comes from solving \cref{eq:model-rho,eq:model-Q} at a $+1/2$
+defect, with the parameters collected in \cref{app:parameters}.
 
 % ============================================================
 \section{Fluctuations around a $+1/2$ defect}
@@ -544,12 +565,12 @@ Solving \cref{eq:model-rho,eq:model-Q} at a $+1/2$ defect takes three steps: fin
  steady state of the noiseless equations
 (\cref{sec:defect-steady}); linearize the stochastic equations around it; and solve the
 resulting linear field theory for the equal-time covariance of the fluctuations
-(\cref{sec:defect-fluct})\new{. \Cref{app:parameters} collects the parameters}.
+(\cref{sec:defect-fluct}). \Cref{app:parameters} collects the parameters.
 
 We solve \cref{eq:model-rho,eq:model-Q} numerically in
-\new{\cref{app:comoving}, and their linearization in \cref{app:lyapunov}}. The main text gives analytical solutions of simplified
+\cref{app:comoving}, and their linearization in \cref{app:lyapunov}. The main text gives analytical solutions of simplified
 equations, which agree well with the numerics. The analytical solutions also show how the
-result depends on the parameters of the model\new{; the numerical solutions do not}.
+result depends on the parameters of the model; the numerical solutions do not.
 
 \subsection{The steady state}
 \label{sec:defect-steady}
@@ -560,7 +581,7 @@ nematic order are cross-coupled. Dropping the cross-coupling term in the $\Q$ eq
 leaves a static problem:
 \begin{align}
   \label{eq:simplified-noiseless}
-  0 = \nabla\cdot\left[B\nabla\rho - \fa\right] \new{,} \qquad \Ha = 0\new{.}
+  0 = \nabla\cdot\left[B\nabla\rho - \fa\right] , \qquad \Ha = 0.
 \end{align}
 The solution of the second equation is given by a Pad\'{e} approximation \citeTODO{}:
 \begin{align}
@@ -569,7 +590,7 @@ The solution of the second equation is given by a Pad\'{e} approximation \citeTO
   S(r) = S_0 f_\pade(r/\elld)
   \nonumber\\
   \label{eq:pade-approximation}
-  f_\pade(x) = x \sqrt{\frac{0.34 + 0.07 x^2}{1 + 0.41 x^2+0.07 x^4}}\new{.}
+  f_\pade(x) = x \sqrt{\frac{0.34 + 0.07 x^2}{1 + 0.41 x^2+0.07 x^4}}.
 \end{align}
 Two scales appear. The far-field nematic order $S_0=\sqrt{-a'/(2b)}$ is the value $S(r)$
 saturates to, and the core size $\elld=\sqrt{K'/(-a')}$ is the distance over which $S$
@@ -690,8 +711,8 @@ steady state of \cref{sec:defect-steady} gives
     \label{eq:linearized-Q}
 \end{align}
 \end{subequations}
-with \new{$\u$ the velocity of the comoving frame (\cref{app:comoving}), $\bs w_\ss\equiv\u+(B/\xi_0)\nabla\rho_\ss$,
-so that $\delta\Q$ is transported with velocity $-\bs w_\ss$, and}
+with $\u$ the velocity of the comoving frame (\cref{app:comoving}), $\bs w_\ss\equiv\u+(B/\xi_0)\nabla\rho_\ss$,
+so that $\delta\Q$ is transported with velocity $-\bs w_\ss$, and
 $\delta\Ha$ the linearization of \cref{eq:H-active} at $\Q_\ss$. The frame term is
 kept only in the $\Q$ equation, through $\bs w_\ss$; in \cref{eq:linearized-rho} it is
 smaller than the retained $B\nabla^2\delta\rho$ by $10^{-4}$ (\cref{app:dean-angle}).
@@ -705,13 +726,13 @@ a Lyapunov equation.
 The main text presents the analytically tractable case, in which only the density
 fluctuates and $\delta\Q=0$. 
 This is the appropriate limit when the $\zeta\,\nabla\!\cdot\!\delta\Q$ term in
-\cref{eq:linearized-rho} is small compared with the noise $\bEta_\rho$. \new{The traction
+\cref{eq:linearized-rho} is small compared with the noise $\bEta_\rho$. The traction
 fluctuations measured in Ref.~\cite{han2025local} exceed the mean active stress, which is
-consistent with the reversal noise dominating.}
+consistent with the reversal noise dominating.
 
 \Cref{eq:linearized-Q} then drops out, and both of its
 noises with it: only $\bEta_\rho$ survives.
-\new{The steady density departs from unity only at order $\zeta/B$ (\cref{eq:rho-analytic}), so we use a flat density profile in the noise autocorrelation:}
+The steady density departs from unity only at order $\zeta/B$ (\cref{eq:rho-analytic}), so we use a flat density profile in the noise autocorrelation:
 \begin{multline}
   \label{eq:eta-rho-ss}
   \la \eta^{\rho}_\alpha(\r,t) \,\eta^{\rho}_\beta(\r',t') \ra
@@ -737,7 +758,7 @@ factor $k^2$ that cancels the $k^2$ of the relaxation rate $\gamma_0k^2$. The sp
 then flat in $\k$, and the equal-time variance
 $\la\delta\rho(\r,t)\delta\rho(\r',t)\ra_\ss$ diverges as $\r'\to\r$.
 
-The divergence comes from treating the monolayer as a continuum down to zero length. However, there is a physical cutoff \new{at the width of a cell}. Thus we introduce a short length scale cutoff
+The divergence comes from treating the monolayer as a continuum down to zero length. However, there is a physical cutoff at the width of a cell. Thus we introduce a short length scale cutoff
 \begin{equation}
     \label{eq:cutoff}
     \elln = 0.5~\micron.
@@ -772,7 +793,7 @@ fluctuation stays coherent: a correlation length equal to the cutoff $\elln$ and
 \end{align}
 the time a fluctuation of size $\elln$ takes to diffuse away. Neither scale involves the
 defect, and we assume the anisotropy does not change them much. \Cref{sec:nucleation-results}
-uses $\tau_c$ to \new{turn the layering probability into a rate, where it cancels from the ratio}.
+uses $\tau_c$ to turn the layering probability into a rate, where it cancels from the ratio.
 
 Restoring the anisotropic piece of \cref{eq:eta-rho-ss}, the one that
 carries $\Q_\ss$, gives the total variance (\cref{app:lyapunov-finite-corr})
@@ -798,7 +819,7 @@ $\partial_i\partial_jQ^\ss_{ij}=\partial_x[S'(r)+S(r)/r]$ is odd. The variance i
 on the $-x$ side, where it peaks about $1.5~\micron$ from the core at
 $\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=3.1\%$, and lowered by as much on the $+x$ side. Along the $y$ axis the
 simplified model predicts no modulation at all.
-The scale of the modulation $\nu_0$ decreases with \new{decreasing} cutoff $\elln$ as shown in \cref{fig:ln_curve} and vanishes at $\elln=0$.
+The scale of the modulation $\nu_0$ decreases with decreasing cutoff $\elln$ as shown in \cref{fig:ln_curve} and vanishes at $\elln=0$.
 
 In \cref{fig:variance} we also show the density variance from the full numerical solution of \cref{eq:linearized}, retaining $\delta\Q\ne0$ (see \cref{app:lyapunov} for details). The simplified model captures its main features. \Cref{fig:variance3d} shows the two-dimensional profile of the density variance.
 
@@ -833,9 +854,13 @@ Three percent is the entire position\nobreakdash-dependent signal in the density
   \label{fig:variance3d}
 \end{figure}
 
+
+\section{Layer formation probability from the pressure fluctuations}
+\label{sec:nucleation-2}
+
 % ============================================================
 \section{Layer formation as a nucleation event}
-\label{sec:nucleation}
+\label{sec:nucleation-old}
 % Was "Extrusion and layer formation" (Results-2D/2E in v2). Renamed and
 % resectioned per structure.md restructure, 2026-09-21.
 % Pages ~2.5 (compact by design; full ranges/sensitivity -> Appendix F.3).
@@ -1079,7 +1104,9 @@ contribution to the variance is suppressed. The two curves shown bracket these r
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\linewidth]{final.png}
-  \caption{Predicted layering-probability enhancement, \cref{eq:R-ratio}, against the
+  \caption{
+    \prompt{this figure is part of fig:main(c). So we do not need this anymore.}
+    Predicted layering-probability enhancement, \cref{eq:R-ratio}, against the
     distance-binned ratio of Fig.~3f in Ref.~\cite{copenhagen2021} (error bar
     $40$--$500$). Two curves are shown: distance measured from the point of maximum
     pressure variance, and distance measured from the defect core itself, bracketing the
@@ -1131,7 +1158,7 @@ corroboration.
 Several approximations limit how far the numbers should be pushed. The translational flux
 of nematic order is dropped from both field equations, throughout the defect calculation
 and not only in the steady state; the suppression that justifies it is
-\new{$(\ell_\star/\elld)^2/4\simeq5\times10^{-3}$} at the parameters used, but it is weakest at
+$(\ell_\star/\elld)^2/4\simeq5\times10^{-3}$ at the parameters used, but it is weakest at
 the core, where the texture varies fastest, so the innermost part of the profile is the
 least controlled. The analytic line of \cref{sec:defect-fluct} sets $\delta\Q=0$ and is
 checked against the coupled numerical solution rather than against a bound. The
