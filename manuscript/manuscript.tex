@@ -55,6 +55,11 @@
 \newenvironment{newtext}{\color{darkgreen}}{}
 \renewenvironment{newtext}{}{}
 
+% current round (2026-09-28): \rev{} and revtext mark what changed; \new and newtext
+% above are switched off, so older rounds print black.
+\newcommand{\rev}[1]{\textcolor{darkgreen}{#1}}
+\newenvironment{revtext}{\color{darkgreen}}{}
+
 \definecolor{movedbrown}{rgb}{0.60,0.30,0.00}
 \newenvironment{movedtext}{\color{movedbrown}}{}
 
@@ -125,7 +130,7 @@ of the nucleus. A bacterial monolayer has no fluctuations that assemble a nucleu
 cells. Instead, the pressure fluctuates, and the barrier fluctuates with it. No nucleus
 can be smaller than one cell, so a layer forms once a pressure fluctuation shrinks the
 critical nucleus to one cell. This sets a critical pressure
-$\pcrit\simeq3.5\times10^4~\Pa\cdot\micron$, fixed by adhesion, surface tension and cell
+\rev{$\pcrit\simeq35~\kPa\cdot\micron$}, fixed by adhesion, surface tension and cell
 size.
 
 A $+1/2$ defect carries a polar active force density, which compresses the monolayer on
@@ -133,8 +138,8 @@ one side of the core. This compression alone cannot form a layer. The mean press
 defect is of the order of the active stress, three to four orders of magnitude below
 $\pcrit$. Layer formation therefore needs a rare pressure fluctuation. These monolayers
 fluctuate strongly: the standard deviation of the traction measured in
-Ref.~\cite{han2025local} is about ten times its mean. The layering probability is the
-probability that the local pressure exceeds $\pcrit$.
+Ref.~\cite{han2025local} is about ten times its mean. The layering probability is
+\rev{set by} the probability that the local pressure exceeds $\pcrit$.
 
 Computing that probability needs the noise, which a continuum active-nematic theory
 \cite{marchetti2013hydrodynamics} does not supply. In equilibrium, the
@@ -154,11 +159,11 @@ coarse-graining fixes how that noise depends on the nematic order.
 
 Solved around a $+1/2$ defect, these equations give a density variance with two parts.
 One is the variance of a uniform monolayer, set by the noise amplitude, the stiffness
-$B$ and the cell width. The other follows the nematic texture, decays away from the
+\rev{of the monolayer} and the cell width. The other follows the nematic texture, decays away from the
 core, and changes the local variance by about three percent. The critical pressure lies
 about nineteen standard deviations out in the tail of the pressure distribution. This
 amplifies the small change in the variance into a factor of about $2\times10^2$ in the
-layering probability. With $B$ fitted, the result matches the enhancement measured near
+layering probability. With \rev{the stiffness} fitted, the result matches the enhancement measured near
 $+1/2$ defects (\cref{fig:main}(c)).
 
 \Cref{sec:nucleation-1} describes layer formation as nucleation over a fluctuating
@@ -183,21 +188,21 @@ approximate, and what would test the mechanism.
     (red). Distance is measured from the point of maximum pressure variance (blue) or
     from the core (orange); the two curves bracket the binning convention of the
     experiment. $B=2\times10^5~\Pa\cdot\micron$, $\elln=0.5~\micron$, other
-    parameters as in \cref{tab:used-values}.}}
+    parameters as in \rev{\cref{tab:used-values,app:parameters-choice}}.}}
   \label{fig:main}
 \end{figure*}
 
 \begin{figure*}[t]
   \includegraphics[width=\textwidth,page=2]{figures/main.pdf}
-  \caption{\new{(a) Formation of a new layer. Top: the monolayer of cells (yellow) on
+  \caption{(a) Formation of a new layer. Top: the monolayer of cells (yellow) on
     the substrate (gray), wetted by water (blue). Middle: a patch of area $A$ and
     perimeter $\ell$ detaches and forms a second layer; $h$ is the height of the
     monolayer. Bottom: the bottom layer relaxes into the space the patch left.
-    (b) Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
-    $10^5~\Pa\cdot\micron^3$, against the patch area $A$ in $\micron^2$, for
-    pressures below (blue), at (black) and above (orange) the critical pressure
-    $p_c=\pcrit$ of \cref{eq:pcrit}. At $p=\pcrit$ the maximum sits at one cell,
-    $A_c=\Acell$. Parameters as in \cref{tab:used-values}.}}
+    (b) \todo{change usints to $\kPa\cdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
+    $10^5~\Pa\cdot\micron^3$, against the patch area $A$ in $\micron^2$.
+    The beam of curves \rev{is} for different pressures $p$.
+    Black line corresponds to the critical pressure $p=\pcrit$, orange and blue correspond to pressures above and below the critical pressure, respectively. So the layering happens only at orange curves of the \rev{barrier}.
+  }
   \label{fig:nucleation}
 \end{figure*}
 
@@ -227,96 +232,77 @@ approximate, and what would test the mechanism.
 % \cref{sec:model,sec:defect} supply the pressure variance. Assembled 2026-09-25 from
 % Ashot's draft, the energetics and threshold parts of the former sec:nucleation-old
 % (dean.tex 1284-1390), and Report 9 (R. Alert, 2020).
+% Rewritten 2026-09-28 as one narrative without subsections: defect compression ->
+% energy of a layer -> p_crit -> the mean pressure falls short -> fluctuating barrier ->
+% p_layer -> why Sections III-IV compute the density fluctuations. The reasoning behind
+% the parameter values moved to \cref{app:parameters-extrusion}.
 % ============================================================
 
-\subsection{Energetics of layer formation}
-\label{sec:nucleation-energetics}
-\begin{newtext}
-Forming a new layer costs energy. We assume that cells adhere both to the substrate and
-to other cells, and that water completely wets the colony (\cref{fig:nucleation}(a)).
-Let $\Wc$ and $\Ws$ be the cell-cell and cell-substrate adhesion energies per unit area,
-and $\gammaw$ the surface tension of water.
+\Cref{fig:main}(b) shows a new layer forming next to a $+1/2$ defect. The active force
+of the defect compresses the monolayer there, and cells can relieve the compression by
+leaving the monolayer. Whether they do depends on how the pressure in the monolayer
+compares with the pressure a new layer needs.
 
-Suppose a patch of cells of area $A$ and perimeter $\ell$ forms a new layer
-(\cref{fig:nucleation}(a)). The cells of the patch need to (1) detach from the
+Forming a new layer costs energy. We assume that cells adhere both to the substrate and
+to other cells, and that water completely wets the colony. Let $\Wc$ and $\Ws$ be the
+cell-cell and cell-substrate adhesion energies per unit area, and $\gammaw$ the surface
+tension of water. Suppose a patch of cells of area $A$ and perimeter $\ell$ forms a new
+layer (\cref{fig:nucleation}(a)). The cells of the patch need to (1) detach from the
 substrate, (2) detach from their neighbors, and (3) work against the surface tension of
 water. This costs $\Ws A + \Wc\ell h + \gammaw\ell h$, where $h$ is the height of the
 monolayer. At the same time, the bottom layer relaxes to fill the space the patch left.
 The energy gain comes from (4) the adhesion of the patch to the cells beneath it and (5)
-the work done by the pressure, $\Wc A + pA$, where $p$ is the two-dimensional pressure
-of the monolayer. The energy cost of the new layer is therefore
+the work done by the pressure, $\Wc A + pA$. Here $p$ is the two-dimensional pressure of
+the monolayer, a force per unit length. The energy cost of the new layer is therefore
 \begin{align}
     \label{eq:virtual-work}
     \Delta E = \Ws A + \Wc\ell h + \gammaw\ell h - \Wc A - p A.
 \end{align}
 \Cref{app:extrusion-elastic} derives the pressure term from the elastic energy of the
-monolayer.
+monolayer. The cell-cell adhesion $\Wc$ enters twice with opposite signs: as a cost on
+the side faces and as a gain on the bottom face. Two idealizations of
+\cref{eq:virtual-work} do not change its form (\cref{app:extrusion-idealizations}). The
+bottom layer may contract instead of diluting, which rescales $\Ws$. The water may bead
+instead of wetting the colony, which lowers the effective $\gammaw$.
 
-The cell-cell adhesion $\Wc$ enters twice with opposite signs: as a cost on the side
-faces and as a gain on the bottom face. Every perimeter term is positive, while the area
-terms have mixed signs. This asymmetry creates the nucleation barrier. For a circular
-patch, $\ell=\sqrt{4\pi A}$, and the energy cost becomes a function of the patch area
-$A$ and the pressure $p$,
+For a circular patch, $\ell=\sqrt{4\pi A}$, and the energy cost becomes a function of the
+patch area $A$ and the pressure $p$,
 \begin{equation}
     \label{eq:dE-of-A}
     \Delta E(A) = (\Ws-\Wc-p)\,A + (\Wc+\gammaw)\,h\sqrt{4\pi A}.
 \end{equation}
-This is the form of classical nucleation theory: a line cost that grows as the perimeter
-and a bulk gain that grows as the area. $\Delta E(A)$ rises as $\sqrt A$ at small $A$,
-reaches a maximum, and then falls (\cref{fig:nucleation}(b)). The maximum is the
-critical nucleus, of radius $r^*=(\Wc+\gammaw)h/(p+\Wc-\Ws)$.
+The perimeter term is a cost and grows as $\sqrt A$. The area term grows as $A$ and is a
+gain once $p>\Ws-\Wc$. At such pressures $\Delta E(A)$ rises at small $A$, reaches a
+maximum and then falls. This is the barrier of classical nucleation theory. Its maximum
+is the critical nucleus, of radius $r^*=(\Wc+\gammaw)h/(p+\Wc-\Ws)$. A larger patch
+lowers its energy by growing, a smaller one by shrinking.
 
-\Cref{app:extrusion-idealizations} discusses two idealizations of
-\cref{eq:virtual-work}. The parent layer may contract instead of diluting, and the water
-may bead instead of wetting the colony. The first rescales $\Ws$, the second lowers the
-effective $\gammaw$. Neither changes the form of \cref{eq:dE-of-A}.
-\end{newtext}
-
-\subsection{Nucleation theory with a fluctuating barrier}
-\label{sec:nucleation-theory}
-\begin{newtext}
-In classical nucleation theory, thermal fluctuations assemble nuclei of different sizes,
-and a nucleus larger than the critical one grows. The fluctuating quantity is the size
-of the nucleus. A bacterial monolayer has no fluctuations that could extrude a group of
-cells at once. Instead, the barrier itself fluctuates. The stress in the monolayer
-fluctuates \cite{han2025local}, so the pressure $p$ fluctuates too. Each value of $p$ gives a
-different barrier $\Delta E(A)$ and a different critical nucleus
-(\cref{fig:nucleation}(b)). Layer formation is thus a nucleation process in which the
-height and position of the barrier fluctuate, not the size of the nucleus.
-
-The discreteness of the system sets the nucleation condition. No nucleus can be smaller
-than one cell, so \cref{eq:dE-of-A} holds only down to $A\simeq\Acell$. Once a pressure
-fluctuation moves the maximum of $\Delta E(A)$ down to one cell, growth from the
-smallest possible nucleus is downhill. Single-cell perturbations, such as
-substrate roughness or a division event, then complete the extrusion
-\new{(\cref{sec:discussion})}. The nucleation
-condition is
+A layer forms only if a patch grows past the critical nucleus. Thermal energy is
+negligible against the adhesion and surface energies of even one cell. Cells glide in the
+plane of the substrate, and nothing lifts a group of them off it together. A new layer
+must therefore start from a single cell, and \cref{eq:dE-of-A} holds only down to
+$A\simeq\Acell$. If the maximum of $\Delta E(A)$ lies at one cell or below, growth from
+that cell is downhill. Single-cell perturbations, such as substrate roughness or a
+division event, then complete the extrusion (\cref{sec:discussion}). The discreteness of
+the system thus sets the nucleation condition,
 \begin{equation}
     \label{eq:nucleation-condition}
     \Delta E'(A)\big|_{A=\Acell} = 0,
 \end{equation}
-or $r^*=\sqrt{\Acell/\pi}$. It gives the critical pressure
+or $r^*=\sqrt{\Acell/\pi}$. Solved for the pressure, it gives the critical pressure
 \begin{equation}
     \label{eq:pcrit}
     \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
 \end{equation}
-With the values of \cref{tab:used-values}, $\pcrit=35~\kPa\cdot\micron$. The
-cell size enters $\pcrit$ together with the adhesion and surface energies. $\pcrit$
-contains no property of the fluctuations.
+With the values of \cref{tab:used-values}, $\pcrit=35~\kPa\cdot\micron$.
 
-\Cref{eq:nucleation-condition} is weaker than abolishing the barrier,
-$\Delta E(\Acell)=0$, which would need twice the pressure,
-$p\simeq7\times10^4~\Pa\cdot\micron$. The layering probability depends on the
-threshold exponentially (\cref{sec:nucleation-2}), so \new{at fixed $B$} the weaker
-condition is what makes a near-water surface tension plausible. \textit{M.\ xanthus} excretes surfactant, which
-would lower $\gammaw$, but \cref{eq:nucleation-condition} does not require it. We set
-$\gammaw$ within $10\%$ of the clean air-water value (\cref{tab:used-values}). It exceeds
-any plausible adhesion energy by an order of magnitude, so the wetting film, and not the
-adhesion, holds the monolayer flat. $\Wc=0$ is an experimental statement and not a fit:
-\textit{M.\ xanthus} cells show essentially no cohesive interaction, and packing against
-the substrate holds the monolayer together. None of these energies has been measured for
-\textit{M.\ xanthus}; \cref{app:parameters-extrusion} gives their literature ranges.
-\end{newtext}
+\Cref{fig:nucleation}(b) shows $\Delta E(A)$ around this pressure. At $p=\pcrit$ (black)
+the maximum sits at one cell, where $\Delta E$ is still positive. For $p>\pcrit$ (orange)
+the maximum lies at $A<\Acell$, and a layer can form. For $p<\pcrit$ (blue) it lies at
+$A>\Acell$, and none forms. \Cref{eq:nucleation-condition} is weaker than abolishing the
+barrier, $\Delta E(\Acell)=0$, which would need about twice the pressure,
+$70~\kPa\cdot\micron$.
+
 
 \begin{table}[tbp]
 \centering
@@ -328,43 +314,49 @@ $\gammaw$ & $6.5\times10^4~\Pa\cdot\micron$ & near clean air-water value \\
 $\Wc$ & $0$ & no measured cell-cell cohesion \\
 $\Ws$ & $2\times10^3~\Pa\cdot\micron$ & bacterial adhesion \\
 $h$ & $0.5~\micron$ & cell diameter \\
-$\Acell$ & $3~\micron^2$ & $\simeq1/\rho_0$ \\
-$\elln$ & $0.5~\micron$ & cell width, \cref{eq:cutoff} \\
-$B$ & $2\times10^5~\Pa\cdot\micron$ & fitted, \cref{sec:nucleation-2} \\
+$\Acell$ & $3~\micron^2$ & \rev{area per cell} \\
 \hline
 \end{tabular}
-\caption{Parameters of the layering probability. Energies per unit area and pressures
-  are in $\Pa\cdot\micron=10^{-6}~\mathrm{J/m^2}$. \new{The first five fix $\pcrit$
-  through \cref{eq:pcrit}, where only the combinations $(\gammaw+\Wc)$ and $(\Ws-\Wc)$
-  appear. $\elln$ and $B$ enter through the pressure variance
-  (\cref{sec:nucleation-2}).} Full ranges and origins in
+\caption{\rev{Parameters of the critical pressure, \cref{eq:pcrit}.} Energies per unit
+  area and pressures are in $\Pa\cdot\micron=10^{-6}~\mathrm{J/m^2}$. \rev{The energies
+  enter only as $(\gammaw+\Wc)$ and $(\Ws-\Wc)$.} Full ranges and origins in
   \cref{app:parameters-extrusion}.}
 \label{tab:used-values}
 \end{table}
 
-\begin{newtext}
-The pressure fluctuates, so layer formation at a point $\r$ is a random event. It
-happens when the local pressure exceeds the critical one, with probability
+
+The defect supplies far less. Its mean compression gives a pressure of a few
+$\Pa\cdot\micron$, the scale of the active stress (\cref{sec:nucleation-2}). This is
+$10^3$ to $10^4$ times below $\pcrit$, and below even $\Ws-\Wc$. At this pressure no patch
+of any size lowers its energy by growing.
+
+Layers form nonetheless, so the pressure must at times exceed $\pcrit$. The stress in
+the monolayer fluctuates \cite{han2025local}, and so does $p$. In
+classical nucleation theory, thermal fluctuations move $A$ along a fixed curve
+$\Delta E(A)$. Here the fluctuations move the curve itself (\cref{fig:nucleation}(b)), and
+the critical nucleus moves with it. Layer formation at a point $\r$ is then a random
+event, with probability
 \begin{equation}
     \label{eq:p-layer-def}
-    p_\text{layer}(\r) = \mathbb P\bigl(p(\r)>\pcrit\bigr).
+    p_\text{layer}(\r) \propto \mathbb P\bigl(p(\r)>\pcrit\bigr).
 \end{equation}
-The mean pressure does not come close to $\pcrit$. At a $+1/2$ defect it is of the order
-of the active stress, a few $\Pa\cdot\micron$ (\cref{sec:nucleation-2}), three to four
-orders of magnitude below $\pcrit$. Layer formation therefore needs a rare fluctuation,
-and $p_\text{layer}$ is set by the tail of the pressure distribution.
 
-Computing that tail needs the noise, which no fluctuation-dissipation relation fixes in
-an active nematic (\cref{sec:intro}). We derive it from the microscopic dynamics in
-\cref{sec:model} and compute the pressure variance around a $+1/2$ defect in
-\cref{sec:defect}. \Cref{sec:nucleation-2} returns to \cref{eq:p-layer-def} with that
-variance and compares the result with experiment (\cref{fig:main}(c)).
+\Cref{eq:pcrit} contains the cell size and the adhesion and surface energies. It
+contains no property of the fluctuations and does not depend on position. A defect can
+therefore favor layers only by changing the distribution of the pressure around it, which
+makes the nucleation heterogeneous. The mechanism itself needs no defect. With the mean
+pressure so far below $\pcrit$, $p_\text{layer}$ is set by the tail of this
+distribution.
 
-Defects make the nucleation heterogeneous: layers form preferentially at $+1/2$ defects,
-where the nematic texture modulates the pressure fluctuations. The mechanism itself does
-not need a defect. A fluctuating barrier, with the nucleus size fixed by the discreteness
-of the system, applies to homogeneous nucleation too.
-\end{newtext}
+The pressure follows the local density of cells, so the pressure fluctuations near a
+defect are density fluctuations. The density fluctuates because each cell glides along
+its axis and reverses at random times. The layering probability depends on the amplitude
+of this reversal noise exponentially, and no fluctuation-dissipation relation fixes that
+amplitude (\cref{sec:intro}). \Cref{sec:model} therefore derives the noise from the
+dynamics of reversing cells. \Cref{sec:defect} computes the density fluctuations it
+drives around a $+1/2$ defect. \Cref{sec:nucleation-2} inserts the resulting pressure
+variance into \cref{eq:p-layer-def}, with the result in \cref{fig:main}(c).
+
 
 
 % ============================================================
@@ -1008,11 +1000,11 @@ pressure $B(\rho_\ss-1)$, the density profile of \cref{sec:defect-steady} read t
 the same equation of state. That profile is of relative size $O(\zeta/B)$, so the mean
 pressure is of order $\zeta$, a few $\Pa\cdot\micron$, \new{two orders of magnitude
 below} $\sigma_{p,\infty}=1.8\times10^3~\Pa\cdot\micron$. From here on we take the pressure to be a zero-mean Gaussian of width
-$\sigma_p(\r)$. \new{The layering probability \cref{eq:p-layer-def} is then the Gaussian
+$\sigma_p(\r)$. \rev{The probability in \cref{eq:p-layer-def} is then the Gaussian
 tail}
 \begin{align}
     \label{eq:p-layer}
-    p_\text{layer}(\r) &\simeq \frac1{\sqrt{2\pi}\,z(\r)}\ee^{-z(\r)^2/2},
+    p_\text{layer}(\r) &\rev{\propto} \frac1{\sqrt{2\pi}\,z(\r)}\ee^{-z(\r)^2/2},
     \\
     z(\r) &= \frac{\pcrit}{\sigma_p(\r)}.
 \end{align}
@@ -1034,7 +1026,8 @@ $z_\infty^2/2$ amplifies it. A modulation of a few percent therefore produces an
 enhancement of two orders of magnitude: layer formation is exponentially sensitive to the
 defect texture.
 
-At the parameters of \cref{tab:used-values}, $\sigma_{p,\infty}=1.8\times10^3~
+\rev{With $B=2\times10^5~\Pa\cdot\micron$, $\elln=0.5~\micron$ and the parameters of
+\cref{tab:used-values,app:parameters-choice}}, $\sigma_{p,\infty}=1.8\times10^3~
 \Pa\cdot\micron$ and $z_\infty=19.1$. The variance modulation of \cref{fig:variance}
 peaks at $\nu_0=3.1\%$, about $1.5~\micron$ off the core, and \cref{eq:R-ratio} then
 gives a predicted enhancement
@@ -1077,7 +1070,7 @@ contribution to the variance is suppressed. The two curves shown bracket these r
 \begin{newtext}
 The fit in \cref{sec:nucleation-2} fixes only the combination
 $\pcrit^2\elln^2\nu_0(\elln)/(B\zeta)$. It therefore does not test the nucleation
-condition of \cref{sec:nucleation-theory}: a different $\pcrit$ would only shift the
+condition \rev{\cref{eq:nucleation-condition}}: a different $\pcrit$ would only shift the
 fitted $B$. The stricter condition $\Delta E(\Acell)=0$, for example, doubles $\pcrit$,
 raises the fitted $B$ about fourfold, and leaves the predicted profile unchanged.
 
@@ -1120,7 +1113,7 @@ energies of \cref{tab:used-values} all move $\pcrit$ or $\sigma_p$, and so the f
 The criterion \cref{eq:nucleation-condition} does not say how the first cell leaves. At
 $p=\pcrit$, one cell still faces $\Delta E(\Acell)\simeq10^5~\Pa\cdot\micron^3$
 (\cref{fig:nucleation}(b)), about $2\times10^7\,\kB T$. The single-cell perturbations of
-\cref{sec:nucleation-theory}, which \cref{eq:dE-of-A} does not describe, must carry the
+\rev{\cref{sec:nucleation-1}}, which \cref{eq:dE-of-A} does not describe, must carry the
 cell over this barrier.
 
 We drop both $\nabla\H$ terms of \cref{eq:model-rho,eq:model-Q} (\cref{sec:model-closure}).
@@ -1192,10 +1185,24 @@ pressure term and the two idealizations of \cref{eq:virtual-work} are here.}
 
 \subsection{Literature ranges for the extrusion parameters}
 \label{app:parameters-extrusion}
+\begin{movedtext}
+None of the energies \rev{in \cref{tab:used-values}} has been measured for
+\textit{M.\ xanthus}. We set $\gammaw$ within $10\%$ of the clean air-water value\rev{,
+$7.2\times10^4~\Pa\cdot\micron$}. \textit{M.\ xanthus} excretes surfactant, which would
+lower $\gammaw$, but \cref{eq:nucleation-condition} does not require it. The layering
+probability depends on the threshold exponentially (\cref{sec:nucleation-2}), so at fixed
+$B$ the \rev{condition \cref{eq:nucleation-condition}, weaker than $\Delta E(\Acell)=0$,}
+is what makes a near-water surface tension plausible. \rev{The surface tension} exceeds
+\rev{$\Ws$ by more than} an order of magnitude, so the wetting film, and not the
+adhesion, holds the monolayer flat. $\Wc=0$ is an experimental statement and not a fit:
+\textit{M.\ xanthus} cells show essentially no cohesive interaction, and packing against
+the substrate holds the monolayer together.
+\end{movedtext}
 \begin{itemize}
-  \item Full literature table for $\gammaw$, $\Wc$, $\Ws$, $B$, $\elln$, $h$, $\Acell$:
+  \item Full literature table for $\gammaw$, $\Wc$, $\Ws$, $h$, $\Acell$ \rev{($B$ and
+    $\elln$ are in \cref{app:extrusion-B,app:parameters-choice})}:
     plausible ranges and origin for each, as currently in dean.tex \S``Parameter
-    estimates and their ranges''. This is what \cref{sec:nucleation-energetics}
+    estimates and their ranges''. This is what \rev{\cref{tab:used-values}}
     compresses to ``used values only.''
   \item The status of each entry. $B$ is the one fitted quantity. Every other entry,
     $\elln$ included, is a model parameter fixed before the comparison with experiment.
@@ -1247,7 +1254,7 @@ by a new term. Second, complete wetting is the \emph{maximum} interfacial cost. 
 water beads into a droplet instead of coating the colony, less than $\ell h$ of new
 water-air interface is created and the dominant term is reduced. This lowers the
 effective $\gammaw$ below the clean-water value, independently of the surfactant
-argument of \new{\cref{sec:nucleation-theory}}.
+argument of \rev{\cref{app:parameters-extrusion}}.
 \end{movedtext}
 \begin{itemize}
   \item The $A$-vs.-$2A$ substrate-detachment bracket in full, and its renormalization
