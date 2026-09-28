@@ -176,34 +176,37 @@ approximate, and what would test the mechanism.
 \end{newtext}
 \begin{figure*}[t]
   \includegraphics[width=\textwidth,page=1]{figures/main.pdf}
-  \caption{\new{(a) The microscopic model of \cref{sec:model-micro}: a self-propelled
-    rod (blue) in the nematic texture around a $+1/2$ defect, whose core is the red dot;
-    red lines follow the director. The rod glides along its axis with velocity
-    $\bs v_i=v_0\p(\theta_i)k_i$, reversing at rate $\frev$, and feels the force
-    $\F_i$ and the torque $\Gamma_i$ of its neighbors; $\xi_0\dot\r_i$ is the
-    friction. (b) Snapshots of a new layer (dark patch) forming next to a $+1/2$ defect
-    (red); blue marks a $-1/2$ defect. Images from Ref.~\cite{copenhagen2021}.
-    (c) Layering probability relative to the far field, \cref{eq:R-ratio}, against the
+  \caption{\new{ 
+    (a) Layering probability relative to the far field, \cref{eq:R-ratio}, against the
     distance from the defect core, compared with Fig.~3f of Ref.~\cite{copenhagen2021}
     (red). Distance is measured from the point of maximum pressure variance (blue) or
     from the core (orange); the two curves bracket the binning convention of the
     experiment. $B=2\times10^5~\Pa\cdot\micron$, $\elln=0.5~\micron$, other
-    parameters as in \rev{\cref{tab:used-values,app:parameters-choice}}.}}
-  \label{fig:main}
+    parameters as in \rev{\cref{tab:used-values,app:parameters-choice}}.  
+  (b) Formation of a new layer. Top: the monolayer of cells (yellow) on
+  the substrate (gray), wetted by water (blue). Middle: a patch of area $A$ and
+  perimeter $\ell$ detaches and forms a second layer; $h$ is the height of the
+  monolayer. Bottom: the bottom layer relaxes into the space the patch left. 
+    }}
+  \label{fig:main-1}
 \end{figure*}
 
 \begin{figure*}[t]
   \includegraphics[width=\textwidth,page=2]{figures/main.pdf}
-  \caption{(a) Formation of a new layer. Top: the monolayer of cells (yellow) on
-    the substrate (gray), wetted by water (blue). Middle: a patch of area $A$ and
-    perimeter $\ell$ detaches and forms a second layer; $h$ is the height of the
-    monolayer. Bottom: the bottom layer relaxes into the space the patch left.
-    (b) \todo{change usints to $\kPa\cdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
+  \caption{(a) The microscopic model of \cref{sec:model-micro}: a self-propelled
+  rod (blue) in the nematic texture around a $+1/2$ defect, whose core is the red dot;
+  red lines follow the director. The rod glides along its axis with velocity
+  $\bs v_i=v_0\p(\theta_i)k_i$, reversing at rate $\frev$, and feels the force
+  $\F_i$ and the torque $\Gamma_i$ of its neighbors; $\xi_0\dot\r_i$ is the
+  friction.
+  (b) Snapshots of a new layer (dark patch) forming next to a $+1/2$ defect
+  (red); blue marks a $-1/2$ defect. Images from Ref.~\cite{copenhagen2021}.
+    (c) \todo{change usints to $\kPa\cdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
     $10^5~\Pa\cdot\micron^3$, against the patch area $A$ in $\micron^2$.
     The beam of curves \rev{is} for different pressures $p$.
     Black line corresponds to the critical pressure $p=\pcrit$, orange and blue correspond to pressures above and below the critical pressure, respectively. So the layering happens only at orange curves of the \rev{barrier}.
   }
-  \label{fig:nucleation}
+  \label{fig:main-2}
 \end{figure*}
 
 
@@ -238,70 +241,64 @@ approximate, and what would test the mechanism.
 % the parameter values moved to \cref{app:parameters-extrusion}.
 % ============================================================
 
-\Cref{fig:main}(b) shows a new layer forming next to a $+1/2$ defect. The active force
-of the defect compresses the monolayer there, and cells can relieve the compression by
-leaving the monolayer. Whether they do depends on how the pressure in the monolayer
-compares with the pressure a new layer needs.
 
-Forming a new layer costs energy. We assume that cells adhere both to the substrate and
+New layers are formed when it is energetically favorable. We model this from a nucleation theory perspective. First, we calculate the energy cost of a new layer.
+
+We assume that cells adhere both to the substrate and
 to other cells, and that water completely wets the colony. Let $\Wc$ and $\Ws$ be the
 cell-cell and cell-substrate adhesion energies per unit area, and $\gammaw$ the surface
 tension of water. Suppose a patch of cells of area $A$ and perimeter $\ell$ forms a new
-layer (\cref{fig:nucleation}(a)). The cells of the patch need to (1) detach from the
-substrate, (2) detach from their neighbors, and (3) work against the surface tension of
+layer (\cref{fig:main-1}(b)). The cells of the patch need to (\textit{i}) detach from the
+substrate, (\textit{ii}) detach from their neighbors, and (\textit{iii}) work against the surface tension of
 water. This costs $\Ws A + \Wc\ell h + \gammaw\ell h$, where $h$ is the height of the
 monolayer. At the same time, the bottom layer relaxes to fill the space the patch left.
-The energy gain comes from (4) the adhesion of the patch to the cells beneath it and (5)
+The energy gain comes from (\textit{iv}) the adhesion of the patch to the cells beneath it and (\textit{v})
 the work done by the pressure, $\Wc A + pA$. Here $p$ is the two-dimensional pressure of
-the monolayer, a force per unit length. The energy cost of the new layer is therefore
-\begin{align}
-    \label{eq:virtual-work}
-    \Delta E = \Ws A + \Wc\ell h + \gammaw\ell h - \Wc A - p A.
-\end{align}
-\Cref{app:extrusion-elastic} derives the pressure term from the elastic energy of the
-monolayer. The cell-cell adhesion $\Wc$ enters twice with opposite signs: as a cost on
-the side faces and as a gain on the bottom face. Two idealizations of
-\cref{eq:virtual-work} do not change its form (\cref{app:extrusion-idealizations}). The
-bottom layer may contract instead of diluting, which rescales $\Ws$. The water may bead
-instead of wetting the colony, which lowers the effective $\gammaw$.
-
-For a circular patch, $\ell=\sqrt{4\pi A}$, and the energy cost becomes a function of the
-patch area $A$ and the pressure $p$,
+the monolayer, a force per unit length. 
+The cell-cell adhesion $\Wc$ enters twice with opposite signs: as a cost on
+the side faces and as a gain on the bottom face. For a circular patch, $\ell=\sqrt{4\pi A}$, and the energy cost of the new layer is therefore
 \begin{equation}
     \label{eq:dE-of-A}
     \Delta E(A) = (\Ws-\Wc-p)\,A + (\Wc+\gammaw)\,h\sqrt{4\pi A}.
 \end{equation}
+which is a function of the patch area $A$ and monolayer pressure $p$.
+
 The perimeter term is a cost and grows as $\sqrt A$. The area term grows as $A$ and is a
 gain once $p>\Ws-\Wc$. At such pressures $\Delta E(A)$ rises at small $A$, reaches a
-maximum and then falls. This is the barrier of classical nucleation theory. Its maximum
-is the critical nucleus, of radius $r^*=(\Wc+\gammaw)h/(p+\Wc-\Ws)$. A larger patch
+maximum and then falls. This is the barrier of classical nucleation theory (\cref{fig:main-2}(c)). Its maximum
+is the critical nucleus, of area $A^*=\pi h^2(\Wc+\gammaw)^2/(p+\Wc-\Ws)^2$. A larger patch
 lowers its energy by growing, a smaller one by shrinking.
 
-A layer forms only if a patch grows past the critical nucleus. Thermal energy is
+In classical nucleation theory, thermal fluctuations or impurities in the system move $A$ along a fixed curve $\Delta E(A)$.
+In our system, because of active and passive flctuations, the pressure fluctuates. The barier moves with it together with the critical nucleus area $A^*$.
+
+Thermal energy is
 negligible against the adhesion and surface energies of even one cell. Cells glide in the
-plane of the substrate, and nothing lifts a group of them off it together. A new layer
-must therefore start from a single cell, and \cref{eq:dE-of-A} holds only down to
-$A\simeq\Acell$. If the maximum of $\Delta E(A)$ lies at one cell or below, growth from
-that cell is downhill. Single-cell perturbations, such as substrate roughness or a
-division event, then complete the extrusion (\cref{sec:discussion}). The discreteness of
+plane of the substrate, and nothing lifts a group of them off it together. A new layer must therefore start from a single cell, as already observed in the experiments. If the maximum of $\Delta E(A)$ lies below one cell area($A^*<\Acell$), growth from
+that cell is downhill of the energy. Single-cell perturbations, such as substrate roughness or a division event, then complete the extrusion. The discreteness of
 the system thus sets the nucleation condition,
 \begin{equation}
     \label{eq:nucleation-condition}
     \Delta E'(A)\big|_{A=\Acell} = 0,
 \end{equation}
-or $r^*=\sqrt{\Acell/\pi}$. Solved for the pressure, it gives the critical pressure
+or $A^*=\Acell$. Solved for the pressure, it gives the critical pressure
 \begin{equation}
     \label{eq:pcrit}
     \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
 \end{equation}
-With the values of \cref{tab:used-values}, $\pcrit=35~\kPa\cdot\micron$.
+So layers are formed only if the pressure in the monolayer exceeds $\pcrit$. Alternaticvely, the probability of layer formation at a point $\r$ is 
+(\cref{fig:main-2}(c))
+\begin{equation}
+  \label{eq:p-layer-def}
+  p_\text{layer}(\r) \propto \mathbb P\bigl(p(\r)>\pcrit\bigr).
+\end{equation}
+With the values of \cref{tab:used-values}, $\pcrit=35~\kPa\cdot\micron$. The mean pressure in the monolayer is far below $\pcrit$, so layering is predominantly from the large and rare fluctuations.
 
-\Cref{fig:nucleation}(b) shows $\Delta E(A)$ around this pressure. At $p=\pcrit$ (black)
-the maximum sits at one cell, where $\Delta E$ is still positive. For $p>\pcrit$ (orange)
-the maximum lies at $A<\Acell$, and a layer can form. For $p<\pcrit$ (blue) it lies at
-$A>\Acell$, and none forms. \Cref{eq:nucleation-condition} is weaker than abolishing the
-barrier, $\Delta E(\Acell)=0$, which would need about twice the pressure,
-$70~\kPa\cdot\micron$.
+
+
+
+
+
 
 
 \begin{table}[tbp]
@@ -325,37 +322,12 @@ $\Acell$ & $3~\micron^2$ & \rev{area per cell} \\
 \end{table}
 
 
-The defect supplies far less. Its mean compression gives a pressure of a few
-$\Pa\cdot\micron$, the scale of the active stress (\cref{sec:nucleation-2}). This is
-$10^3$ to $10^4$ times below $\pcrit$, and below even $\Ws-\Wc$. At this pressure no patch
-of any size lowers its energy by growing.
-
-Layers form nonetheless, so the pressure must at times exceed $\pcrit$. The stress in
-the monolayer fluctuates \cite{han2025local}, and so does $p$. In
-classical nucleation theory, thermal fluctuations move $A$ along a fixed curve
-$\Delta E(A)$. Here the fluctuations move the curve itself (\cref{fig:nucleation}(b)), and
-the critical nucleus moves with it. Layer formation at a point $\r$ is then a random
-event, with probability
-\begin{equation}
-    \label{eq:p-layer-def}
-    p_\text{layer}(\r) \propto \mathbb P\bigl(p(\r)>\pcrit\bigr).
-\end{equation}
-
 \Cref{eq:pcrit} contains the cell size and the adhesion and surface energies. It
 contains no property of the fluctuations and does not depend on position. A defect can
-therefore favor layers only by changing the distribution of the pressure around it, which
-makes the nucleation heterogeneous. The mechanism itself needs no defect. With the mean
-pressure so far below $\pcrit$, $p_\text{layer}$ is set by the tail of this
-distribution.
+therefore favor layers only by changing the distribution of the pressure and its fluctuations around it, which
+makes the nucleation heterogeneous. 
 
-The pressure follows the local density of cells, so the pressure fluctuations near a
-defect are density fluctuations. The density fluctuates because each cell glides along
-its axis and reverses at random times. The layering probability depends on the amplitude
-of this reversal noise exponentially, and no fluctuation-dissipation relation fixes that
-amplitude (\cref{sec:intro}). \Cref{sec:model} therefore derives the noise from the
-dynamics of reversing cells. \Cref{sec:defect} computes the density fluctuations it
-drives around a $+1/2$ defect. \Cref{sec:nucleation-2} inserts the resulting pressure
-variance into \cref{eq:p-layer-def}, with the result in \cref{fig:main}(c).
+In the following sections we set up a microscopic model of the monolayer and calculate the pressure fluctuations around a defect. Then, in \cref{sec:nucleation-2}, when all the components are in place, we compute the spatial profile of the layering probability \eqref{eq:p-layer-def}.
 
 
 
