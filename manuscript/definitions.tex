@@ -1,0 +1,125 @@
+% ============================================================
+% definitions.tex — macros for manuscript.tex
+%
+% Carried over from the top-level derivation log (../definitions.tex),
+% trimmed of nothing, plus a small block of new macros at the end for
+% symbols introduced in the Extrusion/Nucleation section (dean.tex
+% "Extrusion rate": Virtual work, The nucleation threshold, Layering
+% probability) that did not exist when the derivation-log definitions
+% file was written. Keep the two files in sync by hand — there is no
+% automated check.
+% ============================================================
+
+\newcommand{\la}{\left\langle}
+\newcommand{\ra}{\right\rangle}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\E}{\mathbf{E}}
+\newcommand{\Var}{\text{Var}}
+\renewcommand{\d}{\mathrm{d}}
+\renewcommand{\u}{\bs{u}}
+\newcommand{\q}{\bs{q}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\n}{\bs{n}}
+\newcommand{\e}{\bs{e}}
+\newcommand{\T}[0]{\mathrm{T}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\tpd}[2]{\tfrac{\partial #1}{\partial #2}}
+
+
+\newcommand{\ab}{{\alpha\beta}}
+\newcommand{\mn}{{\mu\nu}}
+\newcommand{\abmn}{{\alpha\beta\mu\nu}}
+
+\newcommand{\eye}{\bs{\mathrm{I}}}
+\renewcommand{\v}{\bs{v}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\s}{\mathbf{s}}
+\newcommand{\g}{\mathbf{g}}
+\newcommand{\G}{\mathbf{G}}
+\renewcommand{\H}{\mathbf{H}}
+\newcommand{\Ha}{\mathbf{H}_\text{a}}
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\J}{\mathbf{J}}
+\newcommand{\bnabla}{\boldsymbol{\nabla}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\B}{\mathbf{B}}
+\newcommand{\U}{\mathbf{U}}
+\newcommand{\bxi}{\mathbf{\xi}}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\bT}{\mathbf{T}}
+\newcommand{\nh}{\hat{\bs{n}}}
+\newcommand{\bdelta}{\bs\delta}
+\newcommand{\bsigma}{\bs\sigma}
+\newcommand{\bEta}{\bs\eta}
+\newcommand{\fa}{\bs{f}_\text{a}}
+\renewcommand{\ss}{\mathrm{ss}}
+
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+
+\renewcommand{\k}{\bs{k}}
+\renewcommand{\r}{\mathbf{r}}
+
+\newcommand{\TT}{{\rm T}}
+\newcommand{\Tr}{{\rm T}}
+
+
+\newcommand{\lM}{l_{\rm M}}
+\newcommand{\lm}{l_{\rm m}}
+
+\newcommand{\elln}{\ell_{\rm n}}
+\newcommand{\ellc}{\ell_{\rm c}}
+\newcommand{\elld}{\ell_{\rm d}}
+
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\rmR}{\mathrm{R}}
+
+\providecommand{\Fpair}{\calF_{\mathrm{pair}}}
+\providecommand{\Fent}{\calF_{\mathrm{ent}}}
+\providecommand{\Tr}{\operatorname{tr}}
+\newcommand{\frev}{f_{\rm rev}}
+\newcommand{\xir}{\xi_{\rm r}}
+\newcommand{\ecrit}{\varepsilon_{\rm c}}
+\newcommand{\sigmarho}{\sigma_\rho^2}
+\newcommand{\kB}{k_\mathrm{B}}
+% Correction / open-question annotations (visible in the compiled PDF —
+% useful while this is still a skeleton; strip before submission)
+\newcommand{\corr}[1]{\textcolor{red}{\textbf{[CORR:}\ #1\textbf{]}}}
+\newcommand{\corrm}[1]{{\color{red}#1}}
+\newcommand{\todo}[1]{\textcolor{purple}{\textbf{[TODO:}\ #1\textbf{]}}}
+
+\renewcommand{\div}{\text{div}}
+
+\newcommand{\pade}{\text{Pad\'{e}}}
+\newcommand{\cell}{\text{cell}}
+\newcommand{\crit}{\text{crit}}
+
+\newcommand{\Pa}{\text{Pa}}
+\newcommand{\kPa}{\text{kPa}}
+
+\newcommand{\minute}{\text{min}}
+\newcommand{\micron}{\upmu\mathrm{m}}
+
+\newcommand{\ash}[1]{\textcolor{blue}{\textbf{[ash:}\ #1\textbf{]}}}
+
+% ------------------------------------------------------------
+% New in manuscript.tex: symbols from dean.tex's "Extrusion rate"
+% section (Virtual work / The nucleation threshold / Layering
+% probability), which post-date the derivation-log definitions.tex.
+% ------------------------------------------------------------
+
+\newcommand{\gammaw}{\gamma_{\rm w}}           % water/interfacial surface tension (NOT the nematic relaxation rate \gamma, NOT gamma_0 = B/xi_0 — three distinct gammas in this project, see canonical-model-parameters memory)
+\newcommand{\Wc}{W_{\rm c}}                    % cell-cell adhesion energy
+\newcommand{\Ws}{W_{\rm s}}                    % cell-substrate adhesion energy
+\newcommand{\Acell}{A_{\rm cell}}              % single-cell area
+\newcommand{\pcrit}{p_{\rm crit}}              % critical pressure, boxed result eq:pcrit
+\newcommand{\nuzero}{\nu_0}                    % peak variance modulation, sec-layering-probability
+\newcommand{\ellA}{\ell_A}                     % nucleus smoothing scale (superseded alternative — see FRIDGE/fluctuation_mechanism.tex; kept only in case it resurfaces)

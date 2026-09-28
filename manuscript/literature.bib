@@ -1,0 +1,342 @@
+% ============================================================
+% literature.bib — manuscript.tex
+%
+% Every entry below was checked against a live source (journal page,
+% arXiv abstract, or publisher page) while building this skeleton on
+% 2026-09-21 — none are guessed. Cite keys for the two target papers
+% and the four microscopic/coarse-graining references match the keys
+% already used in dean.tex's inline \cite{} calls, so both files can
+% share this bibliography without renaming.
+%
+% Still needed (not yet added — flagged rather than fabricated):
+%   - the aggregate-compression tissue-surface-tension measurements
+%     dean.tex cites by result only ("chick embryonic neural retina",
+%     "limb bud", "F9", "CHO"), likely a Foty/Steinberg-type paper —
+%     source not yet identified, do not invent an entry for it.
+%   - any review-article citations the Introduction ends up wanting
+%     for "dry active nematics" / "topological defects in active
+%     matter" generally, beyond marchetti2013hydrodynamics.
+% ============================================================
+
+@article{copenhagen2021,
+  title={Topological defects promote layer formation in Myxococcus xanthus colonies},
+  author={Copenhagen, Katherine and Alert, Ricard and Wingreen, Ned S and Shaevitz, Joshua W},
+  journal={Nature Physics},
+  volume={17},
+  number={2},
+  pages={211--215},
+  year={2021},
+  publisher={Nature Publishing Group UK London},
+  note={The primary experimental target of this paper: layer formation localises at +1/2 defects, Fig.~3f is what \S3.3/F4b compares against.}
+}
+
+@article{han2025local,
+  title={Local polar order controls mechanical stress and triggers layer formation in Myxococcus xanthus colonies},
+  author={Han, Endao and Fei, Chenyi and Alert, Ricard and Copenhagen, Katherine and Koch, Matthias D and Wingreen, Ned S and Shaevitz, Joshua W},
+  journal={Nature communications},
+  volume={16},
+  number={1},
+  pages={952},
+  year={2025},
+  publisher={Nature Publishing Group UK London},
+  note={Source of the defect core size elld and of the traction-fluctuation motivation in \S1.}
+}
+
+@article{dean1996,
+  title={Langevin equation for the density of a system of interacting Langevin processes},
+  author={Dean, David S},
+  journal={Journal of Physics A: Mathematical and General},
+  volume={29},
+  number={24},
+  pages={L613--L617},
+  year={1996},
+  note={The coarse-graining method of \S2A/Appendix~A.}
+}
+
+@article{bertin2013,
+  title={Mesoscopic theory for fluctuating active nematics},
+  author={Bertin, Eric and Chat{\'e}, Hugues and Ginelli, Francesco and Mishra, Shradha and Peshkov, Anton and Ramaswamy, Sriram},
+  journal={New journal of physics},
+  volume={15},
+  number={8},
+  pages={085032},
+  year={2013},
+  publisher={IOP Publishing},
+  note={Cited alongside cugliandolo2015 for the microscopic self-propelled-particle Langevin dynamics of \S2A/dean.tex 109-173.}
+}
+
+
+@article{cugliandolo2015,
+  title={Fluctuations of rotational and translational degrees of freedom in an interacting active dumbbell system},
+  author={Cugliandolo, Leticia F and Gonnella, Giuseppe and Suma, Antonio},
+  journal={Chaos, Solitons \& Fractals},
+  volume={81},
+  pages={556--566},
+  year={2015},
+  publisher={Elsevier},
+  note={Cited alongside bertin2013 for the microscopic self-propelled-particle Langevin dynamics of \S2A/dean.tex 109-173.}
+}
+
+@article{marchetti2013hydrodynamics,
+  title={Hydrodynamics of soft active matter},
+  author={Marchetti, M Cristina and Joanny, Jean-Fran{\c{c}}ois and Ramaswamy, Sriram and Liverpool, Tanniemola B and Prost, Jacques and Rao, Madan and Simha, Aditi R},
+  journal={Reviews of Modern Physics},
+  volume={85},
+  pages={1143--1189},
+  year={2013},
+  publisher={American Physical Society},
+  note={Source of the hydrodynamic active-nematic equations quoted in dean.tex \S1.2 (line 82), used as the starting point that \S2A then derives from the microscopic model instead of positing.}
+}
+
+@article{dworkin1983a,
+  title={Surface tension gradients: feasible model for gliding motility of Myxococcus xanthus},
+  author={Keller, KH and Grady, M and Dworkin, M},
+  journal={Journal of bacteriology},
+  volume={155},
+  number={3},
+  pages={1358--1366},
+  year={1983},
+  note={With dworkin1983b: basis for treating M. xanthus surface tension as a free-surface upper bound in \S3.1/Appendix B.3.}
+}
+
+@article{dworkin1983b,
+  title={Experimental observations consistent with a surface tension model of gliding motility of Myxococcus xanthus},
+  author={Dworkin, M and Keller, KH and Weisberg, D},
+  journal={Journal of bacteriology},
+  volume={155},
+  number={3},
+  pages={1367--1371},
+  year={1983},
+  note={With dworkin1983a: experimental evidence for the surfactant/surface-tension picture of gliding motility, cited in \S3.1/Appendix B.3.}
+}
+
+@article{grant2014,
+  title={The role of mechanical forces in the planar-to-bulk transition in growing Escherichia coli microcolonies},
+  author={Grant, Matthew AA and Wac{\l}aw, Bart{\l}omiej and Allen, Rosalind J and Cicuta, Pietro},
+  journal={Journal of The Royal Society Interface},
+  volume={11},
+  number={97},
+  pages={20140400},
+  year={2014},
+  note={Source of the ``effective cell modulus fitted to the mono-to-multilayer transition'' row (~2e5 Pa.um) in Appendix B.3's B ladder -- the row the fitted B in \S3.3 happens to land on; see \S4(iii).}
+}
+
+@article{kochanowski2024,
+  title={Bacteria colonies modify their shear and compressive mechanical properties in response to different growth substrates},
+  author={Kochanowski, Jakub A and Carroll, Bobby and Asp, Merrill E and Kaputa, Emma C and Patteson, Alison E},
+  journal={ACS Applied Bio Materials},
+  volume={7},
+  number={12},
+  pages={7809},
+  year={2024},
+  note={Source of the colony compressive/shear modulus row (Serratia marcescens) in Appendix B.3's B ladder.}
+}
+
+
+@article{munoz2016,
+  title={Myxobacteria: moving, killing, feeding, and surviving together},
+  author={Mu{\~n}oz-Dorado, Jos{\'e} and Marcos-Torres, Francisco J and Garc{\'\i}a-Bravo, Elena and Moraleda-Mu{\~n}oz, Aurelio and P{\'e}rez, Juana},
+  journal={Frontiers in microbiology},
+  volume={7},
+  pages={781},
+  year={2016},
+  publisher={Frontiers Media SA},
+  note={Source of the life-cycle schematic figures/myxo\_life.png used (permission still to be requested/confirmed) as a candidate panel of F1.}
+}
+
+@article{bressloff2024global,
+  title={Global density equations for a population of actively switching particles},
+  author={Bressloff, Paul C},
+  journal={Journal of Physics A: Mathematical and Theoretical},
+  volume={57},
+  number={8},
+  pages={085001},
+  year={2024},
+  publisher={IOP Publishing}
+}
+
+@article{spinney2025dean,
+  title={A Dean--Kawasaki equation for reaction diffusion systems driven by Poisson noise},
+  author={Spinney, Richard E and Morris, Richard G},
+  journal={Journal of Physics A: Mathematical and Theoretical},
+  volume={58},
+  number={3},
+  pages={035004},
+  year={2025},
+  publisher={IOP Publishing}
+}
+
+@article{illien2025dean,
+  title={The Dean--Kawasaki equation and stochastic density functional theory},
+  author={Illien, Pierre},
+  journal={Reports on Progress in Physics},
+  volume={88},
+  number={8},
+  pages={086601},
+  year={2025},
+  publisher={IOP Publishing}
+}
+
+@article{tailleur2008statistical,
+  title={Statistical mechanics of interacting run-and-tumble bacteria},
+  author={Tailleur, Julien and Cates, Michael E},
+  journal={Physical review letters},
+  volume={100},
+  number={21},
+  pages={218103},
+  year={2008},
+  publisher={APS}
+}
+
+
+
+@article{solon2015active,
+  title={Active brownian particles and run-and-tumble particles: A comparative study},
+  author={Solon, Alexandre P and Cates, Michael E and Tailleur, Julien},
+  journal={The European Physical Journal Special Topics},
+  volume={224},
+  number={7},
+  pages={1231--1262},
+  year={2015},
+  publisher={Springer}
+}
+
+@article{konarovskyi2019dean,
+  title={Dean-Kawasaki dynamics: ill-posedness vs. triviality},
+  author={Konarovskyi, Vitalii and Lehmann, Tobias and von Renesse, Max-K},
+  journal={Electronic Communications in Probability},
+  volume={24},
+  pages={1--9},
+  year={2019},
+  doi={10.1214/19-ECP208}
+}
+
+@article{konarovskyi2020dean,
+  title={On Dean--Kawasaki Dynamics with Smooth Drift Potential: V. Konarovskyi et al.},
+  author={Konarovskyi, Vitalii and Lehmann, Tobias and Von Renesse, Max},
+  journal={Journal of Statistical Physics},
+  volume={178},
+  number={3},
+  pages={666--681},
+  year={2020},
+  publisher={Springer}
+}
+
+@article{cornalba2023dean,
+  title={The Dean--Kawasaki equation and the structure of density fluctuations in systems of diffusing particles},
+  author={Cornalba, Federico and Fischer, Julian},
+  journal={Archive for Rational Mechanics and Analysis},
+  volume={247},
+  number={5},
+  pages={76},
+  year={2023},
+  publisher={Springer}
+}
+
+@article{fehrman2024well,
+  title={Well-posedness of the Dean--Kawasaki and the nonlinear Dawson--Watanabe equation with correlated noise},
+  author={Fehrman, Benjamin and Gess, Benjamin},
+  journal={Archive for Rational Mechanics and Analysis},
+  volume={248},
+  number={2},
+  pages={20},
+  year={2024},
+  publisher={Springer}
+}
+
+@article{cornalba2019regularized,
+  title={A Regularized Dean--Kawasaki Model: Derivation and Analysis},
+  author={Cornalba, Federico and Shardlow, Tony and Zimmer, Johannes},
+  journal={SIAM Journal on Mathematical Analysis},
+  volume={51},
+  number={2},
+  pages={1137--1187},
+  year={2019},
+  publisher={SIAM}
+}
+
+@article{kruger2017gaussian,
+  title={A Gaussian theory for fluctuations in simple liquids},
+  author={Kr{\"u}ger, Matthias and Dean, David S},
+  journal={The Journal of Chemical Physics},
+  volume={146},
+  number={13},
+  year={2017},
+  publisher={AIP Publishing}
+}
+
+@article{demery2016conductivity,
+  title={The conductivity of strong electrolytes from stochastic density functional theory},
+  author={D{\'e}mery, Vincent and Dean, David S},
+  journal={Journal of Statistical Mechanics: Theory and Experiment},
+  volume={2016},
+  number={2},
+  pages={023106},
+  year={2016},
+  publisher={IOP Publishing and SISSA}
+}
+
+@article{dean2014relaxation,
+  title={Relaxation of the thermal Casimir force between net neutral plates containing Brownian charges},
+  author={Dean, David S and Podgornik, Rudolf},
+  journal={Physical Review E},
+  volume={89},
+  number={3},
+  pages={032117},
+  year={2014},
+  publisher={APS}
+}
+
+@article{demery2014generalized,
+  title={Generalized Langevin equations for a driven tracer in dense soft colloids: construction and applications},
+  author={D{\'e}mery, Vincent and B{\'e}nichou, Olivier and Jacquin, Hugo},
+  journal={New Journal of Physics},
+  volume={16},
+  number={5},
+  pages={053032},
+  year={2014},
+  publisher={IOP Publishing}
+}
+
+@article{marconi1999dynamic,
+  title={Dynamic density functional theory of fluids},
+  author={Marconi, Umberto Marini Bettolo and Tarazona, Pedro},
+  journal={The Journal of chemical physics},
+  volume={110},
+  number={16},
+  pages={8032--8044},
+  year={1999},
+  publisher={American Institute of Physics}
+}
+
+@article{tevrugt2020classical,
+  title={Classical dynamical density functional theory: from fundamentals to applications},
+  author={te Vrugt, Michael and L{\"o}wen, Hartmut and Wittkowski, Raphael},
+  journal={Advances in Physics},
+  volume={69},
+  number={2},
+  pages={121--247},
+  year={2020},
+  publisher={Taylor \& Francis}
+}
+
+@article{baskaran2008hydrodynamics,
+  title={Hydrodynamics of self-propelled hard rods},
+  author={Baskaran, Aparna and Marchetti, M Cristina},
+  journal={Physical Review E—Statistical, Nonlinear, and Soft Matter Physics},
+  volume={77},
+  number={1},
+  pages={011920},
+  year={2008},
+  publisher={APS}
+}
+
+@article{archer2004dynamical,
+  title={Dynamical density functional theory for interacting Brownian particles: stochastic or deterministic?},
+  author={Archer, Andrew J and Rauscher, Markus},
+  journal={Journal of Physics A: Mathematical and General},
+  volume={37},
+  number={40},
+  pages={9325--9333},
+  year={2004}
+}
