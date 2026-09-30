@@ -24,7 +24,8 @@
 ClearAll[cdGrid, cdOps, cdDerived, cdPadeFuns, cdInitial, cdBC, cdRJ,
          cdNewton, cdEvolve, cdSteady, cdFieldAt, cdCoreG, cdInterp,
          cdRes, cdRates, cdBorder, cdShiftPos, cdFmt, cdRadialBVP,
-         cdGridPade, cdCoreEstimates, cdSymmetry, cdInitialRho, cdBScale];
+         cdGridPade, cdCoreEstimates, cdSymmetry, cdInitialRho, cdBScale,
+         cdGauge, cdNe];
 
 (* Compact SINGLE-LINE numeric form.  ScientificForm renders as a
    two-line superscript under wolframscript's OutputForm, which breaks up
@@ -228,7 +229,8 @@ cdInitial[op_Association, pf_Association] := Module[{xs, ys},
 (* -------------------------------------------------------------------- *)
 (* Quasi-static rho for a FROZEN Q: solve                                *)
 (*    (B/xi0) Lap rho + (zeta/xi0) d_a d_b Q_ab + mu = 0                 *)
-(* with the chosen wall condition (+ the mean row for "Neumann").        *)
+(* with the chosen wall condition (+ the gauge row for "Neumann" and     *)
+(* "RhoNeumann").                                                       *)
 (* The Q equation is untouched, so this is a single LINEAR solve.        *)
 (*                                                                      *)
 (* This matters: rho == 1 satisfies the Dirichlet wall but NOT the       *)
@@ -249,13 +251,13 @@ Module[{n = op["n"], q1, q2, Bx, lam, im, Arho, Aq, src, bq, rhs, sol, M, b},
   bq   = bc["Jbc"][[1 ;; n, n + 1 ;; 3 n]] . Join[q1, q2];
   rhs  = -src - bq + bc["rhs"][[1 ;; n]];
 
-  If[bcType === "Neumann",
+  If[MemberQ[{"Neumann", "RhoNeumann"}, bcType],
     (* border with the mu column and the gauge row (see cdRhoGauge) *)
     M = cdBorder[SparseArray[Arho], SparseArray[Transpose[{im}]],
-                 SparseArray[If[cdRhoGauge[dp] === "Mean",
+                 SparseArray[If[cdGauge[dp, bcType] === "Mean",
                     {op["w"]},
                     {SparseArray[{op["k0"] -> 1.}, {n}]}]], 1];
-    b = Append[rhs, If[cdRhoGauge[dp] === "Mean", op["area"], 1.]];
+    b = Append[rhs, If[cdGauge[dp, bcType] === "Mean", op["area"], 1.]];
     sol = LinearSolve[M, b];
     Join[sol[[1 ;; n]], q1, q2],
   (* else Dirichlet: no multiplier *)
@@ -267,11 +269,23 @@ Module[{n = op["n"], q1, q2, Bx, lam, im, Arho, Aq, src, bq, rhs, sol, M, b},
 (* Boundary rows, as a LINEAR pair (Jbc, rhsbc): the residual on a       *)
 (* boundary row is  Jbc.X - rhsbc.  Jbc is zero on every interior row.   *)
 (*                                                                      *)
-(*   Q      : Dirichlet on the Pade profile, both bcType values.         *)
-(*   rho    : "Dirichlet" -> rho = 1                                     *)
-(*            "Neumann"   -> sealed wall n.(B grad rho + zeta div Q) = 0,*)
-(*                           scaled by 1/xi0 for conditioning.  Corners  *)
-(*                           get the sum of the x and y conditions.      *)
+(*   Q      : Dirichlet on the Pade profile, every bcType.               *)
+(*   rho    : "Dirichlet"  -> rho = 1                                    *)
+(*            "Neumann"    -> sealed wall n.(B grad rho + zeta div Q) = 0,*)
+(*                            scaled by 1/xi0 for conditioning.  Corners *)
+(*                            get the sum of the x and y conditions.     *)
+(*            "RhoNeumann" -> n.grad rho = 0, same scaling and corners.  *)
+(*                                                                      *)
+(* "RhoNeumann" is NOT sealed: the active flux zeta n.(div Q)/xi0 still  *)
+(* crosses the wall.  Integrating the steady rho equation over the box   *)
+(* gives                                                                *)
+(*    mu |Omega| = -(zeta/xi0) Oint n.(div Q) dl,                        *)
+(* which is not zero in general, so mu is a real unknown here: the       *)
+(* uniform rate d_t rho = -mu at which the wall fills or drains the box. *)
+(* Nothing depends on rho itself (only on grad rho and lap rho), so      *)
+(* rho = rho_steady - mu t leaves Q and u exactly steady.  The gauge is  *)
+(* always "Point", rho(0,0) = 1; "Replace" would drop mu and dump the    *)
+(* net wall flux into the replaced node.                                 *)
 (* -------------------------------------------------------------------- *)
 cdBC[op_Association, dp_Association, pf_Association, bcType_String] :=
 Module[{n, bm, px, py, Dx, Dy, Bx, lam, Z, Ibc, Jrr, Jrq1, Jrq2, Jbc, rhs,
@@ -292,6 +306,10 @@ Module[{n, bm, px, py, Dx, Dy, Bx, lam, Z, Ibc, Jrr, Jrq1, Jrq2, Jbc, rhs,
       Jrr  = Bx  (px Dx + py Dy);
       Jrq1 = lam (px Dx - py Dy);
       Jrq2 = lam (px Dy + py Dx);,
+    "RhoNeumann",
+      (* n.grad rho = 0: the sealed row without its Q coupling *)
+      Jrr  = Bx  (px Dx + py Dy);
+      Jrq1 = Z; Jrq2 = Z;,
     _,
       Print["cdBC: unknown bcType ", bcType]; Return[$Failed]
   ];
@@ -320,15 +338,16 @@ Module[{n, bm, px, py, Dx, Dy, Bx, lam, Z, Ibc, Jrr, Jrq1, Jrq2, Jbc, rhs,
 (*                                                                      *)
 (*   X  = Join[rho, q1, q2]            (3n)                             *)
 (*   ex = {ux, uy}                     ("Dirichlet")                    *)
-(*      = {ux, uy, mu}                 ("Neumann"; mu is the multiplier *)
-(*                                      of the mean-density row)        *)
+(*      = {ux, uy, mu}                 ("Neumann", "RhoNeumann"; mu is  *)
+(*                                      the multiplier of the gauge row;*)
+(*                                      length is cdNe[dp, bcType])     *)
 (*                                                                      *)
 (*   theta = 1 -> implicit Euler step of size dt from Xold              *)
 (*   theta = 0 -> steady state (dt, Xold ignored)                       *)
 (*                                                                      *)
 (*  Interior rows:  theta (X - Xold)/dt - F(X, ex)                      *)
 (*  Boundary rows:  Jbc.X - rhs                                          *)
-(*  Border rows  :  q1[k0], q2[k0], and (w.rho - area) when "Neumann"    *)
+(*  Border rows  :  q1[k0], q2[k0], and the gauge row when cdNe == 3     *)
 (* -------------------------------------------------------------------- *)
 (* Assemble [[Mtop, Cmat], [Esp, 0]] by index offset.
    ArrayFlatten CANNOT be used here: with ragged blocks (3n x 3n beside
@@ -395,6 +414,16 @@ cdBScale[theta_, dt_] := If[TrueQ[theta == 0], 1., 1./dt];
    -------------------------------------------------------------------- *)
 cdRhoGauge[dp_Association] := Lookup[dp, "rhoGauge", "Point"];
 
+(* The gauge a wall actually carries, and hence the length of ex:
+     "Dirichlet"  : None                -> {ux, uy}
+     "Neumann"    : cdRhoGauge[dp]      -> {ux, uy, mu}  ({ux, uy} if "Replace")
+     "RhoNeumann" : "Point", always     -> {ux, uy, mu}
+   RhoNeumann ignores dp["rhoGauge"]: its mu is not zero (see cdBC). *)
+cdGauge[dp_Association, bcType_String] :=
+  Switch[bcType, "Neumann", cdRhoGauge[dp], "RhoNeumann", "Point", _, None];
+cdNe[dp_Association, bcType_String] :=
+  If[MemberQ[{"Point", "Mean"}, cdGauge[dp, bcType]], 3, 2];
+
 (* shift rho by a constant so that the weighted mean is 1 *)
 cdShiftRhoMean[X_, op_Association] := Module[{n = op["n"], sh},
   sh = 1. - op["w"] . X[[1 ;; n]]/op["area"];
@@ -423,8 +452,8 @@ Module[{n = op["n"], r, q1, q2, ux, uy, mu, wx, wy, q2sum, Fr, F1, F2,
        - Aq q2 - bet q2sum q2;
   imD = Lookup[bc, "imD", Join[op["imask"], op["imask"], op["imask"]]];
   Rb = {q1[[k0]], q2[[k0]]};
-  If[bcType === "Neumann" && cdRhoGauge[dp] =!= "Replace",
-    AppendTo[Rb, If[cdRhoGauge[dp] === "Mean",
+  If[cdNe[dp, bcType] == 3,
+    AppendTo[Rb, If[cdGauge[dp, bcType] === "Mean",
                     op["w"] . r - op["area"], r[[k0]] - 1.]]];
   Join[imD (theta (X - Xold)/dt - Join[Fr, F1, F2])
        + bc["Jbc"] . X - bc["rhs"], cdBScale[theta, dt] Rb]
@@ -498,8 +527,8 @@ Module[{n, r, q1, q2, ux, uy, mu, Dx, Dy, Lx, Ly, Lap, Dxy, im, k0,
   Erows = {SparseArray[{n + k0 -> bsc}, {3 n}],
            SparseArray[{2 n + k0 -> bsc}, {3 n}]};
   Rb    = {q1[[k0]], q2[[k0]]};
-  If[bcType === "Neumann" && ne >= 3,
-    If[cdRhoGauge[dp] === "Mean",
+  If[cdNe[dp, bcType] == 3 && ne >= 3,
+    If[cdGauge[dp, bcType] === "Mean",
       AppendTo[Erows, SparseArray@Join[bsc op["w"], ConstantArray[0., 2 n]]];
       AppendTo[Rb, op["w"] . r - op["area"]],
     (* else "Point": one entry, keeps the gauge ROW sparse *)

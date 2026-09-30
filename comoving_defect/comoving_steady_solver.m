@@ -27,9 +27,11 @@ SolveActiveNematicComovingSteady::usage =
   "verbose->True\n" <>
   "  bcType       : \"Neumann\"   \[Rule] sealed wall, " <>
   "n.(B \[Del]\[Rho] + \[Zeta] \[Del].Q) = 0, plus a single-node density gauge;\n" <>
-  "                 \"Dirichlet\" \[Rule] \[Rho] = 1 on the entire outer boundary.\n" <>
+  "                 \"Dirichlet\" \[Rule] \[Rho] = 1 on the entire outer boundary;\n" <>
+  "                 \"RhoNeumann\" \[Rule] n.\[Del]\[Rho] = 0, NOT sealed (the " <>
+  "active flux \[Zeta] n.\[Del].Q crosses it), with \[Rho](0,0) = 1 pinned.\n" <>
   "                 Q is held at the Pade +1/2 profile on the outer boundary in " <>
-  "both cases.\n\n" <>
+  "all cases.\n\n" <>
   "Returns <|\"rho\"->..., \"Q1\"->..., \"Q2\"->..., \"mesh\"->..., \"u\"->{ux,uy}, " <>
   "\"solver\"->...|>.  The three fields are 2-argument interpolations of (x,y) -- " <>
   "drop-in for visualizeSteadyState and the Lyapunov modules, exactly like " <>
@@ -53,10 +55,20 @@ SolveActiveNematicComovingSteady::usage =
   "default) or by the mean (\"Mean\") or by overwriting one near-wall PDE row " <>
   "(\"Replace\").  The three gauges differ only by an additive constant in " <>
   "\[Rho], to which u is blind; they agree on u to ten significant figures.  The " <>
-  "density is shifted back to unit mean before it is returned.";
+  "density is shifted back to unit mean before it is returned.\n\n" <>
+  "NB 3: under \"RhoNeumann\" the net wall flux need not vanish, so the " <>
+  "multiplier \"mu\" in \"solver\" is physical: the uniform rate " <>
+  "\[PartialD]t\[Rho] = -mu at which the wall fills or drains the box.  u and Q " <>
+  "are blind to it.  rhoGauge is ignored; the density is NOT shifted, and " <>
+  "\[Rho](0,0) = 1 on return.";
 
 SolveActiveNematicComovingSteady::badbc =
-  "Unknown boundary-condition type `1`; expected \"Neumann\" or \"Dirichlet\".";
+  "Unknown boundary-condition type `1`; expected \"Neumann\", \"Dirichlet\" " <>
+  "or \"RhoNeumann\".";
+
+SolveActiveNematicComovingSteady::gaugeignored =
+  "rhoGauge -> `1` is ignored for \"RhoNeumann\", which always pins " <>
+  "\[Rho](0,0) = 1.";
 
 SolveActiveNematicComovingSteady::badgauge =
   "Unknown rhoGauge `1`; expected \"Point\", \"Mean\" or \"Replace\".";
@@ -95,7 +107,7 @@ Block[
   },
 
   (* --- validate bcType up front ------------------------------------- *)
-  If[!MemberQ[{"Neumann", "Dirichlet"}, bcType],
+  If[!MemberQ[{"Neumann", "Dirichlet", "RhoNeumann"}, bcType],
     Message[SolveActiveNematicComovingSteady::badbc, bcType];
     Return[$Failed]
   ];
@@ -134,6 +146,8 @@ Block[
   If[!MemberQ[{"Point", "Mean", "Replace"}, rhoGauge],
     Message[SolveActiveNematicComovingSteady::badgauge, rhoGauge];
     Return[$Failed]];
+  If[bcType === "RhoNeumann" && rhoGauge =!= "Point",
+    Message[SolveActiveNematicComovingSteady::gaugeignored, rhoGauge]];
   rhoGaugeV = rhoGauge;
 
   (* --- unpack model parameters -------------------------------------- *)
@@ -177,7 +191,7 @@ Block[
   gg = cdGridPade[N[box], dpTarget, N[\[Delta]mesh], N[hMax], refine];
   op = cdOps[gg, gg, order];
   n  = op["n"]; k0 = op["k0"];
-  ne = If[bcType === "Neumann" && rhoGaugeV =!= "Replace", 3, 2];
+  ne = cdNe[dpTarget, bcType];
 
   If[verbose,
     Print["[comoving steady] bc = ", bcType, "   box = ", N[box],
@@ -187,7 +201,8 @@ Block[
           "   ld/hMin = ", cdFmt[dpTarget["ld"]/gg["hMin"]],
           "   alpha = ", cdFmt[\[Zeta] \[Xi]r dpTarget["S0"]/
                                (4 \[Xi]0 dpTarget["Kp"])],
-          If[bcType === "Neumann", "   gauge = " <> rhoGaugeV, ""]]];
+          If[cdGauge[dpTarget, bcType] =!= None,
+             "   gauge = " <> cdGauge[dpTarget, bcType], ""]]];
 
   (* --- \[Zeta]-continuation ------------------------------------------ *)
   (* A cold Newton from the Pade seed does NOT converge at the activities of
@@ -238,7 +253,8 @@ Block[
   (* The gauges differ only by an additive constant, and u is blind to it (the
      Q equation sees \[Rho] through \[Del]\[Rho], the \[Rho] equation through
      \[Del]^2\[Rho]).  Normalising here makes the returned density comparable
-     with the Dirichlet case, where the wall fixes \[Rho] = 1. *)
+     with the Dirichlet case, where the wall fixes \[Rho] = 1.  "RhoNeumann"
+     is left alone: its gauge already fixes \[Rho](0,0) = 1. *)
   If[bcType === "Neumann", X = cdShiftRhoMean[X, op]];
 
   If[verbose,
@@ -249,6 +265,7 @@ Block[
     Print["    u = ", ToString@DecimalForm[ex[[1]], 12],
           "   uy = ", cdFmt@ex[[2]],
           "   core = ", cdFmt[{X[[n + k0]], X[[2 n + k0]]}],
+          If[ne >= 3, "   mu = " <> cdFmt@ex[[3]], ""],
           "   wall = ", Round[N[AbsoluteTime[] - wall0], 0.01], " s"]];
 
   (* --- package ------------------------------------------------------- *)
@@ -269,7 +286,7 @@ Block[
                    "iterations" -> st["iterations"],
                    "core"       -> {X[[n + k0]], X[[2 n + k0]]},
                    "zetaPath"   -> zs,
-                   "gauge"      -> If[bcType === "Neumann", rhoGaugeV, None],
+                   "gauge"      -> cdGauge[dpTarget, bcType],
                    "mu"         -> If[Length[ex] >= 3, ex[[3]], 0.],
                    "state"      -> X,
                    "wall"       -> N[AbsoluteTime[] - wall0]|> |>
