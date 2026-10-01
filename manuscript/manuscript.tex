@@ -1187,7 +1187,6 @@ $B\propto\rho_0\pcrit^2\elln^2\nu_0/[(1+\nu_0)\zeta]$.
 \subsection{Parameters of the critical pressure}
 \label{app:parameters-extrusion}
 \begin{table}[h!]
-\begin{chgtext}
 \centering
 \begin{tabular}{l c c l}
 \hline
@@ -1204,9 +1203,7 @@ $\Acell$ ($\micron^2$) & $3$ & $2.5$--$4.4$ & \cite{wu2009periodic,starruss2012p
   $1~\kPa\cdot\micron=1~\mathrm{mN/m}$. The energies enter only as $(\gammaw+\Wc)$ and
   $(\Ws-\Wc)$.}
 \label{tab:pcrit}
-\end{chgtext}
 \end{table}
-\begin{chgtext}
 We take $\gammaw=65~\kPa\cdot\micron$, the surface tension of the growth medium of
 \textit{M.\ xanthus} measured by pendant drop~\cite{bourque2025active}. Clean water gives
 $72~\kPa\cdot\micron$~\cite{vargaftik1983}. The cells excrete
@@ -1215,9 +1212,9 @@ give about $60~\kPa\cdot\micron$~\cite{islam2020}. The surface tension exceeds $
 more than an order of magnitude, so the wetting film, and not the adhesion, holds the
 monolayer flat.
 
-We set $\Wc=0$. Neighboring cells attract each other because the water menisci around
+In the experiments no direct cell-cell interaction is observed, so we set $\Wc=0$. Neighboring cells attract each other because the water menisci around
 them overlap~\cite{black2025capillary}. This capillary cohesion is the surface energy of
-the water film, which the term $\gammaw\ell h$ of \cref{eq:dE-of-A} already counts.
+the water film, which is already accounted.
 Wild-type cells also cohere through extracellular
 fibrils~\cite{shimkets1986correlation,behmlander1994biochemical}, which we neglect.
 
@@ -1226,8 +1223,12 @@ $3.8~\kPa\cdot\micron$~\cite{bayoudh2006quantification}. Detaching one \textit{E
 cell from glass costs $0.035~\kPa\cdot\micron$, spread over
 $\Acell$~\cite{duanisassaf2024factors}. We take $h=0.5~\micron$, the thickness of one
 cell layer~\cite{han2025local}. We take $\Acell=3~\micron^2$, the footprint of a rod
-$6~\micron$ long and $0.5~\micron$ wide, close to $1/\rho_0=3.3~\micron^2$.
-\end{chgtext}
+$6~\micron$ long and $0.5~\micron$ wide.
+
+With the above choices, the critical pressure \eqref{eq:pcrit} evaluates to \prompt{evaluate it}.
+
+
+
 % removed 2026-09-29, both contradict sec:discussion (the fit fixes only p_crit^2/B):
 %   "..., but \cref{eq:nucleation-condition} does not require it."
 %   "The layering probability depends on the threshold exponentially
@@ -1248,8 +1249,52 @@ $6~\micron$ long and $0.5~\micron$ wide, close to $1/\rho_0=3.3~\micron^2$.
 
 \subsection{Parameters of the field equations}
 \label{app:parameters-choice}
-\prompt{Do not to anything with this subsection. I am clarifying some details. Skip the prompts from this subsection}
-\prompt{In dean.tex file I used another approach to present the parameter values, as equations. I would prefer it instead of the table. I will set some structure below.}
+\prompt{I changed the parameter estimates. I summarised them below. I want you to revrite this subsection}
+
+There are wide range of parameters reported in the literature. The values highly depend on the experimental conditions. Moreover, the values may change over time \prompt{Give some reasons}.
+Therefore, sometimes we have to choosea a value from the range.
+
+
+The choose the density of the monolayer $\rho_0 = 0.25 ~\micron^{-2}$ \cite{copenhagen2021}. The friction coefficient $\xi_0$ is estimated two ways in Ref.~\cite{han2025local} (see their supplementary material, Fig. S12 and Sec. II.C), we take $\xi_0 = 5 ~\Pa\cdot\minute/\micron$.
+
+The reported range of $\zeta/\xi_0$ is wide: $0.5-5~\micron^2/\minute$ \cite{han2025local,copenhagen2021}. We choose the value derived from our model based of self-propulsion velocity and reversal rate in \cref{eq:zeta-definition}. Takin $v_0=1~\micron/\minute$ and $\frev=0.1~\minute^{-1}$ \cite{han2025local}, we get $\zeta/\xi_0 = 2.5 ~\micron^2/\minute$, with $\zeta = 12.5 ~\Pa\cdot\micron$.
+
+
+In Ref.~\cite{copenhagen2021}, the $+1/2$ topological defect parameters are infered from the flow profile, with $\elld \sim 1.5~\micron$ and $S_0 \sim 1$. While in Ref.~\cite{han2025local}, the nematic field is estimatef by individual cell directors; they estimated $\elld \sim 0.8~\micron$, field strength $S$ increases to $0.9$, then decays away from the defect. For simplicity, we choose $\elld = 1~\micron$ and $S_0 = 0.9$.
+
+The rotational diffusion coefficient $\Lambda=0.13~\minute^{-1}$ from Ref.~\cite{liu2019selfdriven}.  There is no measurement for the rotational friction coefficient $\xir$, but we can estimate it from the translational friction coefficient $\xi_0$: $\xir = \xi_0 L^2/12$, where $L$ is the length of the cell. Taking $L = 6~\micron$, we get $\xir = 3 ~\Pa\cdot\micron\cdot\minute$. Note that the rotational noise in \cref{eq:langevin-angle} is highly non-equilibrium: 
+ \begin{align}
+  \frac{\Lambda \xi_r}{\rho_0 \kB T}= % \prompt{Compute this}
+\end{align}
+while in for thermal equilibrium, the Fluctuation-Dissipation Theorem makes above ratio $1$ \citeTODO{FDT}. Here, $\kB$ is the Boltzmann constant and $T= 20^\circ C$.
+
+Parameters $\elld$ and $S_0$ with relations \Cref{eq:H-active,eq:S0-elld} do not fully determine the free energy parameters $a$, $b$ and $K$ \Cref{eq:H-active,eq:S0-elld}.
+The additional input is the relaxation rate of the director field. Consider a uniform nematic order $\Q$ and a small pertirbation $\delta Q$ around it. Take the simpler version of \cref{eq:model-Q}, where the nematic field relaxes due to force field $\Ha$: $\partial_t \Q = 4 \Ha / \xir$. With small perturbation:
+\begin{align}
+  \partial_t \delta \Q = \frac{4}{\xir} \bigl(
+    (-a'-b(\Q:\Q))\delta \Q -2b (\Q:\delta Q)\Q
+  \bigr)
+\end{align} 
+This gives relaxation rate $\gamma \simeq 16 b S_0^2/\xir = -8a'/\xir$.
+
+Additionaly, our model set's a lower bound on $K'$. Requireing positivity of $K$ in the free energy, \cref{eq:H-active} gives $K' > \zeta \xir/(4\xi_0)$. With $K' = \elld^2 a'$, we get a lower bound on the relaxation rate $\gamma$ allowed by the model:
+\begin{align}
+  \gamma > %\prompt{derive the expression and calculate the value}
+\end{align}
+We choose $\gamma = 10$.
+
+The 2d bulk modulus $B$ is the only free parameter in our model. We take $B=90\,000~\Pa\cdot\micron$, which qualitatively reproduces the experimental data of Ref.~\cite{copenhagen2021}.
+
+% \prompt{Read below. State some estimates of B from the literature, with references.}
+% \paragraph{Bulk modulus $B$.} We do not attempt to constrain $B$ from the literature, and we do not treat it as a measured material constant. It is a \emph{model parameter}: the quadratic term $\tfrac{B}{2}(\rho-1)^2$ in \eqref{free-energy-choice-2} is how the incompressibility of the monolayer is imposed, and $B$ is the stiffness with which that constraint is enforced. There is in any case no direct measurement of the compressibility of a bacterial monolayer; the available proxies --- colony shear and compressive rheology, $\sim10^{2}$--$5\cdot10^{3}~\Pa\cdot\micron$ once converted to two dimensions; gram-negative turgor, $5\cdot10^{3}$--$2\cdot10^{4}$; the effective cell modulus fitted to the mono-to-multilayer transition in \emph{E.\ coli}, $\sim2\cdot10^{5}$; the cell-envelope Young's modulus, $\gtrsim10^{6}$ --- span four orders of magnitude and measure different things. Note also that Ref.~\cite{copenhagen} introduces the same equation of state but does not determine $B$ either: their velocity fit constrains only the product $BJ/(\xi_0\rho_0) = -0.32\pm0.04~\micron^3/\mathrm{min}^2$, with the cell flux $J$ an undetermined integration constant, so the apparent value $B\approx5\cdot10^{3}~\Pa\cdot\micron$ obtained by inserting their assumed $J=10^{-4}~(\micron\cdot\mathrm{min})^{-1}$ presupposes the extrusion flux that is being computed here. We therefore fix $B$ by the comparison of \cref{sec-layering-probability}, and report below how the result moves with it.
+
+
+
+In Table below, we summarize the parameter choise for our model..
+
+
+
+\prompt{what comes next is old and inconsistent. Should be removed.}
 
 
 
@@ -1275,7 +1320,7 @@ Then we infere the values of the remaining parametes from physical arguments. Fi
 \end{align}
 where $\kB$ is the Boltzmann constant and $T= 20^\circ C$, with $\kB T = 4.1 \cdot 10^{-3} ~\Pa \cdot \micron^3$.
 
-The free energy parameter $b$ governs the relaxation rate of the director field. Namely, in Appendix ?? we show that the relaxation rate of the director field is given by $\gamma = 8 b / \xir$. \textit{Assuming} fast relaxation with $\gamma = 8  \min^{-1}$, we get an estimate of $b$.
+The free energy parameter $b$ governs the relaxation rate of the director field. Namely, in Appendix ?? we show that the relaxation rate of the director field is given by $\gamma = 8 b / \xir$. \textit{Assuming} fast relaxation with $\gamma = 8  \minute^{-1}$, we get an estimate of $b$.
 
 Using relations in \cref{eq:S0-elld,eq:H-active} and using the estimated value of $b$, we can infer free energy parameters $a$ and $K$.
 
@@ -1710,6 +1755,14 @@ $\partial_t\to\partial_t-(\u\cdot\nabla)$, the noiseless steady state solves
     + \frac4{\xir}\Ha .
 \end{align}
 \end{subequations}
+
+We drop the advection term $\u\cdot\nabla\rho$ from the density equation. At large $B$
+the pressure gradient $B\nabla\rho$ balances $\fa$, so $\nabla\rho\propto1/B$. At distance
+$r$ from the core, the dropped term is smaller than the flux divergence by
+$\xi_0ur/B<10^{-3}$. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not depend on
+$B$, and $\rho_\ss-1\propto1/B$.
+
+
 The frame velocity $\u$ is not available in closed form. It is fixed implicitly, by
 requiring that the defect core stay pinned at the origin, and enters the numerical
 problem as the Lagrange multiplier conjugate to that constraint.
