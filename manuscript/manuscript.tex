@@ -76,7 +76,7 @@
 \date{\today}
 
 \begin{abstract}
-\upd{In colonies of the bacterium \textit{Myxococcus xanthus}, cells leave the monolayer and
+In colonies of the bacterium \textit{Myxococcus xanthus}, cells leave the monolayer and
 form new layers, the first step towards the fruiting bodies that starving colonies build.
 Experiments show that these layers form preferentially at $+1/2$ topological defects of
 the cell orientation. However, the mean compression at a defect falls three to four
@@ -94,7 +94,7 @@ modulated by two to three percent over a few micrometers. Because the critical p
 lies twenty-one standard deviations into the tail, this small modulation becomes an
 enhancement of the layering probability by a factor of about $10^2$. The enhancement
 peaks off the defect core and, once the stiffness of the monolayer is fitted, matches
-the measured one.}
+the measured one.
 \end{abstract}
 
 \maketitle
@@ -106,28 +106,28 @@ the measured one.}
 % ~/.claude/plans/i-made-changes-to-unified-lamport.md).
 % ============================================================
 
-\upd{\textit{Myxococcus xanthus} is a soil bacterium that lives and hunts in groups
+\textit{Myxococcus xanthus} is a soil bacterium that lives and hunts in groups
 \cite{munoz2016}. While nutrients last, the cells glide together across the substrate as
 a swarm, a thin film that feeds on prey bacteria (\cref{fig:myxo_life}(A)). When the
 nutrients run out, the swarm instead aggregates into mounds, and these grow into
 fruiting bodies of $10^5$ to $10^6$ cells, in which some of the cells become spores
 (\cref{fig:myxo_life}(B)). A fruiting body is built by stacking layers of cells on top of
 one another, so its first step is the formation of a second layer on top of the
-monolayer (red arrow in \cref{fig:myxo_life}). We ask how this first new layer forms.}
+monolayer (red arrow in \cref{fig:myxo_life}). We ask how this first new layer forms.
 
 \begin{figure}[h]
 \includegraphics[width=0.8\linewidth]{figures/handmade/myxo_life_2.png}
-\caption{\upd{Life cycle of \textit{M.\ xanthus}, adapted from Ref.~\cite{munoz2016}.
+\caption{Life cycle of \textit{M.\ xanthus}, adapted from Ref.~\cite{munoz2016}.
 (A) Vegetative cycle. With nutrients, the cells glide together as a swarm, a thin film
 on the substrate, and kill and lyse prey bacteria (gray). (B) Developmental cycle. Upon
 starvation, the swarm aggregates into mounds, which grow into upright fruiting bodies
 filled with spores (brown). The spores germinate when nutrients return. The red arrow
 marks the transition this paper addresses: the flat swarm forms its first multilayered
-structures.}}
+structures.}
 \label{fig:myxo_life}
 \end{figure}
 
-\upd{The cells are rods about $5~\micron$ long and $0.5~\micron$ wide that glide along their
+The cells are rods about $5~\micron$ long and $0.5~\micron$ wide that glide along their
 long axis and reverse their direction every few minutes
 \cite{wu2009periodic,copenhagen2021}. Although each cell moves in one direction at a
 time, it keeps reversing, and neighboring rods interact in the same way whichever end
@@ -225,10 +225,10 @@ at a $+1/2$ defect, first for the steady state and then for the fluctuations. Wi
 pressure variance in hand, \cref{sec:nucleation-2} computes the layering probability and
 compares it with the measurements of Ref.~\cite{copenhagen2021}. Finally,
 \cref{sec:discussion} collects what is fitted, what is approximate, and what would test
-the mechanism.}
+the mechanism.
 
 \begin{figure*}[t]
-  % \includegraphics[width=\textwidth,page=1]{figures/main.pdf}
+  % \includegraphics[width=\textwidth,page=1]{figures/handmade/main.pdf}
   \includegraphics[width=\textwidth]{figures/handmade/main-1.png}
   \caption{ 
     (a) Layering probability averaged over a circle of radius $r$,
@@ -246,7 +246,7 @@ the mechanism.}
 \end{figure*}
 
 \begin{figure*}[t]
-  % \includegraphics[width=\textwidth,page=2]{figures/main.pdf}
+  % \includegraphics[width=\textwidth,page=2]{figures/handmade/main.pdf}
   \includegraphics[width=\textwidth]{figures/handmade/main-2.png}
   \caption{(a) The microscopic model of \cref{sec:model-micro}: a self-propelled
   rod (blue) in the nematic texture around a $+1/2$ defect, whose core is the red dot;
@@ -1750,6 +1750,7 @@ $\langle\hat\Q\hat\Q\rangle_\varrho$ and $\langle\hat\Q'\hat\Q'\rangle_\varrho$ 
 $\rho$ and $\Q$. We close it with the lowest-order closure of \cref{app:closure}, which sets
 $\langle\hat\Q\hat\Q\rangle_\varrho\simeq\rho\J$ and $\langle\hat\Q'\hat\Q'\rangle_\varrho\simeq4\rho\J$, with
 \begin{equation}
+  \label{eq:J-definition}
   J_\abmn=\tfrac12(\delta_{\alpha\mu}\delta_{\beta\nu}+\delta_{\alpha\nu}\delta_{\beta\mu}
   -\delta_\ab\delta_\mn) 
 \end{equation}
@@ -1853,23 +1854,23 @@ written at $\rho=1$.
 % Numbers at the fourth-generation set (N150, B = 9e4 steady state of tab:lyapunov-run),
 % not dean.tex's (87.6% there is the old set). Checks: claude_experiments/appD_check.wls.
 
-\upd{This appendix supports \cref{sec:model-closure,app:dean-angle}. The $\Q$ equation
+This appendix supports \cref{sec:model-closure,app:dean-angle}. The $\Q$ equation
 \cref{eq:Q-full} and the correlators \cref{eq:Q-noise-correlators} of its noises contain
-the angular moments $\la\hat\Q\hat\Q\ra_\varrho$, $\la\hat\Q'\hat\Q'\ra_\varrho$ and
-$\la\hat\Q\hat\Q\hat\Q\ra_\varrho$. These depend on the whole angular distribution, which
+the angular moments $\langle\hat\Q\hat\Q\rangle_\varrho$, $\langle\hat\Q'\hat\Q'\rangle_\varrho$ and
+$\langle\hat\Q\hat\Q\hat\Q\rangle_\varrho$. These depend on the whole angular distribution, which
 $\rho$ and $\Q$ do not determine, so closing the equations needs a rule that assigns a
 distribution to every pair $(\rho,\Q)$. We take the distribution that has the given
 $\rho$ and $\Q$ and otherwise carries as little information as possible, the one of
 maximum entropy. \Cref{app:closure-maxent} constructs it, computes its moments exactly
 and expands them at weak nematic order. \Cref{app:realizability} then shows that the
-expansion fails to give a valid noise covariance at the strong order of the defect
-steady state, and that the exact moments repair it.}
+expansion fails to give a valid noise covariance at the strong order ($S > S^\ast$) of the defect
+steady state, and that the exact moments repair it.
 
 \subsection{Construction}
 \label{app:closure-maxent}
-\upd{At a point $\r$, consider all angular distributions $\varrho(\theta)$ with
+At a point $\r$, consider all angular distributions $\varrho(\theta) = \varrho_t(\theta \,|\, \r)$ with
 $\int\!\d\theta\,\varrho=\rho$ and $\int\!\d\theta\,\varrho\,\hat\Q=\Q$. Maximizing the
-entropy $-\int\!\d\theta\,\varrho\ln\varrho$ under these constraints, with a scalar and a
+entropy $\int\!\d\theta\varrho\ln(1/\varrho)$ under these constraints, with a scalar and a
 tensor Lagrange multiplier, gives $\varrho\propto\exp[\bs\lambda\!:\!\hat\Q(\theta)]$.
 Since $\hat\Q$ contains only $\cos2\theta$ and $\sin2\theta$, this is a von Mises
 distribution in $2\theta$,
@@ -1878,7 +1879,7 @@ distribution in $2\theta$,
   \varrho(\theta)=\frac{\rho\,\ee^{\kappa\cos2(\theta-\theta_0)}}{2\pi I_0(\kappa)},
 \end{equation}
 where $\theta_0$ is the angle of the director, $\kappa\ge0$ sets how sharply the rods are
-aligned, and $I_n$ is the modified Bessel function. Because the distribution depends on
+aligned, and $I_n$ is the modified Bessel function \citeTODO{Bessel function}. Because the distribution depends on
 $\theta$ only through $2\theta$, it gives $\p$ and $-\p$ the same weight, and all its odd
 harmonics vanish. The even ones are
 $\int\!\d\theta\,\varrho\,\ee^{2\ii n\theta}=\rho\,m_n\ee^{2\ii n\theta_0}$, with the
@@ -1894,7 +1895,9 @@ The left side increases monotonically from $0$ to $1$, so this equation has exac
 root for every $S<1$.
 
 The other moments follow from the same harmonics. Each is an isotropic tensor function
-of $\Q$, so it can be built from the $\J$ of \cref{app:dean-angle} and three further
+of $\Q$, so it can be built from the $\J$ of 
+\prompt{use ref \cref{eq:J-definition}}
+\cref{app:dean-angle} and three further
 tensors,
 \begin{align}
   \label{eq:tensor-basis}
@@ -1911,11 +1914,11 @@ harmonics. For $\Q=\hat\Q(\theta_0)$, for example, $U_{1111}=\cos4\theta_0$ and
 $W_{111111}=\tfrac14\cos6\theta_0$. Integrating against \cref{eq:von-mises} then gives
 \begin{align}
   \label{eq:exact-moments}
-  \la\hat\Q\hat\Q\ra_\varrho &= \rho\,\J+\frac{g_2}{2\rho}\,\U(\Q),
+  \langle\hat\Q\hat\Q\rangle_\varrho &= \rho\,\J+\frac{g_2}{2\rho}\,\U(\Q),
   \nonumber\\
-  \la\hat\Q'\hat\Q'\ra_\varrho &= 4\rho\,\J-\frac{2g_2}{\rho}\,\U(\Q),
+  \langle\hat\Q'\hat\Q'\rangle_\varrho &= 4\rho\,\J-\frac{2g_2}{\rho}\,\U(\Q),
   \nonumber\\
-  \la\hat\Q\hat\Q\hat\Q\ra_\varrho &= \tfrac12\,\bT(\Q)+\frac{g_3}{\rho^2}\,\W(\Q),
+  \langle\hat\Q\hat\Q\hat\Q\rangle_\varrho &= \tfrac12\,\bT(\Q)+\frac{g_3}{\rho^2}\,\W(\Q),
 \end{align}
 with the coefficients
 \begin{equation}
@@ -1937,29 +1940,33 @@ $\kappa$ and eliminating $\kappa$ with \cref{eq:kappa-S} gives
   \qquad
   g_3=\tfrac16+\tfrac18S^2+O(S^4).
 \end{equation}
+\prompt{Do not use $\rho$ in the asymptotic expansion. Rho is in the order of 1 anyway. Consistently drop it without explanation.}
 Since $\U=O(\rho^2S^2)$ and $\W=O(\rho^3S^3)$, while the leading terms are of order $\rho$
 and $\rho S$, the $\U$ and $\W$ terms of \cref{eq:exact-moments} are smaller than the
 leading ones by a relative $O(S^2)$. Dropping them leaves the lowest-order closure
 \begin{align}
   \label{eq:leading-closure}
-  &\la\hat\Q\hat\Q\ra_\varrho\simeq\rho\,\J,
-  \qquad
-  \la\hat\Q'\hat\Q'\ra_\varrho\simeq4\rho\,\J,
-  \nonumber\\
-  &\la\hat\Q\hat\Q\hat\Q\ra_\varrho\simeq\tfrac12\,\bT(\Q).
+  &\langle\hat\Q\hat\Q\rangle_\varrho\simeq\rho\,\J,
+  \quad
+  \langle\hat\Q'\hat\Q'\rangle_\varrho\simeq4\rho\,\J,
+  \quad \langle\hat\Q\hat\Q\hat\Q\rangle_\varrho\simeq\tfrac12\,\bT(\Q).
 \end{align}
 The first two close \cref{eq:Q-full} into \cref{eq:Q-closed}, and hence give
 \cref{eq:model-Q}. All three, inserted into \cref{eq:Q-noise-correlators}, give the
-lowest-order noise correlators. The defect, however, is not weakly ordered. At $S=0.9$
+lowest-order noise correlators. 
+\prompt{even though the lowest-order closure is not valid for strong orderd case, we still use the final equations, as it is usually done in the literature. However, there is another pathological problem with noise covariance which we discuss in the next section.}
+The defect, however, is not weakly ordered. At $S=0.9$
 the coefficients are $g_2=0.82$ and $g_3=0.55$, against the small-$S$ values $1/2$ and
-$1/6$, so the dropped terms are not small there.}
+$1/6$, so the dropped terms are not small there.
 
 \subsection{Realizability of the noise covariance}
 \label{app:realizability}
-\upd{The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. If some
+The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. 
+\prompt{It is not about the numerical solver. With negative variance, the problem is ill defined. It is prohibited to have negative variance.}
+If some
 combination of the noises had a negative variance, no Gaussian noise would have these
-correlators, and the Lyapunov equation of \cref{app:lyapunov} would have no meaning. For
-any genuine angular distribution this holds automatically, but for the lowest-order
+correlators, and the Lyapunov equation of \cref{app:lyapunov} would have no meaning. 
+For any genuine angular distribution this holds automatically, but for the lowest-order
 closure it does not.
 
 We collect the three flux noises at a point, $\eta^\rho_i$, $\eta^Q_{11i}$ and
@@ -2038,7 +2045,7 @@ its noise covariance from the exact moments. With them, the rotational correlato
 $(2\Lambda/\rho_0)\la\hat\Q'\hat\Q'\ra_\varrho$ gains a term proportional to
 $\U(\Q_\ss)$, which couples $\delta Q_{11}$ and $\delta Q_{12}$. The drift of the
 solver, like the steady state, keeps the lowest-order closure of \cref{eq:model-Q}, so the
-exact moments change only the noise.}
+exact moments change only the noise.
 
 \section{Comoving-frame defect solver}
 \label{app:comoving}
@@ -2142,6 +2149,7 @@ grid, fourth order in the local spacing and refined toward the defect core.
   \label{fig:activeforce}
 \end{figure}
 
+% \prompt{drop this figure, also rewrite the text without this figure}
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.png}
