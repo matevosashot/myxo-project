@@ -1150,10 +1150,11 @@ We drop both $\nabla\H$ terms of \cref{eq:model-rho,eq:model-Q} (\cref{sec:model
 The analytic calculation of \cref{sec:defect-fluct} sets $\delta\Q=0$. We have no bound
 on the resulting error and check the calculation against the coupled numerical solution.
 The maximum-entropy closure is accurate to relative $O(S^2)$, and $S_0=0.9$ is not small.
-The closure sets the relaxational term of \cref{eq:model-Q}, and so $\Q_\ss$. Its noise
-covariance is positive semi-definite only for $S\le0.62$, and around the defect $S$
-exceeds this bound over most of the domain. The numerical solver therefore builds
-its noise covariance from the exact moments (\cref{app:realizability,app:lyapunov}). The
+The closure sets the relaxational term of \cref{eq:model-Q}, and so $\Q_\ss$. \upd{For $S>0.62$ its noise
+covariance has a negative eigenvalue, which makes the stochastic equations ill defined,
+and around the defect $S$ exceeds this bound everywhere except within about
+$1.5~\micron$ of the core. We therefore build the noise covariance of the coupled
+equations from the exact moments} (\cref{app:realizability,app:lyapunov}). The
 analytic result needs neither, since it uses the exact density-noise correlator
 \cref{eq:eta-rho-autocorrelation}. The
 Gaussian tail is used twenty-one standard deviations out, where the monolayer is
@@ -1863,8 +1864,8 @@ distribution to every pair $(\rho,\Q)$. We take the distribution that has the gi
 $\rho$ and $\Q$ and otherwise carries as little information as possible, the one of
 maximum entropy. \Cref{app:closure-maxent} constructs it, computes its moments exactly
 and expands them at weak nematic order. \Cref{app:realizability} then shows that the
-expansion fails to give a valid noise covariance at the strong order ($S > S^\ast$) of the defect
-steady state, and that the exact moments repair it.
+expansion fails to give a valid noise covariance at the strong order \upd{($S>S_\star$,
+\cref{eq:golden-bound})} of the defect steady state, and that the exact moments repair it.
 
 \subsection{Construction}
 \label{app:closure-maxent}
@@ -1895,9 +1896,7 @@ The left side increases monotonically from $0$ to $1$, so this equation has exac
 root for every $S<1$.
 
 The other moments follow from the same harmonics. Each is an isotropic tensor function
-of $\Q$, so it can be built from the $\J$ of 
-\prompt{use ref \cref{eq:J-definition}}
-\cref{app:dean-angle} and three further
+of $\Q$, so it can be built from the $\J$ of \upd{\cref{eq:J-definition}} and three further
 tensors,
 \begin{align}
   \label{eq:tensor-basis}
@@ -1940,9 +1939,8 @@ $\kappa$ and eliminating $\kappa$ with \cref{eq:kappa-S} gives
   \qquad
   g_3=\tfrac16+\tfrac18S^2+O(S^4).
 \end{equation}
-\prompt{Do not use $\rho$ in the asymptotic expansion. Rho is in the order of 1 anyway. Consistently drop it without explanation.}
-Since $\U=O(\rho^2S^2)$ and $\W=O(\rho^3S^3)$, while the leading terms are of order $\rho$
-and $\rho S$, the $\U$ and $\W$ terms of \cref{eq:exact-moments} are smaller than the
+Since \upd{$\U=O(S^2)$ and $\W=O(S^3)$, while the leading terms are of order $1$
+and $S$}, the $\U$ and $\W$ terms of \cref{eq:exact-moments} are smaller than the
 leading ones by a relative $O(S^2)$. Dropping them leaves the lowest-order closure
 \begin{align}
   \label{eq:leading-closure}
@@ -1953,20 +1951,22 @@ leading ones by a relative $O(S^2)$. Dropping them leaves the lowest-order closu
 \end{align}
 The first two close \cref{eq:Q-full} into \cref{eq:Q-closed}, and hence give
 \cref{eq:model-Q}. All three, inserted into \cref{eq:Q-noise-correlators}, give the
-lowest-order noise correlators. 
-\prompt{even though the lowest-order closure is not valid for strong orderd case, we still use the final equations, as it is usually done in the literature. However, there is another pathological problem with noise covariance which we discuss in the next section.}
-The defect, however, is not weakly ordered. At $S=0.9$
+lowest-order noise correlators. The defect, however, is not weakly ordered. At $S=0.9$
 the coefficients are $g_2=0.82$ and $g_3=0.55$, against the small-$S$ values $1/2$ and
-$1/6$, so the dropped terms are not small there.
+$1/6$, so the dropped terms are not small there. \upd{The lowest-order closure is
+therefore not accurate around the defect. We nevertheless keep the closed equation
+\cref{eq:model-Q}, as continuum theories derived from particle models
+usually do \cite{baskaran2008hydrodynamics,bertin2013,grossmann2016mesoscale}. The noise
+correlators are a different matter, because there the closure fails qualitatively: it
+can give a combination of the noises a negative variance, as \cref{app:realizability}
+shows.}
 
 \subsection{Realizability of the noise covariance}
 \label{app:realizability}
-The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. 
-\prompt{It is not about the numerical solver. With negative variance, the problem is ill defined. It is prohibited to have negative variance.}
-If some
-combination of the noises had a negative variance, no Gaussian noise would have these
-correlators, and the Lyapunov equation of \cref{app:lyapunov} would have no meaning. 
-For any genuine angular distribution this holds automatically, but for the lowest-order
+The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. \upd{A
+variance cannot be negative. If some combination of the noises had a negative variance,
+no noise could have these correlators, and the stochastic equations
+\cref{eq:model-rho,eq:model-Q} would be ill defined.} For any genuine angular distribution this holds automatically, but for the lowest-order
 closure it does not.
 
 We collect the three flux noises at a point, $\eta^\rho_i$, $\eta^Q_{11i}$ and
@@ -2030,18 +2030,21 @@ $z_4=S^2/2$, raises the bound only to $S\le0.775$, and the steady state still ex
 that on $99\%$ of the grid. The lowest-order closure therefore gives no valid noise
 covariance for this defect.
 
-The failure does not touch the analytic result of \cref{sec:defect-fluct}, which uses
-only the density noise. Its correlator \cref{eq:eta-rho-autocorrelation} is exact and
-needs no closure. The Lyapunov solver of \cref{app:lyapunov}, on the other hand, needs
-the full covariance of $(\bEta_\rho,\bEta^\Q,\f^Q)$.
+\upd{The analytic calculation of \cref{sec:defect-fluct} avoids the problem, because it
+sets $\delta\Q=0$ and keeps only the density noise.} Its correlator
+\cref{eq:eta-rho-autocorrelation} is exact and needs no closure. \upd{The coupled
+equations for $\delta\rho$ and $\delta\Q$, on the other hand, need the full covariance of
+$(\bEta_\rho,\bEta^\Q,\f^Q)$, and with the lowest-order closure they are ill defined
+around the defect.}
 
 The failure comes from the expansion, not from the maximum-entropy hypothesis. The von
 Mises distribution is a genuine density, so the exact moments \cref{eq:exact-moments}
 give a Gram matrix at every $S$. Moreover, since $\bs M$ depends on the distribution only
 through the harmonics up to $n=6$, the three ratios $m_1$, $m_2$ and $m_3$ reproduce the
-von Mises covariance exactly, and the higher harmonics never enter. The cost is one root
-of \cref{eq:kappa-S} per grid point. The solver of \cref{app:lyapunov} therefore builds
-its noise covariance from the exact moments. With them, the rotational correlator
+von Mises covariance exactly, and the higher harmonics never enter. \upd{We therefore use the exact
+moments in the noise correlators of the coupled equations, at the cost of solving
+\cref{eq:kappa-S} once per point, and the solver of \cref{app:lyapunov} builds its noise
+covariance from them.} With them, the rotational correlator
 $(2\Lambda/\rho_0)\la\hat\Q'\hat\Q'\ra_\varrho$ gains a term proportional to
 $\U(\Q_\ss)$, which couples $\delta Q_{11}$ and $\delta Q_{12}$. The drift of the
 solver, like the steady state, keeps the lowest-order closure of \cref{eq:model-Q}, so the
@@ -2078,13 +2081,23 @@ The frame velocity $\u$ is not available in closed form. It is fixed implicitly,
 requiring that the defect core stay pinned at the origin, and enters the numerical
 problem as the Lagrange multiplier conjugate to that constraint.
 
-Neither available boundary condition describes a defect in an extended colony. The
-reservoir (Dirichlet) wall holds $\rho=1$ on the boundary; the sealed wall imposes zero
-total flux, $\nh\tcdot(B\nabla\rho+\zeta\nabla\tcdot\Q)=0$. We use the reservoir wall
-for simplicity, with $\Q$ held at the Pad\'e profile \cref{eq:pade-approximation} on the
-boundary, and assume that the boundary does not change the behaviour at the core. The two
-walls give the same density near the core and differ in the far field
-(\cref{fig:rho1d-dirichlet-neumann}).
+\upd{No wall at a finite distance describes a defect in an extended colony, so we choose
+walls that constrain the fields as little as possible. For the density we impose
+$\nh\tcdot\nabla\rho=0$. The wall then exerts no pressure gradient, but it does not block
+the active flux $(\zeta/\xi_0)\nabla\tcdot\Q$, which crosses it. Cells can therefore enter
+or leave the box, and the density equation of \cref{eq:comoving-equations} has no strictly
+steady solution. Since the equations contain $\rho$ only through its gradients, however,
+a uniform drift $\rho=\rho_\ss+\dot\rho\,t$ solves that equation with its left side
+replaced by the constant $\dot\rho$, and it leaves $\Q$ and $\u$ steady. We therefore solve
+for $\rho_\ss$, fixed by $\rho_\ss(0)=1$, together with the rate $\dot\rho$, which is
+$-2.2\times10^{-3}~\minute^{-1}$ in our run. For the nematic order we impose
+$\nh\tcdot\nabla\Q=0$, so that the wall does not force the texture to the ideal profile
+\cref{eq:pade-approximation}. This free wall leaves a global rotation of $\Q$
+undetermined, and we fix it by the mirror symmetry of the defect, with $Q_2=0$ on the
+axis $y=0$. The fluctuations of \cref{app:lyapunov} use a different wall, a reservoir that
+holds $\delta\rho=\delta\Q=0$ on the boundary and lets the noise flux through. In both
+cases we assume that the wall does not change the fields near the core, which set the
+variance profile.}
 
 \Cref{eq:comoving-equations} is solved by finite differences on a graded, non-uniform
 grid, fourth order in the local spacing and refined toward the defect core.
@@ -2095,12 +2108,15 @@ grid, fourth order in the local spacing and refined toward the defect core.
     count is odd so that the origin is a node. Fourth-order finite differences in each
     direction, Kronecker-lifted to 2D.
   \item The bordered system. The unknowns are $\rho$, $Q_1$, $Q_2$ at every node plus
-    $u_x$, $u_y$; the equations are the discretized \cref{eq:comoving-equations} plus
-    the pinning conditions $Q_1(0)=Q_2(0)=0$. The border removes the near-null
-    translation mode of the Jacobian. Implicit time stepping finds a stable fixed point,
-    and a steady Newton solve with the same bordered matrix polishes it.
-  \item Practical notes: row equilibration at large $B$, continuation in $\zeta$
-    from zero, constraint-row scaling for the differential-algebraic system.
+    $u_x$, $u_y$\upd{ and $\dot\rho$}; the equations are the discretized \cref{eq:comoving-equations}\upd{,
+    the walls, the pinning conditions $Q_1(0)=Q_2(0)=0$ and $\rho(0)=1$, and the mirror
+    line $Q_2(x,0)=0$}. The border removes the near-null translation mode of the
+    Jacobian\upd{, and the line removes the rotation mode. Newton's method with continuation
+    in $\zeta$ from zero finds the solution, and its stability is checked afterwards
+    through the spectrum of the linearized problem (\cref{app:lyapunov}).}
+  \item Practical notes: row equilibration at large $B$\upd{; full Newton, since reusing
+    the factorization diverges at these parameters; the discrete $\partial_y^2$ averaged
+    with its mirror image, so that the discrete problem keeps the $y\to-y$ symmetry}.
   \end{itemize}
   \item \textit{Effect of the cross-coupling.}
   \begin{itemize}
@@ -2149,18 +2165,6 @@ grid, fourth order in the local spacing and refined toward the defect core.
   \label{fig:activeforce}
 \end{figure}
 
-% \prompt{drop this figure, also rewrite the text without this figure}
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.png}
-  \caption{Boundary-condition dependence of the steady-state density, same $y=0$ section
-    as \cref{fig:rho1d-dirichlet}. Blue: reservoir (Dirichlet) wall, $\rho=1$ on the
-    boundary, used throughout the main text. Orange: sealed (Neumann) wall, zero total
-    flux. Dashed curves are the corresponding closed-form solutions. The two agree near
-    the core and differ in the far field, where the sealed wall cannot relax the
-    accumulated density.}
-  \label{fig:rho1d-dirichlet-neumann}
-\end{figure}
 
 \section{Density variance with a short-length cutoff}
 \label{app:variance}
@@ -2240,17 +2244,37 @@ variance in \cref{sec:defect-fluct}.
   \end{itemize}
   \item \textit{Boundary conditions.}
   \begin{itemize}
-  \item Reservoir vs.\ sealed-wall boundary conditions for the fluctuation solver, and
-    what changes in the covariance near the boundary.
+  \item \upd{The walls of the run of \cref{tab:lyapunov-run}. The fluctuations live on a
+    reservoir wall: the wall nodes are removed, so $\delta\rho=\delta\Q=0$ there, the
+    noise flux through the faces next to the wall is kept, and the smoothing $W$ is
+    built on the Dirichlet Laplacian, so it vanishes at the wall too. The steady state
+    underneath comes from a different wall, $\nh\tcdot\nabla\rho_\ss=0$ and
+    $\nh\tcdot\nabla\Q_\ss=0$ (\cref{app:comoving}).}
   \item Spell out that this is not one condition but three: on the steady state, on the
     fluctuating field, and on the noise flux through the wall. Give the table of the
-    eight combinations and show that only two are physically coherent, the reservoir
-    (all Dirichlet, noise flux free) that the solver runs and used in
-    \cref{sec:defect-steady}, and the sealed one (all Neumann, noise flux blocked).
-  \item Show why the isotropic pedestal of \cref{eq:total-gauss} is blind to the choice,
-    and why the anisotropic wall residue is not: it reverses sign and grows by roughly
-    a factor of three between the two, a no-flux wall being quiet where a reservoir
-    wall is loud.
+    eight combinations. \upd{The last two answer one question, whether a cell may cross
+    the wall, once for the fluctuation and once for the noise, so they must agree. Two
+    coherent choices remain for the fluctuations: the reservoir that the solver runs
+    (fluctuation pinned, noise flux free), and the sealed wall (no flux, noise flux
+    blocked).}
+  \item \upd{The sealed option of the solver anchors $\delta\Q$ at the wall. Only $\rho$
+    is conserved, so sealing constrains the density sector alone. A free $\delta\Q$
+    leaves three unstable modes, the two translations of the defect and the rotation of
+    the director, because a wall that exerts no torque cannot confine the defect.}
+  \item \upd{The first condition breaks the pairing in our run. Physically the steady
+    state should see the same wall as the fluctuations, and here it does not. The
+    fluctuations see the steady state only through $\rho_\ss$, $\Q_\ss$, $\u$ and
+    $\bs w_\ss=\u+(B/\xi_0)\nabla\rho_\ss$, and $\rho_\ss-1=O(\zeta/B)$, so the
+    steady-state wall reaches the variance only through $\Q_\ss$, $\u$ and $\bs w_\ss$.
+    Bound this effect near the core, for example by rerunning the fluctuations on a
+    steady state with $\rho_\ss=1$ and $\Q_\ss$ at the Pad\'e profile on the wall.}
+  \item Show why the isotropic pedestal of \cref{eq:total-gauss} is blind to the
+    choice\upd{ of a coherent wall, since drift and noise then share one Laplacian}, and
+    why the anisotropic wall residue is not: \upd{it sits in the first few cells and
+    scales as $Q^\ss_{nn}/\rho_\ss$, so it depends on the texture at the wall. Quote it for
+    the run of \cref{tab:lyapunov-run}. The comparison in earlier drafts, where the
+    residue reversed sign and grew about threefold from the reservoir to the sealed wall,
+    predates the current walls and parameters, and the current set has no sealed run.}
   \end{itemize}
   \item \textit{Results.}
   \begin{itemize}
@@ -2338,7 +2362,7 @@ Grid & $150\times150$ interior nodes, $\Delta x=0.265~\micron$ \\
 Unknowns & $\delta\rho$, $\delta Q_1$, $\delta Q_2$: $67\,500$ \\
 Cutoff & $\elln=0.5~\micron$, $s=1.89$ \\
 Smoothing length & $\ell_\mathrm{eff}=0.520~\micron$, \cref{eq:ell-eff} \\
-Steady-state wall & $\nh\tcdot\nabla\rho_\ss=0$, $\Q_\ss$ free \\
+Steady-state wall & \upd{$\nh\tcdot\nabla\rho_\ss=0$, $\nh\tcdot\nabla\Q_\ss=0$} \\
 Fluctuation wall & $\delta\rho=\delta\Q=0$, free noise flux \\
 Closure & noise: exact moments; drift: lowest order \\
 Steady state & \cref{app:comoving}, same box, fourth order \\
