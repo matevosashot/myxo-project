@@ -76,24 +76,25 @@
 \date{\today}
 
 \begin{abstract}
-In colonies of \textit{Myxococcus xanthus}, cells leave the monolayer and build a second
-layer preferentially at $+1/2$ topological defects of the cell-orientation field
-\cite{copenhagen2021}. The mean compression a defect sustains falls three to four orders
-of magnitude short of the pressure needed to extrude a cell, so the events cannot be the
-mean crossing a threshold; they are rare excursions of a fluctuating stress, and these
-monolayers carry traction fluctuations larger than the mean active stress
-\cite{han2025local}. An active nematic has no fluctuation-dissipation relation to fix the
-amplitude of its noise, so we obtain that amplitude from the microscopic dynamics rather
-than supplying it: we coarse-grain $N$ self-propelled rods that reverse at rate $\frev$
-into a Dean equation \cite{dean1996}, and integrate out the orientation to reach
-stochastic equations for the density and the nematic order parameter. The reversal rate
-fixes the mean active stress and the noise amplitude together, with no freedom between
-them. Around a $+1/2$ defect these equations give a pressure variance modulated by about
-two to three percent over a few micrometers. Because the extrusion threshold lies
-twenty-one standard deviations into the tail, that small modulation is amplified
-into a
-two-orders-of-magnitude enhancement of the layering probability, peaking off the defect
-core, which is what Fig.~3f of Ref.~\cite{copenhagen2021} measures.
+\upd{In colonies of the bacterium \textit{Myxococcus xanthus}, cells leave the monolayer and
+form new layers, the first step towards the fruiting bodies that starving colonies build.
+Experiments show that these layers form preferentially at $+1/2$ topological defects of
+the cell orientation. However, the mean compression at a defect falls three to four
+orders of magnitude short of the pressure needed to extrude a cell, while the measured
+traction has a standard deviation about ten times its mean. We therefore propose that
+layers form during rare pressure fluctuations, and we compute the statistics of these
+fluctuations. Treating layer formation as nucleation gives a critical pressure, so the
+layering probability is the probability that the pressure exceeds it. This probability
+depends exponentially on the noise, but an active nematic has no
+fluctuation-dissipation relation to fix that noise. We derive it instead by
+coarse-graining self-propelled rods that reverse their direction of motion, and we keep
+the noise through a Dean equation. As a result, the reversals set the active stress and
+the noise amplitude together. Around a $+1/2$ defect, the pressure variance is then
+modulated by two to three percent over a few micrometers. Because the critical pressure
+lies twenty-one standard deviations into the tail, this small modulation becomes an
+enhancement of the layering probability by a factor of about $10^2$. The enhancement
+peaks off the defect core and, once the stiffness of the monolayer is fitted, matches
+the measured one.}
 \end{abstract}
 
 \maketitle
@@ -101,93 +102,131 @@ core, which is what Fig.~3f of Ref.~\cite{copenhagen2021} measures.
 % ============================================================
 \section{Introduction}
 \label{sec:intro}
-% Pages: ~1.5. Source: new. structure.md \S1.
+% Pages: ~1.5. Rewritten 2026-10-02 from Ashot's 13-bullet outline (plan in
+% ~/.claude/plans/i-made-changes-to-unified-lamport.md).
 % ============================================================
 
-\begin{itemize}
-  \item Introduction of myxobacteria, interesting details that have relation to our project. refer to \cref{fig:myxo_life}. Our interest is the transition from monolayer to 3d structures/fruting bodies. This is annotated as red arrow on the figure. I would read Ref. \cite{munoz2016} to get more details.
-  \item when there is a food, myxobacteria swarm as a monolayer. When the food is depleted, starvation, the bacteria form a fruiting body.
-  These 3 dimensional structures are formed by forming layers on top of each other. We want to understand how the very first stage, the second layer on top of the monolayer, is formed.
-  \item explain that bacteria are rodshape. Even though bacetia have self-propulsion direction, the interactions between the bacteria is head-tail symmetric. This allows to discribe the system as a continuum active nematic. Consequentially, the monolayer of cells form half integer topological defects. An example of $+1/2$ defect is shown on \cref{fig:main-2}(a,b). I would also explain what is a topological defect.
-  \item What previous work has studied \cite{copenhagen2021} summary of the results.
-  That paper only has experimental data on the layering probability
-  In this paper we want to explain the mechanism of layer formation.
-  \item Ref. \cite{copenhagen2021} found that it is 200 times more likely to form a layer near a $+1/2$ topological defect than far from it. This is shown on \cref{fig:main-1}(a) red dots with error bars.
-  \item In this paper we propose a possible mechanism of layer formation and reproduce the experimental data.
-  \item We model the layer formation as a nucleation problem. This sets a critical pressure. if pressure in the monolayer exceeds this critical pressure, growth of the new layer is energetically favorable.
-  \item Pressure in the monolayer fluctuates a lot. There is traction force measurements and standard deviation is an order of magnitude larger than the mean traction force \cite{han2025local}.
-  \item We derive the distributio of pressure fluctuations arounf $+1/2$ defect. 
-  \item We start from a microscopic model, equation of motion of each cell.
-  \item We coarse-grain the model to get a fluctuating active nematic equations. This is special, because we retain the noise term during the coarse graining. It depends on the microscopic parameters. Usuall coarse graining methods like hierarch methids calulate the moments and the noise is averaged out during this process.
-  \item We solve the fluctuating active nematic equations and obtain the pressure fluctuations. This reproduces the experimental data.
-  \item This is a possible mechanism of layer formation.
-\end{itemize}
-A monolayer of \textit{Myxococcus xanthus} on a wet surface is a dry active nematic. The
-cells are rods a few micrometers long that glide along their own axis, and the substrate
-takes up their momentum. The monolayer contains $\pm1/2$ topological defects. Cells
-leave the monolayer and form new layers throughout the colony. Unlike in growing
-biofilms, layering needs no critical colony size \cite{copenhagen2021}. Layers form
-about $200$ times more often near $+1/2$ defects than far from them
-(\cref{fig:main-2}(b) and \cref{fig:main-1}(a)), and holes open about $80$ times more often near $-1/2$ defects
-\cite{copenhagen2021}.
-
-Forming a layer is a nucleation problem (\cref{fig:main-1}(b)). A patch of cells that
-forms a new layer pays to detach from the substrate and from its neighbors, and to open
-new water surface along its perimeter. It gains the work of the monolayer pressure over
-its area. In classical nucleation the barrier is fixed, and fluctuations change the size
-of the nucleus. A bacterial monolayer has no fluctuations that assemble a nucleus of many
-cells. Instead, the pressure fluctuates, and the barrier fluctuates with it. No nucleus
-can be smaller than one cell, so a layer forms once a pressure fluctuation shrinks the
-critical nucleus to one cell. This sets a critical pressure
-$\pcrit\simeq35~\kPa\tcdot\micron$, fixed by adhesion, surface tension and cell
-size.
-
-A $+1/2$ defect carries a polar active force density, which compresses the monolayer on
-one side of the core. This compression alone cannot form a layer. The mean pressure at a
-defect is of the order of the active stress, three to four orders of magnitude below
-$\pcrit$. Layer formation therefore needs a rare pressure fluctuation. These monolayers
-fluctuate strongly: the standard deviation of the traction measured in
-Ref.~\cite{han2025local} is about ten times its mean. The layering probability is
-set by the probability that the local pressure exceeds $\pcrit$.
-
+\upd{\textit{Myxococcus xanthus} is a soil bacterium that lives and hunts in groups
+\cite{munoz2016}. While nutrients last, the cells glide together across the substrate as
+a swarm, a thin film that feeds on prey bacteria (\cref{fig:myxo_life}(A)). When the
+nutrients run out, the swarm instead aggregates into mounds, and these grow into
+fruiting bodies of $10^5$ to $10^6$ cells, in which some of the cells become spores
+(\cref{fig:myxo_life}(B)). A fruiting body is built by stacking layers of cells on top of
+one another, so its first step is the formation of a second layer on top of the
+monolayer (red arrow in \cref{fig:myxo_life}). We ask how this first new layer forms.}
 
 \begin{figure}[h]
 \includegraphics[width=0.8\linewidth]{figures/handmade/myxo_life_2.png}
-\caption{Adapted from Ref.~\cite{munoz2016}}
+\caption{\upd{Life cycle of \textit{M.\ xanthus}, adapted from Ref.~\cite{munoz2016}.
+(A) Vegetative cycle. With nutrients, the cells glide together as a swarm, a thin film
+on the substrate, and kill and lyse prey bacteria (gray). (B) Developmental cycle. Upon
+starvation, the swarm aggregates into mounds, which grow into upright fruiting bodies
+filled with spores (brown). The spores germinate when nutrients return. The red arrow
+marks the transition this paper addresses: the flat swarm forms its first multilayered
+structures.}}
 \label{fig:myxo_life}
 \end{figure}
-Computing that probability needs the noise, which a continuum active-nematic theory
-\cite{marchetti2013hydrodynamics} does not supply. In equilibrium, the
-fluctuation-dissipation theorem ties the noise to the dissipation in the equations. An
-active nematic is driven and has no such relation. Noise added at the continuum level
-has a free amplitude and tensor structure, and the layering probability depends on both
-exponentially. We derive both. We start from $N$ self-propelled rods that reverse their
-gliding direction at rate $\frev$, as \textit{M.\ xanthus} does (\cref{fig:main-2}(a)). We
-coarse-grain them into a Dean equation \cite{dean1996} for the joint density in position
-and orientation, and integrate out the orientation.
+
+\upd{The cells are rods about $5~\micron$ long and $0.5~\micron$ wide that glide along their
+long axis and reverse their direction every few minutes
+\cite{wu2009periodic,copenhagen2021}. Although each cell moves in one direction at a
+time, it keeps reversing, and neighboring rods interact in the same way whichever end
+leads. On long time scales the monolayer is therefore an active nematic
+\cite{marchetti2013hydrodynamics,doostmohammadi2018active}, and since the substrate takes
+up the momentum of the cells, it is a dry one. The local average axis of the cells, the
+director, is undefined at isolated points called topological defects. Along any loop
+around such a point the director rotates by $+\pi$ or by $-\pi$, which gives the
+comet-shaped $+1/2$ defect and the three-armed $-1/2$ defect (\cref{fig:main-2}(a,b)).
+In other living active nematics, too, defects are where cells leave the plane:
+epithelial cells are extruded at $+1/2$ defects \cite{saw2017topological}, neural
+progenitor cells accumulate there into three-dimensional mounds
+\cite{kawaguchi2017topological}, and in colonies of \textit{Pseudomonas aeruginosa},
+cells rotate upright and become trapped where two $+1/2$ defects collide
+\cite{meacock2021bacteria}.
+
+Copenhagen \textit{et al.} imaged \textit{M.\ xanthus} monolayers on a nutrient-rich
+substrate, where no fruiting bodies form, and still saw new layers and holes appear
+throughout the colony \cite{copenhagen2021}. Unlike in growing colonies
+\cite{grant2014}, these layers need no critical colony size. They form, however, about
+$200$ times more often near $+1/2$ defects than far from them (\cref{fig:main-1}(a),
+red), while holes open about $80$ times more often near $-1/2$ defects. Here we address
+the layers at $+1/2$ defects. Copenhagen \textit{et al.} explained where these layers
+form by an anisotropic friction. On the side where the director bends around the core,
+the cells lie across the flow and resist it more than the cells on the other side, so
+more cells flow into the core than out of it. This accumulation places the layers at the
+defect. The model assumes, however, that compressed cells leave the monolayer at once,
+so it does not predict how much more often layers form there. The mean compression
+cannot form a layer on its own either. The mean pressure at a defect is of the order of
+the active stress, three to four orders of magnitude below the pressure needed to
+extrude a cell.
+
+The stress in these monolayers, however, fluctuates strongly. Han \textit{et al.} measured
+the traction that the cells exert on the substrate and found a standard deviation about
+ten times its mean \cite{han2025local}. They traced these fluctuations to local polar
+order, whose magnitude the cells tune through their reversal rate, and found them
+stronger at $+1/2$ than at $-1/2$ defects. They proposed that the resulting pressure
+fluctuations trigger new layers, and noted that no quantitative model of these
+fluctuations exists yet. Here we provide such a model. We propose that layers form
+during rare pressure fluctuations that originate in the self-propulsion and reversals of
+single cells, and we compute the statistics of these fluctuations around a $+1/2$
+defect.
+
+To connect layer formation to the pressure, we treat it as nucleation
+(\cref{fig:main-1}(b)). A patch of cells that forms a new layer pays to detach from the
+substrate and from its neighbors and to open new water surface along its edge, and it
+gains the work of the monolayer pressure over its area. Thermal motion cannot lift
+cells, and no nucleus can be smaller than one cell. A layer therefore forms once the
+pressure is high enough that the critical nucleus shrinks to a single cell
+(\cref{fig:main-2}(c)). This sets a critical pressure $\pcrit\simeq35~\kPa\tcdot\micron$,
+fixed by adhesion, surface tension and cell size. Since $\pcrit$ does not depend on
+position, a defect can favor layers only through the statistics of the pressure around
+it, and the layering probability is the probability that the local pressure exceeds
+$\pcrit$.
+
+This probability lies far in the tail of the pressure distribution. It therefore
+depends exponentially on the noise that drives the fluctuations, both on its amplitude
+and on how it depends on the nematic order. In equilibrium, the fluctuation-dissipation
+theorem ties the noise to the dissipation in the equations of motion. An active nematic
+is driven and has no such relation, so a noise added to its continuum equations has a
+free amplitude and tensor structure \cite{ramaswamy2003active}. We therefore derive the
+noise from the dynamics of the cells. Kinetic theories derive continuum equations of
+active matter from particle models, including self-propelled rods that reverse, but
+they average the noise out on the way
+\cite{bertin2006boltzmann,baskaran2008hydrodynamics,grossmann2016mesoscale}. Dean's
+equation keeps it instead \cite{dean1996}. It has been extended to run-and-tumble and
+active Brownian particles \cite{tailleur2008statistical,solon2015active} and, for the
+noise of the free motion, to apolar active nematics whose particles step back and forth
+at random \cite{bertin2013}. We extend it to interacting rods that reverse at a finite
+rate $\frev$, as \textit{M.\ xanthus} does (\cref{fig:main-2}(a)), and then integrate out
+their orientation.
 
 The result is a pair of stochastic equations for the density and the nematic order
-parameter. The reversals generate an active stress with coefficient
-$\zeta=\xi_0v_0^2/(4\frev)$, which grows with the distance $v_0/\frev$ a cell glides
-between reversals. The same $\zeta$ sets the amplitude of the density noise, and the
-coarse-graining fixes how that noise depends on the nematic order.
+parameter. The reversals drive an active stress, which grows with the distance a cell
+glides between reversals, and the same coefficient sets the amplitude of the density
+noise. Neither can therefore be tuned without the other. The coarse-graining also fixes
+how this noise depends on the local nematic order.
 
-Solved around a $+1/2$ defect, these equations give a density variance with two parts.
-One is the variance of a uniform monolayer, set by the noise amplitude, the stiffness
-of the monolayer and the cell width. The other follows the nematic texture, decays away from the
-core, and changes the local variance by two to three percent. The critical pressure
-lies about twenty-one standard deviations out in the tail of the pressure
-distribution. This amplifies the small change in the variance into a factor of about
-$10^2$ in the layering probability. With the stiffness fitted, the result matches the enhancement measured near
-$+1/2$ defects (\cref{fig:main-1}(a)).
+Solved around a $+1/2$ defect, these equations give a density variance, and hence a
+pressure variance, with two parts. One is the variance of a uniform monolayer, set by
+the noise amplitude, the stiffness of the monolayer and the width of a cell. The other
+follows the nematic texture: it decays over a few micrometers from the core and changes
+the local variance by two to three percent. Because $\pcrit$ lies about twenty-one
+standard deviations out in the tail, this small change is amplified into a factor of
+about $10^2$ in the layering probability. The enhancement peaks off the core, on the
+side where the director bends around it, and with the stiffness of the monolayer fitted
+it matches the one measured near $+1/2$ defects (\cref{fig:main-1}(a)). Fluctuations of
+microscopic origin thus suffice to explain where layers form, although the calculation
+does not exclude other mechanisms.
 
 \Cref{sec:nucleation-1} describes layer formation as nucleation over a fluctuating
-barrier and reduces it to the statistics of the pressure. \Cref{sec:model} derives the
-stochastic equations from the microscopic model. \Cref{sec:defect} solves them at a
-$+1/2$ defect, first for the steady state and then for the fluctuations.
-\Cref{sec:nucleation-2} computes the layering probability and compares it with
-Ref.~\cite{copenhagen2021}. \Cref{sec:discussion} collects what is fitted, what is
-approximate, and what would test the mechanism.
+barrier and reduces it to the statistics of the pressure. \Cref{sec:model} then derives
+the stochastic equations from the microscopic model, and \cref{sec:defect} solves them
+at a $+1/2$ defect, first for the steady state and then for the fluctuations. With the
+pressure variance in hand, \cref{sec:nucleation-2} computes the layering probability and
+compares it with the measurements of Ref.~\cite{copenhagen2021}. Finally,
+\cref{sec:discussion} collects what is fitted, what is approximate, and what would test
+the mechanism.}
+
 \begin{figure*}[t]
   % \includegraphics[width=\textwidth,page=1]{figures/main.pdf}
   \includegraphics[width=\textwidth]{figures/handmade/main-1.png}
