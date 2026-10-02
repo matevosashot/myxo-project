@@ -1849,42 +1849,196 @@ written at $\rho=1$.
 
 \section{Maximum-entropy closure}
 \label{app:closure}
-% dean.tex 2090-2262 (construction), 2263-2450 (realizability).
+% dean.tex 2090-2262 (construction), 2263-2450 (realizability). Written 2026-10-02.
+% Numbers at the fourth-generation set (N150, B = 9e4 steady state of tab:lyapunov-run),
+% not dean.tex's (87.6% there is the old set). Checks: claude_experiments/appD_check.wls.
+
+\upd{This appendix supports \cref{sec:model-closure,app:dean-angle}. The $\Q$ equation
+\cref{eq:Q-full} and the correlators \cref{eq:Q-noise-correlators} of its noises contain
+the angular moments $\la\hat\Q\hat\Q\ra_\varrho$, $\la\hat\Q'\hat\Q'\ra_\varrho$ and
+$\la\hat\Q\hat\Q\hat\Q\ra_\varrho$. These depend on the whole angular distribution, which
+$\rho$ and $\Q$ do not determine, so closing the equations needs a rule that assigns a
+distribution to every pair $(\rho,\Q)$. We take the distribution that has the given
+$\rho$ and $\Q$ and otherwise carries as little information as possible, the one of
+maximum entropy. \Cref{app:closure-maxent} constructs it, computes its moments exactly
+and expands them at weak nematic order. \Cref{app:realizability} then shows that the
+expansion fails to give a valid noise covariance at the strong order of the defect
+steady state, and that the exact moments repair it.}
 
 \subsection{Construction}
 \label{app:closure-maxent}
-\begin{itemize}
-  \item The moments to close: the angular averages in the $\Q$ equation and in its noise
-    correlators, written as integrals over $\theta$.
-  \item The maximum-entropy distribution at given $\rho$ and $\Q$: a von Mises
-    distribution in $2\theta$, with concentration $\kappa$ fixed by
-    $I_1(\kappa)/I_0(\kappa)=S$.
-  \item The tensor basis of the moments: $\I$, $\Q$, $\J$ and the higher tensors
-    $\U(\Q)$ and $\W(\Q)$.
-  \item The exact moments, as ratios of Bessel functions of $\kappa$.
-  \item The small-$S$ expansion, $\langle\hat\Q\hat\Q\rangle_\varrho\simeq\rho\J$ and
-    $\langle\hat\Q'\hat\Q'\rangle_\varrho\simeq4\rho\J$, accurate to relative $O(S^2)$. This is
-    the closure used in \cref{eq:model-Q}.
-\end{itemize}
+\upd{At a point $\r$, consider all angular distributions $\varrho(\theta)$ with
+$\int\!\d\theta\,\varrho=\rho$ and $\int\!\d\theta\,\varrho\,\hat\Q=\Q$. Maximizing the
+entropy $-\int\!\d\theta\,\varrho\ln\varrho$ under these constraints, with a scalar and a
+tensor Lagrange multiplier, gives $\varrho\propto\exp[\bs\lambda\!:\!\hat\Q(\theta)]$.
+Since $\hat\Q$ contains only $\cos2\theta$ and $\sin2\theta$, this is a von Mises
+distribution in $2\theta$,
+\begin{equation}
+  \label{eq:von-mises}
+  \varrho(\theta)=\frac{\rho\,\ee^{\kappa\cos2(\theta-\theta_0)}}{2\pi I_0(\kappa)},
+\end{equation}
+where $\theta_0$ is the angle of the director, $\kappa\ge0$ sets how sharply the rods are
+aligned, and $I_n$ is the modified Bessel function. Because the distribution depends on
+$\theta$ only through $2\theta$, it gives $\p$ and $-\p$ the same weight, and all its odd
+harmonics vanish. The even ones are
+$\int\!\d\theta\,\varrho\,\ee^{2\ii n\theta}=\rho\,m_n\ee^{2\ii n\theta_0}$, with the
+Bessel ratios $m_n=I_n(\kappa)/I_0(\kappa)$. The first of them gives
+$\Q=\rho\,m_1\hat\Q(\theta_0)$. With the strength of the nematic order
+$S=\rho^{-1}\sqrt{(\Q\!:\!\Q)/2}$ of \cref{app:dean-normalisation}, $\kappa$ therefore
+follows from $\Q$ through
+\begin{equation}
+  \label{eq:kappa-S}
+  \frac{I_1(\kappa)}{I_0(\kappa)}=S .
+\end{equation}
+The left side increases monotonically from $0$ to $1$, so this equation has exactly one
+root for every $S<1$.
+
+The other moments follow from the same harmonics. Each is an isotropic tensor function
+of $\Q$, so it can be built from the $\J$ of \cref{app:dean-angle} and three further
+tensors,
+\begin{align}
+  \label{eq:tensor-basis}
+  T_{\abmn ij}(\Q) &= Q_\ab J_{\mn ij}+Q_\mn J_{\ab ij}+Q_{ij}J_\abmn,
+  \nonumber\\
+  \U(\Q) &= 2\bigl[\Q\Q-\tfrac12(\Q\!:\!\Q)\,\J\bigr],
+  \nonumber\\
+  \W(\Q) &= \Q\Q\Q-\tfrac14(\Q\!:\!\Q)\,\bT(\Q),
+\end{align}
+where $\Q\Q$ and $\Q\Q\Q$ are outer products, $(\Q\Q)_\abmn=Q_\ab Q_\mn$. The tensor $\bT$
+is linear in $\Q$, while $\U$ and $\W$ are quadratic and cubic. The subtractions make
+$\U$ and $\W$ totally symmetric and traceless, so they are pure fourth and sixth
+harmonics. For $\Q=\hat\Q(\theta_0)$, for example, $U_{1111}=\cos4\theta_0$ and
+$W_{111111}=\tfrac14\cos6\theta_0$. Integrating against \cref{eq:von-mises} then gives
+\begin{align}
+  \label{eq:exact-moments}
+  \la\hat\Q\hat\Q\ra_\varrho &= \rho\,\J+\frac{g_2}{2\rho}\,\U(\Q),
+  \nonumber\\
+  \la\hat\Q'\hat\Q'\ra_\varrho &= 4\rho\,\J-\frac{2g_2}{\rho}\,\U(\Q),
+  \nonumber\\
+  \la\hat\Q\hat\Q\hat\Q\ra_\varrho &= \tfrac12\,\bT(\Q)+\frac{g_3}{\rho^2}\,\W(\Q),
+\end{align}
+with the coefficients
+\begin{equation}
+  \label{eq:g-coefficients}
+  g_2=\frac{m_2}{m_1^2}=\frac{I_0I_2}{I_1^2},
+  \qquad
+  g_3=\frac{m_3}{m_1^3}=\frac{I_0^2I_3}{I_1^3},
+\end{equation}
+both functions of $S$ through \cref{eq:kappa-S}. The coefficients of $\J$ and $\bT$ are
+pure numbers. The shape of the distribution therefore enters only through $g_2$ and
+$g_3$, and the single function $g_2$ controls both second moments.
+
+The exact moments are not polynomials in $\Q$, which makes them awkward in the field
+equations, but at weak order they simplify. Expanding the Bessel functions at small
+$\kappa$ and eliminating $\kappa$ with \cref{eq:kappa-S} gives
+\begin{equation}
+  \label{eq:g-small-S}
+  g_2=\tfrac12+\tfrac16S^2+O(S^4),
+  \qquad
+  g_3=\tfrac16+\tfrac18S^2+O(S^4).
+\end{equation}
+Since $\U=O(\rho^2S^2)$ and $\W=O(\rho^3S^3)$, while the leading terms are of order $\rho$
+and $\rho S$, the $\U$ and $\W$ terms of \cref{eq:exact-moments} are smaller than the
+leading ones by a relative $O(S^2)$. Dropping them leaves the lowest-order closure
+\begin{align}
+  \label{eq:leading-closure}
+  &\la\hat\Q\hat\Q\ra_\varrho\simeq\rho\,\J,
+  \qquad
+  \la\hat\Q'\hat\Q'\ra_\varrho\simeq4\rho\,\J,
+  \nonumber\\
+  &\la\hat\Q\hat\Q\hat\Q\ra_\varrho\simeq\tfrac12\,\bT(\Q).
+\end{align}
+The first two close \cref{eq:Q-full} into \cref{eq:Q-closed}, and hence give
+\cref{eq:model-Q}. All three, inserted into \cref{eq:Q-noise-correlators}, give the
+lowest-order noise correlators. The defect, however, is not weakly ordered. At $S=0.9$
+the coefficients are $g_2=0.82$ and $g_3=0.55$, against the small-$S$ values $1/2$ and
+$1/6$, so the dropped terms are not small there.}
 
 \subsection{Realizability of the noise covariance}
 \label{app:realizability}
-\begin{itemize}
-  \item The covariance of $(\bEta_\rho,\bEta^\Q,\f^Q)$ is a Gram matrix of angular
-    functions weighted by $\varrho$. It is positive semi-definite for every genuine
-    distribution, and depends on it only through the harmonics $n\le6$.
-  \item The truncated closure breaks this. Its covariance is positive semi-definite only
-    for $S\le S_\star=(\sqrt5-1)/2\simeq0.618$. The defect steady state, with
-    $S_0=0.9$, exceeds $S_\star$ over most of the domain.
-  \item What this affects. 
-  The analytic result of \cref{sec:defect-fluct} does not use
-    the closure, since \cref{eq:eta-rho-autocorrelation} is exact. The Lyapunov solver of
-    \cref{app:lyapunov} does.
-  \item The fix. The exact moments restore positivity at every $S$, at the cost of one
-    scalar root-find per grid point. The solver of \cref{app:lyapunov} uses the exact
-    moments in its noise covariance. Its drift, like the steady state, keeps the
-    lowest-order closure of \cref{eq:model-Q}.
-\end{itemize}
+\upd{The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. If some
+combination of the noises had a negative variance, no Gaussian noise would have these
+correlators, and the Lyapunov equation of \cref{app:lyapunov} would have no meaning. For
+any genuine angular distribution this holds automatically, but for the lowest-order
+closure it does not.
+
+We collect the three flux noises at a point, $\eta^\rho_i$, $\eta^Q_{11i}$ and
+$\eta^Q_{12i}$, into a vector with six components $(a,i)$. Each is an angular integral of
+the reversal noise, $\int\!\d\theta\,\sqrt{\varrho_t}\,u_{(ai)}(\theta)\,k$, with the
+weights
+\begin{equation}
+  \label{eq:u-vector}
+  \bs u(\theta)=\bigl(\p,\ \hat Q_{11}\p,\ \hat Q_{12}\p\bigr).
+\end{equation}
+By \cref{eq:dean-noise-sum}, their covariance is $\bs M\Delta'$, with
+\begin{equation}
+  \label{eq:gram-matrix}
+  \bs M=\frac{4\zeta}{\xi_0\rho_0}\int\!\d\theta\,\varrho_t\,\bs u\,\bs u^\T .
+\end{equation}
+This $6\times6$ matrix holds the density correlator \cref{eq:eta-rho-autocorrelation} and
+the first two correlators of \cref{eq:Q-noise-correlators}. Since the weight $\varrho_t$ is
+non-negative, $\bs M$ is a Gram matrix, and
+$\bs v^\T\bs M\bs v=(4\zeta/\xi_0\rho_0)\int\!\d\theta\,\varrho_t\,(\bs v\tcdot\bs u)^2\ge0$
+for every $\bs v$. The covariance of $\f^Q$ is a Gram matrix in the same way. Every
+genuine distribution, and in particular the von Mises distribution with the exact
+moments \cref{eq:exact-moments}, therefore gives a valid covariance.
+
+There is no margin, however. Since $\hat\Q\tcdot\p=\p$ for every $\theta$, the fluxes
+obey the two exact relations $\eta^Q_{\alpha\beta\beta}=\eta^\rho_\alpha$, so $\bs M$ has
+two zero eigenvalues whatever the distribution. Equivalently, the six components of
+$\bs u$ span only the four functions $\cos\theta$, $\sin\theta$, $\cos3\theta$ and
+$\sin3\theta$. A covariance built from approximate moments can move these two
+eigenvalues in either direction, and a negative one makes it invalid.
+
+This is what happens with the lowest-order closure. The products $u_{(ai)}u_{(bj)}$
+contain only the harmonics $n=0,2,4,6$, so $\bs M$ depends on the distribution only
+through $\rho$ and the complex harmonics
+$z_n=\rho^{-1}\int\!\d\theta\,\varrho\,\ee^{\ii n\theta}$ with $n=2,4,6$. The closure
+\cref{eq:leading-closure} keeps $z_2=S\ee^{2\ii\theta_0}$, which $\Q$ fixes, and sets
+$z_4=0$ through $\la\hat\Q\hat\Q\ra_\varrho=\rho\J$ and $z_6=0$ through
+$\la\hat\Q\hat\Q\hat\Q\ra_\varrho=\tfrac12\bT$. Its $\bs M$ is valid only if some
+non-negative distribution has these harmonics, which is a truncated trigonometric moment
+problem. Once the phase of $z_2$ is rotated away, such a distribution exists if and only
+if the Toeplitz matrix of the harmonics,
+\begin{equation}
+  \label{eq:toeplitz}
+  \mathcal T=\begin{pmatrix}1&S&0&0\\S&1&S&0\\0&S&1&S\\0&0&S&1\end{pmatrix},
+\end{equation}
+is positive semi-definite \cite{grenander1958toeplitz}. Its eigenvalues are
+$1+2S\cos(k\pi/5)$ with $k=1,\dots,4$, and the smallest, $1-2S\cos(\pi/5)$, turns
+negative above
+\begin{equation}
+  \label{eq:golden-bound}
+  S_\star=\frac1{2\cos(\pi/5)}=\frac{\sqrt5-1}2\simeq0.618 .
+\end{equation}
+Above $S_\star$, no non-negative distribution has the moments of the closure, and its
+$\bs M$ acquires a negative eigenvalue. We checked numerically that the smallest
+eigenvalue of $\bs M$ changes sign exactly at $S_\star$, so the bound is sharp.
+
+The defect steady state lies far above this bound. In the run of
+\cref{tab:lyapunov-run}, $S$ rises from $0.10$ next to the core to $0.90$ far from it,
+and it exceeds $S_\star$ everywhere except within about $1.5~\micron$ of the core, on
+$99.5\%$ of the grid. Keeping the $\U$ term at its small-$S$ coefficient, which sets
+$z_4=S^2/2$, raises the bound only to $S\le0.775$, and the steady state still exceeds
+that on $99\%$ of the grid. The lowest-order closure therefore gives no valid noise
+covariance for this defect.
+
+The failure does not touch the analytic result of \cref{sec:defect-fluct}, which uses
+only the density noise. Its correlator \cref{eq:eta-rho-autocorrelation} is exact and
+needs no closure. The Lyapunov solver of \cref{app:lyapunov}, on the other hand, needs
+the full covariance of $(\bEta_\rho,\bEta^\Q,\f^Q)$.
+
+The failure comes from the expansion, not from the maximum-entropy hypothesis. The von
+Mises distribution is a genuine density, so the exact moments \cref{eq:exact-moments}
+give a Gram matrix at every $S$. Moreover, since $\bs M$ depends on the distribution only
+through the harmonics up to $n=6$, the three ratios $m_1$, $m_2$ and $m_3$ reproduce the
+von Mises covariance exactly, and the higher harmonics never enter. The cost is one root
+of \cref{eq:kappa-S} per grid point. The solver of \cref{app:lyapunov} therefore builds
+its noise covariance from the exact moments. With them, the rotational correlator
+$(2\Lambda/\rho_0)\la\hat\Q'\hat\Q'\ra_\varrho$ gains a term proportional to
+$\U(\Q_\ss)$, which couples $\delta Q_{11}$ and $\delta Q_{12}$. The drift of the
+solver, like the steady state, keeps the lowest-order closure of \cref{eq:model-Q}, so the
+exact moments change only the noise.}
 
 \section{Comoving-frame defect solver}
 \label{app:comoving}
