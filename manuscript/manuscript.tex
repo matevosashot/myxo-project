@@ -50,7 +50,7 @@
 % \upd{...} marks text changed in the current round (dark green). It works inline, in math
 % and across paragraphs and displays. To accept a round, strip the tags, or switch them
 % off with \renewcommand{\upd}[1]{#1}.
-\definecolor{darkgreen}{rgb}{0.00,0.562,0.16}
+\definecolor{darkgreen}{rgb}{0.00,0.5,0.16}
 \newcommand{\upd}[1]{{\color{darkgreen}#1}}
 
 
@@ -127,16 +127,16 @@ structures.}
 \label{fig:myxo_life}
 \end{figure}
 
-The cells are rods about $5~\micron$ long and $0.5~\micron$ wide that glide along their
+The cells are rods about $6~\micron$ long and $0.5~\micron$ wide that glide along their
 long axis and reverse their direction every few minutes
 \cite{wu2009periodic,copenhagen2021}. Although each cell moves in one direction at a
 time, it keeps reversing, and neighboring rods interact in the same way whichever end
 leads. On long time scales the monolayer is therefore an active nematic
 \cite{marchetti2013hydrodynamics,doostmohammadi2018active}, and since the substrate takes
-up the momentum of the cells, it is a dry one. The local average axis of the cells, the
+up the momentum of the cells, it is a dry one \prompt{"dry one" might be misunderstood without the full term "dry active matter"}. The local average axis of the cells, the
 director, is undefined at isolated points called topological defects. Along any loop
 around such a point the director rotates by $+\pi$ or by $-\pi$, which gives the
-comet-shaped $+1/2$ defect and the three-armed $-1/2$ defect (\cref{fig:main-2}(a,b)).
+comet-shaped $+1/2$ defect and the three-armed $-1/2$ defect (\cref{fig:main-2}(a,b)) \prompt{This is misleading. This is true only for half integer defects, there are other types of defects. Cite some relevant papers}.
 In other living active nematics, too, defects are where cells leave the plane:
 epithelial cells are extruded at $+1/2$ defects \cite{saw2017topological}, neural
 progenitor cells accumulate there into three-dimensional mounds
@@ -150,8 +150,11 @@ throughout the colony \cite{copenhagen2021}. Unlike in growing colonies
 \cite{grant2014}, these layers need no critical colony size. They form, however, about
 $200$ times more often near $+1/2$ defects than far from them (\cref{fig:main-1}(a),
 red), while holes open about $80$ times more often near $-1/2$ defects. Here we address
-the layers at $+1/2$ defects. Copenhagen \textit{et al.} explained where these layers
-form by an anisotropic friction. On the side where the director bends around the core,
+the layers at $+1/2$ defects. 
+\prompt{do not mention anisotropic friction. It complicates things and it is hard to imagine without giving unnecessarily details. What I need it that they try to argue from average fields, but 1) pressure is small, 2) fluctuations are strong and important to consider}
+Copenhagen \textit{et al.} explained where these layers
+form by an anisotropic friction. 
+On the side where the director bends around the core,
 the cells lie across the flow and resist it more than the cells on the other side, so
 more cells flow into the core than out of it. This accumulation places the layers at the
 defect. The model assumes, however, that compressed cells leave the monolayer at once,
@@ -166,11 +169,14 @@ ten times its mean \cite{han2025local}. They traced these fluctuations to local 
 order, whose magnitude the cells tune through their reversal rate, and found them
 stronger at $+1/2$ than at $-1/2$ defects. They proposed that the resulting pressure
 fluctuations trigger new layers, and noted that no quantitative model of these
-fluctuations exists yet. Here we provide such a model. We propose that layers form
+fluctuations exists yet
+\prompt{Read their paper, do they really say that, both statements? }. 
+Here we provide such a model. We propose that layers form
 during rare pressure fluctuations that originate in the self-propulsion and reversals of
 single cells, and we compute the statistics of these fluctuations around a $+1/2$
 defect.
 
+\prompt{Let's avoid repetition. This paragraph is just a summary of sec:nucleation-1. I do not want this much detail here. I would keep the idea only: above some critical pressure in the monolayer, it is energetically favourable to grow the monolayer from a single extruded cell. I do not think we need to refer to a figure at this stage. No numbers at all.}
 To connect layer formation to the pressure, we treat it as nucleation
 (\cref{fig:main-1}(b)). A patch of cells that forms a new layer pays to detach from the
 substrate and from its neighbors and to open new water surface along its edge, and it
@@ -183,16 +189,23 @@ position, a defect can favor layers only through the statistics of the pressure 
 it, and the layering probability is the probability that the local pressure exceeds
 $\pcrit$.
 
-This probability lies far in the tail of the pressure distribution. It therefore
+
+\prompt{top and bottom paragraphs do not join smoothly. Fix it}.
+
+\st{This probability lies far in the tail of the pressure distribution. It therefore
 depends exponentially on the noise that drives the fluctuations, both on its amplitude
-and on how it depends on the nematic order. In equilibrium, the fluctuation-dissipation
+and on how it depends on the nematic order.} In equilibrium, the fluctuation-dissipation
 theorem ties the noise to the dissipation in the equations of motion. An active nematic
 is driven and has no such relation, so a noise added to its continuum equations has a
 free amplitude and tensor structure \cite{ramaswamy2003active}. We therefore derive the
-noise from the dynamics of the cells. Kinetic theories derive continuum equations of
+noise from the dynamics of the cells. 
+
+Kinetic theories derive continuum equations of
 active matter from particle models, including self-propelled rods that reverse, but
 they average the noise out on the way
-\cite{bertin2006boltzmann,baskaran2008hydrodynamics,grossmann2016mesoscale}. Dean's
+\cite{bertin2006boltzmann,baskaran2008hydrodynamics,grossmann2016mesoscale}. 
+% We employ a similar approach to Dean's equation.
+Dean's
 equation keeps it instead \cite{dean1996}. It has been extended to run-and-tumble and
 active Brownian particles \cite{tailleur2008statistical,solon2015active} and, for the
 noise of the free motion, to apolar active nematics whose particles step back and forth
@@ -206,26 +219,32 @@ glides between reversals, and the same coefficient sets the amplitude of the den
 noise. Neither can therefore be tuned without the other. The coarse-graining also fixes
 how this noise depends on the local nematic order.
 
+\prompt{Bottom paragraph contains too many details, not suitable for the introduction. Simplify it}
 Solved around a $+1/2$ defect, these equations give a density variance, and hence a
-pressure variance, with two parts. One is the variance of a uniform monolayer, set by
+pressure variance\st{, with two parts. One is the variance of a uniform monolayer, set by
 the noise amplitude, the stiffness of the monolayer and the width of a cell. The other
 follows the nematic texture: it decays over a few micrometers from the core and changes
 the local variance by two to three percent. Because $\pcrit$ lies about twenty-one
 standard deviations out in the tail, this small change is amplified into a factor of
-about $10^2$ in the layering probability. The enhancement peaks off the core, on the
-side where the director bends around it, and with the stiffness of the monolayer fitted
-it matches the one measured near $+1/2$ defects (\cref{fig:main-1}(a)). Fluctuations of
+about $10^2$ in the layering probability.} 
+\prompt{rewrite the following sentence}
+We obtain non-uniform pressure variance profile: maximum pressure variatons are located in front of the defect head, where the director bends around it. This is consistent with experimental observations: defects indeed preferentially appead in front of the defect (see \cref{fig:main-2}(b)) i.e. apart of the radial profile in \cref{fig:main-1}(a), there is also an angular profile.
+Fluctuations of
 microscopic origin thus suffice to explain where layers form, although the calculation
 does not exclude other mechanisms.
 
-\Cref{sec:nucleation-1} describes layer formation as nucleation over a fluctuating
-barrier and reduces it to the statistics of the pressure. \Cref{sec:model} then derives
+This paper is organized as follows. The next section describes layer formation as nucleation over a fluctuating
+barrier and reduces it to the statistics of the pressure. 
+\Cref{sec:model} then derives
 the stochastic equations from the microscopic model, and \cref{sec:defect} solves them
 at a $+1/2$ defect, first for the steady state and then for the fluctuations. With the
 pressure variance in hand, \cref{sec:nucleation-2} computes the layering probability and
-compares it with the measurements of Ref.~\cite{copenhagen2021}. Finally,
+compares it with the measurements of Ref.~\cite{copenhagen2021}. 
+Finally,
 \cref{sec:discussion} collects what is fitted, what is approximate, and what would test
 the mechanism.
+We relegated detailed derivations of our results to Appendices making
+our conclusions self-contained.
 
 \begin{figure*}[t]
   % \includegraphics[width=\textwidth,page=1]{figures/handmade/main.pdf}
@@ -759,17 +778,32 @@ saturates to, and the core size $\elld$ is the distance over which $S$
 recovers from $S(0)=0$ at the defect. Both are built from the renormalized $a'$
 and $K'$ of \cref{eq:H-active}, not from the bare coefficients of the free energy
 density \eqref{eq:free-energy-choice}. \Cref{app:parameters-choice} gives their values
-\cite{copenhagen2021,han2025local} and \cref{app:comoving} the
+\cite{copenhagen2021,han2025local} and \cref{app:density-poisson,app:comoving} the
 accuracy of the approximant.
 
 Now, the first equation in \cref{eq:simplified-noiseless} is a Poisson equation for the density
 with an exact solution:
 \begin{align}
   \label{eq:rho-analytic}
-  \rho(r,\phi) = 1 - \frac{\zeta}{B}\left[ S(r) - \frac{r}{R}S(R)\right]\cos \phi
+  \rho(r,\phi) = 1 - \frac{\zeta}{B}\left[ S(r) - r\,S'(R)\right]\cos \phi
 \end{align}
-where $(r,\phi)$ are the polar coordinates and we impose $\rho(R,\phi) = 1$ on the boundary $r=R$.
-The density therefore departs from uniformity only at order $\zeta/B$.
+where $(r,\phi)$ are the polar coordinates \upd{centred on the core, with $\phi$ measured
+from the $+x$ axis. The solution needs a condition at a wall, and that condition is a
+choice. No wall at a finite distance describes a defect in an extended colony, and none
+of the possible walls is more physical than the others. Nor can the wall be sent to
+infinity. Far from the core $S$ saturates at $S_0$, so the density tends to
+$1\mp(\zeta/B)S_0$ on the $\pm x$ sides of the core, and no solution relaxes to the
+uniform density at infinity, much as in Stokes' paradox for the flow past a cylinder. We
+therefore choose the wall that constrains the density least. On a circle of radius $R$ we
+impose $\nh\cdot\nabla\rho=0$, so that the density profile is flat at the wall, and we fix
+$\rho=1$ at the core (\cref{app:density-poisson}). The numerical solution of
+\cref{app:comoving} uses the same condition on its walls. The wall then enters
+\cref{eq:rho-analytic} only through the term $rS'(R)$, which is small because $S$ is
+nearly flat there: $RS'(R)\simeq S_0\elld^2/R^2=2\times10^{-3}$ at $R=20~\micron$. A
+reservoir wall, $\rho=1$, or a wall that blocks the flux of cells would instead add a
+linear term about $R^2/\elld^2$ times steeper (\cref{app:density-poisson}). Away from the
+wall, therefore, $\rho\simeq1-(\zeta/B)S(r)\cos\phi$, and} the density departs from
+uniformity only at order $\zeta/B$.
 
 Restoring the cross-coupling sets the defect in motion. It moves
 \emph{opposite} to the active force. The active force does not push the
@@ -796,9 +830,12 @@ numerically in a frame comoving with the core, with neither simplification made 
 defect axis against \cref{eq:rho-analytic}, and \cref{fig:rho2d} the
 two-dimensional field.
 
-The cross-coupling also deforms the defect itself, but only slightly. The director
-rotates by about one degree out to $r=5~\micron$; the nematic order and the active force
-depart as little (\cref{fig:strength,fig:defectangle,fig:activeforce}).
+The cross-coupling also deforms the defect itself, but only slightly. Near the core,
+where the variance modulation lives, the Pad\'e profile stays accurate: the director
+rotates by less than one degree within $2~\micron$, and the nematic order and the active
+force depart from the Pad\'e profile by at most $5\%$ and $8\%$. Farther out the
+director departs more, by about $3^\circ$ at $5~\micron$
+(\cref{fig:strength,fig:defectangle,fig:nematicaxis,fig:activeforce}).
 
 
 \begin{figure}[tbp]
@@ -806,7 +843,7 @@ depart as little (\cref{fig:strength,fig:defectangle,fig:activeforce}).
   \includegraphics[width=0.85\linewidth]{rho1d.png}
   \caption{Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$.
     Solid: the comoving-frame numerical solution of \cref{eq:model-rho,eq:model-Q}
-    (\cref{app:comoving}), reservoir (Dirichlet) boundary condition. Dashed:
+    (\cref{app:comoving}), with the walls described there. Dashed:
     \cref{eq:rho-analytic}, the closed-form solution of the simplified system, which is
     antisymmetric under $x\to-x$. The density is enhanced behind the defect and depleted
     ahead of it, and the departure from antisymmetry is the effect of the drift.}
@@ -823,7 +860,7 @@ depart as little (\cref{fig:strength,fig:defectangle,fig:activeforce}).
   \end{tabular}
   \caption{Steady-state density $(\rho-1)/(\zeta/B)$ around the $+1/2$ defect, from
     the comoving-frame numerical solution of \cref{eq:model-rho,eq:model-Q}
-    (\cref{app:comoving}) with the reservoir (Dirichlet) boundary condition. The core is at
+    (\cref{app:comoving}), with the walls described there. The core is at
     the origin. (a)~Plan view; dark curves are the nematic director. (b)~The same field as
     a surface. The director bends around the core on the $-x$ side and splays along the
     axis on the $+x$ side. The density is enhanced on the former and depleted on the
@@ -947,7 +984,9 @@ fluctuation stays coherent: a correlation length equal to the cutoff $\elln$ and
  \tau_c = \frac{\elln^2}{2 \gamma_0},
 \end{align}
 the time a fluctuation of size $\elln$ takes to diffuse away. Neither scale involves the
-defect, and we assume the anisotropy does not change them much. \Cref{sec:nucleation-2}
+defect. The nematic order leaves $\tau_c$ unchanged to within $2\%$, but it makes
+the spatial correlations anisotropic (\cref{app:variance-corr}), and only $\tau_c$ is
+used below. \Cref{sec:nucleation-2}
 uses $\tau_c$ to turn the layering probability into a rate, where it cancels from the ratio.
 
 Restoring the anisotropic piece of \cref{eq:eta-rho-ss}, the one that
@@ -972,7 +1011,8 @@ Along the defect axis the
 modulation is odd in $x$ and vanishes at the core, because
 $\partial_i\partial_jQ^\ss_{ij}=\partial_x[S'(r)+S(r)/r]$ is odd. The variance is raised
 on the $-x$ side, where it peaks about $1.5~\micron$ from the core at
-$\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=3.1\%$, and lowered by as much on the $+x$ side. Along the $y$ axis the
+$\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=2.9\%$, evaluated on the exact
+defect profile (\cref{app:density-poisson}), and lowered by as much on the $+x$ side. Along the $y$ axis the
 simplified model predicts no modulation at all.
 The scale of the modulation $\nu_0$ decreases with decreasing cutoff $\elln$ as shown in \cref{fig:ln_curve} and vanishes at $\elln=0$.
 
@@ -988,7 +1028,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
     ($x=0$, $\xi=y$). Dashed: the analytic result at $\delta\Q=0$,
     \cref{eq:total-gauss}. Solid: the numerical Lyapunov solution retaining
     $\delta\Q\ne0$ (\cref{app:lyapunov}). Along the axis the modulation is odd and
-    vanishes at the core, reaching $+\nu_0=3.1\%$ on the $-x$ side and about $-3\%$ on
+    vanishes at the core, reaching $+\nu_0=2.9\%$ on the $-x$ side and $-2.9\%$ on
     the $+x$ side, both roughly $1.5~\micron$ out, for $\elln=0.5~\micron$. Across
     the axis the analytic modulation vanishes identically and the numerical one is an
     order of magnitude weaker than along the axis.}
@@ -1150,11 +1190,11 @@ We drop both $\nabla\H$ terms of \cref{eq:model-rho,eq:model-Q} (\cref{sec:model
 The analytic calculation of \cref{sec:defect-fluct} sets $\delta\Q=0$. We have no bound
 on the resulting error and check the calculation against the coupled numerical solution.
 The maximum-entropy closure is accurate to relative $O(S^2)$, and $S_0=0.9$ is not small.
-The closure sets the relaxational term of \cref{eq:model-Q}, and so $\Q_\ss$. \upd{For $S>0.62$ its noise
+The closure sets the relaxational term of \cref{eq:model-Q}, and so $\Q_\ss$. For $S>0.62$ its noise
 covariance has a negative eigenvalue, which makes the stochastic equations ill defined,
 and around the defect $S$ exceeds this bound everywhere except within about
 $1.5~\micron$ of the core. We therefore build the noise covariance of the coupled
-equations from the exact moments} (\cref{app:realizability,app:lyapunov}). The
+equations from the exact moments (\cref{app:realizability,app:lyapunov}). The
 analytic result needs neither, since it uses the exact density-noise correlator
 \cref{eq:eta-rho-autocorrelation}. The
 Gaussian tail is used twenty-one standard deviations out, where the monolayer is
@@ -1193,9 +1233,10 @@ would depend on $\elln$.
 %   B  app:extrusion   -> sec:nucleation-1 (the pA term of eq:dE-of-A, eq:pressure-definition)
 %   C  app:dean        -> sec:model-coarse, sec:model-closure (Dean eq., field eqs, Q conventions)
 %   D  app:closure     -> sec:model-closure (maximum-entropy closure, realizability)
-%   E  app:comoving    -> sec:defect-steady (numerical steady state)
-%   F  app:variance    -> sec:defect-fluct (analytic variance, eq:total-gauss)
-%   G  app:lyapunov    -> sec:defect-fluct (numerical covariance with delta Q)
+%   E  app:density-poisson -> sec:defect-steady (closed-form density, Neumann wall; 2026-10-02)
+%   F  app:comoving    -> sec:defect-steady (numerical steady state)
+%   G  app:variance    -> sec:defect-fluct (analytic variance, eq:total-gauss)
+%   H  app:lyapunov    -> sec:defect-fluct (numerical covariance with delta Q)
 % Removed 2026-09-29: the energetics idealizations (they only rescale W_s and gamma_w,
 % hence p_crit, which the fit absorbs into B) and the sensitivity / fitted-B appendix.
 % Every cross-reference goes through \cref, so appendix letters are never typed by hand.
@@ -1455,10 +1496,12 @@ small: there $\epsilon=\pcrit/B\simeq0.39$, and the dropped term adds about $16\
 % the ones below come from the 2026-10-01 parameter set (set2_2_comove_optimized_2 meta
 % files, B = 9e4; claude_experiments/newset_numbers.py).
 
-This appendix derives the equations of \cref{sec:model-coarse,sec:model-closure}. We first
-obtain Dean's equation for the joint density, then integrate out the orientation to reach
-the field equations for $\rho$ and $\Q$, and finally explain why we work with the
-unnormalized order parameter.
+\upd{The noise in \cref{eq:model-rho,eq:model-Q} follows from the reversals of the
+individual rods, with the amplitude of the active force and a tensor structure set by the
+nematic order. To show this we} obtain Dean's equation for the joint density
+\upd{of positions and orientations}, then integrate out the orientation to reach the field
+equations for $\rho$ and $\Q$ \upd{of \cref{sec:model-coarse,sec:model-closure}}, and
+finally explain why we work with the unnormalized order parameter.
 
 
 \subsection{Derivation of Dean's equation}
@@ -1855,17 +1898,17 @@ written at $\rho=1$.
 % Numbers at the fourth-generation set (N150, B = 9e4 steady state of tab:lyapunov-run),
 % not dean.tex's (87.6% there is the old set). Checks: claude_experiments/appD_check.wls.
 
-This appendix supports \cref{sec:model-closure,app:dean-angle}. The $\Q$ equation
-\cref{eq:Q-full} and the correlators \cref{eq:Q-noise-correlators} of its noises contain
-the angular moments $\langle\hat\Q\hat\Q\rangle_\varrho$, $\langle\hat\Q'\hat\Q'\rangle_\varrho$ and
-$\langle\hat\Q\hat\Q\hat\Q\rangle_\varrho$. These depend on the whole angular distribution, which
-$\rho$ and $\Q$ do not determine, so closing the equations needs a rule that assigns a
+The $\Q$ equation \cref{eq:Q-full} and the correlators \cref{eq:Q-noise-correlators} of
+its noises contain the angular moments $\langle\hat\Q\hat\Q\rangle_\varrho$,
+$\langle\hat\Q'\hat\Q'\rangle_\varrho$ and $\langle\hat\Q\hat\Q\hat\Q\rangle_\varrho$.
+These depend on the whole angular distribution, which $\rho$ and $\Q$ do not determine, so
+closing the equations \upd{of \cref{sec:model-closure}} needs a rule that assigns a
 distribution to every pair $(\rho,\Q)$. We take the distribution that has the given
 $\rho$ and $\Q$ and otherwise carries as little information as possible, the one of
 maximum entropy. \Cref{app:closure-maxent} constructs it, computes its moments exactly
 and expands them at weak nematic order. \Cref{app:realizability} then shows that the
-expansion fails to give a valid noise covariance at the strong order \upd{($S>S_\star$,
-\cref{eq:golden-bound})} of the defect steady state, and that the exact moments repair it.
+expansion fails to give a valid noise covariance at the strong order ($S>S_\star$,
+\cref{eq:golden-bound}) of the defect steady state, and that the exact moments repair it.
 
 \subsection{Construction}
 \label{app:closure-maxent}
@@ -1896,7 +1939,7 @@ The left side increases monotonically from $0$ to $1$, so this equation has exac
 root for every $S<1$.
 
 The other moments follow from the same harmonics. Each is an isotropic tensor function
-of $\Q$, so it can be built from the $\J$ of \upd{\cref{eq:J-definition}} and three further
+of $\Q$, so it can be built from the $\J$ of \cref{eq:J-definition} and three further
 tensors,
 \begin{align}
   \label{eq:tensor-basis}
@@ -1939,8 +1982,8 @@ $\kappa$ and eliminating $\kappa$ with \cref{eq:kappa-S} gives
   \qquad
   g_3=\tfrac16+\tfrac18S^2+O(S^4).
 \end{equation}
-Since \upd{$\U=O(S^2)$ and $\W=O(S^3)$, while the leading terms are of order $1$
-and $S$}, the $\U$ and $\W$ terms of \cref{eq:exact-moments} are smaller than the
+Since $\U=O(S^2)$ and $\W=O(S^3)$, while the leading terms are of order $1$
+and $S$, the $\U$ and $\W$ terms of \cref{eq:exact-moments} are smaller than the
 leading ones by a relative $O(S^2)$. Dropping them leaves the lowest-order closure
 \begin{align}
   \label{eq:leading-closure}
@@ -1953,20 +1996,18 @@ The first two close \cref{eq:Q-full} into \cref{eq:Q-closed}, and hence give
 \cref{eq:model-Q}. All three, inserted into \cref{eq:Q-noise-correlators}, give the
 lowest-order noise correlators. The defect, however, is not weakly ordered. At $S=0.9$
 the coefficients are $g_2=0.82$ and $g_3=0.55$, against the small-$S$ values $1/2$ and
-$1/6$, so the dropped terms are not small there. \upd{The lowest-order closure is
+$1/6$, so the dropped terms are not small there. The lowest-order closure is
 therefore not accurate around the defect. We nevertheless keep the closed equation
 \cref{eq:model-Q}, as continuum theories derived from particle models
 usually do \cite{baskaran2008hydrodynamics,bertin2013,grossmann2016mesoscale}. The noise
-correlators are a different matter, because there the closure fails qualitatively: it
-can give a combination of the noises a negative variance, as \cref{app:realizability}
-shows.}
+correlators are a different matter, because there the closure produces negative definite covariance matrices. This is handled \cref{app:realizability}.
 
 \subsection{Realizability of the noise covariance}
 \label{app:realizability}
-The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. \upd{A
+The correlators \cref{eq:Q-noise-correlators} must form a valid covariance. A
 variance cannot be negative. If some combination of the noises had a negative variance,
 no noise could have these correlators, and the stochastic equations
-\cref{eq:model-rho,eq:model-Q} would be ill defined.} For any genuine angular distribution this holds automatically, but for the lowest-order
+\cref{eq:model-rho,eq:model-Q} would be ill defined. For any genuine angular distribution this holds automatically, but for the lowest-order
 closure it does not.
 
 We collect the three flux noises at a point, $\eta^\rho_i$, $\eta^Q_{11i}$ and
@@ -2030,35 +2071,128 @@ $z_4=S^2/2$, raises the bound only to $S\le0.775$, and the steady state still ex
 that on $99\%$ of the grid. The lowest-order closure therefore gives no valid noise
 covariance for this defect.
 
-\upd{The analytic calculation of \cref{sec:defect-fluct} avoids the problem, because it
-sets $\delta\Q=0$ and keeps only the density noise.} Its correlator
-\cref{eq:eta-rho-autocorrelation} is exact and needs no closure. \upd{The coupled
+The analytic calculation of \cref{sec:defect-fluct} avoids the problem, because it
+sets $\delta\Q=0$ and keeps only the density noise. Its correlator
+\cref{eq:eta-rho-autocorrelation} is exact and needs no closure. The coupled
 equations for $\delta\rho$ and $\delta\Q$, on the other hand, need the full covariance of
 $(\bEta_\rho,\bEta^\Q,\f^Q)$, and with the lowest-order closure they are ill defined
-around the defect.}
+around the defect.
 
 The failure comes from the expansion, not from the maximum-entropy hypothesis. The von
 Mises distribution is a genuine density, so the exact moments \cref{eq:exact-moments}
 give a Gram matrix at every $S$. Moreover, since $\bs M$ depends on the distribution only
 through the harmonics up to $n=6$, the three ratios $m_1$, $m_2$ and $m_3$ reproduce the
-von Mises covariance exactly, and the higher harmonics never enter. \upd{We therefore use the exact
+von Mises covariance exactly, and the higher harmonics never enter. We therefore use the exact
 moments in the noise correlators of the coupled equations, at the cost of solving
 \cref{eq:kappa-S} once per point, and the solver of \cref{app:lyapunov} builds its noise
-covariance from them.} With them, the rotational correlator
+covariance from them. With them, the rotational correlator
 $(2\Lambda/\rho_0)\la\hat\Q'\hat\Q'\ra_\varrho$ gains a term proportional to
 $\U(\Q_\ss)$, which couples $\delta Q_{11}$ and $\delta Q_{12}$. The drift of the
 solver, like the steady state, keeps the lowest-order closure of \cref{eq:model-Q}, so the
 exact moments change only the noise.
 
-\section{Comoving-frame defect solver}
+\section{Solution of the noiseless density equation}
+\label{app:density-poisson}
+% dean.tex 820-903. Written 2026-10-02.
+\upd{For a $+1/2$ defect the density equation of \cref{eq:simplified-noiseless} can be
+integrated at once, because its source is itself a Laplacian, whatever the profile of the
+nematic order. That profile follows from $\Ha=0$, so we find it first. We use polar
+coordinates $(r,\phi)$ centred on the core, with $\phi$ measured from the $+x$ axis. At a
+$+1/2$ defect the director makes the angle $\theta=\phi/2$ with this axis, so it turns by
+half a turn around the core, and the ansatz of \cref{eq:pade-approximation} is
+$\Q=S(r)\hat\Q(\phi/2)$.} Since the components of $\hat\Q(\theta)$ are $\cos2\theta$ and
+$\sin2\theta$, \upd{this ansatz} has the components $Q_{xx}=S\cos\phi$ and
+$Q_{xy}=S\sin\phi$. Both are angular harmonics of order one, on which the Laplacian acts
+as $S''+S'/r-S/r^2$, so $\nabla^2\Q=(S''+S'/r-S/r^2)\,\hat\Q(\phi/2)$. At the same time
+$\Q\!:\!\Q=2S^2$ turns the cubic term of \cref{eq:H-active} into $2bS^3\hat\Q(\phi/2)$.
+With $S_0$ and $\elld$ of \cref{eq:S0-elld}, the condition $\Ha=0$ therefore reduces to the
+radial equation
+\begin{align}
+  \label{eq:S-radial}
+  S''+\frac{S'}{r}-\frac{S}{r^2}=\frac{1}{\elld^2}\Bigl(\frac{S^2}{S_0^2}-1\Bigr)S,
+\end{align}
+with $S(0)=0$ at the core and $S\to S_0$ far from it. \Cref{eq:S-radial} has no
+closed-form solution, which is why \cref{sec:defect-steady} uses the Pad\'e profile. Far
+from the core the equation gives $S\simeq S_0(1-\elld^2/2r^2)$, and the profile
+\cref{eq:pade-approximation} has the same far field. It departs from the numerical
+solution of \cref{eq:S-radial} by less than $10^{-2}\,S_0$, with the largest departure near
+$r\simeq1.5\,\elld$. A higher-order approximant, rational in $x^2$,
+\begin{equation}
+  \label{eq:pade-accurate}
+  f(x)=x\left[\tfrac{0.34011+0.04517\,x^2+0.00234\,x^4}
+  {1+0.38387\,x^2+0.04751\,x^4+0.00234\,x^6}\right]^{1/2}\!\!\!,
+\end{equation}
+departs from it by less than $10^{-4}S_0$, a hundred times less. The difference matters
+only where a small modulation is quoted to a few percent. With
+\cref{eq:pade-accurate}, as with the exact profile, \cref{eq:total-gauss} gives
+$\nu_0=2.94\%$ at $\elln=0.5~\micron$, whereas \cref{eq:pade-approximation} gives
+$3.06\%$, because its $S$ rises slightly too fast near the core. We therefore quote
+$\nu_0$ for the exact profile and use \cref{eq:pade-approximation} everywhere else for simplicity, where
+its error is small against the effects we discuss.
+
+With $\Q$ known, the first equation of \cref{eq:simplified-noiseless} reads
+$B\nabla^2\rho=\nabla\tcdot\fa$. For the defect its source is simple, because the active
+force \cref{eq:active-force-defect} points along $x$ and depends on $r$ alone. Thus
+$\nabla\tcdot\fa=\partial_xf^\text{a}_x=-\zeta\,(S'+S/r)'\cos\phi$. The radial factor
+$(S'+S/r)'$ equals $S''+S'/r-S/r^2$, the operator of \cref{eq:S-radial}, so
+$\nabla\tcdot\fa=-\zeta\nabla^2(S\cos\phi)$, and the density obeys
+\begin{align}
+  \label{eq:rho-harmonic}
+  \nabla^2\Bigl[\rho+\frac{\zeta}{B}\,S(r)\cos\phi\Bigr]=0 .
+\end{align}
+\upd{We therefore write the density as
+\begin{equation}
+  \label{eq:rho-h}
+  \rho(r,\phi)=1-\frac{\zeta}{B}\,S(r)\cos\phi+h(r,\phi),\qquad \nabla^2h=0,
+\end{equation}
+with $h$ regular inside the wall, $r\le R$, and let the wall condition fix $h$. Every
+condition below is proportional to $\cos\phi$, and the only regular harmonic functions
+with this angular dependence are $r\cos\phi$ and constants, so $h=c+A\,r\cos\phi$. The
+constant leaves the density gradient unchanged, and we fix it by $\rho(0)=1$, which gives
+$c=0$ because $S(0)=0$. Since $\cos\phi$ averages to zero over the disk, the mean density
+is then one as well.
+
+The wall of \cref{sec:defect-steady}, $\partial_r\rho=0$ at $r=R$, requires
+$\partial_rh=(\zeta/B)S'(R)\cos\phi$ there. This gives $A=(\zeta/B)S'(R)$, which is
+\cref{eq:rho-analytic}. A reservoir wall, $\rho(R,\phi)=1$, requires instead
+$h(R,\phi)=(\zeta/B)S(R)\cos\phi$, so $A=(\zeta/B)S(R)/R$ and
+\begin{align}
+  \label{eq:rho-dirichlet}
+  \rho(r,\phi)=1-\frac{\zeta}{B}\Bigl[S(r)-\frac rR\,S(R)\Bigr]\cos\phi .
+\end{align}
+
+Neither wall stops the cells. The wall $\partial_r\rho=0$ exerts no pressure gradient, but
+the active flux $\fa/\xi_0$ crosses it, entering the disk through the half of the wall at
+$x>0$ and leaving through the half at $x<0$. In the simplified problem the two cancel,
+because the radial active force $f^\text{a}_r=-\zeta(S'+S/r)\cos\phi$ is antisymmetric
+under $x\to-x$. With the cross-coupling the steady state loses this antisymmetry, so a net
+flux of cells crosses the wall and the density has no strictly steady solution
+(\cref{app:comoving}). A wall that blocks the cells imposes zero normal flux,
+$\nh\tcdot(B\nabla\rho-\fa)=0$, that is $B\,\partial_r\rho=f^\text{a}_r$ at $r=R$. This
+requires $A=-(\zeta/B)S(R)/R$, and
+\begin{align}
+  \label{eq:rho-noflux}
+  \rho(r,\phi)=1-\frac{\zeta}{B}\Bigl[S(r)+\frac rR\,S(R)\Bigr]\cos\phi .
+\end{align}
+The cells that the active force drives against this wall pile up there, so the linear
+term has the slope of the reservoir wall with the opposite sign, and the modulation at the
+wall doubles. Both slopes, $\pm S(R)/R\simeq\pm S_0/R$, exceed the slope
+$S'(R)\simeq S_0\elld^2/R^3$ of \cref{eq:rho-analytic} by about $R^2/\elld^2$.}
+
+
+\section{Solving noiseless equations in comoving frame}
 \label{app:comoving}
 % dean.tex 2460-2597.
-This appendix supports \cref{sec:defect-steady}: it is the numerical route to the
-deterministic steady state $\rho_\ss$, $\Q_\ss$.
+\upd{Our target is the fluctuations around the steady state, but with the cross-coupling the
+defect has no steady state in the laboratory frame, because it moves
+(\cref{sec:defect-steady}). We therefore have to compute its velocity $\u$ together with
+the steady fields, and linearize the equations in the frame that moves with the core,
+where the defect is at rest. Here we obtain $\rho_\ss$, $\Q_\ss$ and $\u$ in that
+comoving frame.}
 
-Dropping the $\nabla\H$ terms as in \cref{sec:model-closure}, regrouping the remaining
-local terms of \cref{eq:model-Q} into $\Ha$ of \cref{eq:H-active}, and substituting
-$\partial_t\to\partial_t-(\u\tcdot\nabla)$, the noiseless steady state solves
+Dropping the $\nabla\H$ terms as in \cref{sec:model-closure}, \upd{dropping} all the noise
+\upd{terms, and} substituting
+$\partial_t\to\partial_t-(\u\tcdot\nabla)$ in \cref{eq:model-rho,eq:model-Q}, we solve the following equations
 \begin{subequations}
     \label{eq:comoving-equations}
 \begin{align}
@@ -2073,75 +2207,54 @@ $\partial_t\to\partial_t-(\u\tcdot\nabla)$, the noiseless steady state solves
 We drop the advection term $\u\tcdot\nabla\rho$ from the density equation. At large $B$
 the pressure gradient $B\nabla\rho$ balances $\fa$, so $\nabla\rho\propto1/B$. At distance
 $r$ from the core, the dropped term is smaller than the flux divergence by
-$\xi_0ur/B<10^{-3}$. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not depend on
-$B$, and $\rho_\ss-1\propto1/B$.
+$\xi_0ur/B$, which is at most $4\times10^{-4}$ at the wall. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not depend on
+$B$, and $\rho_\ss-1\propto1/B$ (see \cref{fig:rho1d-dirichlet,fig:rho2d}).
 
 
 The frame velocity $\u$ is not available in closed form. It is fixed implicitly, by
 requiring that the defect core stay pinned at the origin, and enters the numerical
 problem as the Lagrange multiplier conjugate to that constraint.
 
-\upd{No wall at a finite distance describes a defect in an extended colony, so we choose
-walls that constrain the fields as little as possible. For the density we impose
-$\nh\tcdot\nabla\rho=0$. The wall then exerts no pressure gradient, but it does not block
-the active flux $(\zeta/\xi_0)\nabla\tcdot\Q$, which crosses it. Cells can therefore enter
-or leave the box, and the density equation of \cref{eq:comoving-equations} has no strictly
-steady solution. Since the equations contain $\rho$ only through its gradients, however,
-a uniform drift $\rho=\rho_\ss+\dot\rho\,t$ solves that equation with its left side
-replaced by the constant $\dot\rho$, and it leaves $\Q$ and $\u$ steady. We therefore solve
-for $\rho_\ss$, fixed by $\rho_\ss(0)=1$, together with the rate $\dot\rho$, which is
-$-2.2\times10^{-3}~\minute^{-1}$ in our run. For the nematic order we impose
-$\nh\tcdot\nabla\Q=0$, so that the wall does not force the texture to the ideal profile
-\cref{eq:pade-approximation}. This free wall leaves a global rotation of $\Q$
-undetermined, and we fix it by the mirror symmetry of the defect, with $Q_2=0$ on the
-axis $y=0$. The fluctuations of \cref{app:lyapunov} use a different wall, a reservoir that
-holds $\delta\rho=\delta\Q=0$ on the boundary and lets the noise flux through. In both
-cases we assume that the wall does not change the fields near the core, which set the
-variance profile.}
+\upd{We solve in the square box $[-20,20]^2~\micron^2$, the box of \cref{app:lyapunov}, and
+impose on its walls the density condition of \cref{sec:defect-steady},
+$\nh\tcdot\nabla\rho=0$. The active flux crosses this wall, and with the cross-coupling a
+net flux of cells enters or leaves the box (\cref{app:density-poisson}), so the density
+drifts uniformly. The equations, however, contain $\rho$ only through its gradient, so the
+drift leaves $\Q_\ss$ and $\u$ exactly steady. We therefore solve for its rate together
+with $\u$, and fix the remaining constant in $\rho_\ss$ by $\rho_\ss(0)=1$.}
 
-\Cref{eq:comoving-equations} is solved by finite differences on a graded, non-uniform
-grid, fourth order in the local spacing and refined toward the defect core.
-\begin{itemize}
-  \item \textit{Numerical method.}
-  \begin{itemize}
-  \item The grid. Cell size tracks $1/|S'(r)|$, capped in the far field; the point
-    count is odd so that the origin is a node. Fourth-order finite differences in each
-    direction, Kronecker-lifted to 2D.
-  \item The bordered system. The unknowns are $\rho$, $Q_1$, $Q_2$ at every node plus
-    $u_x$, $u_y$\upd{ and $\dot\rho$}; the equations are the discretized \cref{eq:comoving-equations}\upd{,
-    the walls, the pinning conditions $Q_1(0)=Q_2(0)=0$ and $\rho(0)=1$, and the mirror
-    line $Q_2(x,0)=0$}. The border removes the near-null translation mode of the
-    Jacobian\upd{, and the line removes the rotation mode. Newton's method with continuation
-    in $\zeta$ from zero finds the solution, and its stability is checked afterwards
-    through the spectrum of the linearized problem (\cref{app:lyapunov}).}
-  \item Practical notes: row equilibration at large $B$\upd{; full Newton, since reusing
-    the factorization diverges at these parameters; the discrete $\partial_y^2$ averaged
-    with its mirror image, so that the discrete problem keeps the $y\to-y$ symmetry}.
-  \end{itemize}
-  \item \textit{Effect of the cross-coupling.}
-  \begin{itemize}
-  \item Motion. With the coupling $\Q B\nabla\rho$ in \cref{eq:comoving-equations}
-    the core cannot stay in place, and the multiplier $\u$ is nonzero. It points along
-    $+x$, and $u_y=0$ by mirror symmetry. Its value depends on the box size and on the
-    wall, so we do not quote it.
-  \item Deformation of the alignment field, \cref{fig:strength,fig:defectangle,fig:activeforce}.
-    The nematic order differs between the two sides of the core along the axis, the
-    director rotates away from the ideal $+1/2$ texture with opposite sign on the two
-    sides of the axis, and the active force departs from \cref{eq:active-force-defect}
-    with the same split between the two sides. All three departures from the Pad\'e profile stay
-    small.
-  \end{itemize}
-\end{itemize}
+For the nematic order we impose
+$\nh\tcdot\nabla\Q=0$, so that the wall does not force any nematic axis.
+We impose the shape of the defect only \upd{by pinning the core, $Q_1(0,0)=Q_2(0,0)=0$, and
+by} setting $Q_2(x,0)=0$ \upd{on the axis}, with $x Q_1(x,0)>0$. \upd{These constraints turn}
+out to be enough to \upd{keep the solution a} $+1/2$ defect.
+
+The fields vary fastest near the core, where $S$ rises over the length $\elld$, and
+slowly far from it. We therefore solve \cref{eq:comoving-equations} by finite differences
+on a graded grid, which is finer near the core and coarser far from it. The unknowns are
+$\rho$, $Q_1$ and $Q_2$ at every node, together with $u_x$, $u_y$ \upd{and the drift rate
+of the density}.
+
+With the cross-coupling the core cannot stay at rest, so the multiplier $\u$ is nonzero.
+It points along $+x$, as \cref{sec:defect-steady} \upd{explains}. Its value depends on the box
+size and on the walls, so we quote only the bound $|\u|<0.4~\micron/\minute$ used in
+\cref{app:dean-angle}. The coupling also deforms the defect: \upd{the deformation is weak near the core, but away
+from it the solution} deviates from the Pad\'e profile used in \cref{sec:defect-steady}.
+This can be seen in \cref{fig:strength,fig:defectangle,fig:nematicaxis}. \upd{The active
+force is deformed too: the cross-coupling and the motion of the defect shift it along the
+axis, away from \cref{eq:active-force-defect} (\cref{fig:activeforce}).}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{strength.png}
   \caption{Nematic order $S$ against distance from the core in the converged
     comoving-frame solution, along $+x$, along $-x$ and along $\pm y$, compared with the
-    Pad\'e approximation \cref{eq:pade-approximation} (dashed). The coupling to the
-    density splits the $\pm x$ curves, which is the distortion the drift produces; the
-    departure from the approximant stays small, so \cref{sec:defect-steady} can use
-    it.}
+    Pad\'e approximation \cref{eq:pade-approximation} (dashed). \upd{Along $\pm y$ the
+    numerical $S$ stays within $0.01$ of the approximant. Along the axis} the coupling to
+    the density splits the $\pm x$ curves, which is the distortion the drift
+    produces\upd{: $S$ lies above the approximant on the $+x$ side and below it on the $-x$
+    side. The departure stays small, at most $0.05$, or $5\%$ of $S_0$, near
+    $r=2~\micron$}, so \cref{sec:defect-steady} can use \upd{the approximant}.}
   \label{fig:strength}
 \end{figure}
 
@@ -2149,19 +2262,33 @@ grid, fourth order in the local spacing and refined toward the defect core.
   \centering
   \includegraphics[width=0.85\linewidth]{defectangle.png}
   \caption{Director angle in the converged solution minus the ideal $+1/2$ profile,
-    $\theta-\phi/2$, against polar angle $\phi$ at four radii. The deviation changes sign
-    between the two sides of the defect axis, grows with radius, and reaches one degree
-    at $r=5~\micron$.}
+    $\theta-\phi/2$, against polar angle $\phi$ at $r=0.1$, $1$ and $2~\micron$. Near
+    the core\upd{, where the variance modulation of \cref{sec:defect-fluct} lives,} the
+    Pad\'e director is accurate: the deviation stays below $1^\circ$ within $2~\micron$. It
+    changes sign between the two sides of the defect axis and grows with $r$.}
   \label{fig:defectangle}
+\end{figure}
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{nematicaxis.png}
+  \caption{Director lines of the converged comoving solution (red, solid) and of
+    the Pad\'e profile \cref{eq:pade-approximation} (black, dashed). The two coincide
+    near the core and separate away from it, where the deviation of
+    \cref{fig:defectangle} grows\upd{, to $3.4^\circ$ at $r=5~\micron$ and $7^\circ$ at
+    $10~\micron$}.}
+  \label{fig:nematicaxis}
 \end{figure}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{activeforce.png}
   \caption{Active force along the defect axis in the converged solution, compared with
-    \cref{eq:active-force-defect} evaluated on the Pad\'e profile. The small deviation
-    splits the two sides of the core, as in \cref{fig:strength}, and has the same origin
-    in the drift.}
+    \cref{eq:active-force-defect} evaluated on the Pad\'e profile. \upd{The numerical
+    profile is shifted along $+x$, the direction in which the defect moves. At the core it
+    lies within $1.5\%$ of the Pad\'e value, while at $r=1~\micron$ it is $7\%$ stronger on
+    the $+x$ side and $8\%$ weaker on the $-x$ side. This split of the two sides is the
+    one of \cref{fig:strength}} and has the same origin in the drift.}
   \label{fig:activeforce}
 \end{figure}
 
@@ -2169,43 +2296,332 @@ grid, fourth order in the local spacing and refined toward the defect core.
 \section{Density variance with a short-length cutoff}
 \label{app:variance}
 % dean.tex 904-1211 ("Only density fluctuations"). Supports \cref{sec:defect-fluct}.
-\begin{itemize}
-  \item The frequency integral of \cref{eq:rho-fourier}. For the isotropic part of the
-    noise it gives the equal-time spectrum
-    $\la|\delta\tilde\rho_{\k}|^2\ra=\zeta/(B\rho_0)$, independent of $k$.
-  \item The coefficient in the exponent of the Gaussian filter. It is chosen to match a
-    hard cutoff in real space. Before any cutoff, the equal-time variance is an integral
-    over separations $\bs w$, divergent at $\bs w\to0$,
-    $\sigmarho=\frac{\zeta}{2\pi^2B\rho_0}\int\!\d^2\bs w\,
-    w_iw_j\bigl(Q^\ss_{ij}(\r-\bs w)+\delta_{ij}\bigr)/|\bs w|^6$.
-    Excising $|\bs w|<\elln$ gives the pedestal \cref{eq:pedestal} exactly, the value
-    the filter $\ee^{-k^2\elln^2/4}$ gives. With this choice $\elln$ is the smallest
-    resolved separation. The hard cutoff also gives the leading logarithm of the
-    anisotropic term, but not its additive constant.
-  \item The inversion over space and time that leads to
-    \cref{eq:rho-autocorrelation-isotropic}.
-  \item The anisotropic piece, at first order in $\Q_\ss$. In the integral over the
-    internal wavevector, the part quadratic in that wavevector vanishes by isotropy
-    against the traceless $\Q_\ss$. The exponential the remainder produces cancels the
-    external smoothing factor exactly. The result is $\partial_i\partial_jQ^\ss_{ij}$
-    filtered by $\hat\Phi_{\elln}(q)=\tfrac12E_1(q^2\elln^2/8)$, with no expansion and
-    no fitted scale.
-  \item The two asymptotic branches of $\hat\Phi_{\elln}$, and its transform to the
-    real-space kernel \cref{eq:kappa-real}.
-  \item The small-$\elln$ form of the peak modulation, $\nu_0\propto\elln^2\ln(\elld/\elln)$,
-    and its saturation once $\elln$ approaches $\elld$ (\cref{fig:ln_curve}).
-  \item The correlation length and time, $\elln$ and $\tau_c$ of \cref{eq:tau-c}, come
-    from the isotropic piece. Bound how much the anisotropic piece changes them, since
-    \cref{sec:defect-fluct} assumes it does not.
-\end{itemize}
+% Written 2026-10-02. Checks: claude_experiments/appF_check.wls (transforms, asymptotes,
+% pedestal, inversion), fit_new.py (nu0 vs l_n at S0 = 0.9, l_d = 1), appF_corr.wls
+% (lagged and two-point correlators with the Q_ss term).
+\upd{The layering probability depends exponentially on the equal-point density variance,
+so the few percent by which the defect modulates that variance decide the result of
+\cref{sec:nucleation-2}. Here we derive the variance from \cref{eq:rho-fourier} at
+$\delta\Q=0$, together with the correlation time and length that \cref{sec:defect-fluct}
+quotes. Two features of the calculation need care: the variance of a continuum diverges,
+so it depends on a short-length cutoff, and the nematic order makes the noise
+anisotropic.}
+
+We take the \upd{Fourier conventions} $\tilde f(\k)=\int\!\d^2\r\,\ee^{-\ii\k\cdot\r}f(\r)$
+\upd{in space and $\tilde f(\omega)=\int\!\d t\,\ee^{-\ii\omega t}f(t)$ in time}.
+Taking the Fourier transform of \cref{eq:eta-rho-ss} over time and space, we get
+\begin{multline}
+  \la\tilde \eta^\rho_\alpha(\k,\omega)\tilde \eta^\rho_\beta(\k',\omega')\ra = \frac{4\pi\zeta}{\xi_0\rho_0}\,\delta(\omega+\omega')\,\times
+  \\
+  \times
+  \left[(2\pi)^2 \delta_\ab \delta(\k+\k')\;\upd{+}\;\tilde Q^\ss_\ab(\k+\k')\right].
+\end{multline}
+Then, with \cref{eq:rho-fourier}, \upd{whose factors $-\ii k_\alpha$ and $-\ii k'_\beta$
+multiply to $-k_\alpha k'_\beta$, and with $k_\alpha k'_\alpha\delta(\k+\k')
+=-k^2\delta(\k+\k')$,} we get
+\begin{multline}
+  \la\delta\tilde\rho(\k,\omega)\delta\tilde\rho(\k',\omega') \ra= \frac{4\pi\zeta\,\delta(\omega+\omega')}{\xi_0\rho_0\,[\ii\omega+\gamma_0 k^2]\![-\ii\omega+\gamma_0 k'^2]}\times
+  \\
+  \times
+  \!\left[(2\pi)^2 k^2\,\delta(\k+\k')\;-\;k_\alpha k'_\beta\,\tilde Q^\ss_{\alpha\beta}(\k+\k')\right]
+\end{multline}
+Inverse-transforming to $(t,t')$ and integrating the $\delta(\omega+\omega')$ collapses one $\omega$-integral. Partial fractions on the remaining $\omega$-denominator,
+\begin{multline}
+    \frac{1}{[\ii\omega+\gamma_0 k^2]\,[-\ii\omega+\gamma_0 k'^2]} = 
+    \\
+    =\frac{1}{\gamma_0(k^2+k'^2)}\!\left[\frac{1}{\ii\omega+\gamma_0 k^2}\;+\;\frac{1}{-\ii\omega+\gamma_0 k'^2}\right],
+\end{multline}
+then we apply the standard identity $\int\!\frac{\d\omega}{2\pi}\ee^{\ii\omega t}/(\ii\omega+a) = \theta(t)\ee^{-at}$ on each term. Thus we obtain $\la\delta\tilde\rho(\k,t)\delta\tilde\rho(\k',t') \ra$.
+\begin{multline}
+  \label{eq:rho-autocorrelation-isotropic-without-elln}
+  \la\delta\tilde\rho(\k,t)\delta\tilde\rho(\k',t')\ra = \frac{2\zeta}{\xi_0\rho_0\,\gamma_0(k^2+k'^2)}\times
+  \\
+  \times \left[\theta(t-t')\ee^{-\gamma_0 k^2(t-t')}+\theta(t'-t)\ee^{-\gamma_0 k'^2(t'-t)}\right]
+  \\
+  \times\!\left[(2\pi)^2 k^2\delta(\k+\k') - k_ik'_j\tilde\Q^\ss_{ij}(\k+\k')\right].
+\end{multline}
+
+\upd{At equal times, $t=t'$, the support of $\delta(\k+\k')$ sets $k^2=(k^2+k'^2)/2$ in the
+first term, and with $\xi_0\gamma_0=B$ the spectrum becomes
+\begin{align}
+  \label{eq:rho-spectrum}
+  \la\delta\tilde\rho(\k)\,\delta\tilde\rho(\k')\ra
+  = \frac{\zeta}{B\rho_0}\Bigl[{}&(2\pi)^2\delta(\k+\k')
+  \nonumber\\
+  &-\frac{2k_ik'_j\,\tilde Q^\ss_{ij}(\k+\k')}{k^2+k'^2}\Bigr].
+\end{align}
+The texture enters only through the second term. Before inverting over space for a
+general texture, we consider two simple cases, no nematic order and uniform nematic
+order.}
+
+\subsection{Isotropic case}
+\label{app:variance-iso}
+\upd{Without nematic order, $\Q_\ss=0$, only the first term of
+\cref{eq:rho-autocorrelation-isotropic-without-elln} remains. On the support of
+$\delta(\k+\k')$ we have $k'^2=k^2$, so the two exponentials combine into one, and
+\begin{equation}
+  \la\delta\tilde\rho(\k,t)\,\delta\tilde\rho(\k',t')\ra=(2\pi)^2\delta(\k+\k')\,
+  \frac{\zeta}{B\rho_0}\,\ee^{-\gamma_0k^2|t-t'|}.
+\end{equation}
+At equal times this spectrum does not depend on $k$, because the conservative noise brings
+a factor $k^2$ that cancels the $k^2$ of the relaxation rate $\gamma_0k^2$. Inverting over
+space gives a heat kernel,
+\begin{equation}
+  \label{eq:rho-correlation-no-cutoff}
+  \la\delta\rho(\r,t)\,\delta\rho(\r',t')\ra=\frac{\zeta\,
+  \ee^{-|\r-\r'|^2/(4\gamma_0|t-t'|)}}{4\pi B\rho_0\gamma_0|t-t'|},
+\end{equation}
+which is \cref{eq:rho-autocorrelation-isotropic} at $\elln=0$. As $t'\to t$ it tends to
+$(\zeta/B\rho_0)\,\delta(\r-\r')$. At equal times the density at two different points is
+therefore uncorrelated, and the variance at one point diverges.}
+
+\subsection{The case with uniform nematic order}
+\label{app:variance-uniform}
+When $\Q_\ss$ is constant, \upd{$k_ik'_j\,\tilde Q^\ss_{ij}(\k+\k')=-(2\pi)^2k_ik_jQ^\ss_{ij}\,\delta(\k+\k')$}.
+\upd{Both terms
+of \cref{eq:rho-autocorrelation-isotropic-without-elln} then sit on $\k'=-\k$, where
+$k'^2=k^2$, so the two exponentials combine into $\ee^{-\gamma_0k^2|t-t'|}$ and
+\begin{multline}
+  \label{eq:rho-spectrum-uniform}
+  \la\delta\tilde\rho(\k,t)\,\delta\tilde\rho(\k',t')\ra
+  =(2\pi)^2\frac{\zeta}{B\rho_0}\,\delta(\k+\k')\times
+  \\
+  \times\bigl[1+Q^\ss_{ij}\hat k_i\hat k_j\bigr]\,\ee^{-\gamma_0k^2|t-t'|},
+\end{multline}
+with $\hat\k=\k/k$. Uniform order therefore keeps the spectrum diagonal in $\k$ and only
+multiplies it by a factor that depends on the direction of $\k$. For order $S$ along a
+director at angle $\theta$, and $\k$ at angle $\psi$, this factor is
+$1+S\cos2(\psi-\theta)$, which averages to one over directions. A correlation taken at a
+single point integrates the spectrum over all directions, so it does not see the order:
+the autocorrelation in time at a fixed point is exactly the isotropic
+$\zeta/(4\pi B\rho_0\gamma_0|t-t'|)$, at every lag. Since the argument uses only the
+angular average, it holds for any cutoff that depends on $k$ alone, hard or soft
+(\cref{app:variance-cutoff}), and so
+the equal-point variance and the correlation time $\tau_c$ are those of the isotropic
+case.
+
+Two distinct points, however, weight the directions of $\k$ unequally. The angular integral
+of $\ee^{\ii\k\cdot(\r'-\r)}\cos2(\psi-\theta)$ gives $-2\pi J_2(k|\r'-\r|)\cos2(\alpha-\theta)$,
+with $\alpha$ the direction of $\r'-\r$, and the remaining radial integrals are elementary,
+\begin{align}
+  \label{eq:corr-uniform}
+  &\la\delta\rho(\r,t)\,\delta\rho(\r',t')\ra
+  \nonumber\\
+  &\quad=\frac{\zeta}{4\pi B\rho_0\gamma_0|t-t'|}
+  \Bigl[\ee^{-u}-S\cos2(\alpha-\theta)\,g(u)\Bigr],
+  \nonumber\\
+  &g(u)=\frac{1-(1+u)\,\ee^{-u}}{u},\qquad u=\frac{|\r-\r'|^2}{4\gamma_0|t-t'|}.
+\end{align}
+The first term is the isotropic heat kernel. The second vanishes at $\r'=\r$, because
+$g(u)\simeq u/2$ at small $u$, but at large separation $g(u)\simeq1/u$, so it decays
+only as $-\zeta S\cos2(\alpha-\theta)/(\pi B\rho_0|\r-\r'|^2)$, whatever the lag. The
+tail comes from $k\to0$, where the direction factor is not analytic and the modes relax
+arbitrarily slowly. At equal times the heat kernel collapses to a $\delta$ function and
+only the tail is left at finite separation,
+\begin{equation}
+  \label{eq:corr-uniform-equal-time}
+  \la\delta\rho(\r)\,\delta\rho(\r+\bs d)\ra
+  =\frac{\zeta}{B\rho_0}\Bigl[\delta(\bs d)-\frac{S\cos2(\alpha-\theta)}{\pi d^2}\Bigr].
+\end{equation}
+So the isotropic case leaves two points uncorrelated at equal times, while uniform order
+anticorrelates them along the director and correlates them across it.
+
+The Gaussian cutoff of \cref{eq:cutoff} multiplies the integrand by
+$\ee^{-k^2\elln^2/2}$, which replaces $\gamma_0|t-t'|$ by $\gamma_0|t-t'|+\elln^2/2$ in
+\cref{eq:corr-uniform}. The $\delta$ function then broadens into a Gaussian of width
+$\elln$, the tail beyond $\elln$ is unchanged, and at equal times
+\cref{eq:corr-uniform} becomes \cref{eq:corr-anisotropic}, with $h(s)=g(s^2/2)$.}
+
+\subsection{\upd{Short-length cutoff}}
+\label{app:variance-cutoff}
+\upd{The divergence of the equal-point variance does not depend on the texture. It comes
+from the flat isotropic spectrum, whose integral over all $\k$ is infinite, and the
+nematic order cannot remove it. Instead, the divergence hides the defect: the anisotropic
+part of the variance grows only logarithmically as the resolution improves
+(\cref{app:variance-ln}), much more slowly than the isotropic part, so without a cutoff
+the modulation by the defect vanishes. The divergence comes from treating the monolayer as
+a continuum down to zero length, whereas the density of cells is defined only over patches
+at least a cell wide. The cutoff is therefore part of the physical description of a
+monolayer of cells, and not only a way to regularize the calculation.
+
+We remove the wavevectors above $1/\elln$ from \cref{eq:rho-fourier} in one of two ways. A
+hard cutoff multiplies $\delta\tilde\rho(\k,\omega)$ by $\Theta(\Lambda-k)$, and a soft
+cutoff multiplies it by $\ee^{-k^2\elln^2/4}$. The correlator
+\cref{eq:rho-autocorrelation-isotropic-without-elln} carries one such factor for each
+wavevector, $\Theta(\Lambda-k)\,\Theta(\Lambda-k')$ or $\ee^{-(k^2+k'^2)\elln^2/4}$. With
+the hard cutoff the isotropic spectrum integrates to the equal-point variance
+$\zeta\Lambda^2/(4\pi B\rho_0)$. We use the soft cutoff, which keeps every integral
+Gaussian. It smooths the isotropic spectrum by $\ee^{-k^2\elln^2/2}$, a Gaussian of width
+$\elln$, which integrates to
+$(\zeta/B\rho_0)\int\!\d^2\k\,\ee^{-k^2\elln^2/2}/(2\pi)^2=\zeta/(2\pi B\rho_0\elln^2)$,
+the pedestal \cref{eq:pedestal}. The two cutoffs give the same pedestal for
+$\Lambda=\sqrt2/\elln$.
+
+The coefficient in the exponent follows from a real-space argument. Without a cutoff, the
+heat-kernel solution of \cref{eq:linearized-rho} at $\delta\Q=0$ writes the equal-point
+variance as an integral over separations $\bs w$,
+\begin{equation}
+  \label{eq:variance-realspace}
+  \sigmarho(\r)=\frac{\zeta}{2\pi^2B\rho_0}\int\!\d^2\bs w\,
+  \frac{w_iw_j\bigl[Q^\ss_{ij}(\r-\bs w)+\delta_{ij}\bigr]}{|\bs w|^6},
+\end{equation}
+which diverges as $1/w^4$ at small $w$. The natural cutoff in real space excises
+$|\bs w|<\elln$, the separations the density cannot resolve. In the isotropic term this
+leaves $(\zeta/2\pi^2B\rho_0)\,\pi/\elln^2$, which is again the pedestal
+\cref{eq:pedestal}. With the coefficient $1/4$ in the exponent, $\elln$ is therefore the
+smallest separation the density resolves, whichever cutoff one uses. The cutoffs differ
+only in the anisotropic term, where the real-space one gives the leading logarithm of
+\cref{app:variance-ln} but not the constant that comes with it.
+
+At unequal times the isotropic spectrum carries the factor $\ee^{-\gamma_0k^2|t-t'|}$ in
+addition to the smoothing, so the soft cutoff replaces $\gamma_0|t-t'|$ by
+$\gamma_0|t-t'|+\elln^2/2$ in \cref{eq:rho-correlation-no-cutoff}. The result,
+\begin{multline*}
+  \la\delta\rho(\r,t)\,\delta\rho(\r',t')\ra=\frac{\zeta}{2\pi B\rho_0(\elln^2+2\gamma_0|t-t'|)}
+  \\
+  \times\exp\Bigl(-\frac{|\r-\r'|^2}{2\elln^2+4\gamma_0|t-t'|}\Bigr),
+\end{multline*}
+is \cref{eq:rho-autocorrelation-isotropic}: a Gaussian in $\r-\r'$ whose variance per
+component grows from $\elln^2$ to $\elln^2+2\gamma_0|t-t'|$, while its normalization falls
+by the same factor.}
+
+\subsection{The anisotropic piece}
+\label{app:variance-aniso}
+\upd{With the soft cutoff, the equal-point variance is the integral of
+\cref{eq:rho-spectrum} over $\k$ and $\k'$, weighted by
+$\ee^{\ii(\k+\k')\cdot\r}\ee^{-(k^2+k'^2)\elln^2/4}$. Its second term} depends on the sum
+$\bs p=\k+\k'$, which is conjugate to the slow variation of $\Q_\ss$, and on the internal
+wavevector $\bs q=(\k-\k')/2$. \upd{We therefore change variables to
+\begin{equation}
+  \k=\tfrac12\bs p+\bs q,\qquad\k'=\tfrac12\bs p-\bs q,
+\end{equation}
+which has unit Jacobian, $\d^2\k\,\d^2\k'=\d^2\bs p\,\d^2\bs q$. In these variables
+\begin{align}
+  k_ik'_j&=\tfrac14p_ip_j-q_iq_j+\tfrac12(q_ip_j-p_iq_j),
+  \nonumber\\
+  k^2+k'^2&=\tfrac12p^2+2q^2 .
+\end{align}
+The last term of $k_ik'_j$ is antisymmetric and drops against the symmetric
+$\tilde\Q_\ss$, and the smoothing factor splits into $\ee^{-x}\ee^{-q^2\elln^2/2}$ with
+$x=p^2\elln^2/8$. The anisotropic part of the variance thus reads
+\begin{multline}
+  \label{eq:aniso-pq}
+  \sigmarho(\r)-\sigmarho\big|_\text{pedestal}
+  =-\frac{2\zeta}{B\rho_0}\int\!\frac{\d^2\bs p}{(2\pi)^2}\,\ee^{\ii\bs p\tcdot\r}\,
+  \ee^{-x}\,\tilde Q^\ss_{ij}(\bs p)
+  \\
+  \times\int\!\frac{\d^2\bs q}{(2\pi)^2}\,
+  \frac{\tfrac14p_ip_j-q_iq_j}{p^2/2+2q^2}\,\ee^{-q^2\elln^2/2}.
+\end{multline}
+The smoothing therefore suppresses the internal wavevector and touches $\bs p$ only
+through the overall factor $\ee^{-x}$. In the inner integral the rest of the integrand
+depends only on $q=|\bs q|$, so $q_iq_j$ averages over the directions of $\bs q$ to
+$\tfrac12q^2\delta_{ij}$, and $\delta_{ij}$ vanishes against the traceless
+$\tilde\Q_\ss$. Only the $p_ip_j$ part remains, and it leaves} an elementary integral,
+\begin{equation}
+  \label{eq:aniso-inner}
+  \int\!\frac{\d^2\bs q}{(2\pi)^2}\,\frac{\ee^{-q^2\elln^2/2}}{p^2/2+2q^2}
+  =\frac{\ee^{x}E_1(x)}{8\pi},
+\end{equation}
+with $E_1$ the exponential integral. Its $\ee^{x}$ cancels the external $\ee^{-x}$
+exactly. Since $p_ip_j\tilde Q^\ss_{ij}$ is minus the transform of
+$\partial_i\partial_jQ^\ss_{ij}$, the anisotropic variance is the double divergence of the
+texture passed through a filter,
+\begin{align}
+  \label{eq:aniso-kernel}
+  &\sigmarho(\r)-\sigmarho\big|_\text{pedestal}
+  \nonumber\\
+  &\quad=\frac{\zeta}{8\pi B\rho_0}\!\int\!\frac{\d^2\bs p}{(2\pi)^2}\,
+  \ee^{\ii\bs p\tcdot\r}\,\hat\Phi(p)\,\widetilde{\partial_i\partial_jQ^\ss_{ij}}(\bs p),
+  \nonumber\\
+  &\hat\Phi(p)=\tfrac12E_1\bigl(p^2\elln^2/8\bigr).
+\end{align}
+No expansion and no fitted scale enter it. The inverse transform of $\hat\Phi$ is the
+kernel $\kappa$ of \cref{eq:kappa-real}, and dividing by the pedestal gives
+\cref{eq:total-gauss}.
+
+The filter interpolates between two branches,
+\begin{align}
+  \label{eq:Phi-asymptotics}
+  \hat\Phi(p)&\simeq\ln\frac1{p\elln}+\frac{3\ln2-\gamma_\mathrm{E}}2
+  \quad (p\elln\ll1),
+  \nonumber\\
+  \hat\Phi(p)&\simeq\frac4{p^2\elln^2}\,\ee^{-p^2\elln^2/8}
+  \quad (p\elln\gg1),
+\end{align}
+with $\gamma_\mathrm{E}$ Euler's constant. Texture on scales larger than $\elln$ is
+therefore weighted logarithmically, and texture below $\elln$ is cut off exponentially.
+In real space the same two branches appear as the shape of $\kappa$: it is finite at the
+origin, $\kappa(0)=1/(\pi\elln^2)$, and beyond $\elln$ it falls off as $1/(2\pi w^2)$,
+whose integral produces the logarithm.
+
+\subsection{Dependence on the cutoff}
+\label{app:variance-ln}
+When $\elln$ is much smaller than the core size $\elld$, the texture is supported at
+$p\lesssim1/\elld$, where the filter takes its logarithmic branch. The anisotropic term
+then reduces to $(\zeta/8\pi B\rho_0)\,\partial_i\partial_jQ^\ss_{ij}\ln(\elld/\elln)$,
+plus a term of order one that depends on the shape of the profile. The hard cutoff of
+\cref{eq:variance-realspace} gives the same logarithm with the same coefficient. Relative
+to the pedestal the modulation therefore grows as
+\begin{equation}
+  \label{eq:nu0-asymptote}
+  \nu_0\simeq\elln^2\Bigl[\tfrac14\max\bigl|\partial_i\partial_jQ^\ss_{ij}\bigr|
+  \ln\frac{\elld}{\elln}+c\Bigr]
+\end{equation}
+at small $\elln$, with the maximum near $r\simeq1.2~\micron$, and it vanishes as
+$\elln\to0$. For the exact profile with $S_0=0.9$ and $\elld=1~\micron$ the first
+coefficient is $0.086~\micron^{-2}$, and a fit at small $\elln$ gives
+$c=0.051~\micron^{-2}$. Because of the logarithm, $\nu_0/\elln^2$ never settles to a
+constant: it grows by $0.2~\micron^{-2}$ for every decade by which $\elln$ decreases.
+\Cref{eq:nu0-asymptote} matches the full result to $1\%$ for $\elln\le0.1~\micron$. At
+$\elln=0.5~\micron$, however, $\elld/\elln$ is only $2$, the logarithm is of order one,
+and the asymptote is $6\%$ low, so we evaluate \cref{eq:total-gauss} in full.
+\Cref{fig:ln_curve} shows the result. The peak modulation rises from $0.77\%$ at
+$\elln=0.2~\micron$ to $2.94\%$ at $0.5~\micron$ and $6.7\%$ at $1~\micron$. Over the
+same range its position moves out from $1.3$ to $1.7~\micron$, because the filter
+smooths the texture over a region that grows with $\elln$.
+
+\subsection{Correlation time and length}
+\label{app:variance-corr}
+\Cref{sec:defect-fluct} takes the correlation time $\tau_c$ and the correlation
+length $\elln$ from the isotropic piece. To test whether the texture changes them, we
+evaluated the full correlator with the $\Q_\ss$ term, smoothing the heat-kernel solution
+of \cref{eq:linearized-rho} with the same Gaussian, at the peak and the trough of the
+modulation. For the time the assumption holds. Normalized to its equal-time value, the
+correlator departs from the isotropic $1/(1+|t-t'|/\tau_c)$ by $1.5\%$ at a lag $\tau_c$
+and by $3.5\%$ at $4\tau_c$, so $\tau_c$ holds to within the size of the modulation.
+
+For the length it does not, and the reason is the nematic order rather than the defect.
+\upd{Even in a uniformly ordered region, where the variance is the pedestal, the
+correlation between two points is anisotropic (\cref{app:variance-uniform}). With the
+cutoff, \cref{eq:corr-uniform} at equal times becomes, for points a distance $d$ apart,}
+\begin{align}
+  \label{eq:corr-anisotropic}
+  \frac{\la\delta\rho(\r)\,\delta\rho(\r+\bs d)\ra}{\sigmarho|_\text{pedestal}}
+  &=\ee^{-d^2/2\elln^2}-S\cos2(\alpha-\theta)\,h\Bigl(\frac d\elln\Bigr),
+  \nonumber\\
+  h(s)&=\frac{2-(2+s^2)\,\ee^{-s^2/2}}{s^2},
+\end{align}
+with $\alpha$ the direction of $\bs d$ and $\theta$ that of the director. Correlations are
+therefore weaker along the director than across it, by $2Sh(1)\simeq0.3$ of the pedestal
+at $d=\elln$, and since $h(s)\to2/s^2$ they \upd{keep the power-law tail of
+\cref{eq:corr-uniform-equal-time}} beyond $\elln$.
+Near the defect the full calculation gives departures of $16$ to $22\%$ from the
+isotropic correlation at $d=\elln$. The length $\elln$ is thus the width of the Gaussian
+core of the correlation function, not a full description of it. Averaged over a circular
+patch in a uniformly ordered region, the angular term of \cref{eq:corr-anisotropic} cancels. \Cref{sec:nucleation-2}
+uses only the equal-point variance and $\tau_c$, so the anisotropy does not enter its
+result.
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{ln_curve.png}
-  \caption{Peak variance modulation $\nu_0$ against the cutoff $\elln$. The modulation
-    vanishes as $\elln\to0$: without a short-length cutoff the defect leaves no signature
-    in the density variance. The operating point is $\elln=0.5~\micron$
-    (\cref{eq:cutoff}), the width of an \textit{M.\ xanthus} cell.}
+  \caption{Peak variance modulation $\nu_0$ against the cutoff $\elln$, from
+    \cref{eq:total-gauss} on the exact defect profile. Dashed: the small-$\elln$ asymptote
+    \cref{eq:nu0-asymptote}. The modulation vanishes as $\elln\to0$: without a
+    short-length cutoff the defect leaves no signature in the density variance. The
+    gray lines mark the operating point $\elln=0.5~\micron$ (\cref{eq:cutoff}), the width
+    of an \textit{M.\ xanthus} cell, where $\nu_0=2.94\%$.}
   \label{fig:ln_curve}
 \end{figure}
 
@@ -2213,79 +2629,124 @@ grid, fourth order in the local spacing and refined toward the defect core.
 \label{app:lyapunov}
 
 % dean.tex 1521-2089.
-This appendix supports \cref{sec:defect-fluct}: it is the numerical route to the
+\upd{The analytic variance \cref{eq:total-gauss} rests on $\delta\Q=0$, which holds only if
+the active force $\zeta\nabla\tcdot\delta\Q$ is small against the density noise
+(\cref{sec:defect-fluct}). To test this, and to obtain the variance without the
+approximation, we solve the linearized equations \cref{eq:linearized} numerically for the
 equal-time covariance of $(\delta\rho,\delta\Q)$ on the steady background of
-\cref{app:comoving}, retaining the coupling to $\delta\Q$ that the analytic result
-\cref{eq:total-gauss} drops. The solver implements the cutoff \cref{eq:cutoff} by
+\cref{app:comoving}.} The solver implements the cutoff \cref{eq:cutoff} by
 giving the noise a spatial correlation, chosen to reproduce the cutoff of the density
 variance in \cref{sec:defect-fluct}.
 
 \subsection{Method}
 \label{app:lyapunov-method}
-\begin{itemize}
-  \item \textit{Set-up and discretization.}
-  \begin{itemize}
-  \item General linear OU field theory set-up: $\partial_t\psi = \A(\r)\psi+\bxi$,
-    steady-state covariance solves the Lyapunov equation. State this generally before
-    specialising to $\psi=(\delta\rho,\delta\Q)$.
-  \item Finite-difference discretization of $\A$ and the noise covariance $\B$; how the
-    Lyapunov equation is solved numerically for the discretised system.
-  \item Where the closure of \cref{app:closure} enters the noise covariance. The
-    solver builds the noise covariance from the exact moments of
-    \cref{app:realizability}. It checks at every node that the local covariance is
-    positive semi-definite.
-  \item The cutoff, implemented through the noise: \cref{app:lyapunov-cutoff}.
-  \end{itemize}
-  \item \textit{Difference operators.}
-  \begin{itemize}
-  \item Self-adjointness of the discretised operators vs.\ the continuum ones, and the
-    numerical artefacts that appear if this is gotten wrong. This is what makes the
-    boundary results below trustworthy.
-  \end{itemize}
-  \item \textit{Boundary conditions.}
-  \begin{itemize}
-  \item \upd{The walls of the run of \cref{tab:lyapunov-run}. The fluctuations live on a
-    reservoir wall: the wall nodes are removed, so $\delta\rho=\delta\Q=0$ there, the
-    noise flux through the faces next to the wall is kept, and the smoothing $W$ is
-    built on the Dirichlet Laplacian, so it vanishes at the wall too. The steady state
-    underneath comes from a different wall, $\nh\tcdot\nabla\rho_\ss=0$ and
-    $\nh\tcdot\nabla\Q_\ss=0$ (\cref{app:comoving}).}
-  \item Spell out that this is not one condition but three: on the steady state, on the
-    fluctuating field, and on the noise flux through the wall. Give the table of the
-    eight combinations. \upd{The last two answer one question, whether a cell may cross
-    the wall, once for the fluctuation and once for the noise, so they must agree. Two
-    coherent choices remain for the fluctuations: the reservoir that the solver runs
-    (fluctuation pinned, noise flux free), and the sealed wall (no flux, noise flux
-    blocked).}
-  \item \upd{The sealed option of the solver anchors $\delta\Q$ at the wall. Only $\rho$
-    is conserved, so sealing constrains the density sector alone. A free $\delta\Q$
-    leaves three unstable modes, the two translations of the defect and the rotation of
-    the director, because a wall that exerts no torque cannot confine the defect.}
-  \item \upd{The first condition breaks the pairing in our run. Physically the steady
-    state should see the same wall as the fluctuations, and here it does not. The
-    fluctuations see the steady state only through $\rho_\ss$, $\Q_\ss$, $\u$ and
-    $\bs w_\ss=\u+(B/\xi_0)\nabla\rho_\ss$, and $\rho_\ss-1=O(\zeta/B)$, so the
-    steady-state wall reaches the variance only through $\Q_\ss$, $\u$ and $\bs w_\ss$.
-    Bound this effect near the core, for example by rerunning the fluctuations on a
-    steady state with $\rho_\ss=1$ and $\Q_\ss$ at the Pad\'e profile on the wall.}
-  \item Show why the isotropic pedestal of \cref{eq:total-gauss} is blind to the
-    choice\upd{ of a coherent wall, since drift and noise then share one Laplacian}, and
-    why the anisotropic wall residue is not: \upd{it sits in the first few cells and
-    scales as $Q^\ss_{nn}/\rho_\ss$, so it depends on the texture at the wall. Quote it for
-    the run of \cref{tab:lyapunov-run}. The comparison in earlier drafts, where the
-    residue reversed sign and grew about threefold from the reservoir to the sealed wall,
-    predates the current walls and parameters, and the current set has no sealed run.}
-  \end{itemize}
-  \item \textit{Results.}
-  \begin{itemize}
-  \item Comparison with \cref{eq:total-gauss}, \cref{fig:variance,fig:variance3d}.
-    Along the axis the solver peaks slightly lower, $\nu_0\simeq2.3\%$ against the
-    analytic $3.1\%$; this is the variance behind the curves of \cref{fig:main-1}(a).
-    Across the axis it gives a weak modulation that the analytic result lacks. Part of the gap along the axis is the grid (\cref{app:lyapunov-cutoff}).
-  \item Report the active-force fluctuations the solver returns,
-    \cref{fig:fxfx,fig:fyfy}, and what they check.
-  \end{itemize}
-\end{itemize}
+% Written 2026-10-02 from dean.tex 1521-2047 and lyapunov_solver/ (lyapunov_solver.m,
+% lyap_solve.py). Numbers: claude_experiments/appG_numbers.wls, appG_force.wls, and the
+% job log jobscripts/logs/1773058_2.out (N150, B = 9e4).
+The linearized equations \cref{eq:linearized} are a linear Ornstein--Uhlenbeck field
+theory for $\psi=(\delta\rho,\delta Q_1,\delta Q_2)$,
+\begin{equation}
+  \label{eq:ou-model}
+  \partial_t\psi=\A\psi+\bxi,
+  \qquad
+  \la\bxi(\r,t)\,\bxi(\r',t')^\T\ra=\mathbf N(\r,\r')\,\delta(t-t'),
+\end{equation}
+where $\A$ collects the drift of \cref{eq:linearized} and $\mathbf N$ the noise
+correlators of \cref{eq:eta-rho-ss,eq:Q-noise-correlators}, with the exact moments of
+\cref{app:realizability}. Because the noise is white in time, $\psi$ is a Markov process.
+It\^o's lemma applied to $\psi\psi^\T$ then turns stationarity into an algebraic
+condition on the equal-time covariance
+$\mathbf C(\r,\r')=\la\psi(\r,t)\,\psi(\r',t)^\T\ra$, the Lyapunov equation
+\begin{equation}
+  \label{eq:lyapunov}
+  \A\,\mathbf C+\mathbf C\,\A^\T+\mathbf N=0,
+\end{equation}
+with $\A$ acting on the first argument of $\mathbf C$ and $\A^\T$ on the second. Only the
+delta function in time is needed for this step. The spatial form of $\mathbf N$ is free,
+which is what lets \cref{app:lyapunov-cutoff} give the noise a finite correlation
+length. On a grid, \cref{eq:lyapunov} becomes a matrix equation. It has a unique positive
+semi-definite solution if every eigenvalue of the discretized $\A$ has a negative real
+part, so that the steady state is linearly stable, and if the discretized $\mathbf N$ is
+positive semi-definite, so that it is a covariance at all.
+
+We use a uniform grid of $N_\mathrm{int}=150$ interior nodes per direction on
+$[-20,20]^2~\micron^2$, with spacing $\Delta x=40/151~\micron=0.265~\micron$, so the state
+vector has $3N_\mathrm{int}^2=67\,500$ entries (\cref{tab:lyapunov-run}). The steady
+fields of \cref{app:comoving}, and the gradient of $\rho_\ss$ in $\bs w_\ss$, are sampled
+at the nodes and at the faces between them by cubic interpolation. Two-dimensional
+operators are Kronecker products of one-dimensional ones.
+
+Every difference operator on this grid is second-order accurate, but for the equal-point
+variance that is not enough. The variance of a conserved field is set by a cancellation,
+between the $k^2$ of the noise power and the $k^2$ of the relaxation rate
+(\cref{app:variance-iso}), and the cancellation survives discretization only if the
+noise and the drift are built from the same difference operator. The forward difference
+$G$ from the nodes to the faces between them satisfies $-G^\T G=L$ exactly, with $L$ the
+compact Laplacian of the drift, and the solver checks this identity at run time. The
+central difference $D$ does not. Its square is the Laplacian on a grid of spacing
+$2\Delta x$, which decouples the two sublattices and never drives the shortest modes that
+$L$ damps. A divergence-form noise built from $D$ therefore misses those modes, and the
+pedestal comes out smaller by the inverse zone average of
+$R(p,q)=(\sin^2p+\sin^2q)/[4(\sin^2\tfrac p2+\sin^2\tfrac q2)]$, a factor $2.75$ that
+does not shrink as $\Delta x\to0$. The solver therefore assembles the diagonal terms of
+the flux noise as $G^\T\mathrm{diag}(M_{ii})\,G$, with the local flux covariance $M$
+sampled on the faces. The mixed terms carry two different derivatives and form no
+square, so they keep central differences at the nodes. Drift terms of the form
+$\nabla\tcdot(c\nabla\,\cdot\,)$ become $-G^\T\mathrm{diag}(c)\,G$ with $c$ on the
+faces, which keeps them self-adjoint like the continuum operator, and the advection
+$\nabla\tcdot(\delta\Q\,\bs w_\ss)$ is written in the same conservative form.
+
+Assembled this way, the noise matrix is positive semi-definite whenever the local flux
+covariance is positive semi-definite at every node. With the exact moments of
+\cref{app:realizability} this holds by construction, and the solver checks it with a
+$6\times6$ eigensolve at every node. In the run of \cref{tab:lyapunov-run} the smallest
+eigenvalue lies between $-1\times10^{-15}$ and $3\times10^{-16}$, the two exact zeros of
+\cref{app:realizability} at round-off. The smoothing of \cref{app:lyapunov-cutoff} is a
+further congruence, $W\mathbf N W$, and preserves the property.
+
+With $67\,500$ unknowns the covariance is a dense matrix of $36$~GB, and we solve
+\cref{eq:lyapunov} directly. A real Schur decomposition of the discretized $\A$ is
+followed by a recursive Bartels--Stewart back-substitution \cite{bartels1972solution},
+which keeps most of the work in matrix products. After refinement the residual is
+$1.5\times10^{-12}$ of the largest entry, and the solve takes about six hours on one
+node. The Schur decomposition also yields the spectrum of $\A$, which checks the
+stability condition: every eigenvalue has a negative real part, and the slowest mode
+decays at $7.8\times10^{-3}~\minute^{-1}$.
+
+A bounded domain needs three conditions at its wall, not one: on the steady state, on the
+fluctuating field, and on the noise flux through the wall. The last two answer one
+question, whether a cell may cross the wall, once for the fluctuation and once for the
+noise, so they must agree. Two coherent choices remain for the fluctuations. A reservoir
+pins the fluctuation and lets the noise flux through, like a window cut from a larger
+colony, and a sealed wall blocks both, like a container. The solver offers both, and its
+sealed option also anchors $\delta\Q$ at the wall. Only $\rho$ is conserved, so sealing
+constrains the density sector alone, and a free $\delta\Q$ would leave three unstable
+modes, the two translations of the defect and the rotation of the director, because a
+wall that exerts no torque cannot confine the defect. The run of \cref{tab:lyapunov-run}
+uses the reservoir. Its wall nodes are removed, so $\delta\rho=\delta\Q=0$ there, the
+noise flux through the faces next to the wall is kept, and the smoothing $W$ is built on
+the Dirichlet Laplacian, so it vanishes at the wall too.
+
+For a coherent wall the isotropic pedestal does not depend on the choice. If the drift
+and the noise share one positive mobility $\mathcal M$, with $\A=-\mathcal M\mathbf K$ and
+$\mathbf N=2T\mathcal M$ for a positive stiffness $\mathbf K$ and a constant $T$, the solution
+of \cref{eq:lyapunov} is $\mathbf C=T\mathbf K^{-1}$. It does not contain $\mathcal M$, and
+$\mathcal M$ is where the wall enters. The density sector has this form, because its drift and its noise are
+built from the same Laplacian. Near the wall the variance can still depart from the pedestal,
+through the anisotropic part of the noise, which leaves a residue
+proportional to $Q^\ss_{nn}/\rho_\ss$, and through the smoothing, which vanishes at the
+wall. In the run these effects stay within a few cells of the wall. At the middle of each
+wall the variance departs from the pedestal by $37$ to $73\%$ in the first cell, and by
+less than $2\%$ ten cells, or $2.6~\micron$, in, far from the core.
+
+The steady state breaks the pairing. It comes from its own wall,
+$\nh\tcdot\nabla\rho_\ss=0$ and $\nh\tcdot\nabla\Q_\ss=0$ (\cref{app:comoving}), whereas
+physically it should see the same wall as the fluctuations. The fluctuations see the
+steady state only through $\rho_\ss$, $\Q_\ss$, $\u$ and
+$\bs w_\ss=\u+(B/\xi_0)\nabla\rho_\ss$, and $\rho_\ss-1=O(\zeta/B)$, so the steady-state
+wall reaches the variance only through $\Q_\ss$, $\u$ and $\bs w_\ss$. We have not
+bounded this effect with a run on matched walls, and we assume, as in
+\cref{app:comoving}, that it does not reach the core.
 
 \subsection{The cutoff on the grid}
 \label{app:lyapunov-cutoff}
@@ -2348,7 +2809,34 @@ grows with $s$ as $\nu_0\simeq\nu_0^\infty-c/s^2$. The three runs above, at
 $s=1.76$, $1.89$ and $2.26$, give $\nu_0=2.30$, $2.33$ and $2.39\%$. The fit gives
 $\nu_0^\infty=2.52\%$, with $c\simeq0.68$ percentage points. The run of
 \cref{tab:lyapunov-run} is $8\%$ below $\nu_0^\infty$. The grid therefore accounts for
-about $0.2$ of the $0.7$ percentage points between the solver and the analytic $3.1\%$.
+about $0.2$ of the $0.6$ percentage points between the solver and the analytic $2.9\%$.
+
+\subsection{Results}
+\label{app:lyapunov-results}
+\Cref{fig:variance,fig:variance3d} compare the solver with \cref{eq:total-gauss}.
+Away from the core the pedestal agrees with \cref{eq:pedestal} to within $0.1\%$
+(\cref{app:lyapunov-cutoff}). Along the axis the modulation is again of opposite sign on
+the two sides of the core, $+2.3\%$ at about $1.2~\micron$ on the $-x$ side and $-3.2\%$
+at $1.7~\micron$ on the $+x$ side, against $\pm2.9\%$ at $1.5~\micron$ in the analytic
+result. Part of the difference on the $-x$ side is the grid
+(\cref{app:lyapunov-cutoff}). The rest comes from $\delta\Q$, which the analytic result
+drops, and from the drift, which makes the steady state unequal on the two sides
+(\cref{app:comoving}). Across the axis, where \cref{eq:total-gauss} gives no modulation,
+the solver gives at most about $0.6\%$.
+
+The solver also returns the active force carried by $\delta\Q$,
+$-\zeta\,\partial_\beta\delta Q_{\alpha\beta}$ (\cref{fig:fxfx,fig:fyfy}), which tests
+the approximation $\delta\Q=0$ of \cref{sec:defect-fluct}. This force is not small. At the
+core its standard deviation is three times the mean active force there,
+$\zeta|\nabla\tcdot\Q_\ss|$, and the variance of its $x$ component peaks on a ring about
+$1$ to $1.5~\micron$ from the core. Far from the core, where the mean force decays as
+$S_0/r$, it stays at about $1.3$ times the mean force at the core. The density variance
+nevertheless changes little, because $\delta\Q$ evolves on times of $0.05~\minute$ and
+longer, nearly four orders of magnitude slower than $\tau_c$. Over a correlation time of
+the density the $\delta\Q$ force therefore acts like a static active force, and the
+density responds to a static force only at order $\zeta/B$, as \cref{eq:rho-analytic}
+shows for the mean, while $\sigma_\rho\propto B^{-1/2}$. Like the density variance, the
+force variance depends on the cutoff, so these numbers hold at $\elln=0.5~\micron$.
 
 \begin{table}[h!]
 \centering
@@ -2362,7 +2850,7 @@ Grid & $150\times150$ interior nodes, $\Delta x=0.265~\micron$ \\
 Unknowns & $\delta\rho$, $\delta Q_1$, $\delta Q_2$: $67\,500$ \\
 Cutoff & $\elln=0.5~\micron$, $s=1.89$ \\
 Smoothing length & $\ell_\mathrm{eff}=0.520~\micron$, \cref{eq:ell-eff} \\
-Steady-state wall & \upd{$\nh\tcdot\nabla\rho_\ss=0$, $\nh\tcdot\nabla\Q_\ss=0$} \\
+Steady-state wall & $\nh\tcdot\nabla\rho_\ss=0$, $\nh\tcdot\nabla\Q_\ss=0$ \\
 Fluctuation wall & $\delta\rho=\delta\Q=0$, free noise flux \\
 Closure & noise: exact moments; drift: lowest order \\
 Steady state & \cref{app:comoving}, same box, fourth order \\
@@ -2393,8 +2881,12 @@ Model parameters & \cref{tab:field-params} \\
   \centering
   \includegraphics[width=0.85\linewidth]{fxfx.png}
   \caption{%
-\capitem Active-force fluctuation, $x$-component variance, from the Lyapunov solver:
-      supporting evidence for the validation claim of \cref{sec:defect-fluct}.
+Variance of the $x$ component of the divergence of the fluctuation,
+    $\la(\partial_\beta\delta Q_{x\beta})^2\ra$ in $\micron^{-2}$, from the Lyapunov
+    solution of \cref{tab:lyapunov-run}; the active force it carries is $-\zeta$ times the
+    divergence. It is reduced at the core and peaks on a ring about $1$ to $1.5~\micron$
+    from it, at $10~\micron^{-2}$, where its square root is three times the mean
+    $|\nabla\tcdot\Q_\ss|$ at the core (\cref{app:lyapunov-results}).
 }
   \label{fig:fxfx}
 \end{figure}
@@ -2403,7 +2895,8 @@ Model parameters & \cref{tab:field-params} \\
   \centering
   \includegraphics[width=0.85\linewidth]{fyfy.png}
   \caption{%
-\capitem Companion $y$-component, same purpose as \cref{fig:fxfx}.
+The same for the $y$ component, $\la(\partial_\beta\delta Q_{y\beta})^2\ra$. It
+    is largest at the core, at $4.8~\micron^{-2}$, and has no ring.
 }
   \label{fig:fyfy}
 \end{figure}
