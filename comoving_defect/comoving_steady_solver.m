@@ -24,7 +24,11 @@ SolveActiveNematicComovingSteady::usage =
   "maxSteps->..., relativeDiff->...}\n" <>
   "                 optional: refine->1 (scales every cell together), " <>
   "rhoGauge->\"Point\", zetaSteps->5, order->4, stepTolerance->1.*^-10, " <>
-  "verbose->True\n" <>
+  "verbose->True,\n" <>
+  "                 \"ReuseFactorization\"->Automatic (True: reuse the Newton " <>
+  "Jacobian factorisation across iterations; False: refactor every " <>
+  "iteration, slower per step but robust when the \[Zeta] steps are large; " <>
+  "Automatic: whatever Options[cdNewton] says, True by default)\n" <>
   "  bcType       : \"Neumann\"   \[Rule] sealed wall, " <>
   "n.(B \[Del]\[Rho] + \[Zeta] \[Del].Q) = 0, plus a single-node density gauge;\n" <>
   "                 \"Dirichlet\" \[Rule] \[Rho] = 1 on the entire outer boundary;\n" <>
@@ -70,6 +74,9 @@ SolveActiveNematicComovingSteady::gaugeignored =
   "rhoGauge -> `1` is ignored for \"RhoNeumann\", which always pins " <>
   "\[Rho](0,0) = 1.";
 
+SolveActiveNematicComovingSteady::badreuse =
+  "\"ReuseFactorization\" -> `1`; expected True, False or Automatic.";
+
 SolveActiveNematicComovingSteady::badgauge =
   "Unknown rhoGauge `1`; expected \"Point\", \"Mean\" or \"Replace\".";
 
@@ -98,7 +105,7 @@ Block[
   {
     (* solver knobs (unpacked from solverParams) *)
     \[Delta]mesh, hMax, box, maxSteps, relativeDiff,
-    refine, rhoGauge, zetaSteps, order, stepTolerance, verbose,
+    refine, rhoGauge, zetaSteps, order, stepTolerance, verbose, reuseFac,
     (* model parameters (unpacked from modelParams) *)
     B, a, b, L, \[Zeta], \[Xi]0, \[Xi]r, \[Rho]0, \[CapitalLambda],
     (* derived / working *)
@@ -134,6 +141,8 @@ Block[
     order         = Lookup[sp, order,         4];
     stepTolerance = Lookup[sp, stepTolerance, 1.*^-10];
     verbose       = TrueQ @ Lookup[sp, verbose, True];
+    (* a STRING key, as the cdNewton option it forwards to is named *)
+    reuseFac      = Lookup[sp, "ReuseFactorization", Automatic];
   ];
 
   missing = Pick[{"\[Delta]mesh", "hMax", "box", "maxSteps", "relativeDiff"},
@@ -141,6 +150,10 @@ Block[
                                      relativeDiff}];
   If[missing =!= {},
     Message[SolveActiveNematicComovingSteady::badsolver, missing];
+    Return[$Failed]];
+
+  If[!MemberQ[{True, False, Automatic}, reuseFac],
+    Message[SolveActiveNematicComovingSteady::badreuse, reuseFac];
     Return[$Failed]];
 
   If[!MemberQ[{"Point", "Mean", "Replace"}, rhoGauge],
@@ -229,7 +242,8 @@ Block[
             "MaxIterations" -> maxSteps,
             "StepTolerance" -> If[kk == Length[zs],
                                   N[stepTolerance], N[relativeDiff]],
-            "Verbose" -> False];
+            "Verbose" -> False,
+            "ReuseFactorization" -> reuseFac];
     X = st["X"]; ex = st["ex"];
     If[verbose,
       Print["    zeta = ", StringPadRight[cdFmt[zs[[kk]]], 12],
@@ -287,6 +301,7 @@ Block[
                    "core"       -> {X[[n + k0]], X[[2 n + k0]]},
                    "zetaPath"   -> zs,
                    "gauge"      -> cdGauge[dpTarget, bcType],
+                   "reuseFactorization" -> reuseFac,
                    "mu"         -> If[Length[ex] >= 3, ex[[3]], 0.],
                    "state"      -> X,
                    "wall"       -> N[AbsoluteTime[] - wall0]|> |>

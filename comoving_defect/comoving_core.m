@@ -769,17 +769,25 @@ Module[{X = X0, ex = ex0, n = op["n"], t = 0., dt, dtNat, dtMax, grow, maxSteps,
 (* 1e-10, not 1e-12: see the note on cdNewton's StepTolerance -- with
    B/xi0 = 2000 the residual round-off floor is ~1e-10, so a tighter
    tolerance can never be met and every iteration past it is wasted. *)
+(* "ReuseFactorization" -> Automatic defers to Options[cdNewton].  False
+   refactors the Jacobian at every Newton iteration: needed when the
+   continuation steps are large enough that a stale Jacobian diverges
+   (measured: B = 2e5, zeta = 2.5 xi0, xir = 3 xi0, where the active part
+   of K' dominates and ld doubles along the zeta ramp). *)
 Options[cdSteady] = {"MaxIterations" -> 25, "StepTolerance" -> 1.*^-10,
-                     "Verbose" -> True};
+                     "Verbose" -> True, "ReuseFactorization" -> Automatic};
 
 cdSteady[X0_, ex0_, op_Association, dp_Association, bc_Association,
          bcType_String, opts : OptionsPattern[]] :=
-Module[{X, ex, ok, it, nrm, step, nFac, tm, rates},
+Module[{X, ex, ok, it, nrm, step, nFac, tm, rates, reuse},
+  reuse = OptionValue["ReuseFactorization"];
   {tm, {X, ex, ok, it, nrm, step, nFac}} = AbsoluteTiming@
     cdNewton[X0, ex0, X0, 1., 0, op, dp, bc, bcType,
              "MaxIterations" -> OptionValue["MaxIterations"],
              "StepTolerance" -> OptionValue["StepTolerance"],
-             "Verbose" -> OptionValue["Verbose"]];
+             "Verbose" -> OptionValue["Verbose"],
+             Sequence @@ If[reuse === Automatic, {},
+                            {"ReuseFactorization" -> reuse}]];
   rates = cdRates[X, ex, op, dp, bc, bcType];
   If[OptionValue["Verbose"],
     Print["[steady] ", If[ok, "converged", "FAILED"], " in ", it,
