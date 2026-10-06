@@ -172,12 +172,11 @@ instead lift off near $-1/2$ defects, where simulations show stress accumulating
   (red); blue marks a $-1/2$ defect. The layer starts off the core, at the head of
   the defect, where the model places the maximum layering
   probability (\cref{sec:nucleation-2}). Images from Ref.~\cite{copenhagen2021}.
-    \textbf{(c)} Layering probability averaged over a circle of radius $r$,
+    \textbf{(c)} Layering probability averaged over a circle of radius $r$ around the defect,
     \cref{eq:p-layer-radial}, relative to the far field, compared with Fig.~3f of Ref.~\cite{copenhagen2021}
     (red). The circle is centred on the point of maximum probability (blue) or on
-    the defect core (orange). Only the first gives a monotonically decreasing profile,
-    as in the experiment. $B=9\times10^4~\Pa\tcdot\micron$, $\elln=0.5~\micron$, other
-    parameters as in \cref{app:parameters}.
+    the origin (orange). Only the first gives a monotonically decreasing profile,
+    as in the experiment. Model parameters are as in \cref{app:parameters}. \todo{change legend of the figure (c)}
   }
   \label{fig:defects-layering}
 \end{figure*}
@@ -249,10 +248,10 @@ their orientation.
   \includegraphics[width=0.65\linewidth,page=1]{figures/handmade/main_v2.pdf}
   \caption{The microscopic model of \cref{sec:model-micro}: a self-propelled
   rod (blue) in the nematic field around a $+1/2$ defect, whose core is the red dot;
-  red lines follow the director. The rod glides along its axis with velocity
+  red lines denote the nematic axis. The rod glides along its axis with velocity
   $\bs v_i=v_0\p(\theta_i)k_i$, reversing at rate $\frev$, and feels the force
   $\F_i$ and the torque $\Gamma_i$ of its neighbors; $\xi_0\dot\r_i$ is the
-  friction.}
+  friction from the substrate.}
   \label{fig:model-micro}
 \end{figure}
 
@@ -321,9 +320,8 @@ elastic energy the bottom layer releases.
   \caption{\textbf{(a)} Formation of a new layer. Top: the monolayer of cells (yellow) on
   the substrate (gray), wetted by water (blue). Middle: a patch of area $A$ and
   perimeter $\ell$ detaches and forms a second layer, which costs
-  $\Ws A+\Wc\ell h+\gammaw\ell h$ (green); $h$ is the height of the
-  monolayer. Bottom: the bottom layer relaxes into the space the patch left, and
-  adhesion and pressure return $\Wc A+pA$ (red), \cref{eq:dE-of-A}.
+  $\Ws A+\Wc\ell h+\gammaw\ell h$; $h$ is the height of the
+  monolayer. Bottom: the bottom layer relaxes into the space the patch left. The energy gain  $\Wc A+pA$ is from adhesion and the work done by pressure, \cref{eq:dE-of-A}.
     \textbf{(b)} \todo{change usints to $\kPa\tcdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
     $10^5~\Pa\tcdot\micron^3$, against the patch area $A$ in $\micron^2$.
     The beam of curves is for different pressures $p$: the black curve is at the
@@ -831,43 +829,22 @@ The closed form \cref{eq:rho-analytic} fixes $\Q$ to the Pad\'e profile
 \cref{eq:pade-approximation} and solves only the density equation, whereas the numerics
 solve both fields together and let $\Q$ depart from that profile.
 \Cref{fig:rho1d-dirichlet} shows the resulting density along the
-defect axis against \cref{eq:rho-analytic}, and \cref{fig:rho2d} the
-two-dimensional field.
+defect axis against \cref{eq:rho-analytic}.
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet.pdf}
   \caption{Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$,
-    across the whole box. Solid: the comoving-frame numerical solution of
+    across the whole domain. Solid: the comoving-frame numerical solution of
     \cref{eq:model-rho,eq:model-Q} (\cref{app:comoving}), with $\rho=1$ at the walls
     $x=\pm20~\micron$. Dashed: \cref{eq:rho-analytic}, the closed-form solution of the
     simplified system, which is antisymmetric under $x\to-x$, for $R=20~\micron$. The
     density is enhanced behind the defect and depleted ahead of it, and both curves
     return to one at the walls. The numerical density lies below the closed form on both
     sides of the core, by about $\zeta/2B$ near it. This symmetric shift comes from the
-    cross-coupling, which the closed form drops, and it is two orders of magnitude smaller
-    than the standard deviation of the density fluctuations.}
+    cross-coupling, which the closed form drops.}
   \label{fig:rho1d-dirichlet}
 \end{figure}
-
-
-\begin{figure*}[tbp]
-  \centering
-  \begin{tabular}{@{}l@{\hspace{2em}}l@{}}
-    (a) & (b) \\
-    \includegraphics[height=0.3\textwidth]{rhodensity.png} 
-    \includegraphics[height=0.3\textwidth]{rho3d.png}
-  \end{tabular}
-  \caption{Steady-state density $(\rho-1)/(\zeta/B)$ around the $+1/2$ defect, from
-    the comoving-frame numerical solution of \cref{eq:model-rho,eq:model-Q}
-    (\cref{app:comoving}), with the reservoir wall $\rho=1$. The core is at
-    the origin. \textbf{(a)}~Plan view; dark curves are the nematic director. \textbf{(b)}~The same field as
-    a surface. The director bends around the core on the $-x$ side and splays along the
-    axis on the $+x$ side. The density is enhanced on the former and depleted on the
-    latter.}
-  \label{fig:rho2d}
-\end{figure*}
-
 
 Both calculations give a density of
 order $\zeta/B$, enhanced behind the defect and depleted ahead of it. The closed form,
@@ -886,14 +863,11 @@ small, so the analytic calculation there keeps the static profile of the defect.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{nematicaxis.pdf}
+  \includegraphics[width=0.7\linewidth]{nematicaxis.pdf}
   \caption{Director lines of the converged comoving solution (red, solid) and of
     the Pad\'e profile \cref{eq:pade-approximation} (black, dashed). The two coincide
-    near the core, where the variance modulation of \cref{sec:defect-fluct} lives: within
-    $2~\micron$ the director rotates by less than $1^\circ$ (\cref{fig:defectangle}), and
-    the nematic order and the active force depart from the Pad\'e profile by at most $5\%$
-    and $8\%$ (\cref{fig:strength,fig:activeforce}). Farther out the lines separate, and
-    the director departs by $3.4^\circ$ at $r=5~\micron$ and $7^\circ$ at $10~\micron$.}
+    near the core, where the variance modulation of \cref{sec:defect-fluct} lives (see \cref{fig:defectangle}).
+     Farther out the lines separate and Pad\'e approximation is not correct due to cross-coupling of density and nematic fields.}
   \label{fig:nematicaxis}
 \end{figure}
 
@@ -1046,7 +1020,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
     \cref{eq:total-gauss}. Solid: the numerical Lyapunov solution retaining
     $\delta\Q\ne0$ (\cref{app:lyapunov}). Along the axis the modulation is odd and
     vanishes at the core, reaching $+\nu_0=2.9\%$ on the $-x$ side and $-2.9\%$ on
-    the $+x$ side, both roughly $1.5~\micron$ out, for $\elln=0.5~\micron$. Across
+    the $+x$ side, both roughly $1.5~\micron$ out. Across
     the axis the analytic modulation vanishes identically and the numerical one is an
     order of magnitude weaker than along the axis.}
   \label{fig:variance}
@@ -1054,13 +1028,12 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\linewidth]{varrho3D.png}
+  \includegraphics[width=\linewidth]{varrho3D_high.png}
   \caption{The same quantity as \cref{fig:variance} over the plane: equal-point density
     variance normalized by the pedestal of \cref{eq:pedestal}, on a disc of radius
     $5~\micron$ about the core, at the parameters of \cref{fig:variance}. This is the
     numerical Lyapunov solution retaining $\delta\Q\ne0$ (\cref{app:lyapunov}), reservoir
-    boundary condition. The dark curves are streamlines of the ideal $+1/2$ director,
-    registered to the surface; the faint dashes are the plot mesh. The variance
+    boundary condition. The dark curves are streamlines of the $+1/2$ director. The variance
     rises into a ridge on the $-x$ side and falls into a trough on the $+x$ side, and
     both sit within a couple of micrometers of the core.}
   \label{fig:variance3d}
@@ -2154,10 +2127,11 @@ stays of order $\zeta/B$, far below the scale of its fluctuations.
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.pdf}
-  \caption{Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$,
-    for the reservoir wall $\rho=1$ (blue) and the no-flux wall
-    $\nh\tcdot(B\nabla\rho-\fa)=0$ (orange) at $x=\pm20~\micron$. Solid: the numerical
-    solution of \cref{app:comoving}; dashed: the closed forms \cref{eq:rho-analytic} and
+  \caption{
+  Same as , but for two types of boundary conditions.  
+  Steady-state density along the defect axis, at $y=0$. The blue curves are the same as in \cref{fig:rho1d-dirichlet} corresponding to the reservoir wall $\rho=1$. The orange curve corresponds to no-flux boundary condition
+    $\nh\tcdot(B\nabla\rho-\fa)=0$ at $x=\pm20~\micron$. 
+    Solid lines are the full numerical solution of \cref{app:comoving}; dashed lines are the closed forms \cref{eq:rho-analytic} and
     \cref{eq:rho-noflux}. The reservoir pulls the density back to one at the walls, while
     the no-flux wall lets the modulation grow towards them.}
   \label{fig:rho1d-dirichlet-neumann}
@@ -2173,6 +2147,12 @@ defect has no steady state in the laboratory frame, because it moves
 the steady fields, and linearize the equations in the frame that moves with the core,
 where the defect is at rest. Here we obtain $\rho_\ss$, $\Q_\ss$ and $\u$ in that
 comoving frame.
+
+\begin{figure*}
+  \includegraphics[width=0.3\linewidth]{strength.pdf}
+  \includegraphics[width=0.3\linewidth]{defectangle.pdf}
+  \includegraphics[width=0.3\linewidth]{activeforce.pdf}
+\end{figure*}
 
 \begin{figure}[tbp]
   \centering
@@ -2229,7 +2209,7 @@ We drop the advection term $\u\tcdot\nabla\rho$ from the density equation. At la
 the pressure gradient $B\nabla\rho$ balances $\fa$, so $\nabla\rho\propto1/B$. At distance
 $r$ from the core, the dropped term is smaller than the flux divergence by
 $\xi_0ur/B$, which is at most $3\times10^{-4}$ at the wall. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not depend on
-$B$, and $\rho_\ss-1\propto1/B$ (see \cref{fig:rho1d-dirichlet,fig:rho2d}).
+$B$, and $\rho_\ss-1\propto1/B$ (see \cref{fig:rho1d-dirichlet}).
 
 
 The frame velocity $\u$ is not available in closed form. It is fixed implicitly, by
