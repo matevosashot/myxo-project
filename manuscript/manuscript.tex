@@ -9,7 +9,6 @@
 \usepackage{hyperref}
 \usepackage{upgreek}
 \usepackage{soul}
-\usepackage{tikz} % fig:staggered-grid
 \usepackage[capitalise]{cleveref}
 
 
@@ -127,8 +126,8 @@ monolayer (red arrow in \cref{fig:myxo_life}). We ask how this first new layer f
 \begin{figure}[tbp]
 \includegraphics[width=0.8\linewidth]{figures/handmade/myxo_life_2.png}
 \caption{Life cycle of \textit{M.\ xanthus}, adapted from Ref.~\cite{munoz2016}.
-(A) Vegetative cycle. With nutrients, the cells glide together as a swarm, a thin film
-on the substrate, and kill and lyse prey bacteria (gray). (B) Developmental cycle. Upon
+\textbf{(A)} Vegetative cycle. With nutrients, the cells glide together as a swarm, a thin film
+on the substrate, and kill and lyse prey bacteria (gray). \textbf{(B)} Developmental cycle. Upon
 starvation, the swarm aggregates into mounds, which grow into upright fruiting bodies
 filled with spores (brown). The spores germinate when nutrients return. The red arrow
 marks the transition this paper addresses: the flat swarm forms its first multilayered
@@ -155,7 +154,7 @@ dominate in two-dimensional nematics
 in living systems, for example in myoblasts confined to discs \cite{guillamat2022integer}
 and in the actin fibres of regenerating \textit{Hydra} \cite{maroudassacks2021topological},
 but \textit{M.\ xanthus} monolayers show half-integer defects \cite{copenhagen2021}: the
-comet-shaped $+1/2$ defect and the three-armed $-1/2$ defect (\cref{fig:defect-illustration}, \cref{fig:main-2}(b)).
+comet-shaped $+1/2$ defect and the three-armed $-1/2$ defect (\cref{fig:defects-layering}(a,b)).
 In other living active nematics, too, defects are where cells leave the plane:
 epithelial cells are extruded at $+1/2$ defects \cite{saw2017topological}, neural
 progenitor cells accumulate there into three-dimensional mounds
@@ -164,41 +163,30 @@ cells rotate upright and become trapped where two $+1/2$ defects collide
 \cite{meacock2021bacteria}. In chaining \textit{Bacillus subtilis} biofilms, cells
 instead lift off near $-1/2$ defects, where simulations show stress accumulating
 \cite{yaman2019emergence}.
-\begin{figure}[th]
-  \centering
-  \includegraphics[width=0.3\linewidth]{figures/defect_plus.png}%
-  \includegraphics[width=0.3\linewidth]{figures/defect_minus.png}
-  \caption{Illustration of the $+1/2$ and $-1/2$ defects. Streamlines denote the director field}
-  \label{fig:defect-illustration}
-\end{figure}
-
-
 \begin{figure*}[t]
-  % \includegraphics[width=\textwidth,page=2]{figures/handmade/main.pdf}
-  \includegraphics[width=\textwidth]{figures/handmade/main-2.png}
-  \caption{(a) The microscopic model of \cref{sec:model-micro}: a self-propelled
-  rod (blue) in the nematic field around a $+1/2$ defect, whose core is the red dot;
-  red lines follow the director. The rod glides along its axis with velocity
-  $\bs v_i=v_0\p(\theta_i)k_i$, reversing at rate $\frev$, and feels the force
-  $\F_i$ and the torque $\Gamma_i$ of its neighbors; $\xi_0\dot\r_i$ is the
-  friction.
-  (b) Snapshots of a new layer (dark patch) forming next to a $+1/2$ defect
-  (red); blue marks a $-1/2$ defect. The layer starts off the core, on the side
-  where the director bends around it, where the model places the maximum layering
+  \includegraphics[width=\textwidth,page=2]{figures/handmade/main_v2.pdf}
+  \caption{\textbf{(a)} The $+1/2$ (top) and $-1/2$ (bottom) defects; black lines follow the
+  director. The head of the $+1/2$ defect is the
+  side on which the director bends around the core, and the tail is the opposite side.
+  \textbf{(b)} Snapshots of a new layer (dark patch) forming next to a $+1/2$ defect
+  (red); blue marks a $-1/2$ defect. The layer starts off the core, at the head of
+  the defect, where the model places the maximum layering
   probability (\cref{sec:nucleation-2}). Images from Ref.~\cite{copenhagen2021}.
-    (c) \todo{change usints to $\kPa\tcdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
-    $10^5~\Pa\tcdot\micron^3$, against the patch area $A$ in $\micron^2$.
-    The beam of curves is for different pressures $p$.
-    Black line corresponds to the critical pressure $p=\pcrit$, orange and blue correspond to pressures above and below the critical pressure, respectively. So the layering happens only at orange curves of the barrier.
+    \textbf{(c)} Layering probability averaged over a circle of radius $r$,
+    \cref{eq:p-layer-radial}, relative to the far field, compared with Fig.~3f of Ref.~\cite{copenhagen2021}
+    (red). The circle is centred on the point of maximum probability (blue) or on
+    the defect core (orange). Only the first gives a monotonically decreasing profile,
+    as in the experiment. $B=9\times10^4~\Pa\tcdot\micron$, $\elln=0.5~\micron$, other
+    parameters as in \cref{app:parameters}.
   }
-  \label{fig:main-2}
+  \label{fig:defects-layering}
 \end{figure*}
 
 Copenhagen \textit{et al.} imaged \textit{M.\ xanthus} monolayers on a nutrient-rich
 substrate, where no fruiting bodies form, and still saw new layers and holes appear
 throughout the colony \cite{copenhagen2021}. Unlike in growing colonies
 \cite{grant2014}, these layers need no critical colony size. They form, however, about
-$200$ times more often near $+1/2$ defects than far from them (\cref{fig:main-1}(a),
+$200$ times more often near $+1/2$ defects than far from them (\cref{fig:defects-layering}(c),
 red), while holes open about $80$ times more often near $-1/2$ defects. Here we address
 the layers at $+1/2$ defects.
 Copenhagen \textit{et al.} explained this preference with an active nematic model in
@@ -213,24 +201,6 @@ causes the layers or follows from them. Moreover, extrusion has an energy cost, 
 pressure at a defect is of the order of
 the active stress, three to four orders of magnitude below the pressure needed to
 extrude a cell.
-
-\begin{figure*}[t]
-  % \includegraphics[width=\textwidth,page=1]{figures/handmade/main.pdf}
-  \includegraphics[width=\textwidth]{figures/handmade/main-1.png}
-  \caption{ 
-    (a) Layering probability averaged over a circle of radius $r$,
-    \cref{eq:p-layer-radial}, relative to the far field, compared with Fig.~3f of Ref.~\cite{copenhagen2021}
-    (red). The circle is centred on the point of maximum probability (blue) or on
-    the defect core (orange). Only the first gives a monotonically decreasing profile,
-    as in the experiment. $B=9\times10^4~\Pa\tcdot\micron$, $\elln=0.5~\micron$, other
-    parameters as in \cref{app:parameters}.
-  (b) Formation of a new layer. Top: the monolayer of cells (yellow) on
-  the substrate (gray), wetted by water (blue). Middle: a patch of area $A$ and
-  perimeter $\ell$ detaches and forms a second layer; $h$ is the height of the
-  monolayer. Bottom: the bottom layer relaxes into the space the patch left. 
-    }
-  \label{fig:main-1}
-\end{figure*}
 
 The stress in these monolayers, however, fluctuates strongly. Han \textit{et al.} measured
 the traction that the cells exert on the substrate around $\pm1/2$ defects and found that its standard
@@ -271,8 +241,20 @@ equation keeps it instead \cite{dean1996,kawasaki1994stochastic,illien2025dean}.
 active Brownian particles \cite{tailleur2008statistical,solon2015active} and, for the
 noise of the free motion, to apolar active nematics whose particles step back and forth
 at random \cite{bertin2013}. We extend it to interacting rods that reverse at a finite
-rate $\frev$, as \textit{M.\ xanthus} does (\cref{fig:main-2}(a)), and then integrate out
-their orientation. 
+rate $\frev$, as \textit{M.\ xanthus} does (\cref{fig:model-micro}), and then integrate out
+their orientation.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.65\linewidth,page=1]{figures/handmade/main_v2.pdf}
+  \caption{The microscopic model of \cref{sec:model-micro}: a self-propelled
+  rod (blue) in the nematic field around a $+1/2$ defect, whose core is the red dot;
+  red lines follow the director. The rod glides along its axis with velocity
+  $\bs v_i=v_0\p(\theta_i)k_i$, reversing at rate $\frev$, and feels the force
+  $\F_i$ and the torque $\Gamma_i$ of its neighbors; $\xi_0\dot\r_i$ is the
+  friction.}
+  \label{fig:model-micro}
+\end{figure}
 
 The result is a pair of stochastic equations for the density and the nematic order
 parameter. The reversals drive an active stress, which grows with the distance a cell
@@ -284,9 +266,9 @@ Solved around a $+1/2$ defect, these equations give a density variance, and henc
 pressure variance. The defect changes this variance only slightly, but since layers form
 in the far tail of the pressure distribution, this small change is enough to make layers
 form much more often near the defect. The variance is largest just
-off the core, at the head of the defect, on the side where the director bends around it (see \cref{fig:defect-illustration}). 
-In experiments, it is also observed that more often layering starts at the head of the defect, \cref{fig:main-2}(b) as an example. Besides the radial profile of
-\cref{fig:main-1}(a), the layering probability therefore has an angular profile around the
+off the core, at the head of the defect, on the side where the director bends around it (\cref{fig:defects-layering}(a)). 
+In experiments, it is also observed that more often layering starts at the head of the defect, \cref{fig:defects-layering}(b) as an example. Besides the radial profile of
+\cref{fig:defects-layering}(c), the layering probability therefore has an angular profile around the
 defect, but there is no quantitative measurement.
 Fluctuations of
 microscopic origin thus suffice to explain where layers form, although the calculation
@@ -325,7 +307,7 @@ We assume that cells adhere both to the substrate and
 to other cells, and that water completely wets the colony. Let $\Wc$ and $\Ws$ be the
 cell-cell and cell-substrate adhesion energies per unit area, and $\gammaw$ the surface
 tension of water. Suppose a patch of cells of area $A$ and perimeter $\ell$ forms a new
-layer (\cref{fig:main-1}(b)). The cells of the patch need to (\textit{i}) detach from the
+layer (\cref{fig:nucleation}(a)). The cells of the patch need to (\textit{i}) detach from the
 substrate, (\textit{ii}) detach from their neighbors, and (\textit{iii}) work against the surface tension of
 water. This costs $\Ws A + \Wc\ell h + \gammaw\ell h$, where $h$ is the height of the
 monolayer. At the same time, the bottom layer relaxes to fill the space the patch left.
@@ -333,6 +315,24 @@ The energy gain comes from (\textit{iv}) the adhesion of the patch to the cells 
 the work done by the pressure, $\Wc A + pA$. Here $p$ is the two-dimensional pressure of
 the monolayer, a force per unit length. \Cref{app:extrusion} derives $pA$ from the
 elastic energy the bottom layer releases.
+
+\begin{figure*}[t]
+  \includegraphics[width=\textwidth,page=3]{figures/handmade/main_v2.pdf}
+  \caption{\textbf{(a)} Formation of a new layer. Top: the monolayer of cells (yellow) on
+  the substrate (gray), wetted by water (blue). Middle: a patch of area $A$ and
+  perimeter $\ell$ detaches and forms a second layer, which costs
+  $\Ws A+\Wc\ell h+\gammaw\ell h$ (green); $h$ is the height of the
+  monolayer. Bottom: the bottom layer relaxes into the space the patch left, and
+  adhesion and pressure return $\Wc A+pA$ (red), \cref{eq:dE-of-A}.
+    \textbf{(b)} \todo{change usints to $\kPa\tcdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
+    $10^5~\Pa\tcdot\micron^3$, against the patch area $A$ in $\micron^2$.
+    The beam of curves is for different pressures $p$: the black curve is at the
+    critical pressure $p=\pcrit$, and the orange and blue curves lie above and below it,
+    so layers form only on the orange curves.
+  }
+  \label{fig:nucleation}
+\end{figure*}
+
 The cell-cell adhesion $\Wc$ enters twice with opposite signs: as a cost on
 the side faces and as a gain on the bottom face. For a circular patch, $\ell=\sqrt{4\pi A}$, and the energy cost of the new layer is therefore
 \begin{equation}
@@ -343,7 +343,7 @@ which is a function of the patch area $A$ and monolayer pressure $p$.
 
 The perimeter term is a cost and grows as $\sqrt A$. The area term grows as $A$ and is a
 gain once $p>\Ws-\Wc$. At such pressures $\Delta E(A)$ rises at small $A$, reaches a
-maximum and then falls. This is the barrier of classical nucleation theory (\cref{fig:main-2}(c)). Its maximum
+maximum and then falls. This is the barrier of classical nucleation theory (\cref{fig:nucleation}(b)). Its maximum
 is the critical nucleus, of area $A^*=\pi h^2(\Wc+\gammaw)^2/(p+\Wc-\Ws)^2$. A larger patch
 lowers its energy by growing, a smaller one by shrinking.
 
@@ -365,7 +365,7 @@ or $A^*=\Acell$. Solved for the pressure, it gives the critical pressure
     \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
 \end{equation}
 So layers are formed only if the pressure in the monolayer exceeds $\pcrit$. Alternaticvely, the probability of layer formation at a point $\r$ is 
-(\cref{fig:main-2}(c))
+(\cref{fig:nucleation}(b))
 \begin{equation}
   \label{eq:p-layer-def}
  \calP(\r) \propto \mathbb P\bigl(p(\r)>\pcrit\bigr).
@@ -400,7 +400,7 @@ In the following sections we set up a microscopic model of the monolayer and cal
 \label{sec:model-micro}
 % dean.tex 109-173 ("Microscopic equations of motion").
 We start from Langevin equations for $N$ overdamped, self-propelled rods
-\cite{cugliandolo2015,bertin2013}, each with position $\r_i$ and orientation $\theta_i$:
+\cite{cugliandolo2015,bertin2013}, each with position $\r_i$ and orientation $\theta_i$ (\cref{fig:model-micro}):
 \begin{subequations}
   \label{eq:model}
 \begin{align}
@@ -766,9 +766,9 @@ leaves a static problem:
   \label{eq:simplified-noiseless}
   0 = \nabla\cdot\left[B\nabla\rho - \fa\right] , \qquad \Ha = 0.
 \end{align}
-\upd{We use polar coordinates $(r,\phi)$ centred on the core, with $\phi$ measured from the
+We use polar coordinates $(r,\phi)$ centred on the core, with $\phi$ measured from the
 $+x$ axis, the symmetry axis of the defect. At a $+1/2$ defect the director then makes the
-angle $\theta=\phi/2$ with this axis.} The solution of the second equation is given by a Pad\'{e} approximation \citeTODO{Pade approximation}:
+angle $\theta=\phi/2$ with this axis. The solution of the second equation is given by a Pad\'{e} approximation \citeTODO{Pade approximation}:
 \begin{align}
   \Q(r,\phi) = S(r)\hat\Q(\phi/2)
   \qquad
@@ -792,7 +792,7 @@ Now, the first equation in \cref{eq:simplified-noiseless} is a Poisson equation 
 with an exact solution:
 \begin{align}
   \label{eq:rho-analytic}
-  \rho(r,\phi) = 1 - \frac{\zeta}{B}\left[ S(r) - \frac rR\,S(R)\right]\cos \phi\upd{.}
+  \rho(r,\phi) = 1 - \frac{\zeta}{B}\left[ S(r) - \frac rR\,S(R)\right]\cos \phi.
 \end{align}
 The solution needs a condition at a wall, and that condition is a
 choice. No wall at a finite distance describes a defect in an extended colony, and none
@@ -821,7 +821,7 @@ For the $+1/2$ defect \cref{eq:pade-approximation} gives
   \qquad f^\text{a}_y = 0,
 \end{align}
 a vector field along the defect axis with no transverse component. It points along $-x$,
-the side on which the director bends around the core (\cref{fig:main-2}(a)), so the
+the side on which the director bends around the core (\cref{fig:defects-layering}(a)), so the
 defect drifts along $+x$ (\cref{app:comoving}).
 
 A drifting defect has no steady state in the laboratory frame.
@@ -836,7 +836,7 @@ two-dimensional field.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet.png}
+  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet.pdf}
   \caption{Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$,
     across the whole box. Solid: the comoving-frame numerical solution of
     \cref{eq:model-rho,eq:model-Q} (\cref{app:comoving}), with $\rho=1$ at the walls
@@ -861,7 +861,7 @@ two-dimensional field.
   \caption{Steady-state density $(\rho-1)/(\zeta/B)$ around the $+1/2$ defect, from
     the comoving-frame numerical solution of \cref{eq:model-rho,eq:model-Q}
     (\cref{app:comoving}), with the reservoir wall $\rho=1$. The core is at
-    the origin. (a)~Plan view; dark curves are the nematic director. (b)~The same field as
+    the origin. \textbf{(a)}~Plan view; dark curves are the nematic director. \textbf{(b)}~The same field as
     a surface. The director bends around the core on the $-x$ side and splays along the
     axis on the $+x$ side. The density is enhanced on the former and depleted on the
     latter.}
@@ -886,7 +886,7 @@ small, so the analytic calculation there keeps the static profile of the defect.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{nematicaxis.png}
+  \includegraphics[width=0.85\linewidth]{nematicaxis.pdf}
   \caption{Director lines of the converged comoving solution (red, solid) and of
     the Pad\'e profile \cref{eq:pade-approximation} (black, dashed). The two coincide
     near the core, where the variance modulation of \cref{sec:defect-fluct} lives: within
@@ -1039,7 +1039,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=\linewidth]{varrho.png}
+  \includegraphics[width=\linewidth]{varrho.pdf}
   \caption{Equal-point density variance around a $+1/2$ defect, normalized by the
     pedestal of \cref{eq:pedestal}, along the defect axis ($\xi=x$, $y=0$) and across it
     ($x=0$, $\xi=y$). Dashed: the analytic result at $\delta\Q=0$,
@@ -1072,7 +1072,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 % The calculation motivated in \cref{sec:nucleation-1}, now that \cref{sec:defect}
 % supplies the variance. Pressure statistics from the former sec:nucleation-theory,
 % comparison with experiment from the former sec:nucleation-results
-% (dean.tex 1392-1487). Former fig:match is panel (a) of fig:main-1.
+% (dean.tex 1392-1487). Former fig:match is panel (c) of fig:defects-layering.
 % ============================================================
 
 By \cref{eq:pressure-definition}, a density fluctuation $\delta\rho$ changes the
@@ -1112,8 +1112,8 @@ $z_\infty^2/2$ amplifies it. A modulation of a few percent therefore produces an
 enhancement of two orders of magnitude.
 
 
-\Cref{fig:main-1}(a) shows the layering probability averaged over a circle of radius $r$
-about a centre $\r_\mathrm c$\upd{, with $\phi$ the polar angle about that centre},
+\Cref{fig:defects-layering}(c) shows the layering probability averaged over a circle of radius $r$
+about a centre $\r_\mathrm c$, with $\phi$ the polar angle about that centre,
 \begin{equation}
     \label{eq:p-layer-radial}
     \calP(r) = \frac{1}{2\pi} \oint\limits_{|\r-\r_\mathrm c|=r}\!\d\phi\,\calP(\r),
@@ -1126,7 +1126,7 @@ monotonically from its first bin. Only a centre at the point of maximum probabil
 $\r_\mathrm c=\r_\mathrm{max}\equiv\mathrm{argmax}\,\calP(\r)$, gives such a profile
 (blue).
 
-The experiments point to the same centre. In the snapshots of \cref{fig:main-2}(b),
+The experiments point to the same centre. In the snapshots of \cref{fig:defects-layering}(b),
 the new layer starts off the core, on the side where the director bends around it. This
 is where the model places $\r_\mathrm{max}$. No quantitative measurement of where layers
 start relative to the defect has been published.
@@ -1141,7 +1141,7 @@ the peak enhancement
     \frac{\calP(\r_\mathrm{max})}{\calP(\infty)}
     = \exp\!\left[\frac{z_\infty^2}2\,\frac{\nu_0}{1+\nu_0}\right] \simeq 1.4\times10^2 .
 \end{equation}
-The curves of \cref{fig:main-1}(a) use the same variance. On finer grids its peak
+The curves of \cref{fig:defects-layering}(c) use the same variance. On finer grids its peak
 rises toward $2.5\%$, and the enhancement toward $2.1\times10^2$
 (\cref{app:lyapunov-cutoff}). Both values lie within the error bar of the first bin of
 Fig.~3f of Ref.~\cite{copenhagen2021}, which spans $40$--$500$ around $2\times10^2$. 
@@ -1231,7 +1231,7 @@ Ref.~\cite{han2025local} and not in a companion paper before this sentence stand
 \begin{itemize}
 \item[\textbf{N1}] \textbf{Where the layers start.} The variance peaks off the core, on the
   side where the director bends around it, which is where new layers start in the
-  experiment (\cref{fig:main-2}(b)): an angular profile beyond the radial one.
+  experiment (\cref{fig:defects-layering}(b)): an angular profile beyond the radial one.
   [intro, \cref{sec:nucleation-2}]
 \item[\textbf{N2}] \textbf{Mean fields against fluctuations.} The mean density departs from
   one at order $\zeta/B$, while $\sigma_\rho\propto B^{-1/2}$, so at large $B$ the
@@ -1460,7 +1460,7 @@ relations in \cref{tab:field-params}.
 
 This leaves the bulk modulus $B$, the only free parameter of the model. We set
 $B=90~\kPa\tcdot\micron$, because this value reproduces the layering probability data of
-Ref.~\cite{copenhagen2021} (\cref{sec:nucleation-2}, \cref{fig:main-1}(a)). No direct measurement exists to
+Ref.~\cite{copenhagen2021} (\cref{sec:nucleation-2}, \cref{fig:defects-layering}(c)). No direct measurement exists to
 compare it with, but related moduli, multiplied by the layer height $h$, span five orders
 of magnitude. At the soft end, colonies of \textit{Serratia marcescens} on agar have shear
 and compressive moduli of $10^2$--$10^4~\Pa$, or
@@ -1525,7 +1525,7 @@ derive it from the free energy. Only the bulk term $\mathfrak f=\tfrac B2(\rho-1
 Consider a region of area $A_d$ that is compressed uniformly to $\rho=1+\epsilon$, so that
 it stores the energy $\mathfrak fA_d=\tfrac B2\epsilon^2A_d$. A patch of area $A$ inside
 this region then forms the new layer and takes $\rho_0(1+\epsilon)A$ cells with it. As the
-bottom layer spreads back over the whole of $A_d$ (\cref{fig:main-1}(b)), its strain
+bottom layer spreads back over the whole of $A_d$ (\cref{fig:nucleation}(a)), its strain
 falls to $\epsilon_f=\epsilon-(1+\epsilon)A/A_d$. The extruded cells, in contrast, are
 unconfined in the new layer and relax to zero strain. The elastic energy therefore changes
 by $\Delta E_e=\tfrac B2(\epsilon_f^2-\epsilon^2)A_d$, which we write as
@@ -2153,7 +2153,7 @@ stays of order $\zeta/B$, far below the scale of its fluctuations.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.png}
+  \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.pdf}
   \caption{Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$,
     for the reservoir wall $\rho=1$ (blue) and the no-flux wall
     $\nh\tcdot(B\nabla\rho-\fa)=0$ (orange) at $x=\pm20~\micron$. Solid: the numerical
@@ -2176,7 +2176,7 @@ comoving frame.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{strength.png}
+  \includegraphics[width=0.85\linewidth]{strength.pdf}
   \caption{Nematic order $S$ against distance from the core in the converged
     comoving-frame solution, along $+x$, along $-x$ and along $\pm y$, compared with the
     Pad\'e approximation \cref{eq:pade-approximation} (dashed). Along $\pm y$ the
@@ -2190,7 +2190,7 @@ comoving frame.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{defectangle.png}
+  \includegraphics[width=0.85\linewidth]{defectangle.pdf}
   \caption{Director angle in the converged solution minus the ideal $+1/2$ profile,
     $\theta-\phi/2$, against polar angle $\phi$ at $r=0.1$, $1$ and $2~\micron$. Near
     the core, where the variance modulation of \cref{sec:defect-fluct} lives, the
@@ -2201,7 +2201,7 @@ comoving frame.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{activeforce.png}
+  \includegraphics[width=0.85\linewidth]{activeforce.pdf}
   \caption{Active force along the defect axis in the converged solution, compared with
     \cref{eq:active-force-defect} evaluated on the Pad\'e profile. The numerical
     profile is shifted along $+x$, the direction in which the defect moves. At the core it
@@ -2538,7 +2538,7 @@ a larger region.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{ln_curve.png}
+  \includegraphics[width=0.85\linewidth]{ln_curve.pdf}
   \caption{Peak variance modulation $\nu_0$ against the cutoff $\elln$, from
     \cref{eq:total-gauss} on the exact defect profile. Dashed: the small-$\elln$ asymptote
     \cref{eq:nu0-asymptote}. The modulation vanishes as $\elln\to0$: without a
@@ -2563,15 +2563,15 @@ equal-time covariance of $(\delta\rho,\delta\Q)$ on the steady background of
 giving the noise a spatial correlation, chosen to reproduce the pedestal
 \cref{eq:pedestal} (\cref{app:lyapunov-cutoff}).
 
-\upd{\Cref{app:lyapunov-method} turns the linearized equations into a Lyapunov equation for the
+\Cref{app:lyapunov-method} turns the linearized equations into a Lyapunov equation for the
 covariance and states when it has a valid solution. The next three subsections make the
 discretized noise satisfy these conditions and reproduce the continuum: the noise covariance
 needs the exact moments of the closure to be positive semi-definite
 (\cref{app:realizability}), the drift and the noise need matching difference operators
-(\cref{app:lyapunov-operators}), and the smoothing that imposes the cutoff needs a
+(\cref{app:lyapunov-operators}), and the spatial correlation of the noise, which imposes the cutoff, needs a
 calibration to the grid (\cref{app:lyapunov-cutoff}). \Cref{app:lyapunov-walls} gives the
 boundary conditions, and \cref{app:lyapunov-results} compares the solution with the analytic
-variance and shows the fluctuations of the active force.}
+variance and shows the fluctuations of the active force.
 
 \subsection{Method}
 \label{app:lyapunov-method}
@@ -2602,15 +2602,13 @@ $\mathbf C(\r,\r')=\la\psi(\r,t)\,\psi(\r',t)^\T\ra$:
 with $\A$ acting on the first argument of $\mathbf C$ and $\A^\T$ on the second. Only the
 delta function in time is needed for this step. The spatial form of $\mathbf N$ is free,
 which is what lets \cref{app:lyapunov-cutoff} give the noise a finite correlation
-length. \Cref{eq:lyapunov} is \upd{the Lyapunov equation of control theory, where it is the
-classical test of stability: a linear system $\partial_t\psi=\A\psi$ is asymptotically stable
-exactly when, for any positive definite $\mathbf N$, the equation has a positive definite
-solution, which is then unique \cite{lyapunov1992general,zhou1996robust}. Its solution,
+length. \Cref{eq:lyapunov} is the Lyapunov equation of control theory, where it tests
+stability: a linear system $\partial_t\psi=\A\psi$ is asymptotically stable exactly when, for
+a positive definite $\mathbf N$, the equation has a positive definite solution
+\cite{lyapunov1992general,zhou1996robust}. This solution,
 $\mathbf C=\int_0^\infty\!\d t\,\ee^{\A t}\,\mathbf N\,\ee^{\A^\T t}$, adds up the noise
-injected at every earlier time and carried to the present by the drift. Control theory calls
-it the controllability Gramian, which measures how strongly an input, here the noise,
-excites each direction of the state space \cite{zhou1996robust,simoncini2016computational}.}
-\prompt{a bit less detail on the Lyapunov equation, keep ~2/3}
+injected at every earlier time and carried to the present by the drift
+\cite{zhou1996robust,simoncini2016computational}.
 
 On a grid, \cref{eq:lyapunov} becomes a matrix equation. It has a unique positive
 semi-definite solution if two conditions hold:
@@ -2633,16 +2631,16 @@ condition ($i$): in our run every eigenvalue has a negative real part.
 \label{app:realizability}
 % Moved here from the closure appendix (2026-10-05); only the opening and the references
 % to the run were rewritten.
-\upd{The noise of the coupled equations comes from the angular distribution of the rods, through
+The noise of the coupled equations comes from the angular distribution of the rods, through
 the moments that the closure of \cref{app:closure} assigns to it. A covariance must be
-positive semi-definite, and the lowest-order closure keeps it so only for weak order,}
+positive semi-definite, and the lowest-order closure keeps it so only for weak order,
 \begin{equation}
   \label{eq:realizability-condition}
-  S\le S_\star \simeq 0.618\upd{,}
+  S\le S_\star \simeq 0.618,
 \end{equation}
-\upd{whereas around the defect the nematic order reaches $S_0=0.9$. We therefore build the
+whereas around the defect the nematic order reaches $S_0=0.9$. We therefore build the
 noise from the exact moments of the distribution, which give a valid covariance at every
-$S$.}
+$S$.
 
 Condition ($ii$) is not automatic. The noise covariance $\mathbf N$ is assembled from the
 local covariance of the noise fluxes at each point (\cref{app:lyapunov-operators}), so it is
@@ -2661,8 +2659,8 @@ weights
   \label{eq:u-vector}
   \bs u(\theta)=\bigl(\p,\ \hat Q_{11}\p,\ \hat Q_{12}\p\bigr).
 \end{equation}
-By \cref{eq:dean-noise-sum}, their covariance is $\bs M\Delta'$\upd{, where $\Delta'=\delta(\r-\r')\delta(t-t')$ as in
-\cref{eq:Q-noise-correlators}}, with
+By \cref{eq:dean-noise-sum}, their covariance is $\bs M\Delta'$, where $\Delta'=\delta(\r-\r')\delta(t-t')$ as in
+\cref{eq:Q-noise-correlators}, with
 \begin{equation}
   \label{eq:gram-matrix}
   \bs M=\frac{4\zeta}{\xi_0\rho_0}\int\!\d\theta\,\varrho_t\,\bs u\,\bs u^\T .
@@ -2718,10 +2716,10 @@ equations for $\delta\rho$ and $\delta\Q$, on the other hand, need the full cova
 $(\bEta_\rho,\bEta^\Q,\f^Q)$, and with the lowest-order closure they are ill defined
 around the defect.
 
-\upd{The von Mises distribution itself is a genuine density, so its exact moments
+The von Mises distribution itself is a genuine density, so its exact moments
 \cref{eq:exact-moments} give a Gram matrix at every $S$. The solver builds the noise
 covariance from them, solving \cref{eq:kappa-S} once per node, while its drift, like the
-steady state, keeps the lowest-order closure of \cref{eq:model-Q}.}
+steady state, keeps the lowest-order closure of \cref{eq:model-Q}.
 
 \subsection{Consistent difference operators}
 \label{app:lyapunov-operators}
@@ -2729,240 +2727,194 @@ steady state, keeps the lowest-order closure of \cref{eq:model-Q}.}
 % lyapunov_solver/lyapunov_solver.m (915-960 operators and the exact identity check,
 % 1166-1183 drift, 1241-1291 noise assembly). Numbers: claude_experiments/fd_operators/
 % check_operators.py and cutoff_run_resolution.py.
-\prompt{is there any book that you can cite for this topic and technic?}
-The equal-point variance of the density is sensitive to how the derivatives in
-\cref{eq:linearized-rho} are discretized, because of the way it arises in the continuum.
- Density fluctuations spectrum is flat, since two factors of $k^2$ cancel: the noise enters as the
-divergence of the flux $\bEta_\rho$, so its power carries one, and diffusion relaxes a mode
-of wavevector $\k$ at the rate $(B/\xi_0)k^2$, which carries the other
-(\cref{sec:defect-fluct}). Every wavevector below the cutoff therefore contributes
-equally, and since most of them lie close to the cutoff, the variance is set by the
-shortest wavelengths that are kept. On a grid each factor $k^2$ becomes the symbol of a
-difference operator, the factor by which the operator multiplies a plane wave. The
-spectrum stays flat only if the symbol of the noise and that of the drift are equal.
-Second-order accuracy makes them agree at long wavelengths, but at short ones two equally
-accurate operators can differ by a factor of order one.
+The equal-point variance of the density depends on how the derivatives in
+\cref{eq:linearized-rho} are discretized. In the continuum the spectrum of the density
+fluctuations is flat, because two factors of $k^2$ cancel: the noise enters as the divergence
+of the flux $\bEta_\rho$, so its power carries one, and diffusion relaxes a mode of wavevector
+$\k$ at the rate $(B/\xi_0)k^2$, which carries the other (\cref{sec:defect-fluct}). Every
+wavevector below the cutoff contributes equally, so the variance is set by the shortest
+wavelengths that are kept. On a grid each factor $k^2$ becomes the symbol of a difference
+operator, the factor by which the operator multiplies a plane wave \cite{leveque2007finite}, and the spectrum
+stays flat only if the noise and the drift have equal symbols.
 
-For example, consider two discretisation of 1d laplacian \prompt{ define operators L, D, G, and show that $L = G^2$ but not $D^2$, like in dean.tex. This is a simple example to show the underlying difference. Update fig:staggered-grid if needed. And om this example, say what is acctually being done in numerical implementation.}
+The one-dimensional Laplacian shows what can go wrong (\cref{fig:staggered-grid}). On nodes
+spaced by $\Delta x$, the drift uses the compact second difference
+\begin{equation*}
+  (Lu)_n=\frac{u_{n+1}-2u_n+u_{n-1}}{\Delta x^2}.
+\end{equation*}
+A first derivative can be taken at a node, with the central difference
+$(Du)_n=(u_{n+1}-u_{n-1})/2\Delta x$. Applying $D$ twice, however, does not give $L$ (\cref{fig:staggered-grid}(a)):
+\begin{equation*}
+  (D^2u)_n=\frac{u_{n+2}-2u_n+u_{n-2}}{4\Delta x^2}\neq(Lu)_n .
+\end{equation*}
 
-\prompt{I think this appendix can be more concise, but still clear and easy to read.}
+The forward difference $G$ takes the first derivative between two nodes instead, on the face
+$n+1/2$, $(Gu)_{n+1/2}=(u_{n+1}-u_n)/\Delta x$. Its negative transpose,
+$(-G^\T F)_n=(F_{n+1/2}-F_{n-1/2})/\Delta x$, takes a face flux $F$ back to the nodes as a
+divergence (\cref{fig:staggered-grid}(b)), so that whatever leaves one node enters its
+neighbour. Applying $G$ and then $-G^\T$ gives the compact Laplacian exactly, $L=-G^\T G$. This is the staggered grid of computational fluid dynamics, which avoids the
+decoupling of neighbouring nodes that $D^2$ produces \cite{ferziger2020computational}.
 
-The most natural choice fails this test. The drift $(B/\xi_0)\nabla^2\delta\rho$ is
-discretized with the compact Laplacian, in one dimension
-$(Lu)_n=(u_{n+1}-2u_n+u_{n-1})/\Delta x^2$, while the divergence in the noise would
-naturally be taken at the nodes with the central difference
-$(Du)_n=(u_{n+1}-u_{n-1})/2\Delta x$. \upd{As \cref{fig:staggered-grid}(a) shows, the central
-difference compares the two neighbours of a node and skips the node itself.} For a plane
-wave $u_n=\ee^{\ii kn\Delta x}$ the symbol of $L$ and the noise power of $D$ are
+The density noise in \cref{eq:ou-model} is the divergence of the flux noise $\bEta_\rho$, so
+its covariance contains a first difference on each side. If this divergence is taken with
+$D$, the noise carries $|\hat D|^2$ where the drift carries $\hat L$. For a plane wave
+$u_n=\ee^{\ii kn\Delta x}$ the two symbols are \cite{leveque2007finite}
 \begin{align}
   \hat L(k)&=-\frac{4}{\Delta x^2}\sin^2\frac{k\Delta x}{2},
   \nonumber\\
   \label{eq:fd-symbols}
   |\hat D(k)|^2&=\frac{\sin^2k\Delta x}{\Delta x^2}=-\hat L(k)\cos^2\frac{k\Delta x}{2},
 \end{align}
-so a noise built from $D$ multiplies the spectrum of $\delta\rho$ by
-$\cos^2(k\Delta x/2)$ \prompt{I would prefer to have a book where I can open and read this or similarcomputation}. This factor is one at long wavelengths but vanishes at the shortest
-wavelength of the grid, $k\Delta x=\pi$, where the field alternates in sign from node to
-node. \upd{The two neighbours of every node are then equal, so $D$ does not see this mode, and
-the noise never drives it, although $L$ damps it.} Without a cutoff the variance
-averages the spectrum over all wavevectors of the grid, so a noise built from $D$ lowers it
-by a factor $2$ in one dimension and $2.75$ in two, however fine the grid. The cutoff
-$\elln$ suppresses the shortest wavelengths and makes this error shrink as the grid is
-refined, but in our run $\elln$ spans only about two grid spacings, and the pedestal would
-still come out about $10\%$ low, several times the modulation of the variance by the
-defect.
+so the noise power of $D$ falls short of the drift by $\cos^2(k\Delta x/2)$. The
+driving by the noise and the damping by the drift then disagree at short wavelengths. We fix
+this by taking the divergence with $G$ instead, as is done in fluctuating hydrodynamics
+\cite{donev2010accuracy,balboa2012staggered,kim2017stochastic}, so that the noise and the
+drift share one operator and the spectrum is exactly flat.
 
-% \prompt{instead of building the figure here, move the code to plotgen/staggered-grid, generate pdf or something similar and include it here. Also note that "(b)" is almost touching the figure text}
-\begin{figure}[tbp]
-  \centering
-  \begin{tikzpicture}[x=1.25cm, y=1cm, >=stealth]
-    % (a) collocated grid: the central difference skips the node it belongs to
-    \begin{scope}[yshift=2.1cm]
-      \node[font=\small] at (-0.45,0.55) {(a)};
-      \draw[gray!70, thick] (-0.15,0) -- (5.15,0);
-      \foreach \i in {0,1,3,4,5}
-        \filldraw[black] (\i,0) circle (1.7pt);
-      \draw[black, fill=white] (2,0) circle (1.7pt);
-      \foreach \i/\lab in {0/{u_0\!=\!0}, 1/{u_1}, 2/{u_2}, 3/{u_3}, 4/{u_4}, 5/{u_5\!=\!0}}
-        \node[below=5pt, font=\footnotesize] at (\i,0) {$\lab$};
-      \draw[->, gray!50!black] (1,0.12) to[bend left=45] (1.9,0.16);
-      \draw[->, gray!50!black] (3,0.12) to[bend right=45] (2.1,0.16);
-      \node[font=\footnotesize] at (2,0.72) {$(Du)_2$};
-    \end{scope}
-    % (b) staggered grid: nodes and faces
-    \node[font=\small] at (-0.45,0.55) {(b)};
-    \draw[gray!70, thick] (-0.15,0) -- (5.15,0);
-    \foreach \i in {0,1,2,3,4,5}
-      \filldraw[black] (\i,0) circle (1.7pt);
-    \foreach \i/\lab in {0/{u_0\!=\!0}, 1/{u_1}, 2/{u_2}, 3/{u_3}, 4/{u_4}, 5/{u_5\!=\!0}}
-      \node[above=7pt, font=\footnotesize] at (\i,0) {$\lab$};
-    \foreach \i in {0.5,1.5,2.5,3.5,4.5}
-      \draw[blue!55!black, very thick] (\i,-0.17) -- (\i,0.17);
-    \foreach \i/\lab in {0.5/{F_{1/2}}, 1.5/{F_{3/2}}, 2.5/{F_{5/2}}, 3.5/{F_{7/2}}, 4.5/{F_{9/2}}}
-      \node[below=7pt, font=\footnotesize, blue!55!black] at (\i,0) {$\lab$};
-    % G: two nodes -> the face between them
-    \draw[->, gray!50!black] (1.06,0.30) -- (1.42,0.30);
-    \draw[->, gray!50!black] (1.94,0.30) -- (1.58,0.30);
-    % -G^T: two faces -> the node between them
-    \draw[->, blue!55!black] (2.56,-0.30) -- (2.92,-0.30);
-    \draw[->, blue!55!black] (3.44,-0.30) -- (3.08,-0.30);
-  \end{tikzpicture}
-  \caption{\upd{One-dimensional grid with four interior nodes ($\bullet$) between two wall
-    nodes, where the field vanishes. (a) The central difference at a node uses its two
-    neighbours and skips the node itself ($\circ$), $(Du)_2=(u_3-u_1)/2\Delta x$.
-    (b) The fluxes live on the faces ($|$) between neighbouring nodes. The forward
-    difference takes two nodes to the face between them (gray arrows),
-    $(Gu)_{3/2}=(u_2-u_1)/\Delta x$, and its negative transpose takes two faces back to the
-    node between them as a divergence (blue arrows),
-    $(-G^\T F)_3=(F_{7/2}-F_{5/2})/\Delta x$. The two outer faces carry the flux through
-    the wall.}}
-  \label{fig:staggered-grid}
-\end{figure}
-
-\upd{The remedy is to put every flux where a flux acts, on the faces midway between
-neighbouring nodes, since it carries density from one node to the next
-(\cref{fig:staggered-grid}(b)). The forward difference
-$(Gu)_{n+1/2}=(u_{n+1}-u_n)/\Delta x$ takes the values at two neighbouring nodes to the
-face between them, and its negative transpose,
-$(-G^\T F)_n=(F_{n+1/2}-F_{n-1/2})/\Delta x$, takes the fluxes on the two faces of a node
-back to the node as a divergence, so that whatever leaves one node enters its neighbour.
-The faces next to the wall are kept, since the field is known to vanish on the wall nodes
-(\cref{app:lyapunov-walls}). Composing the two operators then gives the compact Laplacian
-exactly, including the rows next to the wall.} In two dimensions, with $G_x$ and $G_y$ taking the nodes to the faces between
-horizontal and vertical neighbours,
+The solver is built this way. In two dimensions, with $G_x$ and $G_y$ taking the nodes to the
+faces between horizontal and vertical neighbours, the drift of the density is
+$(B/\xi_0)L$ with
 \begin{equation}
   \label{eq:fd-identity}
   L=-G_x^\T G_x-G_y^\T G_y .
 \end{equation}
-We therefore put the noise flux $\bEta_\rho$ on the faces, independent from face to face,
-with its local covariance $M_\ab=(2\zeta/\xi_0\rho_0)(\delta_\ab+Q^\ss_\ab)$ of
-\cref{eq:eta-rho-ss} sampled there. The diagonal part of the density noise is then
+The noise flux $\bEta_\rho$ lives on the faces, independent from face to face, with the
+local covariance $M_\ab=(2\zeta/\xi_0\rho_0)(\delta_\ab+Q^\ss_\ab)$ of \cref{eq:eta-rho-ss}
+sampled there, so the diagonal part of the density noise is
 \begin{equation}
   \label{eq:fd-noise}
   \mathbf N_{\rho\rho}=\frac1{\Delta x^2}\sum_{i=x,y}G_i^\T\,\mathrm{diag}(M_{ii})\,G_i ,
 \end{equation}
-where $1/\Delta x^2$ is the grid form of $\delta(\r-\r')$. For an isotropic noise,
-\cref{eq:fd-identity,eq:fd-noise} make the noise matrix a multiple of the drift matrix
-$(B/\xi_0)L$ itself, so the spectrum is exactly flat on the grid, and every node, including
-those next to the wall, has the same variance. The noise of $\delta\Q$ and its correlation
-with $\bEta_\rho$ are assembled in the same way. Since all of this rests on
-\cref{eq:fd-identity}, the solver builds both sides in exact arithmetic and stops if they
-differ.
+where $1/\Delta x^2$ is the grid form of $\delta(\r-\r')$. For an isotropic noise the noise
+matrix is then a multiple of the drift matrix, the spectrum is flat on the grid, and every
+node, including those next to the wall, has the same variance. The solver builds both sides
+of \cref{eq:fd-identity} in exact arithmetic and stops if they differ.
 
-The other terms of \cref{eq:linearized} that are divergences of a flux follow the same
-construction. A drift term $\nabla\tcdot(c\nabla\,\cdot\,)$, such as
-$(B/\xi_0)\nabla\tcdot(\Q_\ss\nabla\delta\rho)$, becomes
-$-\sum_iG_i^\T\,\mathrm{diag}(c)\,G_i$ with $c$ sampled on the faces, which is symmetric,
-as the continuum operator is self-adjoint. The advection $\nabla\tcdot(\delta\Q\,\bs w_\ss)$
-is the divergence $-G^\T$ of the face flux $\bs w_\ss\,\delta\Q$, with $\delta\Q$ averaged
-onto the faces from its two neighbouring nodes. Only the mixed terms of the noise,
-$M_{xy}=M_{yx}\propto Q^\ss_{xy}$, keep the central difference at the nodes. They pair a
-derivative along $x$ with one along $y$, so they form no square and have nothing in the
-drift to cancel against. Instead they must keep a symmetry of the continuum, where uniform
-nematic order leaves the variance unchanged (\cref{app:variance-uniform}). With both
-derivatives at the same node their symbol is proportional to
-$\sin(k_x\Delta x)\sin(k_y\Delta x)$, which is odd in $k_x$ and averages to zero, whereas
-derivatives taken on different faces, half a spacing apart, would add a spurious pedestal
-proportional to $Q^\ss_{xy}$.
+The other divergence terms of \cref{eq:linearized} follow the same construction. A drift term
+$\nabla\tcdot(c\nabla\,\cdot\,)$, such as $(B/\xi_0)\nabla\tcdot(\Q_\ss\nabla\delta\rho)$,
+becomes $-\sum_iG_i^\T\,\mathrm{diag}(c)\,G_i$ with $c$ on the faces, and the advection
+$\nabla\tcdot(\delta\Q\,\bs w_\ss)$ is $-G^\T$ applied to the face flux $\bs w_\ss\,\delta\Q$,
+with $\delta\Q$ averaged onto the faces. The noise of $\delta\Q$ and its correlation with
+$\bEta_\rho$ are assembled in the same way. Only the mixed noise terms,
+$M_{xy}=M_{yx}\propto Q^\ss_{xy}$, keep the central difference at the nodes. Their symbol is
+proportional to $\sin(k_x\Delta x)\sin(k_y\Delta x)$, which is odd in $k_x$ and averages to
+zero, as in the continuum, where uniform nematic order leaves the variance unchanged
+(\cref{app:variance-uniform}). Derivatives taken on different faces would instead add a
+spurious pedestal proportional to $Q^\ss_{xy}$.
 
-Each diagonal term of \cref{eq:fd-noise} is a congruence, and so it is positive
-semi-definite wherever the local covariance is. With the exact moments of
-\cref{app:realizability} the local covariance is valid at every node, and the solver checks
-it there with a $6\times6$ eigensolve, whose smallest eigenvalue is zero to round-off, the
-two exact zeros of \cref{app:realizability}. The smoothing of \cref{app:lyapunov-cutoff} is
-a further congruence, $W\mathbf NW$, and preserves positivity.
+Each diagonal term of \cref{eq:fd-noise} is a congruence, so it is positive semi-definite
+wherever the local covariance is. With the exact moments of \cref{app:realizability} the
+local covariance is valid at every node, and the solver checks it there with a
+$6\times6$ eigensolve.
 
-\subsection{The cutoff on the grid}
+
+% the source code of this image is in plotgen/staggered-grid
+\begin{figure}[tbp]
+  \centering
+  \includegraphics{staggered_grid.pdf}
+  \caption{One-dimensional grid with four interior nodes ($\bullet$) between two wall
+    nodes, where the field vanishes. \textbf{(a)} The central difference skips the node it belongs
+    to, so applied twice it reaches two nodes away and skips the neighbours ($\circ$),
+    $(D^2u)_3=(u_5-2u_3+u_1)/4\Delta x^2$. \textbf{(b)} The fluxes live on the faces ($|$) between
+    neighbouring nodes. The forward difference takes two nodes to the face between them
+    (gray arrows), $(Gu)_{3/2}=(u_2-u_1)/\Delta x$, and its negative transpose takes two
+    faces back to the node between them as a divergence (blue arrows),
+    $(-G^\T F)_3=(F_{7/2}-F_{5/2})/\Delta x$. Their composition is the compact Laplacian,
+    $L=-G^\T G$. The two outer faces carry the flux through the wall.}
+  \label{fig:staggered-grid}
+\end{figure}
+
+\subsection{\texorpdfstring{The noise correlation length and its calibration}{The noise correlation length and its calibration}}
 \label{app:lyapunov-cutoff}
 % dean.tex 1200-1275 (sec-ln-vs-h, sec-cutoff-numerics), 2048-2089 (sec-noise-cutoff).
-% Figure and the 0.1% checks: claude_experiments/cutoff_fig/cutoff_calibration_v2.wls (solver
-% on a uniform state, plus the defect runs of set2_2_comove_optimized_2); the other numbers
-% below: cutoff_calibration.wls.
-\prompt{update the title. this section sets the noise correlation length and its calibration + reasons for the calibration.}
+% Figure (l_eff/l_n against dx/l_n, 2026-10-06): plotgen/cutoff-calibration (run.sh).
+% The 0.1% checks: cutoff_calibration_v2.wls (solver on a uniform state, plus the defect runs of
+% set2_2_comove_optimized_2).
 The density variance is set by the shortest wavelengths that the noise excites
 (\cref{app:lyapunov-operators}), so the solver must impose the cutoff $\elln$ of
-\cref{eq:cutoff}. Otherwise the grid sets a cutoff of its own: with noise white in space the
-solver returns the pedestal $\zeta/(B\rho_0\Delta x^2)$, which is \cref{eq:pedestal} with
-$\elln=\Delta x/\sqrt{2\pi}$, so the grid spacing would play the role of smoothing or of the width of a cell.
-\prompt{the solver does not smooth the noise. The idea is to implement the discrete nature of the system into the noise correlation length. So instead of white spatial noise, we consider a spatially correlated noise. and we do it as follows.}
-The solver therefore smooths the noise over the length $\elln$ with the Gaussian patch of
-\cref{app:variance-cutoff}, and on a grid this smoothing is too weak. The patch is built from
-the Laplacian, and the discrete Laplacian, which measures the curvature of a wave from three
-neighbouring nodes, underestimates the curvature of waves only a few nodes long. For the
-shortest wave of the grid, which alternates from node to node, it gives $4/\Delta x^2$
-instead of $\pi^2/\Delta x^2$. The smoothing then damps the shortest waves too little, and
-since these set the variance, the pedestal comes out too high.
+\cref{eq:cutoff}. A noise white in space would let the grid set the cutoff instead: the
+solver then returns the pedestal $\zeta/(B\rho_0\Delta x^2)$, which is \cref{eq:pedestal}
+with $\elln=\Delta x/\sqrt{2\pi}$, so the grid spacing would play the role of the width of a
+cell. The monolayer, however, is made of cells of width $\elln$, and we build this
+discreteness into the noise. Instead of a noise white in space, we use a noise correlated
+over the length $\elln$.
 
-The error depends on how many grid spacings fit into $\elln$, and it disappears on fine grids, where all the waves that
-pass the smoothing are long compared with $\Delta x$. A finer grid, however, is out of reach:
-the covariance is a dense matrix with $(3N_\mathrm{int}^2)^2$ entries, so its memory grows as
-$N_\mathrm{int}^4$, and at $N_\mathrm{int}=150$ it already takes $36$~GB. We therefore keep
-the grid and calibrate the smoothing instead.
-
-The Gaussian patch $\tilde W(\k)=\ee^{-k^2\ell_W^2/4}$ of a length $\ell_W$ multiplies each
-plane wave by a factor. Since $\nabla^2$ multiplies a plane wave by $-k^2$, the patch is the
-operator $W=\exp(\ell_W^2\nabla^2/4)$, and on the grid we replace $\nabla^2$ by the discrete
-Dirichlet Laplacian $\nabla^2_{\Delta x}$, so that $W=\exp(\ell_W^2\nabla^2_{\Delta x}/4)$. The
-solver applies $W$ to the noise $\bxi$ of \cref{eq:ou-model}. The smoothed noise $W\bxi$ is
-still white in time, and its covariance between the points $\r$ and $\r'$ is
+We construct it from the white noise $\bxi$ of \cref{eq:ou-model} with the operator
+$W=\exp(\ell_W^2\nabla^2/4)$. Since $\nabla^2$ multiplies a plane wave by $-k^2$, the symbol of
+$W$ is the Gaussian $\tilde W(\k)=\ee^{-k^2\ell_W^2/4}$ of \cref{app:variance-cutoff}, and $W$
+correlates the noise over the length $\ell_W$. The noise $W\bxi$ is still white in time, and
+its covariance between the points $\r$ and $\r'$ is
 \begin{equation*}
   (W\mathbf NW)(\r,\r')=\int\!\d^2\r_1\d^2\r_2\,W(\r,\r_1)\mathbf N(\r_1,\r_2)W(\r_2,\r'),
 \end{equation*}
 with $W(\r,\r_1)$ the kernel of $W$ and $\mathbf N(\r_1,\r_2)$ the covariance of
 \cref{eq:ou-model}. For any field $\bs v$ the quadratic form of $W\mathbf NW$ equals that of
-$\mathbf N$ evaluated on $W\bs v$, so it is positive semi-definite whenever $\mathbf N$ is. Smoothing the noise field, rather than its
-covariance, therefore keeps the covariance valid. Moreover, $W$ commutes with the drift
-$(B/\xi_0)\nabla^2$ of the density, so smoothing the noise gives the same covariance as
-smoothing the density, which is what \cref{app:variance-cutoff} does.
+$\mathbf N$ evaluated on $W\bs v$, so the correlated covariance is positive semi-definite
+whenever $\mathbf N$ is. Moreover, $W$ commutes with the drift $(B/\xi_0)\nabla^2$ of the
+density, so the correlated noise gives the same density covariance as the density smoothed
+with $W$, which is what \cref{app:variance-cutoff} computes.
 
-The symbol of $W$, the factor by which it multiplies a plane wave
-(\cref{app:lyapunov-operators}), follows from that of $\nabla^2_{\Delta x}$, which is $-k^2$
-with each $k_i^2$ replaced by $(4/\Delta x^2)\sin^2(k_i\Delta x/2)$:
+On the grid we replace $\nabla^2$ in $W$ by the discrete Dirichlet Laplacian
+$\nabla^2_{\Delta x}$, and the correlation then comes out too short. The discrete Laplacian
+measures the curvature of a wave from three neighbouring nodes, so it underestimates the
+curvature of waves only a few nodes long. Its symbol is $-k^2$ with each $k_i^2$ replaced by
+$(4/\Delta x^2)\sin^2(k_i\Delta x/2)$. For the shortest wave of the grid, which alternates
+from node to node, this gives $4/\Delta x^2$ instead of $\pi^2/\Delta x^2$. The grid version of $W$
+therefore damps the shortest waves too little, and since these set the variance, the pedestal
+comes out too high. The error depends on the ratio $\Delta x/\elln$, and it
+disappears on fine grids, where all the waves that $W$ lets through are long compared with
+$\Delta x$. 
+
+A finer grid, however, is out of reach: the covariance is a dense matrix with
+$(3N_\mathrm{int}^2)^2$ entries, so its memory grows as $N_\mathrm{int}^4$, and at
+$N_\mathrm{int}=150$ it already takes $36$~GB. We therefore keep the grid and calibrate the
+correlation length instead.
+
+Quantitatively, the symbol of $W$ on the grid is
 \begin{equation*}
   \exp\Bigl[-\frac{\ell_W^2}{\Delta x^2}\Bigl(\sin^2\frac{k_x\Delta x}2
-  +\sin^2\frac{k_y\Delta x}2\Bigr)\Bigr].
+  +\sin^2\frac{k_y\Delta x}2\Bigr)\Bigr],
 \end{equation*}
-\upd{Since $\sin^2(k\Delta x/2)<(k\Delta x/2)^2$, it decays more slowly than the continuum
-$\ee^{-k^2\ell_W^2/4}$, so the grid keeps too much short-wavelength noise.} With
-$\ell_W=\elln$ the pedestal on the grid therefore exceeds \cref{eq:pedestal} by the factor
+which decays more slowly than $\ee^{-k^2\ell_W^2/4}$, since
+$\sin^2(k\Delta x/2)<(k\Delta x/2)^2$. 
+With $\ell_W=\elln$ the pedestal on the grid therefore exceeds \cref{eq:pedestal} by the factor
 \begin{equation}
   \label{eq:lattice-overshoot}
-  \chi(s)=2\pi s^2\,\mathcal I(s)^2\simeq1+\frac1{4s^2},\qquad s=\frac{\elln}{\Delta x},
+  \chi=2\pi\frac{\elln^2}{\Delta x^2}\,\mathcal I\Bigl(\frac{\elln}{\Delta x}\Bigr)^2
+  \simeq1+\frac{\Delta x^2}{4\elln^2},
 \end{equation}
-with $\mathcal I(s)=\ee^{-s^2}I_0(s^2)$ and $I_0$ the modified Bessel function. \upd{On our
-grid, $s=1.89$, the pedestal would come out $9\%$ too high.}
+with $\mathcal I(s)=\ee^{-s^2}I_0(s^2)$ and $I_0$ the modified Bessel function. On our
+grid, $\Delta x/\elln=0.53$, the pedestal would come out $9\%$ too high.
 
-The solver removes this factor by building $W$ from a length $\ell_\mathrm{eff}$,
-larger than $\elln$ wherever $\chi>1$ and chosen so that the pedestal on the grid equals \cref{eq:pedestal} at
+The solver removes this factor by building $W$ from a length $\ell_\mathrm{eff}$
+instead of $\elln$, chosen so that the pedestal on the grid equals \cref{eq:pedestal} at
 the physical $\elln$:
 \begin{equation}
   \label{eq:ell-eff}
   \mathcal I(\ell_\mathrm{eff}/\Delta x)=\frac{\Delta x}{\sqrt{2\pi}\,\elln}.
 \end{equation}
-\upd{This needs a grid finer than the cutoff, $\elln\ge\Delta x/\sqrt{2\pi}$, since on a coarser
-grid the bare grid already gives a smaller pedestal than \cref{eq:pedestal}, and smoothing can
-only lower it. \Cref{fig:cutoff-calibration} tests both steps on the solver: with $W$ built
-from $\elln$ its pedestal follows \cref{eq:lattice-overshoot}, and with $W$ built from
-$\ell_\mathrm{eff}$ it equals \cref{eq:pedestal}. Around the defect, away from the core and
-the wall, the calibrated pedestal equals \cref{eq:pedestal} as well.
+\Cref{fig:cutoff-calibration} shows the ratio $\ell_\mathrm{eff}/\elln$ that solves
+\cref{eq:ell-eff} against $\Delta x/\elln$. On fine grids it approaches one,
+$\ell_\mathrm{eff}/\elln\simeq1+\Delta x^2/8\elln^2$, and on our grid $\ell_\mathrm{eff}$ lies
+$4\%$ above $\elln$. 
+
 
 The calibration fixes the isotropic pedestal only. The anisotropic term of
 \cref{eq:total-gauss} keeps a lattice correction of its own, so the peak modulation $\nu_0$
 of the solver approaches its continuum value only as the grid is refined, which accounts for
-part of the difference from the analytic $\nu_0$ (\cref{app:lyapunov-results}).}
+part of the difference from the analytic $\nu_0$ (\cref{app:lyapunov-results}).
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\linewidth]{cutoff_calibration.pdf}
-  \caption{Isotropic pedestal of the Lyapunov solver, divided by \cref{eq:pedestal},
-    against $s=\elln/\Delta x$. The solver runs on a uniform isotropic state, and the
-    pedestal is read off at the centre of the box $[-20,20]^2~\micron^2$, on a grid of
-    $31\times31$ interior nodes, $\Delta x=1.25~\micron$. Since the ratio depends on $s$
-    alone, $s$ is varied through the cutoff length on this one grid. Open circles: $W$ built
-    from $\elln$; filled: $W$ built from $\ell_\mathrm{eff}$ of \cref{eq:ell-eff}, which
-    exists only to the right of the dotted line $s=1/\sqrt{2\pi}$. Orange: $s=1.89$, the grid
-    of the run behind \cref{fig:variance,fig:variance3d}. Solid: $\chi(s)$,
-    \cref{eq:lattice-overshoot}; dashed: its large-$s$ form.}
+  \caption{Correlation length $\ell_\mathrm{eff}$ of the noise in the solver,
+    \cref{eq:ell-eff}, relative to the physical cutoff $\elln$, against the grid spacing
+    $\Delta x/\elln$ (solid). Dashed: its fine-grid form $1+\Delta x^2/8\elln^2$. The ratio
+    approaches one as the grid is refined. Beyond the dotted line,
+    $\Delta x=\sqrt{2\pi}\,\elln$, the calibration has no solution. Orange: the grid of the run
+    behind \cref{fig:variance,fig:variance3d}. Top axis: the number of interior nodes per
+    direction that gives this $\Delta x$ in our box, $[-20,20]^2~\micron^2$, at
+    $\elln=0.5~\micron$.}
   \label{fig:cutoff-calibration}
 \end{figure}
 
@@ -2973,12 +2925,12 @@ fluctuating field, and on the noise flux through the wall. The last two answer o
 question, whether a cell may cross the wall, once for the fluctuation and once for the
 noise, so they must agree. Two coherent choices remain for the fluctuations. A reservoir
 pins the fluctuation and lets the noise flux through, like a window cut from a larger
-colony\upd{. A} sealed wall blocks both, like a container.
+colony. A sealed wall blocks both, like a container.
 
-\upd{We use the reservoir.} Its
+We use the reservoir. Its
 wall nodes are removed, so $\delta\rho=\delta\Q=0$ there, the noise flux through the faces
-next to the wall is kept, and the smoothing $W$ is built on the Dirichlet Laplacian, so it
-vanishes at the wall too. The steady state of \cref{app:comoving} has the same density wall, $\rho_\ss=1$, so
+next to the wall is kept, and $W$ is built on the Dirichlet Laplacian, so the correlated
+noise vanishes at the wall too. The steady state of \cref{app:comoving} has the same density wall, $\rho_\ss=1$, so
 the density sector is coherent throughout. Only the nematic wall differs: the steady state
 leaves $\Q_\ss$ free at the wall, $\nh\tcdot\nabla\Q_\ss=0$, whereas the fluctuations are
 anchored there, $\delta\Q=0$. The fluctuations see the steady state only through
@@ -2987,25 +2939,25 @@ this difference does not reach the core.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.95\linewidth]{fActiveMeanAndStd.png}
-  \caption{\upd{Mean and standard deviation of $f_\alpha=\partial_\beta Q_\ab$ along the axis
+  \includegraphics[width=0.95\linewidth]{fActiveMeanAndStd.pdf}
+  \caption{Mean and standard deviation of $f_\alpha=\partial_\beta Q_\ab$ along the axis
     of the defect, $y=0$, in $\micron^{-1}$; the active force is $-\zeta\bs f$. The mean
     $\la f_x\ra$ comes from the steady state, and $\la f_y\ra$ vanishes on the axis by
     symmetry. The standard deviations come from $\delta\Q$ in the Lyapunov solution behind
     \cref{fig:variance}. The fluctuations exceed the mean everywhere. Near the core, $f_x$
-    fluctuates most on either side of it, and $f_y$ at the core itself.}}
+    fluctuates most on either side of it, and $f_y$ at the core itself.}
   \label{fig:force-axis}
 \end{figure}
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{f2.png}
-  \caption{\upd{Total variance of the fluctuating force,
+  \caption{Total variance of the fluctuating force,
     $\la|\delta\bs f|^2\ra=\la(\partial_\beta\delta Q_{x\beta})^2\ra
     +\la(\partial_\beta\delta Q_{y\beta})^2\ra$, in $\micron^{-2}$, from the same solution
     as \cref{fig:force-axis}. It forms a ring around the core. On the ring the $x$
     component carries most of the variance, so there the force fluctuates mostly along the
-    axis of the defect.}}
+    axis of the defect.}
   \label{fig:force-map}
 \end{figure}
 
