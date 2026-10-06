@@ -30,11 +30,11 @@ cI[t_?NumericQ] := scaledI0[t^2];
 xOf[t_] := Sqrt[2 Pi] cI[t];          (* dx/l_n *)
 lamOf[t_] := Sqrt[2 Pi] t cI[t];      (* l_eff/l_n *)
 
-pts = Table[{xOf[t], lamOf[t]}, {t, Join[Subdivide[0.02, 3., 300], Subdivide[3., 400., 600]]}];
-pts = Select[pts, 0.005 <= #[[1]] <= 2.6 &];
+pts = Table[{xOf[t], lamOf[t]}, {t, Join[Subdivide[0.02, 3., 300], Subdivide[3., 20., 600]]}];
+pts = Select[pts, 0.075 <= #[[1]] <= 2.6 &];
 
-(* production grid: box 20, N_int = 150, l_n = 0.5 *)
-xProd = (40./151)/0.5;
+(* production grid: box 20, N_int = 180, l_n = 0.5 (was 150 until 2026-10-06) *)
+xProd = (40./181)/0.5;
 tProd = t /. FindRoot[xOf[t] == xProd, {t, 1/xProd}];
 lamProd = lamOf[tProd];
 lamMax = Max[pts[[All, 2]]];
@@ -57,31 +57,32 @@ lblY = Row[{Style["\[ScriptL]", Italic], Subscript["", "eff"], "/", Style["\[Scr
 lblA = Row[{"1 + (\[CapitalDelta]", italic["x"], "/", Style["\[ScriptL]", Italic],
    Subscript["", "n"], ")", Superscript["", 2], "/8"}];
 
-nTicks = {50, 150, 500, 1500, 5000};
+nTicks = {50, 100, 200, 500};
 topTicks = {Log[80./(# + 1)], ToString[#]} & /@ nTicks;
-botTicks = {Log[#], ToString[#]} & /@ {0.01, 0.1, 1};
+botTicks = {Log[#], ToString[#]} & /@ {0.1, 0.2, 0.5, 1, 2};
 minorBot = {Log[#], "", {0.006, 0}} & /@ Flatten[Table[k 10^e, {e, -2, 0}, {k, 2, 9}]];
 
 Print["curve points: ", Length[pts], "  dx/l_n range ", MinMax[pts[[All, 1]]]];
 curve = ListLogLinearPlot[SortBy[pts, First], Joined -> True, PlotRange -> All,
    PlotStyle -> Directive[blue, AbsoluteThickness[1.4]]];
-asym  = LogLinearPlot[1 + x^2/8, {x, 0.005, 1.25},
-   PlotStyle -> Directive[Black, Dashed, AbsoluteThickness[0.9]]];
-one   = LogLinearPlot[1, {x, 0.005, 2.6}, PlotStyle -> Directive[GrayLevel[0.6], AbsoluteThickness[0.6]]];
+asym  = LogLinearPlot[1 + x^2/8, {x, 0.075, 1.25},
+   PlotStyle -> Directive[Black, Dashed, AbsoluteThickness[1.4]]];
+one   = LogLinearPlot[1, {x, 0.075, 2.6}, PlotStyle -> Directive[GrayLevel[0.6], AbsoluteThickness[0.6]]];
 edge  = Graphics[{GrayLevel[0.55], Dotted, AbsoluteThickness[0.9],
     Line[{{Log[Sqrt[2 Pi]], 0}, {Log[Sqrt[2 Pi]], 1.3}}]}];
 prod  = Graphics[{orange, Disk[{Log[xProd], lamProd}, Offset[{3.5, 3.5}]]}];
 
-fig = Show[one, edge, asym, curve, prod,
+fig = Show[one, edge, curve, asym, prod,
    Frame -> True, Axes -> False,
-   PlotRange -> {{Log[0.005], Log[2.9]}, {0, 1.25}},
+   GridLines -> {{Log[xProd]}, None}, GridLinesStyle -> Directive[GrayLevel[0.6], AbsoluteThickness[0.6]],
+   PlotRange -> {{Log[0.075], Log[2.9]}, {0, 1.25}},
    FrameTicks -> {{Automatic, Automatic}, {Join[botTicks, minorBot], topTicks}},
    FrameLabel -> {{lblY, None}, {lblX, Row[{italic["N"], Subscript["", "int"]}]}},
    FrameStyle -> Directive[Black, AbsoluteThickness[0.8]],
    FrameTicksStyle -> base, LabelStyle -> base,
    ImageSize -> 300, ImagePadding -> {{48, 10}, {40, 34}}];
 fig = Legended[fig, Placed[LineLegend[{Directive[blue, AbsoluteThickness[1.4]],
-     Directive[Black, Dashed, AbsoluteThickness[0.9]]}, {"exact", lblA},
+     Directive[Black, Dashed, AbsoluteThickness[1.4]]}, {"exact", lblA},
     LabelStyle -> base, LegendMarkerSize -> {22, 10}], {0.32, 0.35}]];
 
 Export[FileNameJoin[{figDir, "cutoff_calibration.pdf"}], fig];

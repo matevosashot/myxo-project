@@ -12,8 +12,8 @@
 \usepackage[capitalise]{cleveref}
 
 
-\usepackage[inline]{showlabels}
-\renewcommand{\showlabelfont}{\small\ttfamily\color{lightgray}} % Custom label appearance
+% \usepackage[inline]{showlabels}
+% \renewcommand{\showlabelfont}{\small\ttfamily\color{lightgray}} % Custom label appearance
 
 % Reference names. Every cross-reference in this file goes through \cref,
 % so that section/equation/figure/appendix prefixes are generated rather
@@ -91,15 +91,11 @@ orders of magnitude short of the pressure needed to extrude a cell, while the tr
 measured around defects has a standard deviation about ten times its mean. We therefore propose that
 layers form during rare pressure fluctuations, and we compute the statistics of these
 fluctuations. Treating layer formation as nucleation gives a critical pressure, so the
-layering probability is the probability that the pressure exceeds it. This probability
-depends exponentially on the noise, but an active nematic has no
+layering probability is the probability that the pressure exceeds it. Pressure fluctuations depend on the active noise in the system, but an active nematic has no
 fluctuation-dissipation relation to fix that noise. We derive it instead by
 coarse-graining self-propelled rods that reverse their direction of motion, and we keep
 the noise through a Dean equation. As a result, the reversals set the active stress and
-the noise amplitude together. Around a $+1/2$ defect, the pressure variance is then
-modulated by two to three percent over a few micrometers. Because the critical pressure
-lies twenty-one standard deviations into the tail, this small modulation becomes an
-enhancement of the layering probability by a factor of about $10^2$. The enhancement
+the noise amplitude together. The pressure fluctuates more close to $+1/2$ defect, which enhances the layering probability close to the defect. The enhancement
 peaks off the defect core and, once the stiffness of the monolayer is fitted, matches
 the measured one.
 \end{abstract}
@@ -224,7 +220,7 @@ that the local pressure exceeds the critical one.
 
 This probability is set by the fluctuations of the pressure, and hence by the noise
 that drives them. In equilibrium, the fluctuation-dissipation theorem fixes that noise by
-tying it to the dissipative terms in the equations of motion \citeTODO{}. An active nematic
+tying it to the dissipative terms in the equations of motion \cite{kubo1966fluctuation}. An active nematic
 is out of equilibrium and has no such relation, so phenomenological theories add the noise
 to the continuum equations by hand, with a free amplitude and a chosen tensor structure
 \cite{ramaswamy2003active}. We therefore derive the
@@ -322,7 +318,7 @@ elastic energy the bottom layer releases.
   perimeter $\ell$ detaches and forms a second layer, which costs
   $\Ws A+\Wc\ell h+\gammaw\ell h$; $h$ is the height of the
   monolayer. Bottom: the bottom layer relaxes into the space the patch left. The energy gain  $\Wc A+pA$ is from adhesion and the work done by pressure, \cref{eq:dE-of-A}.
-    \textbf{(b)} \todo{change usints to $\kPa\tcdot\micron$} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
+    \textbf{(b)} Energy cost of the new layer, \cref{eq:dE-of-A}, in units of
     $10^5~\Pa\tcdot\micron^3$, against the patch area $A$ in $\micron^2$.
     The beam of curves is for different pressures $p$: the black curve is at the
     critical pressure $p=\pcrit$, and the orange and blue curves lie above and below it,
@@ -581,7 +577,7 @@ nematic term,
     &+ \frac K2(\partial_\r\Q)\!:\!(\partial_\r\Q).
 \end{align}
 The first term enforces near-incompressibility of the monolayer with a large bulk
-modulus $B$; the rest is the standard nematic free energy, with $a<0$ favoring order and $K$ penalizing distortion. The single $K$ is the one-constant approximation of the Frank free energy, in which the splay and bend moduli of the two-dimensional nematic are taken equal \citeTODO{Frank Free energy}.
+modulus $B$; the rest is the standard nematic free energy, with $a<0$ favoring order and $K$ penalizing distortion. The single $K$ is the one-constant approximation of the Frank free energy, in which the splay and bend moduli of the two-dimensional nematic are taken equal \cite{degennes1993physics,frank1958liquid}.
 
 The first term also sets the pressure of the monolayer. From
 $p=\rho\,\partial_\rho\mathfrak f-\mathfrak f$,
@@ -603,7 +599,7 @@ $1/B$ (\cref{app:dean-angle}) gives a continuity equation for the density,
 The first two terms in the bracket are passive, inherited from the pair potential through
 the free energy. The term $-B\nabla\rho$ resists compression, and $\Q\!:\!\nabla\H$
 carries cells along gradients of the nematic force field
-$\H(\r)=-\delta F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$ \citeTODO{active nematic}. The third term is the active force density
+$\H(\r)=-\delta F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$ \cite{degennes1993physics}. The third term is the active force density
 \begin{align}
   \label{eq:active-force}
   f^a_\alpha(\r) = -\zeta\,\partial_\beta Q_\ab(\r)
@@ -766,7 +762,7 @@ leaves a static problem:
 \end{align}
 We use polar coordinates $(r,\phi)$ centred on the core, with $\phi$ measured from the
 $+x$ axis, the symmetry axis of the defect. At a $+1/2$ defect the director then makes the
-angle $\theta=\phi/2$ with this axis. The solution of the second equation is given by a Pad\'{e} approximation \citeTODO{Pade approximation}:
+angle $\theta=\phi/2$ with this axis. The solution of the second equation is given by a Pad\'{e} approximation \cite{pismen1999vortices,pismen2006patterns}:
 \begin{align}
   \Q(r,\phi) = S(r)\hat\Q(\phi/2)
   \qquad
@@ -866,7 +862,7 @@ small, so the analytic calculation there keeps the static profile of the defect.
   \includegraphics[width=0.7\linewidth]{nematicaxis.pdf}
   \caption{Director lines of the converged comoving solution (red, solid) and of
     the Pad\'e profile \cref{eq:pade-approximation} (black, dashed). The two coincide
-    near the core, where the variance modulation of \cref{sec:defect-fluct} lives (see \cref{fig:defectangle}).
+    near the core, where the variance modulation of \cref{sec:defect-fluct} lives (see \cref{fig:comoving-deformation}(b)).
      Farther out the lines separate and Pad\'e approximation is not correct due to cross-coupling of density and nematic fields.}
   \label{fig:nematicaxis}
 \end{figure}
@@ -1107,12 +1103,12 @@ start relative to the defect has been published.
 With $B=90~\kPa\tcdot\micron$, $\elln=0.5~\micron$ and the parameters of
 \cref{app:parameters}, $\sigma_{p,\infty}=1.7~\kPa\tcdot\micron$ and
 $z_\infty=20.8$. The numerical variance of \cref{eq:linearized} peaks at
-$\nu_0\simeq2.3\%$, about $1.2~\micron$ off the core, and \cref{eq:R-ratio} then gives
+$\nu_0\simeq2.4\%$, about $1.2~\micron$ off the core, and \cref{eq:R-ratio} then gives
 the peak enhancement
 \begin{equation}
     \label{eq:R-value}
     \frac{\calP(\r_\mathrm{max})}{\calP(\infty)}
-    = \exp\!\left[\frac{z_\infty^2}2\,\frac{\nu_0}{1+\nu_0}\right] \simeq 1.4\times10^2 .
+    = \exp\!\left[\frac{z_\infty^2}2\,\frac{\nu_0}{1+\nu_0}\right] \simeq 1.6\times10^2 .
 \end{equation}
 The curves of \cref{fig:defects-layering}(c) use the same variance. On finer grids its peak
 rises toward $2.5\%$, and the enhancement toward $2.1\times10^2$
@@ -1956,9 +1952,9 @@ distribution in $2\theta$,
 \begin{equation}
   \label{eq:von-mises}
   \varrho(\theta)=\frac{\rho\,\ee^{\kappa\cos2(\theta-\theta_0)}}{2\pi I_0(\kappa)},
-\end{equation}
+\end{equation} 
 where $\theta_0$ is the angle of the director, $\kappa\ge0$ sets how sharply the rods are
-aligned, and $I_n$ is the modified Bessel function \citeTODO{Bessel function}. Because the distribution depends on
+aligned, and $I_n$ is the modified Bessel function \cite{olver2010nist}. Because the distribution depends on
 $\theta$ only through $2\theta$, it gives $\p$ and $-\p$ the same weight, and all its odd
 harmonics vanish. The even ones are
 $\int\!\d\theta\,\varrho\,\ee^{2\ii n\theta}=\rho\,m_n\ee^{2\ii n\theta_0}$, with the
@@ -2148,48 +2144,23 @@ the steady fields, and linearize the equations in the frame that moves with the 
 where the defect is at rest. Here we obtain $\rho_\ss$, $\Q_\ss$ and $\u$ in that
 comoving frame.
 
-\begin{figure*}
-  \includegraphics[width=0.3\linewidth]{strength.pdf}
-  \includegraphics[width=0.3\linewidth]{defectangle.pdf}
-  \includegraphics[width=0.3\linewidth]{activeforce.pdf}
+\begin{figure*}[tbp]
+  \centering
+  % each label sits just above the top-left corner of its panel, taking no width
+  \leavevmode\rlap{\textbf{(a)}}\raisebox{-\height}{\includegraphics[width=0.32\textwidth]{strength.pdf}}\hspace{0.015\textwidth}%
+  \rlap{\textbf{(b)}}\raisebox{-\height}{\includegraphics[width=0.32\textwidth]{defectangle.pdf}}\hspace{0.015\textwidth}%
+  \rlap{\textbf{(c)}}\raisebox{-\height}{\includegraphics[width=0.32\textwidth]{activeforce.pdf}}
+  \caption{Deformation of the defect by the cross-coupling in the comoving-frame solution,
+    compared with the Pad\'e profile \cref{eq:pade-approximation}. \textbf{(a)} Nematic
+    order $S$ against the distance from the core: the drift splits the $\pm x$ curves, $S$
+    lying above the approximant on $+x$ and below it on $-x$, by at most $5\%$ of $S_0$.
+    \textbf{(b)} Director angle relative to the ideal profile, $\theta-\phi/2$, against
+    $\phi$ at $r=0.1$, $1$ and $2~\micron$; it stays below $1^\circ$ within $2~\micron$.
+    \textbf{(c)} $(\nabla\tcdot\Q)_x$ along the axis, which is $-1/\zeta$ times the active force
+    \cref{eq:active-force-defect}: the numerical profile is shifted along $+x$, the direction of motion, and at the core lies within
+    $1.5\%$ of the Pad\'e value.}
+  \label{fig:comoving-deformation}
 \end{figure*}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=0.85\linewidth]{strength.pdf}
-  \caption{Nematic order $S$ against distance from the core in the converged
-    comoving-frame solution, along $+x$, along $-x$ and along $\pm y$, compared with the
-    Pad\'e approximation \cref{eq:pade-approximation} (dashed). Along $\pm y$ the
-    numerical $S$ stays within $0.01$ of the approximant. Along the axis the coupling to
-    the density splits the $\pm x$ curves, which is the distortion the drift
-    produces: $S$ lies above the approximant on the $+x$ side and below it on the $-x$
-    side. The departure stays small, at most $0.05$, or $5\%$ of $S_0$, near
-    $r=2~\micron$, so \cref{sec:defect-steady} can use the approximant.}
-  \label{fig:strength}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=0.85\linewidth]{defectangle.pdf}
-  \caption{Director angle in the converged solution minus the ideal $+1/2$ profile,
-    $\theta-\phi/2$, against polar angle $\phi$ at $r=0.1$, $1$ and $2~\micron$. Near
-    the core, where the variance modulation of \cref{sec:defect-fluct} lives, the
-    Pad\'e director is accurate: the deviation stays below $1^\circ$ within $2~\micron$. It
-    changes sign between the two sides of the defect axis and grows with $r$.}
-  \label{fig:defectangle}
-\end{figure}
-
-\begin{figure}[tbp]
-  \centering
-  \includegraphics[width=0.85\linewidth]{activeforce.pdf}
-  \caption{Active force along the defect axis in the converged solution, compared with
-    \cref{eq:active-force-defect} evaluated on the Pad\'e profile. The numerical
-    profile is shifted along $+x$, the direction in which the defect moves. At the core it
-    lies within $1.5\%$ of the Pad\'e value, while at $r=1~\micron$ it is $7\%$ stronger on
-    the $+x$ side and $8\%$ weaker on the $-x$ side. This split of the two sides is the
-    one of \cref{fig:strength} and has the same origin in the drift.}
-  \label{fig:activeforce}
-\end{figure}
 
 Dropping the $\nabla\H$ terms as in \cref{sec:model-closure}, dropping all the noise
 terms, and substituting
@@ -2237,9 +2208,9 @@ $u_x=0.24~\micron/\minute$, while $u_y=7\times10^{-12}~\micron/\minute$ vanishes
 round-off, as the mirror symmetry requires. The value of $u_x$ depends on the box size and
 on the walls. The coupling also deforms the defect: the deformation is weak near the core, but away
 from it the solution deviates from the Pad\'e profile used in \cref{sec:defect-steady}.
-This can be seen in \cref{fig:strength,fig:defectangle,fig:nematicaxis}. The active
+This can be seen in \cref{fig:comoving-deformation}(a,b) and \cref{fig:nematicaxis}. The active
 force is deformed too: the cross-coupling and the motion of the defect shift it along the
-axis, away from \cref{eq:active-force-defect} (\cref{fig:activeforce}).
+axis, away from \cref{eq:active-force-defect} (\cref{fig:comoving-deformation}(c)).
 
 \section{Density variance with a short-length cutoff}
 \label{app:variance}
@@ -2518,7 +2489,7 @@ a larger region.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{ln_curve.pdf}
+  \includegraphics[width=0.85\linewidth]{figures/ln_curve.pdf}
   \caption{Peak variance modulation $\nu_0$ against the cutoff $\elln$, from
     \cref{eq:total-gauss} on the exact defect profile. Dashed: the small-$\elln$ asymptote
     \cref{eq:nu0-asymptote}. The modulation vanishes as $\elln\to0$: without a
@@ -2622,8 +2593,8 @@ $\sigma_{p,\infty}$ unchanged, gives the peak enhancements
 \end{equation}
 Because the modulation sits in the exponent, halving $\nu_0$ halves the logarithm of the
 enhancement, and the enhancement falls by a factor of about $26$. On the $+1/2$ side the
-coupled numerics of \cref{app:lyapunov} lower $\nu_0$ from $2.94\%$ to $2.3\%$, and
-with it the enhancement to the $1.4\times10^2$ of \cref{eq:R-value}. We have not run
+coupled numerics of \cref{app:lyapunov} lower $\nu_0$ from $2.94\%$ to $2.4\%$, and
+with it the enhancement to the $1.6\times10^2$ of \cref{eq:R-value}. We have not run
 them for the $-1/2$ defect, so only the analytic values are compared here.
 
 The experiment measures something weaker than the peak, because it bins new layers by
@@ -2642,7 +2613,7 @@ mechanism must dominate, one that opens holes despite the raised layering probab
     and the Gaussian tail \cref{eq:p-layer}, for a $+1/2$ defect (blue) and a $-1/2$
     defect (orange). The red points are the measured enhancement at $+1/2$ defects,
     Fig.~3f of Ref.~\cite{copenhagen2021}. Averaged about the core, the $-1/2$ defect
-    raises the layering probability by at most a factor of four, near $3~\micron$, and
+    raises the layering probability by at most a factor of four (mind the log scale), near $3~\micron$, and
     the $+1/2$ defect by $76$, near $1.5~\micron$. Centred on the core, the $+1/2$
     curve misses the first measured bin, which is why \cref{sec:nucleation-2} centres it
     at $\r_\mathrm{max}$ instead.}
@@ -2717,9 +2688,9 @@ state is linearly stable;
 ($ii$)~the discretized $\mathbf N$ is positive semi-definite, so that it is a covariance at
 all.
 
-We use a uniform grid of $N_\mathrm{int}=150$ interior nodes per direction on
-$[-20,20]^2~\micron^2$, with spacing $\Delta x=40/151~\micron=0.265~\micron$, so the state
-vector has $3N_\mathrm{int}^2=67\,500$ entries. Two-dimensional
+We use a uniform grid of $N_\mathrm{int}=180$ interior nodes per direction on
+$[-20,20]^2~\micron^2$, with spacing $\Delta x=40/181~\micron=0.221~\micron$, so the state
+vector has $3N_\mathrm{int}^2=97\,200$ entries. Two-dimensional
 operators are Kronecker products of one-dimensional ones.
 The covariance is then a dense matrix, and we solve \cref{eq:lyapunov} directly. A real
 Schur decomposition of the discretized $\A$ is followed by a recursive Bartels--Stewart
@@ -2967,7 +2938,7 @@ $\Delta x$.
 
 A finer grid, however, is out of reach: the covariance is a dense matrix with
 $(3N_\mathrm{int}^2)^2$ entries, so its memory grows as $N_\mathrm{int}^4$, and at
-$N_\mathrm{int}=150$ it already takes $36$~GB. We therefore keep the grid and calibrate the
+$N_\mathrm{int}=180$ it already takes $76$~GB. We therefore keep the grid and calibrate the
 correlation length instead.
 
 Quantitatively, the symbol of $W$ on the grid is
@@ -2984,7 +2955,7 @@ With $\ell_W=\elln$ the pedestal on the grid therefore exceeds \cref{eq:pedestal
   \simeq1+\frac{\Delta x^2}{4\elln^2},
 \end{equation}
 with $\mathcal I(s)=\ee^{-s^2}I_0(s^2)$ and $I_0$ the modified Bessel function. On our
-grid, $\Delta x/\elln=0.53$, the pedestal would come out $9\%$ too high.
+grid, $\Delta x/\elln=0.44$, the pedestal would come out $6\%$ too high.
 
 The solver removes this factor by building $W$ from a length $\ell_\mathrm{eff}$
 instead of $\elln$, chosen so that the pedestal on the grid equals \cref{eq:pedestal} at
@@ -2996,7 +2967,7 @@ the physical $\elln$:
 \Cref{fig:cutoff-calibration} shows the ratio $\ell_\mathrm{eff}/\elln$ that solves
 \cref{eq:ell-eff} against $\Delta x/\elln$. On fine grids it approaches one,
 $\ell_\mathrm{eff}/\elln\simeq1+\Delta x^2/8\elln^2$, and on our grid $\ell_\mathrm{eff}$ lies
-$4\%$ above $\elln$. 
+$3\%$ above $\elln$. 
 
 
 The calibration fixes the isotropic pedestal only. The anisotropic term of
@@ -3051,7 +3022,7 @@ this difference does not reach the core.
 
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.85\linewidth]{f2.png}
+  \includegraphics[width=0.85\linewidth]{f2_high.png}
   \caption{Total variance of the fluctuating force,
     $\la|\delta\bs f|^2\ra=\la(\partial_\beta\delta Q_{x\beta})^2\ra
     +\la(\partial_\beta\delta Q_{y\beta})^2\ra$, in $\micron^{-2}$, from the same solution

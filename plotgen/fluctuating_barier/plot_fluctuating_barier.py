@@ -53,11 +53,14 @@ BLUE, GOLD, GREEN, RED = "#5e81b5", "#e19c24", "#8fb131", "#ff0000"
 INK, FAINT, SURF = "#000000", "#cccccc", "#ffffff"
 
 WIDTH_PT, HEIGHT_PT = 126.0, 126.0   # figures/final.pdf page size
+ARROW_TAIL = (12.75, 56.25)             # "increasing p" arrow, data coords
+ARROW_HEAD = (6.75, 14.25)
 LEGEND_XY = (0.99, 0.99)             # top-right corner, in axes fraction
 LEGEND_PAD = (0.3, 0.3)              # x, y padding inside the legend plate
 LEGEND_ALPHA = 0.1              # opacity of that white plate
 LEGEND_EDGE_LW = 0.5                 # its border, thinner than the frame
 FS = 6.0                             # every label in the house figures
+FS_ARROW = 4.5                       # the "increasing p" label, kept small
 LW_CURVE, LW_FRAME, LW_FAINT = 1.044, 0.8, 0.144
 
 # manuscript.tex, tab:pcrit: energies in kPa um (= mN/m), lengths in um, so
@@ -89,7 +92,8 @@ def barrier_top(p, P):
 
 def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
          legend_xy=LEGEND_XY, legend_pad=LEGEND_PAD, legend_alpha=LEGEND_ALPHA,
-         width_pt=WIDTH_PT, height_pt=HEIGHT_PT):
+         width_pt=WIDTH_PT, height_pt=HEIGHT_PT,
+         arrow_tail=ARROW_TAIL, arrow_head=ARROW_HEAD):
     import numpy as np
     import matplotlib
     matplotlib.use("Agg")
@@ -142,6 +146,13 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     ax.axhline(0.0, color=FAINT, lw=LW_FAINT, zorder=1)
     ax.plot(A, e(pc), color=INK, lw=LW_CURVE, solid_capstyle="round", zorder=4)
 
+    # raising p lowers every curve, so the arrow crosses the beam from the blue
+    # (low p) side to the gold (high p) side, from arrow_tail to arrow_head
+    ax.annotate("", xy=arrow_head, xytext=arrow_tail,
+                arrowprops=dict(arrowstyle="-|>,head_length=0.5,head_width=0.25",
+                                color=INK, lw=LW_FRAME, shrinkA=0, shrinkB=0),
+                zorder=5)
+
     # the critical barrier top, at A = Ac by construction -- marked with the
     # faint reference line figures/ln_curve.pdf uses for the same job
     top = barrier_top(pc, P)
@@ -149,7 +160,7 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
         ax.axvline(top[0], color=FAINT, lw=LW_FAINT, zorder=1)
         # in the clear band below the bundles, beside the reference line
         tr = mpl.transforms.blended_transform_factory(ax.transData, ax.transAxes)
-        ax.text(top[0], 0.40, r"  $A_{\rm cell}$", transform=tr, color=INK,
+        ax.text(top[0]-1, 0.050, r"  $A_{\rm cell}$", transform=tr, color=INK,
                 fontsize=FS, ha="left", va="center", zorder=6)
 
     handles = [plt.Line2D([], [], color=BLUE, lw=LW_CURVE),
@@ -187,7 +198,7 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     ax.set_ylim(*ylim)
     ax.xaxis.set_major_locator(MultipleLocator(3.0))
     ax.set_xlabel(r"Patch area  $A$  ($\mu\mathrm{m}^2$)", fontsize=FS, labelpad=3.5)
-    ax.set_ylabel(r"$\Delta E(A)$  ($\mathrm{kPa}\cdot\mu\mathrm{m}^3$)", fontsize=FS, labelpad=3.5)
+    ax.set_ylabel(r"Energy cost  $\Delta E(A)$  ($\mathrm{kPa}\cdot\mu\mathrm{m}^3$)", fontsize=FS, labelpad=3.5)
 
     # full frame; ticks inward on the left and bottom only
     for sp in ax.spines.values():
@@ -195,6 +206,17 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
         sp.set_linewidth(LW_FRAME)
     ax.tick_params(which="major", direction="in", top=False, right=False,
                    length=2.6, width=0.6, color=INK, labelsize=FS, pad=3.0)
+
+    # the arrow's label sits on its shaft midpoint, turned along it, on a white
+    # plate that interrupts the shaft.  The angle has to be taken in display
+    # space, so only now that the limits (and hence the aspect) are final.
+    (x0, y0), (x1, y1) = ax.transData.transform([arrow_tail, arrow_head])
+    angle = math.degrees(math.atan2(y0 - y1, x0 - x1))     # reads uphill, left to right
+    mid = ((arrow_tail[0] + arrow_head[0]) / 2, (arrow_tail[1] + arrow_head[1]) / 2)
+    ax.text(*mid, r"increasing $p$", color=INK, fontsize=FS_ARROW, rotation=angle,
+            rotation_mode="anchor", ha="center", va="center", zorder=6,
+            bbox=dict(boxstyle="round,pad=0.15,rounding_size=0.2", facecolor=SURF,
+                      edgecolor=INK, linewidth=LEGEND_EDGE_LW))
 
     fig.savefig(out_path, facecolor=SURF, dpi=raster_dpi)
     return top
@@ -223,6 +245,10 @@ def main():
                     help="x and y padding inside the legend plate, in font units")
     ap.add_argument("--legend-alpha", type=float, default=LEGEND_ALPHA,
                     help="opacity of the legend's white plate (0 = invisible)")
+    ap.add_argument("--arrow-tail", type=float, nargs=2, default=ARROW_TAIL,
+                    metavar=("A", "E"), help="tail of the increasing-p arrow, data coords")
+    ap.add_argument("--arrow-head", type=float, nargs=2, default=ARROW_HEAD,
+                    metavar=("A", "E"), help="head of the increasing-p arrow, data coords")
     ap.add_argument("--width-pt", type=float, default=WIDTH_PT)
     ap.add_argument("--height-pt", type=float, default=HEIGHT_PT)
     for k, v in PARAMS.items():
@@ -233,7 +259,7 @@ def main():
     pc = a.pc if a.pc is not None else critical_pressure(P)
     top = plot(a.out, P, pc, a.n, a.amax, tuple(a.ylim), a.sigma_lo, a.sigma_hi, a.seed, a.raster_dpi,
                tuple(a.legend_xy), tuple(a.legend_pad), a.legend_alpha,
-               a.width_pt, a.height_pt)
+               a.width_pt, a.height_pt, tuple(a.arrow_tail), tuple(a.arrow_head))
     print(f"pc = {pc:.4f}")
     if top:
         print(f"barrier top at A* = {top[0]:.4f}, e = {top[1]:.4f}")
