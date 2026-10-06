@@ -2555,6 +2555,8 @@ equal-time covariance of $(\delta\rho,\delta\Q)$ on the steady background of
 giving the noise a spatial correlation, chosen to reproduce the pedestal
 \cref{eq:pedestal} (\cref{app:lyapunov-cutoff}).
 
+\prompt{this appendix has many subsection. I would like to have a summary what reader will find in this appendix. Be concise and clear.}
+
 \subsection{Method}
 \label{app:lyapunov-method}
 % Written 2026-10-02 from dean.tex 1521-2047 and lyapunov_solver/ (lyapunov_solver.m,
@@ -2573,10 +2575,10 @@ where $\A$ and $\mathbf N$ are linear operators on fields. $\A$ collects the dri
 noise terms, which contains derivatives as well, because the flux noises $\bEta_\rho$ and
 $\bEta^\Q$ enter through their divergence. The flux correlators are
 \cref{eq:eta-rho-ss,eq:Q-noise-correlators}, evaluated with the exact moments of
-\cref{app:realizability}. Because the noise is white in time, $\psi$ is a Markov process.
+\cref{app:realizability} to ensure covariance positivity. Because the noise is white in time, $\psi$ is a Markov process.
 It\^o's lemma applied to $\psi\psi^\T$ then turns stationarity into an algebraic
 condition on the equal-time covariance
-$\mathbf C(\r,\r')=\la\psi(\r,t)\,\psi(\r',t)^\T\ra$, the Lyapunov equation \citeTODO{Lyapunov equation}
+$\mathbf C(\r,\r')=\la\psi(\r,t)\,\psi(\r',t)^\T\ra$:
 \begin{equation}
   \label{eq:lyapunov}
   \A\,\mathbf C+\mathbf C\,\A^\T+\mathbf N=0,
@@ -2584,7 +2586,7 @@ $\mathbf C(\r,\r')=\la\psi(\r,t)\,\psi(\r',t)^\T\ra$, the Lyapunov equation \cit
 with $\A$ acting on the first argument of $\mathbf C$ and $\A^\T$ on the second. Only the
 delta function in time is needed for this step. The spatial form of $\mathbf N$ is free,
 which is what lets \cref{app:lyapunov-cutoff} give the noise a finite correlation
-length.
+length. \Cref{eq:lyapunov} is known as the Lyapunov equation \citeTODO{Lyapunov equation} \prompt{some insites from control theory with references, 1-2 sentences}.
 
 On a grid, \cref{eq:lyapunov} becomes a matrix equation. It has a unique positive
 semi-definite solution if two conditions hold:
@@ -2601,13 +2603,22 @@ The covariance is then a dense matrix, and we solve \cref{eq:lyapunov} directly.
 Schur decomposition of the discretized $\A$ is followed by a recursive Bartels--Stewart
 back-substitution \cite{bartels1972solution}, which keeps most of the work in matrix
 products. The Schur decomposition also yields the spectrum of $\A$, which checks
-condition (i): in our run every eigenvalue has a negative real part.
+condition ($i$): in our run every eigenvalue has a negative real part.
 
 \subsection{Realizability of the noise covariance}
 \label{app:realizability}
 % Moved here from the closure appendix (2026-10-05); only the opening and the references
 % to the run were rewritten.
-Condition (ii) is not automatic. The noise covariance $\mathbf N$ is assembled from the
+\prompt{I think we need an opening}
+In this appendix we show that the low-order closure of \cref{app:closure} gives valid noise covariance, when
+the nematic field strength satisfies
+\begin{equation}
+  \label{eq:realizability-condition}
+  S\le S_\star \simeq 0.618,
+\end{equation}
+In order to apply our model at stronger order, we use the exact moments of the distribution.
+
+Condition ($ii$) is not automatic. The noise covariance $\mathbf N$ is assembled from the
 local covariance of the noise fluxes at each point (\cref{app:lyapunov-operators}), so it is
 positive semi-definite only if that local covariance is. A variance cannot be negative: if
 some combination of the noises had a negative variance, no noise could have the
@@ -2624,7 +2635,7 @@ weights
   \label{eq:u-vector}
   \bs u(\theta)=\bigl(\p,\ \hat Q_{11}\p,\ \hat Q_{12}\p\bigr).
 \end{equation}
-By \cref{eq:dean-noise-sum}, their covariance is $\bs M\Delta'$, with
+By \cref{eq:dean-noise-sum}, their covariance is $\bs M\Delta'$ \prompt{remind what is $\Delta'$}, with
 \begin{equation}
   \label{eq:gram-matrix}
   \bs M=\frac{4\zeta}{\xi_0\rho_0}\int\!\d\theta\,\varrho_t\,\bs u\,\bs u^\T .
@@ -2642,15 +2653,15 @@ obey the two exact relations $\eta^Q_{\alpha\beta\beta}=\eta^\rho_\alpha$, so $\
 two zero eigenvalues whatever the distribution. Equivalently, the six components of
 $\bs u$ span only the four functions $\cos\theta$, $\sin\theta$, $\cos3\theta$ and
 $\sin3\theta$. A covariance built from approximate moments can move these two
-eigenvalues in either direction, and a negative one makes it invalid.
+eigenvalues in either direction, and a negative eigenvalue makes it invalid.
 
 This is what happens with the lowest-order closure. The products $u_{(ai)}u_{(bj)}$
 contain only the harmonics $n=0,2,4,6$, so $\bs M$ depends on the distribution only
 through $\rho$ and the complex harmonics
 $z_n=\rho^{-1}\int\!\d\theta\,\varrho\,\ee^{\ii n\theta}$ with $n=2,4,6$. The closure
 \cref{eq:leading-closure} keeps $z_2=S\ee^{2\ii\theta_0}$, which $\Q$ fixes, and sets
-$z_4=0$ through $\la\hat\Q\hat\Q\ra_\varrho=\rho\J$ and $z_6=0$ through
-$\la\hat\Q\hat\Q\hat\Q\ra_\varrho=\tfrac12\bT$. Its $\bs M$ is valid only if some
+$z_4=0$ through $\langle\hat\Q\hat\Q\rangle_\varrho=\rho\J$ and $z_6=0$ through
+$\langle\hat\Q\hat\Q\hat\Q\rangle_\varrho=\tfrac12\bT$. Its $\bs M$ is valid only if some
 non-negative distribution has these harmonics, which is a truncated trigonometric moment
 problem. Once the phase of $z_2$ is rotated away, such a distribution exists if and only
 if the Toeplitz matrix of the harmonics,
@@ -2671,11 +2682,7 @@ eigenvalue of $\bs M$ changes sign exactly at $S_\star$, so the bound is sharp.
 
 The defect steady state lies far above this bound. In the steady state of
 \cref{app:comoving}, $S$ rises from $0.10$ next to the core to $0.90$ far from it,
-and it exceeds $S_\star$ everywhere except within about $1.5~\micron$ of the core, on
-$99.5\%$ of the grid. Keeping the $\U$ term at its small-$S$ coefficient, which sets
-$z_4=S^2/2$, raises the bound only to $S\le0.775$, and the steady state still exceeds
-that on $99\%$ of the grid. The lowest-order closure therefore gives no valid noise
-covariance for this defect.
+and it exceeds $S_\star$ everywhere except within about $1.5~\micron$ of the core. Keeping the next lowest order term in \cref{eq:exact-moments} raises the bound only to $S\le0.775$. The lowest-order closure therefore gives no valid noise covariance for this defect.
 
 The analytic calculation of \cref{sec:defect-fluct} avoids the problem, because it
 sets $\delta\Q=0$ and keeps only the density noise. Its correlator
@@ -2684,16 +2691,21 @@ equations for $\delta\rho$ and $\delta\Q$, on the other hand, need the full cova
 $(\bEta_\rho,\bEta^\Q,\f^Q)$, and with the lowest-order closure they are ill defined
 around the defect.
 
+\prompt{shorten this paragraph}
 The failure comes from the expansion, not from the maximum-entropy hypothesis. The von
 Mises distribution is a genuine density, so the exact moments \cref{eq:exact-moments}
-give a Gram matrix at every $S$. Moreover, since $\bs M$ depends on the distribution only
-through the harmonics up to $n=6$, the three ratios $m_1$, $m_2$ and $m_3$ reproduce the
-von Mises covariance exactly, and the higher harmonics never enter. We therefore use the exact
+give a Gram matrix at every $S$. 
+% Moreover, since $\bs M$ depends on the distribution only
+% through the harmonics up to $n=6$, the three ratios $m_1$, $m_2$ and $m_3$ reproduce the
+% von Mises covariance exactly, and the higher harmonics never enter. 
+We therefore use the exact
 moments in the noise correlators of the coupled equations, at the cost of solving
 \cref{eq:kappa-S} once per point, and the solver builds its noise
-covariance from them. With them, the rotational correlator
-$(2\Lambda/\rho_0)\la\hat\Q'\hat\Q'\ra_\varrho$ gains a term proportional to
-$\U(\Q_\ss)$, which couples $\delta Q_{11}$ and $\delta Q_{12}$. The drift of the
+covariance from them. 
+% With them, the rotational correlator
+% $(2\Lambda/\rho_0)\la\hat\Q'\hat\Q'\ra_\varrho$ gains a term proportional to
+% $\U(\Q_\ss)$, which couples $\delta Q_{11}$ and $\delta Q_{12}$. 
+The drift of the
 solver, like the steady state, keeps the lowest-order closure of \cref{eq:model-Q}, so the
 exact moments change only the noise.
 
@@ -2703,6 +2715,9 @@ exact moments change only the noise.
 % lyapunov_solver/lyapunov_solver.m (915-960 operators and the exact identity check,
 % 1166-1183 drift, 1241-1291 noise assembly). Numbers: claude_experiments/fd_operators/
 % check_operators.py and cutoff_run_resolution.py.
+
+\prompt{the illustration in dean.tex fig:staggered-grid would be useful here, rewrite this section including it}
+
 The equal-point variance of the density is sensitive to how the derivatives in
 \cref{eq:linearized-rho} are discretized, because of the way it arises in the continuum.
 There its spectrum is flat, since two factors of $k^2$ cancel: the noise enters as the
@@ -2796,6 +2811,9 @@ a further congruence, $W\mathbf NW$, and preserves positivity.
 % Figure and the 0.1% checks: claude_experiments/cutoff_fig/cutoff_calibration_v2.wls (solver
 % on a uniform state, plus the defect runs of set2_2_comove_optimized_2); the other numbers
 % below: cutoff_calibration.wls.
+
+\prompt{This section is confusing. The idea of this section is to show that there is a need of calibration, first explaining the underlying reason in an intuitive way and mention that this calibration is not needed for fine grids but we cannot consider finer grids as memory increases with power 4 on one axis discretisation. then explain quantititatively + the plot. }
+
 A grid does not resolve lengths below its spacing, so it is itself a short-length
 cutoff. With noise white in space, the solver returns the pedestal
 $\zeta/(B\rho_0\Delta x^2)$, which is \cref{eq:pedestal} with $\elln=\Delta x/\sqrt{2\pi}$.
@@ -2809,15 +2827,15 @@ matches the analytic one, \cref{eq:pedestal}.
 
 The solver smooths the noise field with the Gaussian patch of \cref{app:variance-cutoff},
 built from a length $\ell_W$, $\tilde W(\k)=\ee^{-k^2\ell_W^2/4}$. Smoothing the noise
-field, rather than its covariance, keeps the covariance positive semi-definite. With
+field, rather than its covariance, keeps the covariance positive semi-definite. \unclear{With
 $M(\r)$ the local amplitude of the white-noise covariance, the smoothed covariance is
 $\int\!\d^2\r''\,W(\r-\r'')M(\r'')W(\r''-\r')$, which is positive semi-definite wherever
-$M$ is. Moreover, $W$ commutes with the drift $(B/\xi_0)\nabla^2$ of the density, so
+$M$ is} \prompt{I do not understand what are the arguments of the covariance. Be clear here}. Moreover, $W$ commutes with the drift $(B/\xi_0)\nabla^2$ of the density, so
 smoothing the noise gives the same covariance as smoothing the density, which is what
 \cref{app:variance-cutoff} does.
 
-On the grid, $W=\exp(\ell_W^2\nabla^2_{\Delta x}/4)$, with $\nabla^2_{\Delta x}$ the
-discrete Dirichlet Laplacian. Its symbol,
+On the grid, \unclear{$W=\exp(\ell_W^2\nabla^2_{\Delta x}/4)$}\prompt{how is this obtained?}, with $\nabla^2_{\Delta x}$ the
+discrete Dirichlet Laplacian. Its \unclear{symbol}\prompt{what is a symbol?},
 \begin{equation*}
   \exp\Bigl[-\frac{\ell_W^2}{\Delta x^2}\Bigl(\sin^2\frac{k_x\Delta x}2
   +\sin^2\frac{k_y\Delta x}2\Bigr)\Bigr],
@@ -2840,6 +2858,7 @@ the physical $\elln$:
   \label{eq:ell-eff}
   \mathcal I(\ell_\mathrm{eff}/\Delta x)=\frac{\Delta x}{\sqrt{2\pi}\,\elln}.
 \end{equation}
+\prompt{shorten the rest. Too many quantititative comments}
 On fine grids $\ell_\mathrm{eff}\simeq\elln+\Delta x^2/(8\elln)$. The calibration needs
 a grid finer than the cutoff: \cref{eq:ell-eff} has a solution only for
 $\elln\ge\Delta x/\sqrt{2\pi}$, because below that the bare grid already gives a smaller
@@ -2880,7 +2899,10 @@ fluctuating field, and on the noise flux through the wall. The last two answer o
 question, whether a cell may cross the wall, once for the fluctuation and once for the
 noise, so they must agree. Two coherent choices remain for the fluctuations. A reservoir
 pins the fluctuation and lets the noise flux through, like a window cut from a larger
-colony, and a sealed wall blocks both, like a container. The solver offers both, and its
+colony, \prompt{sentence break here}and a sealed wall blocks both, like a container. 
+
+\prompt{do not write what support we have. Just write what is presented, what conditions are used}
+The solver offers both, and its
 sealed option also anchors $\delta\Q$ at the wall. Only $\rho$ is conserved, so sealing
 constrains the density sector alone, and a free $\delta\Q$ would leave three unstable
 modes, the two translations of the defect and the rotation of the director, because a
@@ -2889,6 +2911,7 @@ wall nodes are removed, so $\delta\rho=\delta\Q=0$ there, the noise flux through
 next to the wall is kept, and the smoothing $W$ is built on the Dirichlet Laplacian, so it
 vanishes at the wall too.
 
+\prompt{remove this paragraph}
 For a coherent wall the isotropic pedestal does not depend on the choice. If the drift
 and the noise share one positive mobility $\mathcal M$, with $\A=-\mathcal M\mathbf K$ and
 $\mathbf N=2T\mathcal M$ for a positive stiffness $\mathbf K$ and a constant $T$, the solution
@@ -2900,6 +2923,7 @@ proportional to $Q^\ss_{nn}/\rho_\ss$, and through the smoothing, which vanishes
 wall. In our run these effects stay within about ten cells, or $2.6~\micron$, of the
 wall, far from the core.
 
+\prompt{merge this with the previous paragraph}
 The steady state of \cref{app:comoving} has the same density wall, $\rho_\ss=1$, so
 the density sector is coherent throughout. Only the nematic wall differs: the steady state
 leaves $\Q_\ss$ free at the wall, $\nh\tcdot\nabla\Q_\ss=0$, whereas the fluctuations are
@@ -2955,6 +2979,17 @@ over $\tau_c$. Over a correlation time of the density the $\delta\Q$ force there
 like a static active force, and the density responds to a static force only at order
 $\zeta/B$, as \cref{eq:rho-analytic} shows for the mean, while
 $\sigma_\rho\propto B^{-1/2}$.
+
+\prompt{we also conpute the fluctuations of Q and active force. Look at figures fxfx fyfy f2 fActiveMeanAndStd, understand how these figures can be used and which ones. In clude them in this appendix and comment on them. Do not comment quantitative differences, comment on the physics and qualitative differences. Make it easy to read.}
+
+
+
+
+
+
+
+
+
 
 \bibliographystyle{apsrev4-2}
 \bibliography{literature}
