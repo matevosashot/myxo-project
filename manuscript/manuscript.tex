@@ -2528,7 +2528,127 @@ a larger region.
   \label{fig:ln_curve}
 \end{figure}
 
-\input{negative_defect}
+% ============================================================
+\section{Density variance at a $-1/2$ defect}
+\label{app:negative}
+% Written 2026-10-05. Numbers and figures: negative-defect/negative_defect.wls
+% (numbers.txt). Analytic treatment only (delta Q = 0, eq:total-gauss); no Lyapunov run
+% for -1/2. Supports the -1/2 paragraph of \cref{sec:discussion}.
+% ============================================================
+For comparison, we consider the current model on the $-1/2$ defect.
+A $-1/2$ defect feels no net active force, so it does not drift. \Cref{eq:total-gauss}, however, holds for any steady nematic field,
+so a $-1/2$ defect modulates the density variance too, and through it the layering
+probability. Here we compute that modulation at the parameters of \cref{app:parameters}
+and compare it with the one at a $+1/2$ defect. We stay with the analytic treatment of
+\cref{sec:defect-fluct}, at $\delta\Q=0$, and compare it with the same treatment at a
+$+1/2$ defect, which gives $\nu_0=2.94\%$ variance modulation (\cref{app:variance-ln}).
+
+
+In the polar coordinates of \cref{sec:defect-steady}, a defect of charge $\pm1/2$ has the
+director at the angle $\theta=\pm\phi/2$, and both defects share the radial profile $S(r)$.
+The variance depends on the defect only through the double divergence
+$\partial_i\partial_jQ_{ij}$, which for the two defects is
+\begin{align}
+  \label{eq:ddQ-plus}
+  &+1/2:\quad \partial_i\partial_jQ_{ij}=g_1(r)\cos\phi,
+  \\
+  \label{eq:ddQ-minus}
+  &-1/2:\quad \partial_i\partial_jQ_{ij}=g_3(r)\cos3\phi,
+\end{align}
+with $g_1=(S'+S/r)'$, $g_3=h'-2h/r$ and $h=S'-S/r$. The first line is the source of \cref{sec:defect-fluct}. The second has threefold
+symmetry, as the defect does, and its radial factor differs from $g_1$ at both ends.
+Near the core $S\simeq s_1r+s_3r^3+s_5r^5$, and the terms of order $r$ cancel in $g_3$, so
+$g_3\simeq8s_5r^3$, whereas $g_1\simeq8s_3r$. Far from the core
+$S\simeq S_0(1-\elld^2/2r^2)$, which gives $g_3\simeq3S_0/r^2$ against $g_1\simeq-S_0/r^2$.
+The $-1/2$ source is thus suppressed within the core and three times stronger in the far
+field. Inside about $\elld$, where the nematic field varies fastest, it is weak: its largest
+value, $\max|g_3|=0.16~\micron^{-2}$, is half that of $g_1$, $0.35~\micron^{-2}$.
+
+The kernel $\kappa$ of \cref{eq:kappa-real} is isotropic, so the convolution in
+\cref{eq:total-gauss} keeps the angular harmonic of its source. Writing $\r'-\r$ in polar
+form and integrating over its angle, we find
+\begin{equation}
+  \label{eq:nu-harmonic}
+  \frac{\sigmarho(\r)}{\sigmarho|_\text{pedestal}}-1=\frac{\elln^2}{4}\,H_n(r)\cos n\phi,
+\end{equation}
+with
+\begin{align}
+  H_n(r)&=\int_0^\infty\!\d r'\,r'g_n(r')\,K_n(r,r'),
+  \nonumber\\
+  K_n(r,r')&=\int_0^{2\pi}\!\d\alpha\,
+   \kappa\Bigl(\sqrt{r^2+r'^2-2rr'\cos\alpha}\Bigr)\cos n\alpha,
+  \nonumber
+\end{align}
+and with $n=1$ for the $+1/2$ defect and $n=3$ for the $-1/2$ defect. Each $H_n$ is a
+two-dimensional integral, which we evaluate numerically on the profile
+\cref{eq:pade-accurate}.
+
+At a $-1/2$ defect the variance is therefore raised in three lobes and lowered in three
+lobes between them (\cref{fig:negative-3d}(b)). Since $g_3>0$ in the far field, the
+raised lobes lie at $\phi=0,\pm2\pi/3$, where the director points radially away from the
+core, and the lowered ones at $\phi=\pi,\pm\pi/3$, where it runs around the core. The
+modulation peaks at
+\begin{equation}
+  \label{eq:nu0-minus}
+  \nu_0^{(-)}=1.35\%\quad\text{at}\quad r=3.3~\micron,
+\end{equation}
+less than half of $\nu_0$ at the $+1/2$ defect and more than twice as far from the core.
+Both differences follow from the source: within $\elld$ of the core $g_3$ is small, so the
+$-1/2$ modulation builds up only where $S$ has nearly saturated.
+\Cref{fig:negative-3d} shows the two surfaces on a common scale.
+
+
+\begin{figure*}[tbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{varrho3D_pm.png}
+  \caption{Analytic density variance normalized by the pedestal, \cref{eq:nu-harmonic},
+    around \textbf{(a)} a $+1/2$ defect and \textbf{(b)} a $-1/2$ defect, on discs of radius $6~\micron$, on
+    the same vertical and colour scales and at the same parameters; the black curves are director
+    streamlines. The $+1/2$ modulation is a single ridge and trough of
+    $\pm2.94\%$ about $1.5~\micron$ from the core. The $-1/2$ modulation reaches
+    $\pm1.35\%$ in three lobes each, about $3.3~\micron$ from the core.}
+  \label{fig:negative-3d}
+\end{figure*}
+
+The layering probability amplifies this difference. \Cref{eq:R-value}, with $\pcrit$ and
+$\sigma_{p,\infty}$ unchanged, gives the peak enhancements
+\begin{equation}
+  \label{eq:R-minus}
+  \frac{\calP(\r_\mathrm{max})}{\calP(\infty)}\simeq
+  \begin{cases}
+    4.5\times10^2, & +1/2,\\
+    17, & -1/2.
+  \end{cases}
+\end{equation}
+Because the modulation sits in the exponent, halving $\nu_0$ halves the logarithm of the
+enhancement, and the enhancement falls by a factor of about $26$. On the $+1/2$ side the
+coupled numerics of \cref{app:lyapunov} lower $\nu_0$ from $2.94\%$ to $2.3\%$, and
+with it the enhancement to the $1.4\times10^2$ of \cref{eq:R-value}. We have not run
+them for the $-1/2$ defect, so only the analytic values are compared here.
+
+The experiment measures something weaker than the peak, because it bins new layers by
+their distance from the core and so averages the probability over circles about it
+(\cref{eq:p-layer-radial} with $\r_\mathrm c=0$). On such a circle three raised lobes alternate with three lowered ones. 
+\Cref{fig:negative-layering} shows the result for both defects. The model thus favours
+new layers near $-1/2$ defects too, although less than near $+1/2$ defects. Near $-1/2$
+defects, however, Ref.~\cite{copenhagen2021} observes holes opening, so there another
+mechanism must dominate, one that opens holes despite the raised layering probability.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{layering_pm.pdf}
+  \caption{Layering probability averaged over a circle of radius $r$ about the core,
+    relative to its far-field value, from the analytic variance \cref{eq:nu-harmonic}
+    and the Gaussian tail \cref{eq:p-layer}, for a $+1/2$ defect (blue) and a $-1/2$
+    defect (orange). The red points are the measured enhancement at $+1/2$ defects,
+    Fig.~3f of Ref.~\cite{copenhagen2021}. Averaged about the core, the $-1/2$ defect
+    raises the layering probability by at most a factor of four, near $3~\micron$, and
+    the $+1/2$ defect by $76$, near $1.5~\micron$. Centred on the core, the $+1/2$
+    curve misses the first measured bin, which is why \cref{sec:nucleation-2} centres it
+    at $\r_\mathrm{max}$ instead.}
+  \label{fig:negative-layering}
+\end{figure}
+
 
 \section{Lyapunov solver for the coupled fluctuations}
 \label{app:lyapunov}
