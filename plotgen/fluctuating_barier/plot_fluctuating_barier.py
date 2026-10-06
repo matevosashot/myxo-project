@@ -27,7 +27,7 @@ pc is fixed by Ac: it is the pressure whose barrier top sits at A = Ac.
 With b = (Gamma + Wc) h 2 Sqrt(Pi), de/dA = (Ws - Wc - p) + b / (2 Sqrt(A)),
 so the top is at Sqrt(A*) = b / (2 (p - Ws + Wc)) and demanding A* = Ac gives
 
-    pc = Ws - Wc + (Gamma + Wc) h Sqrt(Pi / Ac)        (35258.3 here)
+    pc = Ws - Wc + (Gamma + Wc) h Sqrt(Pi / Ac)        (35.258 kPa um here)
 
 Override it with --pc if the intended definition is a different one.
 
@@ -60,7 +60,9 @@ LEGEND_EDGE_LW = 0.5                 # its border, thinner than the frame
 FS = 6.0                             # every label in the house figures
 LW_CURVE, LW_FRAME, LW_FAINT = 1.044, 0.8, 0.144
 
-PARAMS = dict(Ws=2000.0, Wc=0.0, gamma=65000.0, h=0.5, Ac=3.0)
+# manuscript.tex, tab:pcrit: energies in kPa um (= mN/m), lengths in um, so
+# e(A, p) comes out in kPa um^3 for A in um^2
+PARAMS = dict(Ws=2.0, Wc=0.0, gamma=65.0, h=0.5, Ac=3.0)
 
 
 def energy(A, p, P):
@@ -117,13 +119,12 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     # p_hi = pc * (1.0 + np.abs(rng.exponential(sigma_hi/2, n)))   # above pc
 
     A = np.linspace(0.0, amax, 1200)
-    SC = 1e5                                    # y is O(1e5); carry the decade
-    def e(p):                                   # in the axis label instead
-        return energy(A, p, P) / SC
+    def e(p):                                   # kPa um^3
+        return energy(A, p, P)
 
     fig = plt.figure(figsize=(width_pt / 72.0, height_pt / 72.0))
     fig.patch.set_facecolor(SURF)
-    rect = [0.165, 0.180, 0.775, 0.745]
+    rect = [0.195, 0.180, 0.745, 0.745]
     ax = fig.add_axes(rect)
     ax.set_facecolor(SURF)
 
@@ -148,7 +149,7 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
         ax.axvline(top[0], color=FAINT, lw=LW_FAINT, zorder=1)
         # in the clear band below the bundles, beside the reference line
         tr = mpl.transforms.blended_transform_factory(ax.transData, ax.transAxes)
-        ax.text(top[0], 0.40, r"  $A_c$", transform=tr, color=INK,
+        ax.text(top[0], 0.40, r"  $A_{\rm cell}$", transform=tr, color=INK,
                 fontsize=FS, ha="left", va="center", zorder=6)
 
     handles = [plt.Line2D([], [], color=BLUE, lw=LW_CURVE),
@@ -163,7 +164,7 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     anchor = (legend_xy[0] - bpad / (width_pt * rect[2]),
               legend_xy[1] - bpad / (height_pt * rect[3]))
     leg = ax.legend(handles,
-                    [r"$p<p_c$", r"$p=p_c$", r"$p>p_c$"],
+                    [r"$p<p_{\rm crit}$", r"$p=p_{\rm crit}$", r"$p>p_{\rm crit}$"],
                     loc="upper right", bbox_to_anchor=anchor,
                     bbox_transform=ax.transAxes,
                     frameon=True, fancybox=True,
@@ -185,8 +186,8 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     ax.set_xlim(-1, amax)
     ax.set_ylim(*ylim)
     ax.xaxis.set_major_locator(MultipleLocator(3.0))
-    ax.set_xlabel(r"Nucleus area  $A$", fontsize=FS, labelpad=3.5)
-    ax.set_ylabel(r"Free energy  $e(A,p)$  ($10^{5}$)", fontsize=FS, labelpad=3.5)
+    ax.set_xlabel(r"Patch area  $A$  ($\mu\mathrm{m}^2$)", fontsize=FS, labelpad=3.5)
+    ax.set_ylabel(r"$\Delta E(A)$  ($\mathrm{kPa}\cdot\mu\mathrm{m}^3$)", fontsize=FS, labelpad=3.5)
 
     # full frame; ticks inward on the left and bottom only
     for sp in ax.spines.values():
@@ -208,8 +209,8 @@ def main():
                     help="resolution of the rasterized bundle layer")
     ap.add_argument("--n", type=int, default=50, help="curves per bundle")
     ap.add_argument("--amax", type=float, default=15.0, help="right edge of the A axis")
-    ap.add_argument("--ylim", type=float, nargs=2, default=(-0.25, 1.15),
-                    metavar=("LO", "HI"), help="y range, in units of 1e5")
+    ap.add_argument("--ylim", type=float, nargs=2, default=(-25.0, 115.0),
+                    metavar=("LO", "HI"), help="y range, in kPa um^3")
     ap.add_argument("--sigma-lo", type=float, default=0.1)
     ap.add_argument("--sigma-hi", type=float, default=0.05)
     ap.add_argument("--pc", type=float, default=None, help="override the critical pressure")
