@@ -2,3 +2,10 @@
 jobscripts/logs
 output
 claude_experiments
+remote_kernel
+
+
+**/__pycache__/
+# downloaded papers of manuscript/literature.bib
+literature/
+literature-new/

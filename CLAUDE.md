@@ -12,6 +12,9 @@ In order to export an image with wolframscript, unset DISPLAY environment variab
 
 # Latex
 
+## Intermediate files
+make the intermediate files in a temporary folder ./.tmp next to tex file. Move the pdf next to the tex file.
+
 ## Highlight the changes
 
 Use \upd{...} for smaller changes or \begin{updenv}... \end{updenv} for larger blocks of text to highlight the changes.
