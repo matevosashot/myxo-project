@@ -131,14 +131,14 @@ one another, so its first step is the formation of a second layer on top of the
 monolayer (red arrow in \cref{fig:myxo_life}). We ask how this first new layer forms.
 
 \begin{figure}[tbp]
-\includegraphics[width=0.8\linewidth]{figures/handmade/myxo_life_2.png}
+\includegraphics[width=0.6\linewidth,page=2]{figures/handmade/myxo_life.pdf}
 \caption{Life cycle of \textit{M.\ xanthus}, adapted from Ref.~\cite{munoz2016}.
 \textbf{(A)} Vegetative cycle. With nutrients, the cells glide together as a swarm, a thin film
 on the substrate, and kill and lyse prey bacteria (gray). \textbf{(B)} Developmental cycle. Upon
 starvation, the swarm aggregates into mounds, which grow into upright fruiting bodies
 filled with spores (brown). The spores germinate when nutrients return. The red arrow
 marks the transition this paper addresses: the flat swarm forms its first multilayered
-structures. \todo{increase label size}}
+structures. }
 \label{fig:myxo_life}
 \end{figure}
 The cells are rods $5$ to $7~\micron$ long and about $0.5~\micron$ wide that glide along their
@@ -905,27 +905,26 @@ density \eqref{eq:free-energy-choice}. \Cref{app:parameters-choice} gives their 
 \cite{copenhagen2021,han2025local} and \cref{app:density-poisson,app:comoving} the
 accuracy of the approximant.
 
-\prompt{I do not like terminology "wall", do not use it. Maybe "boundary"?}
 Now, the first equation in \cref{eq:simplified-noiseless} is a Poisson equation for the density.
-Its solution needs a boundary condition at a wall, and that condition is a
-choice. Without a wall, the density would not return to one far from the core. No wall at a finite distance describes a defect in an extended colony, and none
-of the possible walls is more physical than the others. We take the wall to be a
+Its solution needs a boundary condition, and that condition is a
+choice. Without a boundary, the density would not return to one far from the core. No boundary at a finite distance describes a defect in an extended colony, and none
+of the possible boundaries is more physical than the others. We take the boundary to be a
 reservoir: on a circle of radius $R$ we impose $\rho=1$, as if the region inside the
-wall were embedded in a monolayer held at the density that incompressibility imposes.
+boundary were embedded in a monolayer held at the density that incompressibility imposes.
 We take $R=20~\micron$, comparable to the nematic correlation length 
 measured in Ref.~\cite{copenhagen2021}, beyond which the director field of one defect
 gives way to that of others. The
-numerical solution in \cref{app:comoving} satisfies the same condition at the walls of its
+numerical solution in \cref{app:comoving} satisfies the same condition at the boundaries of its
 domain.
 With this condition, the Poisson equation has the exact solution
 \begin{align}
   \label{eq:rho-analytic}
   \rho(r,\phi) = 1 - \frac{\zeta}{B}\left[ S(r) - \frac rR\,S(R)\right]\cos \phi.
 \end{align}
-The wall adds the linear term
+The boundary adds the linear term
 $(r/R)S(R)$ of \cref{eq:rho-analytic}, which pulls the density back to one at $r=R$.
-\Cref{app:density-poisson} derives \cref{eq:rho-analytic} and compares it with a wall that
-blocks the flux of cells \prompt{no-flux boundary?}. In either case the density departs from uniformity only at
+\Cref{app:density-poisson} derives \cref{eq:rho-analytic} and compares it with a no-flux boundary, which
+blocks the flux of cells. In either case the density departs from uniformity only at
 order $\zeta/B$.
 
 Restoring the cross-coupling sets the defect in motion. To find the direction of the
@@ -956,7 +955,7 @@ its alignment with it. At the
 tail the rods lie along the axis and carry their alignment into the core, whereas at the
 head they lie across the axis, so this transport moves the defect toward its head. The
 lowest-order closure drops it, although it is as large as the transport the closure keeps.
-With the exact moments of the \prompt{angular?} maximum-entropy distribution (\cref{app:closure}), it
+With the exact moments of the maximum-entropy angular distribution (\cref{app:closure}), it
 outweighs the cross-coupling, and the defect moves toward its head as in experiments
 (\cref{app:drift}).
 
@@ -976,12 +975,12 @@ defect axis against \cref{eq:rho-analytic}.
   \caption{Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$,
     across the whole domain; $\zeta$ is the coefficient of the active stress and $B$ the
     bulk modulus. Solid: the comoving-frame numerical solution of
-    \cref{eq:model-rho,eq:model-Q} (\cref{app:comoving}), with $\rho=1$ at the walls
+    \cref{eq:model-rho,eq:model-Q} (\cref{app:comoving}), with $\rho=1$ at the boundaries
     $x=\pm20~\micron$. Dashed: \cref{eq:rho-analytic}, the closed-form solution of the
-    simplified system, which is antisymmetric under $x\to-x$, for a circular wall of
+    simplified system, which is antisymmetric under $x\to-x$, for a circular boundary of
     radius $R=20~\micron$. The density is enhanced at the head of the defect, $x<0$
     (\cref{fig:defects-layering}(a)), and depleted at its tail, and in both solutions it
-    returns to one at the walls. The numerical density lies below the closed form on both
+    returns to one at the boundaries. The numerical density lies below the closed form on both
     sides of the core, by about $\zeta/2B$ near it. This symmetric shift comes from the
     cross-coupling, which the closed form drops.}
   \label{fig:rho1d-dirichlet}
@@ -1053,7 +1052,10 @@ The main text presents the analytically tractable case, in which only the densit
 fluctuates and $\delta\Q=0$. 
 This is the appropriate limit when the $\zeta\,\nabla\cdot\delta\Q$ term in
 \cref{eq:linearized-rho} is small compared with the noise $\bEta_\rho$, or when $\delta\Q$
-changes so slowly that the density responds to its force \unclear{only at order $\zeta/B$} \prompt{I do not understand this}.
+changes so slowly that the density follows the active force $-\zeta\nabla\cdot\delta\Q$
+quasi-statically. The density then shifts only by about $(\zeta/B)\,\delta\Q$, as the mean
+density does in \cref{eq:rho-analytic}, far less than the fluctuations that $\bEta_\rho$
+drives.
 
 \Cref{eq:linearized-Q} then drops out, and both of its
 noises with it: only $\bEta_\rho$ survives.
@@ -1084,9 +1086,8 @@ then flat in $\k$, and the equal-time variance
 $\la\delta\rho(\r,t)\delta\rho(\r',t)\ra_\ss$ diverges as $\r'\to\r$.
 
 The divergence comes from treating the monolayer as a continuum down to arbitrarily short
-length scales. \unclear{However, the continuum description fails below the shortest length in the system,
-the width of a cell, which sets a physical cutoff. Thus we
-introduce a short length scale cutoff} \prompt{I want to rewrite this. Contonum theory works, but seems we need a cutoff, which indeed exists in the system, there is no shorter distance then elln. Current text does not reflect that. Suggest versions, I will pick one.}
+length scales. The theory therefore needs a cutoff, and the system supplies one: there is no length
+shorter than the width of a cell. We therefore set
 \begin{equation}
     \label{eq:cutoff}
     \elln = 0.5~\micron.
@@ -1185,7 +1186,7 @@ In \cref{fig:variance} we also show the density variance from the full numerical
 It does so although the force $-\zeta\nabla\cdot\delta\Q$ that $\delta\Q$ adds
 fluctuates more strongly than the mean active force. The reason is that $\delta\Q$ evolves
 orders of magnitude more slowly than the density relaxes over $\tau_c$, so the density sees
-it as a nearly static force and responds to it only at order $\zeta/B$, as it does to the
+it as a nearly static force and shifts only by about $(\zeta/B)\,\delta\Q$, as it does under the
 mean force in \cref{eq:rho-analytic} (\cref{app:lyapunov-results}). \Cref{fig:variance3d}(a) shows the two-dimensional profile of the density variance.
 
 A modulation of two to three percent is the entire position\nobreakdash-dependent signal in the density variance profile. In \cref{sec:nucleation-2} we show that it modulates the layering probability by two orders of magnitude.
@@ -1337,9 +1338,7 @@ single-cell perturbations (\cref{sec:nucleation-1}). Taken at face value, it giv
 below the observed one. The ratio is less sensitive, because the attempt time and the
 prefactors cancel from it, and the fit of $B$ below fixes $z_\infty$.
 
-The match with the measured ratio is a one-parameter fit. We chose $B$ by eye, comparing
-the computed layering probability with the data of Fig.~3f of Ref.~\cite{copenhagen2021}
-for a few values of $B$, because each value requires a long numerical evaluation \prompt{move this sentence to appendix. Find and suggest suitable places}. Every quantity in \cref{eq:R-value} is fixed in advance 
+The match with the measured ratio is a one-parameter fit. Every quantity in \cref{eq:R-value} is fixed in advance 
 except the bulk modulus $B$, the stiffness of the incompressibility penalty in
 \cref{eq:free-energy-choice}. $B$ is a model parameter rather than a measured constant.
 No measurement of $B$ exists for the monolayer, but related moduli, multiplied by the
@@ -1686,7 +1685,9 @@ relations in \cref{tab:field-params}.
 
 This leaves the bulk modulus $B$, the only parameter of the model that we fit. We set
 $B=90~\kPa\tcdot\micron$, because this value reproduces the layering probability data of
-Ref.~\cite{copenhagen2021} (\cref{sec:nucleation-2}, \cref{fig:defects-layering}(c)). No direct measurement exists to
+Ref.~\cite{copenhagen2021} (\cref{sec:nucleation-2}, \cref{fig:defects-layering}(c)). We chose it by eye,
+comparing the computed layering probability with Fig.~3f of Ref.~\cite{copenhagen2021} for a
+few values of $B$, because each value requires a long numerical evaluation. No direct measurement exists to
 compare it with, but related moduli, multiplied by the layer height $h$, span five orders
 of magnitude. At the soft end, colonies of \textit{Serratia marcescens} on agar have shear
 and compressive moduli of $10^2$--$10^4~\Pa$, or
@@ -1745,11 +1746,11 @@ $\gamma_0$ & $1.8\times10^4~\micron^2/\minute$ & $B/\xi_0$ \\
 
 \Cref{eq:dE-of-A} counts the pressure work $pA$ as the energy a patch gains when it leaves
 the monolayer. This gain comes from the elastic energy of the compressed cells, so here we
-derive it from the free energy. Only the bulk term $\mathfrak f=\tfrac B2(\rho-1)^2$ of
+derive it from the free energy. Only the compression term $\mathfrak f_B=\tfrac B2(\rho-1)^2$ of
 \cref{eq:free-energy-choice} depends on $\rho$, and we therefore keep only this term.
 
 Consider a region of area $A_d$ that is compressed uniformly to $\rho=1+\epsilon$, so that
-it stores the energy $\mathfrak fA_d=\tfrac B2\epsilon^2A_d$. A patch of area $A$ inside
+it stores the energy $\mathfrak f_BA_d=\tfrac B2\epsilon^2A_d$. A patch of area $A$ inside
 this region then forms the new layer and takes $\rho_0(1+\epsilon)A$ cells with it. As the
 bottom layer spreads back over the whole of $A_d$ (\cref{fig:nucleation}(a)), its strain
 falls to $\epsilon_f=\epsilon-(1+\epsilon)A/A_d$. The extruded cells, in contrast, are
@@ -1764,21 +1765,22 @@ by $\Delta E_e=\tfrac B2(\epsilon_f^2-\epsilon^2)A_d$, which we write as
 The two parts of the system contribute differently to this release. The bottom layer
 releases $pA-\tfrac B2(1+\epsilon)^2A^2/A_d$, where $p=\tfrac B2(\rho^2-1)$ is the exact
 pressure of \cref{eq:pressure-definition}, while the extruded cells release their own
-strain energy $\mathfrak fA$. For a patch much smaller than the compressed region,
+strain energy $\mathfrak f_BA$. For a patch much smaller than the compressed region,
 $A\ll A_d$, the term in $A^2/A_d$ is negligible, and
 \begin{equation}
     \label{eq:dEe}
-    \Delta E_e \simeq -(p+\mathfrak f)A \simeq -pA.
+    \Delta E_e \simeq -(p+\mathfrak f_B)A \simeq -pA.
 \end{equation}
-The $p$ of \cref{eq:dE-of-A} is thus the pressure $\rho\,\partial_\rho\mathfrak f-\mathfrak f$
-of \cref{eq:pressure-definition} \prompt{in eq:pressure-definition we used only compression part of the free energy. What is written here is not correct/complete}.
+The $p$ of \cref{eq:dE-of-A} is thus the pressure $\rho\,\partial_\rho\mathfrak f_B-\mathfrak f_B$
+of \cref{eq:pressure-definition}, which also comes from the compression term alone.
 
-In the last step of \cref{eq:dEe} we drop $\mathfrak f$. This is consistent at leading
-order, because $\mathfrak f$ is quadratic in $\epsilon$ while $p$ is linear, and
-\cref{eq:dE-of-A} works at this order. At the threshold \prompt{what threshold}, however, the correction is not
+In the last step of \cref{eq:dEe} we drop $\mathfrak f_B$. This is consistent at leading
+order, because $\mathfrak f_B$ is quadratic in $\epsilon$ while $p$ is linear, and
+\cref{eq:dE-of-A} works at this order. At the pressure where a layer forms, $p=\pcrit$ (\cref{eq:pcrit}), however, the correction is not
 small: there $\epsilon=\pcrit/B\simeq0.39$, and the dropped term adds about $16\%$ to $pA$.
-Like the idealized nucleus (\cref{sec:nucleation-1}, \prompt{try to be specific, it is not clear where you refere to}), the correction lowers the pressure
-at which a layer forms, a shift that the fit of $B$ absorbs.
+The correction lowers the pressure at which a layer forms. Like the other simplifications
+of the nucleus in \cref{sec:nucleation-1}, the disc of one cell area and the pressure taken
+at a point, this shift is absorbed by the fit of $B$.
 
 
 \section{Coarse-graining}
@@ -2360,23 +2362,23 @@ We therefore write the density as
   \label{eq:rho-h}
   \rho(r,\phi)=1-\frac{\zeta}{B}\,S(r)\cos\phi+h(r,\phi),\qquad \nabla^2h=0,
 \end{equation}
-with $h$ regular inside the wall, $r\le R$, and let the wall condition fix $h$. Every
+with $h$ regular inside the boundary, $r\le R$, and let the boundary condition fix $h$. Every
 condition below is proportional to $\cos\phi$, and the only regular harmonic function with
 this angular dependence is $r\cos\phi$, up to an added constant, so $h=c+A\,r\cos\phi$.
 
-The reservoir wall of \cref{sec:defect-steady}, $\rho(R,\phi)=1$, requires
+The reservoir boundary of \cref{sec:defect-steady}, $\rho(R,\phi)=1$, requires
 $h(R,\phi)=(\zeta/B)S(R)\cos\phi$. This gives $c=0$ and $A=(\zeta/B)S(R)/R$, which is
 \cref{eq:rho-analytic}. Since $S(0)=0$ and $\cos\phi$ averages to zero over the disk, the
 density at the core and the mean density are then both one.
 
-A reservoir lets cells cross the wall. One might instead leave the density free at the
-wall, $\partial_r\rho=0$, but this condition is inconsistent. It exerts no pressure
-gradient, so the active flux $\fa/\xi_0$ still crosses the wall, and once the
+A reservoir lets cells cross the boundary. One might instead leave the density free at the
+boundary, $\partial_r\rho=0$, but this condition is inconsistent. It exerts no pressure
+gradient, so the active flux $\fa/\xi_0$ still crosses the boundary, and once the
 cross-coupling of \cref{app:comoving} breaks the antisymmetry of the defect, the inflow
 and the outflow no longer cancel. Cells then enter or leave the box, and no steady state
 is reached.
 
-A wall that blocks the cells imposes zero normal flux,
+A no-flux boundary blocks the cells and imposes zero normal flux,
 $\nh\tcdot(B\nabla\rho-\fa)=0$, that is $B\,\partial_r\rho=f^\text{a}_r$ at $r=R$, with
 the radial active force $f^\text{a}_r=-\zeta(S'+S/r)\cos\phi$. This requires
 $A=-(\zeta/B)S(R)/R$, while the number of cells is conserved, so the mean density
@@ -2385,10 +2387,10 @@ stays one and $c=0$. Thus
   \label{eq:rho-noflux}
   \rho(r,\phi)=1-\frac{\zeta}{B}\Bigl[S(r)+\frac rR\,S(R)\Bigr]\cos\phi .
 \end{align}
-The cells that the active force drives against this wall pile up there, so the linear
-term has the slope of the reservoir wall with the opposite sign, and the modulation at the
-wall doubles. \Cref{fig:rho1d-dirichlet-neumann} compares the two walls in the
-numerical solution. They change the density across the whole box, but under both walls it
+The cells that the active force drives against this boundary pile up there, so the linear
+term has the slope of the reservoir boundary with the opposite sign, and the modulation at the
+boundary doubles. \Cref{fig:rho1d-dirichlet-neumann} compares the two boundaries in the
+numerical solution. They change the density across the whole box, but under both boundaries it
 stays of order $\zeta/B$, far below the scale of its fluctuations.
 
 \begin{figure}[tbp]
@@ -2397,12 +2399,12 @@ stays of order $\zeta/B$, far below the scale of its fluctuations.
   \caption{
   Steady-state density along the defect axis, at $y=0$, for two types of boundary
   conditions. The blue curves are the same as in \cref{fig:rho1d-dirichlet} corresponding
-  to the reservoir wall $\rho=1$. The orange curve corresponds to no-flux boundary
+  to the reservoir boundary $\rho=1$. The orange curve corresponds to no-flux boundary
   condition
     $\nh\tcdot(B\nabla\rho-\fa)=0$ at $x=\pm20~\micron$. 
     Solid lines are the full numerical solution of \cref{app:comoving}; dashed lines are the closed forms \cref{eq:rho-analytic} and
-    \cref{eq:rho-noflux}. The reservoir pulls the density back to one at the walls, while
-    the no-flux wall lets the modulation grow towards them.}
+    \cref{eq:rho-noflux}. The reservoir pulls the density back to one at the boundaries, while
+    the no-flux boundary lets the modulation grow towards them.}
   \label{fig:rho1d-dirichlet-neumann}
 \end{figure}
 
@@ -2453,7 +2455,7 @@ $\partial_t\to\partial_t-(\u\tcdot\nabla)$ in \cref{eq:model-rho,eq:model-Q}, we
 We drop the advection term $\u\tcdot\nabla\rho$ from the density equation. At large $B$
 the pressure gradient $B\nabla\rho$ balances $\fa$, so $\nabla\rho\propto1/B$. At distance
 $r$ from the core, the dropped term is smaller than the flux divergence by
-$\xi_0ur/B$, which is at most $3\times10^{-4}$ at the wall. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not depend on
+$\xi_0ur/B$, which is at most $3\times10^{-4}$ at the boundary. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not depend on
 $B$, and $\rho_\ss-1\propto1/B$ (see \cref{fig:rho1d-dirichlet}).
 
 
@@ -2463,11 +2465,11 @@ requiring that the defect core stay pinned at the origin, and enters the numeric
 problem as the Lagrange multiplier conjugate to that constraint.
 
 We solve in the square box of side $40~\micron$, and
-impose on its walls the density condition of \cref{sec:defect-steady}, the reservoir
+impose on its boundaries the density condition of \cref{sec:defect-steady}, the reservoir
 $\rho=1$.
 
 For the nematic order, with the components $Q_1=Q_{xx}$ and $Q_2=Q_{xy}$, we impose
-$\nh\tcdot\nabla\Q=0$, so that the wall does not force any nematic axis.
+$\nh\tcdot\nabla\Q=0$, so that the boundary does not force any nematic axis.
 We impose the shape of the defect only by pinning the core, $Q_1(0,0)=Q_2(0,0)=0$, and
 by setting $Q_2(x,0)=0$ on the axis, with $x Q_1(x,0)>0$. These constraints turn
 out to be enough to keep the solution a $+1/2$ defect.
@@ -2482,7 +2484,7 @@ It points along $+x$, as \cref{sec:defect-steady} explains, and with the exact m
 closure it reverses (\cref{app:drift}). In our box
 $u_x=0.24~\micron/\minute$, while $u_y=7\times10^{-12}~\micron/\minute$ vanishes to
 round-off, as the mirror symmetry requires. The value of $u_x$ depends on the box size and
-on the walls. The coupling also deforms the defect: the deformation is weak near the core, but away
+on the boundary conditions. The coupling also deforms the defect: the deformation is weak near the core, but away
 from it the solution deviates from the Pad\'e profile used in \cref{sec:defect-steady}.
 This can be seen in \cref{fig:comoving-deformation}(a,b) and \cref{fig:nematicaxis}. The active
 force is deformed too: the cross-coupling and the motion of the defect shift it along the
@@ -2692,13 +2694,13 @@ $s_0=w(\zeta/2\xi_0)(F''+3F'/r)$, which gives
 On the Pad\'e profile with the parameters of \cref{tab:field-params} and $R=20~\micron$,
 $u_a=0.28~\micron/\minute$ and $u_b=-0.52~\micron/\minute$, so the estimate changes sign at
 $w\simeq0.54$. The term $T$ acts near the core, whereas the retained transport also collects
-contributions far from it, because the pressure field decays slowly toward the wall. The
+contributions far from it, because the pressure field decays slowly toward the boundary. The
 strong order of the defect matters too. With the small-$S$ value $g_2=1/2$ of
 \cref{eq:g-small-S} in place of $g_2(S)$, $u_b$ is smaller in magnitude, and the sign changes
 only at $w\simeq0.79$.
 
 The full comoving problem confirms the estimate. We add $wT$ to the solver of
-\cref{app:comoving}, keep its box, walls and grid, and continue the steady state from $w=0$
+\cref{app:comoving}, keep its box, boundary conditions and grid, and continue the steady state from $w=0$
 to $w=1$. As $w$ grows, $u_x$ decreases and changes sign at $w_*$, so with the exact moments
 the defect moves toward its head (\cref{fig:drift-closure}(a)). The first-order estimate
 overshoots the numerical drift, but it places the sign change close to the numerical one.
@@ -3202,7 +3204,7 @@ mechanism must dominate, one that opens holes despite the raised layering probab
 The analytic variance \cref{eq:total-gauss} neglects the force
 $\zeta\nabla\cdot\delta\Q$ of the nematic fluctuations, which is appropriate when it is
 small compared with the density noise, or when $\delta\Q$ changes so slowly that the
-density responds to it only at order $\zeta/B$ (\cref{sec:defect-fluct}). To test this, and to obtain the variance without the
+density follows it quasi-statically and shifts only by about $(\zeta/B)\,\delta\Q$ (\cref{sec:defect-fluct}). To test this, and to obtain the variance without the
 approximation, we solve the linearized equations \cref{eq:linearized} numerically for the
 equal-time covariance of $(\delta\rho,\delta\Q)$ on the steady background of
 \cref{app:comoving}. The solver implements the cutoff \cref{eq:cutoff} by
@@ -3433,7 +3435,7 @@ sampled there, so the diagonal part of the density noise is
 \end{equation}
 where $1/\Delta x^2$ is the grid form of $\delta(\r-\r')$. For an isotropic noise the noise
 matrix is then a multiple of the drift matrix, the spectrum is flat on the grid, and every
-node, including those next to the wall, has the same variance. The solver builds both sides
+node, including those next to the boundary, has the same variance. The solver builds both sides
 of \cref{eq:fd-identity} in exact arithmetic and stops if they differ.
 
 The other divergence terms of \cref{eq:linearized} follow the same construction. A drift term
@@ -3458,7 +3460,7 @@ $6\times6$ eigensolve.
 \begin{figure}[tbp]
   \centering
   \includegraphics{staggered_grid.pdf}
-  \caption{One-dimensional grid with four interior nodes ($\bullet$) between two wall
+  \caption{One-dimensional grid with four interior nodes ($\bullet$) between two boundary
     nodes, where the field vanishes. \textbf{(a)} The central difference skips the node it belongs
     to, so applied twice it reaches two nodes away and skips the neighbors ($\circ$),
     $(D^2u)_3=(u_5-2u_3+u_1)/4\Delta x^2$. \textbf{(b)} The fluxes live on the faces ($|$) between
@@ -3466,7 +3468,7 @@ $6\times6$ eigensolve.
     (gray arrows), $(Gu)_{3/2}=(u_2-u_1)/\Delta x$, and its negative transpose takes two
     faces back to the node between them as a divergence (blue arrows),
     $(-G^\T F)_3=(F_{7/2}-F_{5/2})/\Delta x$. Their composition is the compact Laplacian,
-    $L=-G^\T G$. The two outer faces carry the flux through the wall.}
+    $L=-G^\T G$. The two outer faces carry the flux through the boundary.}
   \label{fig:staggered-grid}
 \end{figure}
 
@@ -3566,19 +3568,19 @@ part of the difference from the analytic $\nu_0$ (\cref{app:lyapunov-results}).
 
 \subsection{Boundary conditions}
 \label{app:lyapunov-walls}
-A bounded domain needs three conditions at its wall, not one: on the steady state, on the
-fluctuating field, and on the noise flux through the wall. The last two answer one
-question, whether a cell may cross the wall, once for the fluctuation and once for the
+A bounded domain needs three conditions at its boundary, not one: on the steady state, on the
+fluctuating field, and on the noise flux through the boundary. The last two answer one
+question, whether a cell may cross the boundary, once for the fluctuation and once for the
 noise, so they must agree. Two coherent choices remain for the fluctuations. A reservoir
 pins the fluctuation and lets the noise flux through, like a window cut from a larger
-colony. A sealed wall blocks both, like a container.
+colony. A sealed boundary blocks both, like a container.
 
 We use the reservoir. Its
-wall nodes are removed, so $\delta\rho=\delta\Q=0$ there, the noise flux through the faces
-next to the wall is kept, and $W$ is built on the Dirichlet Laplacian, so the correlated
-noise vanishes at the wall too. The steady state of \cref{app:comoving} has the same density wall, $\rho_\ss=1$, so
-the density sector is coherent throughout. Only the nematic wall differs: the steady state
-leaves $\Q_\ss$ free at the wall, $\nh\tcdot\nabla\Q_\ss=0$, whereas the fluctuations are
+boundary nodes are removed, so $\delta\rho=\delta\Q=0$ there, the noise flux through the faces
+next to the boundary is kept, and $W$ is built on the Dirichlet Laplacian, so the correlated
+noise vanishes at the boundary too. The steady state of \cref{app:comoving} has the same density condition, $\rho_\ss=1$, so
+the density sector is coherent throughout. Only the nematic condition differs: the steady state
+leaves $\Q_\ss$ free at the boundary, $\nh\tcdot\nabla\Q_\ss=0$, whereas the fluctuations are
 anchored there, $\delta\Q=0$. The fluctuations see the steady state only through
 $\rho_\ss$, $\Q_\ss$, $\u$ and $\bs w_\ss=\u+(B/\xi_0)\nabla\rho_\ss$, and we assume that
 this difference does not reach the core.
