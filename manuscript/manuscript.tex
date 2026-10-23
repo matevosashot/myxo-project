@@ -47,11 +47,12 @@
 % prompt, address all the prompts in the text
 \newcommand{\prompt}[1]{\textcolor{blue!90!black}{[ #1 ]}}
 \newcommand{\unclear}[1]{{\color{blue}[\textit{unclear}} #1{\color{blue}]}}
+\newcommand{\shorten}[1]{{\color{blue}[\textit{shorten}} #1{}}
 
 % ... and the environment updenv mark text changed in the current round (dark green).
 % \upd works inline, in math and across paragraphs and displays. To accept a round, strip the
-% tags, or switch them off with \renewcommand{\upd}[1]{#1}. No round open: the 2026-10-12d
-% tags (sec:defect-steady rewrite, appendix merge) were stripped at his request.
+% tags, or switch them off with \renewcommand{\upd}[1]{#1}. The tags of the 2026-10-22/23
+% rounds and of round 2026-10-23d were stripped at his request (2026-10-23). No round open.
 \definecolor{darkgreen}{rgb}{0.00,0.6,0.16}
 \newcommand{\upd}[1]{{\color{darkgreen}#1}}
 \newenvironment{updenv}{\color{darkgreen}}{}
@@ -528,12 +529,9 @@ regular~\cite{wu2009periodic}, since they come from a gated oscillator with a re
 period, a time after each reversal during which the cell cannot reverse
 again~\cite{guzzo2018gated}. Both simplifications could be lifted by keeping the direction of
 motion of each cell as a dynamical variable~\cite{spinney2025dean}, together with the
-time since its last reversal. We keep the white-noise limit nevertheless, as a
-deliberate simplification. It closes the theory on the density and the nematic tensor, with
-no separate field for the direction of motion, and it lets us compute the variance around
-the defect analytically (\cref{sec:defect-fluct}). The polarity of each cell, its
-direction of motion $\p(\theta_i)k_i$, is then itself a white noise, so the local polar
-order enters the coarse-grained equations as noise rather than as a field of its own.
+time since its last reversal. We keep both as deliberate simplifications, because the
+white-noise limit closes the theory on the density and the nematic order
+(\cref{sec:model-closure}).
 
 
 Self-propulsion is a multiplicative noise. The noise is $k_i$, and the amplitude it
@@ -658,6 +656,7 @@ The conventional nematic order parameter is normalized by the local density,
 $\Q=\rho^{-1}\!\int\!\d\theta\,\varrho\hat\Q$, and is bounded by unity. We use the
 unnormalized moment \cref{eq:density-definition} instead; the two coincide in the
 incompressible limit $\rho\to1$ taken throughout (\cref{app:dean-normalisation}).}
+
 In this subsection we reduce \cref{eq:final-langevin} to a closed pair of stochastic
 equations for these two fields.
 
@@ -701,7 +700,7 @@ f_B=\tfrac B2(\rho-1)^2$,
   \label{eq:pressure-definition}
   p=\frac B2\left(\rho^2-1\right)\simeq B(\rho-1),
 \end{align}
-where the last form is the leading order in $\rho-1$. 
+where the last form is the leading order in $\rho-1$.
 This is the two-dimensional pressure $p$ of \cref{eq:dE-of-A} (\cref{app:extrusion}).
 
 Integrating \cref{eq:final-langevin} over $\theta$ and keeping the leading terms in
@@ -714,8 +713,8 @@ the density, without the isotropic diffusion of \cref{sec:model-micro},
     + \bEta_{\rho}(\r,t)\Bigr].
 \end{align}
 The first two terms in the bracket are passive, inherited from the pair potential through
-the free energy. The term $-B\nabla\rho$ resists compression, and $\Q\!:\!\nabla\H$
-carries cells along gradients of the nematic force field
+the free energy. The term $-B\nabla\rho$ resists compression, and the elastic force
+$\Q\!:\!\nabla\H$ carries cells along gradients of the nematic force field
 $\H(\r)=-\delta F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$ \cite{degennes1993physics}. The third term is the active force density
 \begin{align}
   \label{eq:active-force}
@@ -734,6 +733,9 @@ leading order in $\Lambda/\frev$.}.
 % from experiment.}
 % SW-Q(L10) [run 8]: footnote at "fast-reversing colonies are less active": (1) the mark sits before the period, "active\footnote{...}.", where APS places it after: "active.\footnote{...}"; (2) "This is same as large $\frev$ limit" lacks two articles: "This is the same as the large-$\frev$ limit". a) fix both, b) fix only (2), c) keep as is.
 % SW-A:
+Unlike the passive terms, $\fa$ does not derive from the free energy $F$. Since
+$\fa\propto\nabla\!\cdot\!\Q$, it vanishes in a uniform nematic field and is largest where the
+field bends fastest, at a defect core (\cref{sec:defect-steady}).
 
 The last term is the noise of the density flux,
 \begin{equation}
@@ -760,20 +762,20 @@ $\int\!\d\theta\,\partial_\theta(\cdot)=0$. The noise $\bEta_{\rho}$ sits inside
 divergence, so $\int\!\d\r\,\rho$ is constant in every realization of the noise, not only
 in the mean.
 
-\Cref{eq:model-rho} is a continuity equation,
-$\partial_t\rho=-\nabla\!\cdot\!\bs J$. If we write $\bs J = \rho \v$, where $\v(\r,t)$
-is the velocity field, and set $\rho\approx1$ in the incompressible limit, we get a force balance
+% 2026-10-23c, his prompt ("I would write this in the previous section, maybe after density
+% equation, including the elastic part"): the force balance is back here, with Q:grad H.
+\Cref{eq:model-rho} is a continuity equation. Writing its flux as $\rho\v$, with the velocity
+field $\v(\r,t)$ of the cells, and setting $\rho\approx1$ in the incompressible limit gives the
+force balance
 \begin{align}
   \label{eq:velocity}
-  \xi_0 \v = -B\nabla\rho + \Q\!:\!\nabla\H + \fa + \xi_0 \bEta_{\rho},
+  \xi_0 \v = -B\nabla\rho + \Q\!:\!\nabla\H + \fa + \xi_0 \bEta_{\rho}.
 \end{align}
-where the friction force density $\xi_0 \v$ on the cells is balanced by the passive
-interactions, the active nematic force and the noise. By \cref{eq:pressure-definition},
-$B\nabla\rho\simeq\nabla p$ is the pressure gradient.
-The elastic force $\Q\!:\!\nabla\H$ redistributes
-cells to relieve orientational stress. Only $\fa$ does not derive from the free energy $F$. Since $\fa\propto\nabla\!\cdot\!\Q$, it vanishes in a
-uniform nematic field and is largest where the field bends fastest, at a defect core
-(\cref{sec:defect-steady}).
+The friction force density $\xi_0\v$ on the cells is balanced by the pressure gradient
+$B\nabla\rho\simeq\nabla p$ of \cref{eq:pressure-definition}, the elastic force, the active
+force and the noise. The elastic force is the divergence of the nematic stresses, a nematic
+pressure and an anisotropic stress that the nematic terms of \cref{eq:free-energy-choice} add
+to the pressure (\cref{app:pressure}).
 
 We also need a dynamical equation for the nematic order parameter $\Q$. Multiplying
 \cref{eq:final-langevin} by $\hat\Q(\theta)$ and integrating over $\theta$ does not close
@@ -797,8 +799,7 @@ With the closure in place we obtain
   \nonumber\\
   &+ \frac4{\xir} \Ha + \f^Q.
 \end{align}
-The first two terms inside the divergence are the Onsager conjugates of the passive
-terms of \cref{eq:model-rho}. $\Ha$ is the
+Here $\Ha$ is the
 nematic force field with coefficients renormalized by the rotational noise and the activity,
 \begin{align}
   \label{eq:H-active}
@@ -807,49 +808,113 @@ nematic force field with coefficients renormalized by the rotational noise and t
   a' &= a+\Lambda\xir, \qquad K' = K+{\zeta\xir}/({4\xi_0}).
 \end{align}
 Like $\H=-\delta F/\delta\Q$, the field $\Ha$ is minus the functional derivative of the effective free energy, which is $F$ with $a'$ and $K'$ in place of $a$ and
-$K$. It is $a'$ and $K'$, not the bare $a$ and $K$, that set the defect profile solved for
+$K$. The relaxational term $4\Ha/\xir$ carries no flux. It turns the rods and
+relaxes $\Q$ toward a minimizer of the effective free energy, so it is $a'$ and $K'$, not the bare $a$ and $K$, that set the defect profile solved for
 in
 \cref{sec:defect-steady}.
+
+% 2026-10-23b, his request ("complete rewrite of sec:model-closure ... after definition of
+% eta^Q, everything is messed up"): the rod velocity now explains the flux of eq:model-Q
+% here, before the noises; the drop of the grad-H terms, the force balance and the summary
+% form the new subsection sec:model-elastic. The relaxational/transport paragraph went into
+% the H^a paragraph above and the summary; the Onsager sentence was removed (his prompt).
+The passive terms in the flux of $\Q$ have the same origin as those of \cref{eq:model-rho}.
+By \cref{eq:chain-rule}, the interaction term of \cref{eq:final-langevin} moves a rod of
+orientation $\theta$ with the velocity $\xi_0^{-1}[-B\nabla\rho+\hat\Q(\theta)\!:\!\nabla\H]$.
+Its first part comes from the pressure gradient, which pushes every rod alike, and its second
+part from the elastic force, which depends on the orientation of the rod. Summed over the
+rods, this velocity gives the passive flux of the density in \cref{eq:model-rho}, and weighted
+with $\hat\Q$ it gives the passive flux of $\Q$ in \cref{eq:model-Q}. The pressure gradient
+thus carries the alignment of the rods through $\Q B\nabla\rho$, and the elastic force
+carries it through $\nabla\H$.
 
 The two noises of \cref{eq:model-Q} enter differently. $\bEta^\Q$ is a flux, the
 rank-three tensor
 \begin{equation}
-\eta^Q_{\ab i}=\int\!\d\theta\,\sqrt{\varrho_t}\,\hat
+\eta^\Q_{\ab i}=\int\!\d\theta\,\sqrt{\varrho_t}\,\hat
 Q_\ab(\theta)p_i(\theta)k(\r,\theta,t).
 \end{equation}
 Both $\bEta_\rho$ and $\bEta^\Q$ carry the same
 reversal noise $k(\r,\theta,t)$, so the two are correlated. The
-second noise $\f^Q$ is local and non-conservative. It carries the rotational noise
-$\lambda(\r,\theta,t)$ alone and is uncorrelated with both.
+second noise $\f^\Q$ is local and non-conservative. It carries the rotational noise
+$\lambda(\r,\theta,t)$ alone and is uncorrelated with $\bEta_\rho$ and $\bEta^\Q$. It is
+the only noise that changes the orientation of the rods.
 \Cref{app:dean-angle} gives their correlators.
 
-The relaxational and the transport terms of \cref{eq:model-Q} do different jobs. The
-relaxational term $\tfrac4{\xir}\Ha$ carries no flux divergence. It relaxes $\Q$ toward a
-minimizer of the effective free energy and fixes the shape of the defect. The transport
-terms leave that shape almost unchanged, but through $\Q B\nabla\rho$ they couple the
-nematic field to the density field and translate the
-defect. 
+The reversal noise enters the equation for $\Q$ although a reversal does not change the
+nematic tensor $\hat\Q$ of a rod. It enters through the transport of alignment: each rod
+carries its alignment as it runs along its axis, and $\bEta^\Q$ is the random part of this
+transport, as $\bEta_\rho$ is the random part of the transport of the rods. Like
+$\bEta_\rho$, it sits inside a divergence, so it moves alignment between neighboring points
+and leaves $\int\!\d\r\,\Q$ unchanged in every realization. Such a conserved noise is weak at
+long wavelengths, and Ref.~\cite{bertin2013} discarded it as irrelevant. We keep it, because the
+reversals are the strongest source of fluctuations in the monolayer, and these fluctuations
+drive the layering.
 
-In the rest of the paper we drop the terms proportional to $\nabla\H$ from
-\cref{eq:model-rho,eq:model-Q}. They introduce fourth-order spatial derivatives of $\Q$,
-which we cannot treat either analytically or numerically. The two terms must
-go together, because they are Onsager conjugates: dropping one alone would break
-reciprocity. These terms are usually dropped in continuum models of dry active
+% 2026-10-23f, his prompt ("look at the artifact ... the main idea is that if we take into
+% account the polarity equation, in the white noise limit, we recover the equations we get
+% below ... move this to the end of this subsection"): artifact "Four questions on the model",
+% Q1 (eliminating P gives back the paper; f^a = xi0 v0 P_Q with P_Q = -(v0/4 f_rev) div Q;
+% eta_rho = v0 P, eq:eta-rho-chi). Details of the P equation dropped.
+The same equations follow from a theory that keeps the direction of motion of each cell as a
+variable (\cref{sec:model-micro}). Such a theory has a third field, the local polar order
+$\bs P(\r,t)=\rho_0^{-1}\sum_ik_i\,\p(\theta_i)\,\delta(\r-\r_i(t))$, with an equation of its
+own~\cite{baskaran2008hydrodynamics,banerjee2026active,spinney2025dean}. Reversals relax it at
+the rate $2\frev$, and splay and bend of the director drive it. In the white-noise limit
+$\bs P$ follows $\rho$ and $\Q$ at once, and eliminating it gives back
+\cref{eq:model-rho,eq:model-Q}. Its mean contains the polarity
+$\bs P_Q=-(v_0/4\frev)\nabla\tcdot\Q$ that splay and bend induce, and the active force is the
+friction force of this polarity, $\fa=\xi_0v_0\bs P_Q$. Its fluctuation is the density
+noise, $\bEta_\rho=v_0\bs P$.
+
+\subsection{Dropping the elastic force}
+\label{sec:model-elastic}
+% 2026-10-23c, his prompt: the subsection now opens with the drop as a simplification (the
+% nematic part of the force, both grad-H terms consistently), then the closure that forces it;
+% his \unclear on the exact moments answered by the covariance argument; force balance moved
+% back to sec:model-closure (his prompt).
+We simplify \cref{eq:model-rho,eq:model-Q} by dropping the elastic force, the nematic part of
+the passive force on the rods. The passive velocity of a rod is then $-B\nabla\rho/\xi_0$, the
+same for every orientation. Summed over the rods, without and with the weight $\hat\Q$, it
+gives the passive fluxes of the density and of $\Q$, so the simplification drops the
+$\nabla\H$ terms consistently from both equations, $\Q\!:\!\nabla\H$ from the first and
+$\nabla\H$ from the second. The pressure becomes the only passive stress, and the force
+balance \cref{eq:velocity} loses its elastic term. Both $\nabla\H$ terms are usually dropped in
+continuum models of dry active
 nematics~\cite{ramaswamy2003active,bertin2013,mishra2010dynamic,ngo2014large,putzig2014phase,shankar2018low},
 including those of \textit{M.\ xanthus} monolayers~\cite{copenhagen2021,han2025local}.
 The usual argument is that the nematic force field vanishes in the ordered state, so these
 terms enter at higher order in gradients than the active
 ones~\cite{shankar2018low,srivastava2016negative}.
-% comment SW-Q(G8) [run 3]: Only about the reasons given for dropping the grad-H terms (the drop itself and your todo ncote stay). Both readers doubt "cannot treat either analytically or numerically" ("Fourth-order spatial derivatives are routine numerically (Cahn-Hilliard is fourth order)", R03#9, R04#14). R04 also pairs the cross terms (sev 2): "reciprocity links the cross couplings, Q:grad H in the rho flux with Q B grad rho in the Q flux [...] dropping Q:grad H while keeping Q B grad rho would itself break reciprocity" (R04#15); this matches the off-diagonal entries of the mobility matrix in ../report_full_solution/report.tex, which gives another reason: with the lowest-order closure, keeping grad H makes the transport "anti-diffusive in the amplitude of the order wherever S>1/sqrt2, so that model is ill posed". a) replace "They introduce fourth-order [...] would break reciprocity." by that reason, in your words; b) keep the Onsager argument but say which term pairs with which (here and at "are the Onsager conjugates of the passive terms"), and present the drop as a deliberate simplification instead of "cannot treat"; c) keep as is; or other?
+
+Here, however, the lowest-order closure forces the simplification on us, because with the
+elastic force \cref{eq:model-rho,eq:model-Q} are ill posed. The elastic force pushes the
+cells, and at large $B$ the pressure builds up until its gradient balances this push, so the
+cells barely move. Their alignment still moves: the elastic force carries it through the
+$\nabla\H$ term of the flux of $\Q$, and the flow driven by the pressure carries it back
+through $\Q B\nabla\rho$. The forward flux is set by the second moment
+$\langle\hat\Q\hat\Q\rangle_\varrho$ of the rod orientations, and the return flux by $\Q\Q$,
+the product of two first moments. Their difference is therefore the covariance of $\hat\Q$
+over the rods, which cannot be negative. The closure replaces $\langle\hat\Q\hat\Q\rangle_\varrho$
+by $\rho\J$, which is too small at strong order, so wherever $S>1/\sqrt2$, as in most of the
+monolayer, the return flux outweighs the forward one. The transport of the strength of the
+order then becomes anti-diffusive, and perturbations of the strength grow at a rate that
+increases without bound with their wavenumber (\cref{app:closure}). Keeping only the
+$\nabla\H$ term of the flux of $\Q$ would avoid this, but it introduces fourth-order
+derivatives of $\Q$, which make the equations much harder to solve, numerically as well as
+analytically. It would also let the elastic force carry the alignment of the rods but not the
+rods themselves.
 
 % \todo{We need to understand what physics we are missing by discarding these terms.}
 
-\Cref{eq:model-rho,eq:model-Q} are the fluctuating active nematic equations this paper
-solves. Activity enters them in three places: the force $\fa$,
-the amplitude of the reversal noises $\bEta_\rho$ and $\bEta^\Q$, and the renormalization of the nematic force field $\Ha$ in \cref{eq:H-active}. The
-density and the nematic field are coupled in both directions, through
-$\fa\propto\nabla\!\cdot\!\Q$ in one equation and through $\Q B\nabla\rho$ in the other.
-That coupling sets a $+1/2$ defect in motion (\cref{sec:defect-steady}).
+\Cref{eq:model-rho,eq:model-Q}, without their $\nabla\H$ terms, are the fluctuating active
+nematic equations this paper solves. Activity enters them in three places: the force $\fa$,
+the amplitude of the reversal noises $\bEta_\rho$ and $\bEta^\Q$, and the renormalization of
+the nematic force field $\Ha$ in \cref{eq:H-active}. The transport terms leave the shape of a
+defect, which $\Ha$ sets, almost unchanged, but they couple the density and the nematic field
+in both directions, through $\fa\propto\nabla\!\cdot\!\Q$ in one equation and through
+$\Q B\nabla\rho$ in the other. This coupling sets a $+1/2$ defect in motion
+(\cref{sec:defect-steady}).
 
 Everything that follows comes from solving \cref{eq:model-rho,eq:model-Q} at a $+1/2$
 defect, with the parameters collected in \cref{app:parameters}.
@@ -1147,31 +1212,71 @@ fluctuations, which we do not compute (\cref{sec:model-micro}).
 
 Restoring the anisotropic piece of \cref{eq:eta-rho-ss}, the one that
 carries $\Q_\ss$, gives the total variance (\cref{app:variance})
-\begin{align}
-  \label{eq:total-gauss}
-  \sigmarho(\r) = \sigmarho\big|_\text{pedestal}
-  \left(1 + \frac{\elln^2}{4}\bigl(\kappa\star\partial_i\partial_jQ^\ss_{ij}\bigr)(\r)\right),
-\end{align}
-a convolution of the double divergence of the steady nematic field against the
-isotropic real-space kernel, a function of the distance $w$ between two points,
 \begin{equation}
-  \label{eq:kappa-real}
-  \kappa(w) = \frac{1-\ee^{-2w^2/\elln^2}}{2\pi\,w^2}.
+  \label{eq:total-gauss}
+  \frac{\sigmarho(\r)}{\sigmarho|_\text{pedestal}}
+  = 1 + \bigl\langle S\cos2(\theta_\text{nb}-\theta_{\bs d})\bigr\rangle_\Omega .
 \end{equation}
+The average runs over the neighbors $\r+\bs d$ of the point $\r$,
+$\langle g\rangle_\Omega=\int\!\d^2\bs d\,\Omega(d)\,g(\r+\bs d)$. Here $S$ is the strength of
+the steady nematic order at the neighbor, $\theta_\text{nb}$ the angle of its director with the
+$x$ axis, and $\theta_{\bs d}$ the angle of $\bs d$ with the same axis
+(\cref{fig:neighbors}(a)). A neighbor thus counts
+with $+S$ when its rods point at $\r$ and with $-S$ when they lie across the line to $\r$. The weight depends
+only on the distance $d$ to the neighbor,
+\begin{align}
+  \label{eq:omega-weight}
+  \Omega(d)=\frac{\elln^2}{2\pi d^4}\Bigl[2-\ee^{-X}\bigl(X^2+2X+2\bigr)\Bigr],
+  % \\
+  \quad
+  X=\frac{2d^2}{\elln^2}.
+\end{align}
+It is positive and normalized over the plane, $\int\!\d^2\bs d\,\Omega(d)=1$, and since
+$\Omega(0)=0$ the point $\r$ itself does not count (\cref{fig:neighbors}(b)).
+
+% fig:neighbors (2026-10-23d, his choice: diagram v3 with the angle theta_nb - theta_d of v1;
+% it replaces fig:omega-weight and figures/omega_weight.pdf). First cited just above, before
+% fig:variance. Source: plotgen/neighbor_diagram/neighbor_diagram_v3.tex (run.sh copies the
+% pdf here). 2026-10-23e, his prompts: the 50%/94% sentence moved from the text into the
+% caption, and the caption explains why (b) plots 2 pi d Omega rather than Omega.
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\linewidth]{figures/neighbor_diagram_v3.pdf}
+  \caption{Neighbors in the average of \cref{eq:total-gauss}. \textbf{(a)}~The angles at
+    a neighbor $\r+\bs d$ of the point $\r$, and two neighbors that count with $+S$ (red) and
+    $-S$ (blue). \textbf{(b)}~The weight of all neighbors at distance $d$, per unit
+    distance, for $\elln=0.5~\micron$. It is $2\pi d\,\Omega(d)$, because $\Omega$ of
+    \cref{eq:omega-weight} is a weight per unit area and $2\pi d$ is the length of the circle
+    of radius $d$. The area under the curve is one.
+    Half of the weight lies within $0.68~\micron$ of $\r$ (shaded, left dashed line) and
+    $94\%$ within $2~\micron$ (right dashed line).}
+  \label{fig:neighbors}
+\end{figure}
+
 \Cref{eq:total-gauss} is the central result of \cref{sec:defect}.
 The defect modulates the variance around a uniform pedestal. The pedestal is the
 variance of a uniform monolayer, fixed by the noise amplitude $\zeta$, the stiffness $B$
 and the resolution $\elln$.
-\Cref{fig:variance} shows sections of \cref{eq:total-gauss}.
-Along the defect axis the
-modulation is odd in $x$ and vanishes at the core, because
-$\partial_i\partial_jQ^\ss_{ij}=\partial_x[S'(r)+S(r)/r]$ is odd. The variance is raised
+\Cref{fig:variance} shows sections of \cref{eq:total-gauss}. Reflecting the defect across
+the $y$ axis turns its director by a right angle everywhere, and this turn reverses the sign
+of $S\cos2(\theta_\text{nb}-\theta_{\bs d})$. Along the
+defect axis the modulation is therefore odd in $x$ and vanishes at the core, and
+along the $y$ axis the simplified model predicts no modulation at all. The variance is raised
 on the $-x$ side, where it peaks about $1.5~\micron$ from the core at
 $\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=2.9\%$, evaluated on the exact
 solution of $\Ha=0$ (\cref{app:density-poisson}), and lowered by as much on the $+x$ side.
-Along the $y$ axis the
-simplified model predicts no modulation at all.
-The scale of the modulation $\nu_0$ decreases with decreasing cutoff $\elln$ as shown in \cref{fig:ln_curve} and vanishes at $\elln=0$.
+
+The variance differs between head and tail because a cell runs back and forth along its
+own axis. It moves density into and out of the points ahead of it and behind it, but not
+those beside it, and this sets the sign with which a neighbor counts in
+\cref{eq:total-gauss} (\cref{fig:neighbors}(a)). In a uniform nematic, the neighbors that raise the variance above the
+pedestal and those that lower it below the pedestal balance (\cref{fig:aimed-rods}(a)). Around the defect, however, the
+director lines bend around the core: they cross the axis on the head side (\cref{fig:defects-layering}(a)), and run along it on the tail side. Seen from a point
+on the head side, most rods between it and the core therefore point at it and raise its
+variance (\cref{fig:aimed-rods}(b)). Seen from a point on the tail side, they lie across the line to it and lower its
+variance (\cref{fig:aimed-rods}(d)). On the far side of the point the lines bend the other way, but less, so the rods
+there offset the core side only in part (\cref{app:variance-neighbors}). The weight $\Omega$
+reaches over a distance proportional to $\elln$, so the scale of the modulation $\nu_0$ decreases with decreasing cutoff $\elln$ as shown in \cref{fig:ln_curve} and vanishes at $\elln=0$.
 
 The defect therefore modulates the variance only because the density is resolved at the
 scale of a cell, which makes $\elln$, the shortest length of the model, a physical parameter.
@@ -1189,28 +1294,77 @@ It does so although the force $-\zeta\nabla\tcdot\delta\Q$ that $\delta\Q$ adds
 fluctuates more strongly than the mean active force. The reason is that $\delta\Q$ evolves
 orders of magnitude more slowly than the density relaxes over $\tau_c$, so the density sees
 it as a nearly static force and shifts only by about $(\zeta/B)\,\delta\Q$, as it does under the
-mean force in \cref{eq:rho-analytic} (\cref{app:lyapunov-results}). \Cref{fig:variance3d}(a) shows the two-dimensional profile of the density variance.
+mean force in \cref{eq:rho-analytic} (\cref{app:lyapunov-results}). The differences
+that remain come from the steady state rather than from $\delta\Q$. Evaluated on the steady
+state of the moving defect (\cref{app:comoving}) instead of the static profile,
+\cref{eq:total-gauss} follows the numerical solution (dotted in \cref{fig:variance}). The
+motion of the defect deforms the nematic field. Within $2~\micron$ of the core its director
+stays within a degree of the static profile, but its order is weaker on the head side of the
+core and stronger on the tail side (\cref{app:comoving}). This deformation makes the modulation
+unequal between head and tail (\cref{fig:aimed-rods}(b,d)) and gives it a weak signal
+across the axis. It also lifts the modulation above zero at the core
+(\cref{fig:aimed-rods}(c)). Seen from the core, the rods on the tail side point at it and
+raise its variance, and those on the head side lie across the line to it and lower it. On the
+static profile the two halves cancel, but in the moving defect the tail side, where the order
+is stronger, outweighs the head side. \Cref{fig:variance3d}(a) shows the two-dimensional profile of the density variance.
 
 A modulation of two to three percent is the entire position\nobreakdash-dependent signal in the density variance profile. In \cref{sec:nucleation-2} we show that it modulates the layering probability by two orders of magnitude.
 
+
+% fig:variance regenerated 2026-10-23 (his prompt): plotgen/varrho/varrho.wls + run.sh reproduce the
+% notebook figure and add the dotted curve, eq:total-gauss on the stored comoving steady state
+% data/fluctuations-set2_2_comove_optimized_2/steady_box20_N180_Dir_lN0.5_z12.5_ld1_B90000_ss20.m
+% (RhoNeumann steady wall, as the solid curve; option ssDir switches both to the Dirichlet run).
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=\linewidth]{varrho.pdf}
   \caption{Equal-point density variance around a $+1/2$ defect, normalized by the
     pedestal of \cref{eq:pedestal}, along the defect axis ($\xi=x$, $y=0$) and across it
-    ($x=0$, $\xi=y$). Dashed: the analytic result at $\delta\Q=0$, where only the density
-    fluctuates, \cref{eq:total-gauss}. Solid: the numerical Lyapunov solution retaining
-    $\delta\Q\ne0$ (\cref{app:lyapunov}). Along the axis the analytic modulation is odd
+    ($x=0$, $\xi=y$). Dashed ($\Q_\text{Pad\'e}$): the analytic result at $\delta\Q=0$, where only the density
+    fluctuates, \cref{eq:total-gauss}, on the static profile of the defect
+    (\cref{app:density-poisson}). Dotted ($\Q_\ss$): the same result evaluated on the
+    steady state of the moving defect (\cref{app:comoving}). Solid: the numerical Lyapunov solution retaining
+    $\delta\Q\ne0$ (\cref{app:lyapunov}).
+    Along the axis the dashed modulation is odd
     and vanishes at the core, reaching its peak $+\nu_0=2.9\%$ on the $-x$ side and
     $-2.9\%$ on
     the $+x$ side, both roughly $1.5~\micron$ out. The numerical modulation is not odd: it
     peaks at about $2.4\%$, $1.2~\micron$ out on the $-x$ side and dips to about
     $-3.3\%$ about $1.7~\micron$ out on the $+x$ side. Across
-    the $y$-axis the analytic modulation vanishes identically and the numerical one is
-    several times weaker than along the axis.}
+    the $y$-axis the dashed modulation vanishes identically and the numerical one is
+    several times weaker than along the axis. The dotted curve follows the numerical one
+    along the axis and across it.}
   \label{fig:variance}
 \end{figure}
-% SW-TODO(FIG9,FIG2): printed 8.5 cm wide (scale 1.37); ticks about 8 pt, axis titles about 10 pt and curves 1.1-1.6 pt pass; legend text prints at about 6.5 pt (capital height 19 px at 300 dpi, body 10 pt): raise it to 8-9 pt; the legend says 'Theory' and 'Lyapunov solver' where the caption says 'analytic result' and 'numerical Lyapunov solution', and both curves are theory: e.g. 'analytic, dQ = 0' and 'numerical (Lyapunov)' (source: ../negative-defect/plotting_small_core+ln_2.nb, Export cell "varrho" near line 2732; regenerate figures/varrho.pdf)
+% (SW-TODO FIG9/FIG2 on the legend done 2026-10-23: labels match the caption, legend at about 9 pt.)
+
+% fig:aimed-rods, moved from App F to the main text 2026-10-23 (his request "regenerate it with
+% Q_ss profile, the dotted line in Fig 8. Move to the main text"): plotgen/aimed_rods/
+% aimed_rods_qss.wls + run_qss.sh, on the steady state of the dotted curves of fig:variance
+% (same data, same quadrature: +2.546% at x = -1.26, -3.394% at x = +1.66). First cited in the
+% head/tail paragraph, after fig:variance and before fig:variance3d, so its source sits
+% between theirs. The caption cites no appendix equation (alpha -> theta_nb - theta_d).
+% 2026-10-23, his requests: a core panel, now (c) (the tail side moved to (d)), printed at
+% \textwidth (four panels designed 1:1 for it). Core: +0.628% = -11.64% (head-side neighbors)
+% + 12.26% (tail-side); mainly S_ss, weaker on the head side (claude_experiments/core_asym.wls).
+\begin{figure*}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{figures/aimed_rods_qss.pdf}
+  \caption{Neighbors that raise and lower the density variance around a $+1/2$ defect.
+    Each panel shows the rods around a point (open circle) at which the variance is
+    evaluated, colored by the sign with which they count in \cref{eq:total-gauss}. The color
+    fades as $|\cos2(\theta_\text{nb}-\theta_{\bs d})|$ decreases, the length of a rod is
+    proportional to $S$, and rods outside the dashed circle are drawn faint. Gray lines are
+    director lines, and the diamond marks the core. The panel titles give the change of the
+    variance at the point relative to the pedestal. \textbf{(a)}~Uniform nematic with
+    $S=S_0$. \textbf{(b)}~The maximum of the variance on the head side. \textbf{(c)}~The
+    core. The dotted line separates the neighbors on the head side from those on the tail
+    side, and the numbers in the upper corners are their parts of the change.
+    \textbf{(d)}~The minimum on the tail side. In \textbf{(b--d)} the nematic field is the
+    steady state $\Q_\ss$ of the moving defect (\cref{app:comoving}), on which the dotted
+    curves of \cref{fig:variance} are evaluated.}
+  \label{fig:aimed-rods}
+\end{figure*}
 
 % 2026-10-12c, his prompt: fig:circle-average merged into this figure, all panels from the
 % numerical solution on one color scale. plotgen/variance_map/variance_map.wls redraws (a) in
@@ -1252,8 +1406,8 @@ variance of \cref{eq:total-gauss}, so $p$ is Gaussian too, with
     \qquad
     \sigma_{p,\infty}^2 = \frac{B\zeta}{2\pi\rho_0\elln^2},
 \end{equation}
-the second expression its far-field value, from the isotropic pedestal of
-\cref{eq:total-gauss}.
+the second expression its far-field value, from the isotropic pedestal
+\cref{eq:pedestal}.
 As we argued for the average density, in the large-$B$ limit the mean pressure is $\la p(\r) \ra \ll \sigma_p(\r)$. We therefore set it to zero.%
 \footnote{Far in the tail, the mean shifts the exponent by
 $z_\infty|\la p\ra|/\sigma_{p,\infty}\lesssim0.14$, which changes the probability by less
@@ -1398,14 +1552,29 @@ across it (\cref{eq:eta-rho-ss}). Following the director field of the defect, th
 anisotropic noise places the peak of the variance off the core and makes the modulation
 decay over a few micrometers (\cref{eq:total-gauss}).
 
-The model rests on three deliberate simplifications. The reversals are treated as white
+We have aimed at the simplest description that still captures the mechanism. Several of
+its assumptions hold only approximately, and correcting them would make the model more
+elaborate, so we keep them as deliberate simplifications. The first is the lowest-order
+closure of the angular moments in the field equations, which is inaccurate at the strong
+order around the defect (\cref{app:closure}). The closure also forces us to drop the elastic
+force on the translation of the cells, so that the pressure is the only passive stress
+(\cref{sec:model-elastic}). This breaks the Onsager symmetry of the passive transport: the
+pressure-driven flow still carries the alignment of the cells, but gradients of the nematic
+force field no longer move the cells. The broken symmetry costs little. Since the model is
+active, its free energy need not decrease in time, and since the passive transport has no
+noise of its own, no fluctuation--dissipation relation ties it to the noise. The equations
+without the elastic force also remain linearly stable in a uniform nematic state
+(\cref{app:closure}).
+
+Three further simplifications concern the reversals, the
+statistics of the density and the nucleus. The reversals are treated as white
 noise (\cref{sec:model-micro}), although the density modes that set the variance at the
 scale of a cell relax much faster than the cells reverse, and the same limit makes the
 pressure fluctuations at this scale short-lived (\cref{sec:defect-fluct}). The density is
 treated as Gaussian even far in its tail, although the area $\elln^2$ over which it is
 resolved contains on average much less than one cell. The nucleus, finally, is idealized as
 a disc of one cell area, and a cell is assumed to leave the monolayer as soon as the
-pressure at a point exceeds $\pcrit$ (\cref{sec:nucleation-1}). These choices keep the
+pressure at a point exceeds $\pcrit$ (\cref{sec:nucleation-1}). These three choices keep the
 theory linear and the layering criterion simple, so that the variance around the defect,
 and from it the layering probability, can be computed analytically. They affect absolute
 quantities most, such as the rate of layering, which depends exponentially on
@@ -1798,7 +1967,8 @@ individual rods, with an amplitude set by the coefficient $\zeta$ of the active 
 a tensor structure set by the nematic order. To show this we obtain Dean's equation for
 the joint density
 of positions and orientations, then integrate out the orientation to reach the field
-equations for $\rho$ and $\Q$ of \cref{sec:model-coarse,sec:model-closure}, and
+equations for $\rho$ and $\Q$ of \cref{sec:model-coarse,sec:model-closure}, identify
+the pressure and the passive stress they contain, and
 finally explain why we work with the unnormalized order parameter.
 
 
@@ -2019,7 +2189,8 @@ $\bs\chi$ by $\sqrt{\varrho_t}\,\p\,k$ gives \cref{eq:eta-rho-def}. Each term
 of \cref{eq:rho-full} has a simple meaning. With
 \cref{eq:free-energy-choice}, the first term,
 $\rho\nabla(\delta F/\delta\rho)=B\rho\nabla\rho=\nabla p$, is the gradient of the exact
-pressure \cref{eq:pressure-definition}, and the second is $-\Q\!:\!\nabla\H$. The $\zeta$
+pressure \cref{eq:pressure-definition}, and the second is $-\Q\!:\!\nabla\H$, which is
+minus the divergence of the nematic stresses (\cref{app:pressure}). The $\zeta$
 term, in turn, splits into the diffusion $\zeta\nabla^2\rho/\xi_0$ and the divergence of
 the active force \cref{eq:active-force}.
 
@@ -2173,6 +2344,59 @@ $\nabla\tcdot(\delta\Q\,\bs w_\ss)$ competes with the much slower elastic relaxa
 $(4K'/\xir)\nabla^2\delta\Q$. Since $|\bs w_\ss|$ reaches $0.96~\micron/\minute$, their
 ratio $|\bs w_\ss|\,\xir L/(4K')$ is already $0.19$ at $L=\elld$, so we keep it.
 
+% 2026-10-22, his request: formal definition of the pressure (Gibbs-Duhem), the terms the
+% main text drops and why. Numbers: scratchpad round1022/checks_round.py (sigma^n <= 5.9 Pa um
+% on the simple Pade profile, bare a, b, K).
+\subsection{The pressure and the passive stress}
+\label{app:pressure}
+% 2026-10-23e, his prompts ("It is hard to read until here, rewrite and simplify this
+% section", "ij -> alpha beta"): the passive flux is split by the two parts of the free energy
+% first; the total pressure p_f and the chemical potential of a rod are gone; Greek indices.
+% Identity checked by hand: Q:d_a mu_Q = d_a(Q:mu_Q - f_n) + d_b[d_aQ : df_n/d(d_bQ)].
+
+The pressure enters the model twice. The layering criterion of \cref{sec:nucleation-1}
+compares it with $\pcrit$, and in the force balance \cref{eq:velocity} its gradient drives
+the cells. Once the elastic force is dropped, the pressure \cref{eq:pressure-definition} is
+the whole passive stress, as the Gibbs--Duhem relation shows.
+
+The interaction terms of \cref{eq:rho-full} form the passive flux
+$-\xi_0^{-1}(\rho\nabla\mu_\rho+\Q\!:\!\nabla\bs\mu_Q)$, with the chemical potentials
+$\mu_\rho=\delta F/\delta\rho$ and $\bs\mu_Q=\delta F/\delta\Q=-\H$. The free energy
+density \cref{eq:free-energy-choice} is the sum of the compression term
+$\mathfrak f_B=\tfrac B2(\rho-1)^2$ and a nematic part $\mathfrak f_n(\Q,\partial_\r\Q)$,
+and each part gives one term of the flux. The compression term depends on $\rho$ alone, so
+$\mu_\rho=\partial_\rho\mathfrak f_B$, and the first term is the gradient of the pressure,
+$\rho\nabla\mu_\rho=\nabla p$ with $p=\rho\,\partial_\rho\mathfrak f_B-\mathfrak f_B$ of
+\cref{eq:pressure-definition}. This is the Gibbs--Duhem relation of a simple fluid~\cite{callen1985thermodynamics}. For the
+nematic part,
+$\bs\mu_Q=\partial\mathfrak f_n/\partial\Q-\partial_\beta[\partial\mathfrak f_n/\partial(\partial_\beta\Q)]$. Writing $\partial_\alpha\mathfrak f_n$ with the
+chain rule and inserting this $\bs\mu_Q$ turns the second term into the divergence of a
+stress,
+\begin{align}
+  \label{eq:gibbs-duhem}
+  \Q\!:\!\partial_\alpha\bs\mu_Q &= -\partial_\beta\sigma^n_{\alpha\beta},
+  \nonumber\\
+  \sigma^n_{\alpha\beta} &= -\bigl(\Q\!:\!\bs\mu_Q-\mathfrak f_n\bigr)\,\delta_{\alpha\beta}
+  -K\,\partial_\alpha\Q\!:\!\partial_\beta\Q ,
+\end{align}
+where the last term is $-\partial_\alpha\Q\!:\!\partial\mathfrak f_n/\partial(\partial_\beta\Q)$
+for the Frank term of \cref{eq:free-energy-choice}. The nematic stress $\bs\sigma^n$ is thus the
+sum of an isotropic nematic pressure, whose local part is
+$\tfrac a2\Q\!:\!\Q+\tfrac{3b}4(\Q\!:\!\Q)^2$, and the anisotropic Ericksen
+stress~\cite{degennes1993physics,doostmohammadi2018active} of the Frank term. Since
+$\bs\mu_Q=-\H$, \cref{eq:gibbs-duhem} also gives $\nabla\tcdot\bs\sigma^n=\Q\!:\!\nabla\H$:
+the divergence of the nematic stress is the elastic force. The passive flux is therefore
+$\xi_0^{-1}\nabla\tcdot\bs\sigma$, with the passive stress $\bs\sigma=-p\,\I+\bs\sigma^n$.
+
+Dropping the elastic force (\cref{sec:model-elastic,app:closure}) drops
+$\bs\sigma^n$ and leaves $-p\,\I$ as the passive stress of \cref{eq:velocity}. The pressure that drives the cells is
+then the same $p$ whose work releases the elastic energy in \cref{app:extrusion}. The nematic
+stresses are also small. On the Pad\'e profile \cref{eq:pade-approximation}, with the bare
+coefficients of \cref{tab:field-params}, every component stays below about
+$6~\Pa\tcdot\micron$. This is of the order of the mean pressure, and both are far below the
+standard deviation of the pressure, $\sigma_{p,\infty}=1.7~\kPa\tcdot\micron$, which is why
+\cref{sec:nucleation-2} sets the mean pressure to zero.
+
 \subsection{Definitions of the nematic order parameter}
 \label{app:dean-normalisation}
 We use the unnormalized $\Q$ of \cref{eq:density-definition} because it is linear in
@@ -2204,7 +2428,8 @@ $\rho$ and $\Q$ and otherwise carries as little information as possible, the one
 maximum entropy. Below we construct it, compute its moments exactly and expand them
 at weak nematic order. The expansion fails to give a valid noise covariance at the strong
 order of the defect steady state, as \cref{app:realizability} shows, and the exact moments
-repair it.
+repair it. At the same strong order the expansion also makes the transport driven by
+$\Q\!:\!\nabla\H$ ill posed, which is why we drop it.
 
 At a point $\r$, consider all angular distributions $\varrho(\theta) = \varrho_t(\theta \,|\, \r)$ with
 $\int\!\d\theta\,\varrho=\rho$ and $\int\!\d\theta\,\varrho\,\hat\Q=\Q$. Maximizing the
@@ -2293,11 +2518,54 @@ lowest-order noise correlators. The defect, however, is not weakly ordered. At $
 the coefficients are $g_2=0.82$ and $g_3=0.55$, against the small-$S$ values $1/2$ and
 $1/6$, so the dropped terms are not small there. The lowest-order closure is
 therefore not accurate around the defect. We nevertheless keep the closed equation
-\cref{eq:model-Q}, as continuum theories derived from particle models
+\cref{eq:model-Q}, without its $\nabla\H$ terms, as continuum theories derived from particle models
 usually do \cite{baskaran2008hydrodynamics,bertin2013,grossmann2016mesoscale,peshkov2012nonlinear}. The noise
 correlators are a different matter, because there the closure produces covariance
 matrices with a negative eigenvalue, which makes the stochastic equations ill defined.
 \Cref{app:realizability} shows this and builds the noise from the exact moments instead.
+
+% 2026-10-22, his request: the lowest-order closure forces the drop of the grad-H terms.
+% Source: ../report_full_solution/report.tex sec:wellposed; numbers from
+% ../report_full_solution/dispersion.py, case (wT,wR,wH,wE) = (0,0,1,0) = this paper's model
+% with both grad-H terms (unstable for k > 1.53/um at S0 = 0.9; k^4 regime below k ~ 100/um,
+% (B/xi0)(2S^2-1)k^2 above), and (0,0,1,1) stable. Review 2026-10-22: with only the grad-H term of
+% the Q flux (cross term Q:grad H off) the paper model is stable; the instability needs Q:grad H
+% together with Q B grad rho (scratchpad round1022b).
+% 2026-10-23e, his prompt ("Simplify the text below ... a lot of new definitions. Do we really
+% need this long explanation for that?"): the mobility matrix L, the fluxes j_rho, j_Q and the
+% large-B mode are gone; the argument runs on the flux of Q of eq:Q-full alone. Labels
+% eq:mobility (unused elsewhere) removed, eq:antidiffusion kept.
+The closure also decides which terms the closed equations can keep. The first line of
+\cref{eq:Q-full} transports the alignment of the rods with two passive terms, one driven by
+the pressure through $\delta F/\delta\rho$ and one by the elastic force through
+$\delta F/\delta\Q=-\H$. Both come from the velocity
+$\xi_0^{-1}[-B\nabla\rho+\hat\Q(\theta)\!:\!\nabla\H]$ of a rod of orientation $\theta$
+(\cref{sec:model-closure}): summed over the rods it gives the passive flux of the density,
+and weighted with $\hat\Q$ the first line of \cref{eq:Q-full}. The same coefficient $\Q$
+therefore couples the flux of $\Q$ to the pressure and the flux of the density to the
+elastic force $\Q\!:\!\nabla\H$, so these two cross terms are Onsager partners. To see what the closure does to them, we
+linearize about a uniform state with $\rho=1$ and order $\Q_0$ of strength $S$, keeping
+both $\nabla\H$ terms. At large $B$ and short wavelengths the pressure balances the elastic
+force on the cells, $B\,\delta\rho\simeq\Q_0\!:\!\delta\H$, and the first line of
+\cref{eq:Q-full} becomes
+\begin{align}
+  \label{eq:antidiffusion}
+  \partial_t\delta\Q&\simeq-\frac1{\xi_0}\bigl(\langle\hat\Q\hat\Q\rangle_\varrho-\Q_0\Q_0\bigr)\!:\!\nabla^2\delta\H
+  \nonumber\\
+  &\simeq-\frac K{\xi_0}\bigl(\langle\hat\Q\hat\Q\rangle_\varrho-\Q_0\Q_0\bigr)\!:\!\nabla^4\delta\Q ,
+\end{align}
+with $\delta\H\simeq K\nabla^2\delta\Q$ at short wavelengths. The difference in the brackets is
+the covariance of $\hat\Q$ over the rods, so for any distribution of the rods this transport
+is a stable fourth-order diffusion. The lowest-order closure replaces
+$\langle\hat\Q\hat\Q\rangle_\varrho$ by $\J$. For a change of the strength of the order,
+$\delta\Q\propto\Q_0$, the coefficient then becomes $1-2S^2$, which is negative for
+$S>1/\sqrt2$. Such perturbations grow at the rate $(K/\xi_0)(2S^2-1)k^4$, which increases
+without bound with the wavenumber $k$, so the equations are ill posed. 
+
+We therefore drop the elastic force on the translation of the rods
+(\cref{sec:model-elastic}). The failure is of the same kind as that of the noise covariance in
+\cref{app:realizability}: the closure breaks the positivity of a matrix of second moments,
+here above $S=1/\sqrt2$ and there already above $S\simeq0.62$.
 
 \section{\texorpdfstring{The steady state of the defect}{The steady state of the defect}}
 \label{app:steady}
@@ -2439,7 +2707,7 @@ comoving frame.
   \label{fig:comoving-deformation}
 \end{figure*}
 
-Dropping the $\nabla\H$ terms as in \cref{sec:model-closure}, dropping all the noise
+Dropping the $\nabla\H$ terms as in \cref{sec:model-elastic}, dropping all the noise
 terms, and substituting
 $\partial_t\to\partial_t-(\u\tcdot\nabla)$ in \cref{eq:model-rho,eq:model-Q}, we solve the following equations
 \begin{subequations}
@@ -2999,10 +3267,7 @@ divergence of the nematic field passed through a filter,
   \nonumber\\
   &\hat\Phi(p)=\tfrac12E_1\bigl(p^2\elln^2/8\bigr).
 \end{align}
-No expansion and no fitted scale enter it. The inverse transform of $\hat\Phi$ is the
-kernel $\kappa$ of \cref{eq:kappa-real}, and dividing by the pedestal gives
-\cref{eq:total-gauss}.
-
+No expansion and no fitted scale enter it. 
 The filter interpolates between two branches,
 \begin{align}
   \label{eq:Phi-asymptotics}
@@ -3016,13 +3281,82 @@ with $\gamma_\mathrm{E}$ Euler's constant. Variations of the nematic field on sc
 larger than $\elln$ are therefore weighted logarithmically, and those below $\elln$
 are cut off exponentially. In real space the same two branches appear as the shape of
 $\kappa$: it is finite at the origin, $\kappa(0)=1/(\pi\elln^2)$, and beyond $\elln$ it
-falls off as $1/(2\pi w^2)$, whose integral produces the logarithm.
+falls off as $1/(2\pi d^2)$, whose integral produces the logarithm.
+
+The inverse transform of $\hat\Phi$ is the
+isotropic real-space kernel, a function of the distance $d$ between two points,
+\begin{equation}
+  \label{eq:kappa-real}
+  \kappa(d) = \frac{1-\ee^{-2d^2/\elln^2}}{2\pi\,d^2}.
+\end{equation}
+With the convolution $(\kappa\star g)(\r)=\int\!\d^2\bs d\,\kappa(d)\,g(\r+\bs d)$, dividing by
+the pedestal gives
+\begin{equation}
+  \label{eq:variance-kernel}
+  \frac{\sigmarho(\r)}{\sigmarho|_\text{pedestal}}
+  = 1 + \frac{\elln^2}{4}\bigl(\kappa\star\partial_i\partial_jQ^\ss_{ij}\bigr)(\r).
+\end{equation}
+In the next subsection, we will show that this kernel can be written as an average over neighbors of \cref{eq:total-gauss}.
+
+% 2026-10-22, his request: the head/tail argument in the appendix, his real-space
+% eq:total-gauss rewritten in the neighbor form of the artifact (Question 3). Checks: scratchpad
+% round1022/checks_round.py (Omega = (l_n^2/4)(kappa''-kappa'/w), int Omega = 1, 0.68 um,
+% 75%/94% within 1/2 um, nu(+-1.5) = +-2.942% on eq:pade-accurate, 5.245% at S = S0; the
+% real-space time integral equals sigma_ped Omega to 1e-14).
+\subsection{The variance as an average over neighbors}
+\label{app:variance-neighbors}
+Two integrations by parts move the derivatives in \cref{eq:variance-kernel} from the nematic
+field onto the kernel and give
+\begin{equation}
+  (\kappa\star\partial_i\partial_jQ^\ss_{ij})(\r)
+  =\int\!\d^2\bs d\;\partial_i\partial_j\kappa(d)\,Q^\ss_{ij}(\r+\bs d),
+\end{equation}
+without boundary terms, because $\kappa$ and $\kappa'$ decay as $d^{-2}$ and $d^{-3}$, while
+$\Q_\ss$ and its gradient stay bounded. For the radial kernel,
+$\partial_i\partial_j\kappa=\kappa''\hat d_i\hat d_j+(\kappa'/d)(\delta_{ij}-\hat d_i\hat d_j)$
+with $\hat{\bs d}=\bs d/d$, and $\delta_{ij}$ drops against the traceless $\Q_\ss$.
+\Cref{eq:variance-kernel} thus becomes
+\begin{align}
+  \label{eq:variance-neighbors}
+  \frac{\sigmarho(\r)}{\sigmarho|_\text{pedestal}}-1
+  &=\int\!\d^2\bs d\;\Omega(d)\;\hat{\bs d}\tcdot\Q_\ss(\r+\bs d)\tcdot\hat{\bs d},
+  \nonumber\\
+  \Omega(d)&=\frac{\elln^2}4\Bigl(\kappa''-\frac{\kappa'}d\Bigr),
+\end{align}
+and the derivatives of \cref{eq:kappa-real} give the weight \cref{eq:omega-weight}. For
+$d\gg\elln$ it falls off as $\elln^2/(\pi d^4)$. The averaged quantity is
+$\hat{\bs d}\tcdot\Q_\ss\tcdot\hat{\bs d}=S\cos2\alpha$, where
+$\alpha=\theta_\text{nb}-\theta_{\bs d}$ is the angle between $\hat{\bs d}$ and the director
+at the neighbor (\cref{fig:neighbors}(a)), as in \cref{app:variance-uniform}, so \cref{eq:variance-neighbors} is
+\cref{eq:total-gauss}.
+
+% 2026-10-23e, his prompt ("remove these numbers, only qualitative comments. Do not repeat
+% the main text"): the percentages above (10.7/7.8/2.94/62/a quarter/5.2) are now qualitative,
+% and the head/tail statements of sec:defect are not repeated; the paragraph keeps what the
+% main text leaves to this appendix (the angular cancellation, the far neighbors, the slower
+% turning away from the core, bending vs loss of order).
+% 2026-10-23f, his prompt ("make sure there is no repetition of the main text or the caption
+% of a figure"): the head/tail description of sec:defect (rods toward the core point at a
+% head-side point, lie across at a tail-side point; lines bend around the core) is no longer
+% repeated; the paragraph keeps the angular cancellation, the far neighbors, the reason the
+% far side offsets the core side only in part, and bending vs loss of order.
+In a uniform nematic $\cos2\alpha$ averages to zero over the directions of $\hat{\bs d}$, as
+found in \cref{app:variance-uniform}, so only the change of the nematic order across the
+neighborhood of a point survives the average. This change grows with the distance from the
+point, and the neighbors farther than two cell widths therefore supply most of the modulation
+at its peak, although they carry only a small part of the weight $\Omega$. Around a $+1/2$
+defect the change comes from the bending of the director lines (\cref{fig:aimed-rods}(b,d)).
+The rods beyond a point on the axis tilt the other way than those between the point and the
+core, but less, because the director turns at a rate inversely proportional to the distance
+from the core, and this is why the far side offsets the core side only in part. The loss of
+order near the core only weakens the modulation: with $S$ held at $S_0$ everywhere,
+\cref{eq:variance-neighbors} would give a larger one.
 
 \subsection{Dependence on the cutoff}
 \label{app:variance-ln}
 When $\elln$ is much smaller than the core size $\elld$, the nematic field varies only
 on scales of $\elld$ and larger, so its transform is supported at $p\lesssim1/\elld$,
-where the filter takes its logarithmic branch. The anisotropic term then reduces to
+where the filter takes its logarithmic branch (\cref{eq:Phi-asymptotics}). The anisotropic term then reduces to
 $(\zeta/8\pi\xi_0\rho_0\gamma_0)\,\partial_i\partial_jQ^\ss_{ij}\ln(\elld/\elln)$,
 plus a term of order one that depends on the shape of the profile. Relative to the
 pedestal the modulation therefore grows as
@@ -3091,57 +3425,50 @@ and compare it with the one at a $+1/2$ defect. We stay with the analytic treatm
 $+1/2$ defect, which gives $\nu_0=2.94\%$ variance modulation (\cref{app:variance-ln}).
 
 
+% 2026-10-23f, his prompt ("using the results of app:variance-neighbors, the equations in this
+% section can be simplified, or even omitted. Run a subagent ..."): report
+% scratchpad/negdefect_report.md. The double divergence g_1, g_3 and the harmonic filter H_n,
+% K_n (eq:ddQ-plus, eq:ddQ-minus, eq:nu-harmonic) are replaced by the symmetry of
+% eq:total-gauss. Checks (claude_experiments/negdefect_neighbors.py, negdefect_diagnostics.py,
+% negdefect_extra.py; rerun by me): -1/2 1.3493% at 3.2512 um, +1/2 2.9437% at 1.4634 um,
+% nu(phi)/nu(0) = cos 3 phi to 1e-6, F(r) > 0 for all r, nu- ~ r^3 and nu+ ~ r near the core,
+% 0.2617% / 2.6723% at 1 um; S = S0 everywhere: 7.95% at 0.897 um / 17.83% at 0.416 um, ratios
+% 0.446 / 2.16; ld = 0.1..4 um: ratios 0.45-0.46 / 2.17-2.23. The old reason ("g_3 small in the
+% core, so the -1/2 modulation builds up only where S has saturated") was dropped: the ratios do
+% not depend on the loss of order.
 In the polar coordinates of \cref{sec:defect-steady}, a defect of charge $\pm1/2$ has the
 director at the angle $\theta=\pm\phi/2$, and both defects share the radial profile $S(r)$.
-The variance depends on the defect only through the double divergence
-$\partial_i\partial_jQ_{ij}$, which for the two defects is
-\begin{align}
-  \label{eq:ddQ-plus}
-  &+1/2:\quad \partial_i\partial_jQ_{ij}=g_1(r)\cos\phi,
-  \\
-  \label{eq:ddQ-minus}
-  &-1/2:\quad \partial_i\partial_jQ_{ij}=g_3(r)\cos3\phi,
-\end{align}
-with $g_1=(S'+S/r)'$, $g_3=h'-2h/r$ and $h=S'-S/r$. The first line is the source of \cref{sec:defect-fluct}. The second has threefold
-symmetry, as the defect does, and its radial factor differs from $g_1$ at both ends.
-Near the core $S\simeq s_1r+s_3r^3+s_5r^5$, and the terms of order $r$ cancel in $g_3$, so
-$g_3\simeq8s_5r^3$, whereas $g_1\simeq8s_3r$. Far from the core
-$S\simeq S_0(1-\elld^2/2r^2)$, which gives $g_3\simeq3S_0/r^2$ against $g_1\simeq-S_0/r^2$.
-The $-1/2$ source is thus suppressed within the core and three times stronger in the far
-field. Inside about $\elld$, where the nematic field varies fastest, it is weak: its largest
-value, $\max|g_3|=0.16~\micron^{-2}$, is half that of $g_1$, $0.35~\micron^{-2}$.
+Rotated about its core by an angle $\beta$, the $-1/2$ defect has its director at the angle
+$-(\phi-\beta)/2+\beta=\theta+3\beta/2$, so the rotation turns the director everywhere by
+$3\beta/2$. A rotation by $2\pi/3$ thus turns the director by $\pi$ and leaves the nematic
+field unchanged, and the variance repeats every third of a turn around the core. A rotation
+by $\pi/3$ turns the director by a right angle everywhere, and, like the reflection of the
+$+1/2$ defect across the $y$ axis in \cref{sec:defect-fluct}, this turn reverses the sign of
+$S\cos2(\theta_\text{nb}-\theta_{\bs d})$ in \cref{eq:total-gauss}. At a $-1/2$ defect the
+variance is therefore raised in three lobes and lowered in three lobes between them
+(\cref{fig:negative-3d}(b)).
 
-The kernel $\kappa$ of \cref{eq:kappa-real} is isotropic, so the convolution in
-\cref{eq:total-gauss} keeps the angular harmonic of its source. Writing $\r'$ in polar
-form, with $\alpha$ its angle from $\r$, and integrating over $\alpha$, we find
-\begin{equation}
-  \label{eq:nu-harmonic}
-  \frac{\sigmarho(\r)}{\sigmarho|_\text{pedestal}}-1=\frac{\elln^2}{4}\,H_n(r)\cos n\phi,
-\end{equation}
-with
-\begin{align}
-  H_n(r)&=\int_0^\infty\!\d r'\,r'g_n(r')\,K_n(r,r'),
-  \nonumber\\
-  K_n(r,r')&=\int_0^{2\pi}\!\d\alpha\,
-   \kappa\Bigl(\sqrt{r^2+r'^2-2rr'\cos\alpha}\Bigr)\cos n\alpha,
-  \nonumber
-\end{align}
-and with $n=1$ for the $+1/2$ defect and $n=3$ for the $-1/2$ defect. Each $H_n$ is a
-two-dimensional integral, which we evaluate numerically on the profile
-\cref{eq:pade-accurate}.
-
-At a $-1/2$ defect the variance is therefore raised in three lobes and lowered in three
-lobes between them (\cref{fig:negative-3d}(b)). Since $g_3>0$ in the far field, the
-raised lobes lie at $\phi=0,\pm2\pi/3$, where the director points radially away from the
-core, and the lowered ones at $\phi=\pi,\pm\pi/3$, where it runs around the core. The
-modulation peaks at
+At a point on the ray $\phi=0$ the director lies along the ray. Between the point and the
+core the rods above and below the ray tilt toward the line to the point, and beyond the point
+they tilt away from it, but less, as around the $+1/2$ defect
+(\cref{app:variance-neighbors}). The variance is therefore raised on this ray, and
+\cref{eq:total-gauss}, evaluated on the profile \cref{eq:pade-accurate}, confirms it at every
+distance from the core. The raised lobes thus lie at $\phi=0,\pm2\pi/3$, where the director
+points radially away from the core, and the lowered ones at $\phi=\pi,\pm\pi/3$, where it
+runs around the core. The modulation peaks at
 \begin{equation}
   \label{eq:nu0-minus}
   \nu_0^{(-)}=1.35\%\quad\text{at}\quad r=3.3~\micron,
 \end{equation}
 less than half of $\nu_0$ at the $+1/2$ defect and more than twice as far from the core.
-Both differences follow from the source: within $\elld$ of the core $g_3$ is small, so the
-$-1/2$ modulation builds up only where $S$ has nearly saturated.
+Both differences come from the threefold symmetry of the director and not from the loss of
+order at the core: with $S$ held at $S_0$ everywhere, \cref{eq:total-gauss} gives nearly the
+same ratios, $0.45$ and $2.2$. The variance is a smooth function of position, and a smooth
+function that reverses its sign under a rotation by $\pi/3$ about the core starts from it
+with cubic terms, such as $r^3\cos3\phi=x^3-3xy^2$. The $-1/2$ modulation therefore rises
+from the core as $r^3$, whereas the $+1/2$ modulation, which is odd in $x$, rises as $r$. At
+$r=\elld$ the $-1/2$ modulation is only $0.26\%$, against $2.67\%$ on the head side of the
+$+1/2$ defect, and it peaks only farther out, where the director bends more slowly.
 \Cref{fig:negative-3d} shows the two surfaces on a common scale.
 % SW-TODO(FIG9): printed 15.1 cm wide (0.85 textwidth; the PNG is drawn 18.8 cm wide, scale 0.81); the vertical-axis title Var[rho]/Var[rho]_pedestal prints at about 6.4 pt and its subscript 'pedestal' at about 4-4.5 pt (11 px at 300 dpi; body 10 pt), the tick and color-bar labels at about 6.5 pt (FontSize 8 x 0.81): raise FontSize 8 to about 10 (../negative-defect/negative_defect.wls:195, 196, 213); the director streamlines the caption names print at about 0.48 pt and 60% opacity (AbsoluteThickness[0.6], Opacity[0.6], :189): use AbsoluteThickness[1.2] and full opacity, as asked for Fig. 8; regenerate figures/varrho3D_pm.png (want["varrho3D_pm"])
 
@@ -3149,7 +3476,7 @@ $-1/2$ modulation builds up only where $S$ has nearly saturated.
 \begin{figure*}[tbp]
   \centering
   \includegraphics[width=0.85\textwidth]{varrho3D_pm.png}
-  \caption{Analytic density variance normalized by the pedestal, \cref{eq:nu-harmonic},
+  \caption{Analytic density variance normalized by the pedestal, \cref{eq:total-gauss},
     around \textbf{(a)} a $+1/2$ defect and \textbf{(b)} a $-1/2$ defect, on discs of radius $6~\micron$, on
     the same vertical and color scales and at the same parameters; the black curves are director
     streamlines. The $+1/2$ modulation is a single ridge and trough of
@@ -3186,7 +3513,7 @@ mechanism must dominate, one that opens holes despite the raised layering probab
   \centering
   \includegraphics[width=0.85\linewidth]{layering_pm.pdf}
   \caption{Layering probability averaged over a circle of radius $r$ about the core,
-    relative to its far-field value, from the analytic variance \cref{eq:nu-harmonic}
+    relative to its far-field value, from the analytic variance \cref{eq:total-gauss}
     and the Gaussian tail \cref{eq:p-layer}, for a $+1/2$ defect (blue) and a $-1/2$
     defect (orange). The red points are the measured enhancement at $+1/2$ defects,
     Fig.~3f of Ref.~\cite{copenhagen2021}; the error bars are the standard error given
