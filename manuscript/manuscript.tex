@@ -313,9 +313,9 @@ off the core, at the head of the defect, on the side where the director bends ar
 In unpublished observations, the authors of Refs.~\cite{copenhagen2021,han2025local} also
 find that layering starts more often at the head of the defect (private communication),
 as in the example of \cref{fig:defects-layering}(b). 
-% Besides the radial profile of
-% \cref{fig:defects-layering}(c), the layering probability therefore has an angular profile around the
-% defect, but there is no quantitative measurement.
+Besides the radial profile of
+\cref{fig:defects-layering}(c), the layering probability therefore has an angular profile around the
+defect, but there is no quantitative measurement.
 Fluctuations of
 microscopic origin thus suffice to explain where layers form, although the calculation
 does not exclude other mechanisms.
@@ -383,6 +383,7 @@ elastic energy the bottom layer releases.
   above it, and the blue curves for pressures below it. Layers form only at the pressures
   of the orange curves. The dot marks the maximum of the black curve, the critical nucleus,
   which lies at the area of one cell, $A^*=\Acell$.
+  \prompt{if you can do an annotation instead of a sentence in the caption, do it.}
   }
   \label{fig:nucleation}
 \end{figure*}
@@ -740,7 +741,7 @@ Refs.~\cite{grossmann2016mesoscale,banerjee2026active} find
 $\zeta={\xi_0v_0^2}/{(4\frev+2\Lambda)}$. This coefficient reduces to that of
 \cref{eq:active-force} when the cells reverse much faster than they turn, $\frev\gg\Lambda$,
 a limit of fast reversals that we assume together with the white-noise approximation of
-\cref{sec:model-micro}.}
+\cref{sec:model-micro}. \prompt{we do not assume 'together', the white noise limit relies/follows from that assumption/limit}}
 %  \todo{$\Lambda/\frev=1.3$ with the parameters of App.~A.2:
 % separate the white-noise simplification (valid for large $\frev$) from the parameters taken
 % from experiment.}
@@ -784,11 +785,10 @@ force balance
 \end{align}
 The friction force density $\xi_0\v$ on the cells is balanced by the pressure gradient
 $B\nabla\rho\simeq\nabla p$ of \cref{eq:pressure-definition}, the elastic force, the active
-force and the noise. The elastic force is the divergence of the nematic stresses: a nematic
-pressure and an anisotropic stress that the nematic terms of \cref{eq:free-energy-choice} add
-to the pressure (\cref{app:pressure}). Only the pressure of \cref{eq:pressure-definition}
-enters the layering probability \cref{eq:p-layer-def}, because these nematic stresses stay
-far below the fluctuations of the pressure (\cref{app:pressure}).
+force and the noise. The elastic force is the divergence of the nematic stresses, see \cref{app:pressure}. 
+% Only the pressure of \cref{eq:pressure-definition}
+% enters the layering probability \cref{eq:p-layer-def}, because these nematic stresses stay
+% far below the fluctuations of the pressure (\cref{app:pressure}).
 
 We also need a dynamical equation for the nematic order parameter $\Q$. Multiplying
 \cref{eq:final-langevin} by $\hat\Q(\theta)$ and integrating over $\theta$ does not close
@@ -879,7 +879,7 @@ variable (\cref{sec:model-micro}). Such a theory has a third field, the local po
 $\bs P(\r,t)=\rho_0^{-1}\sum_ik_i\,\p(\theta_i)\,\delta(\r-\r_i(t))$, with $k_i=\pm1$ the
 dichotomous variable of \cref{eq:k-dichotomous}, and $\bs P$ has an equation of its
 own~\cite{baskaran2008hydrodynamics,banerjee2026active,spinney2025dean}. Reversals relax it at
-the rate $2\frev$, and splay and bend of the director drive it. In the white-noise limit,
+the rate $2\frev$, and splay and bend of the director drive it. In the white-noise limit (large $\frev$),
 $\bs P$ follows $\rho$ and $\Q$ instantaneously, and eliminating it gives back
 \cref{eq:model-rho,eq:model-Q}. The mean of $\bs P$ contains the polarity
 $\bs P_Q=-(v_0/4\frev)\nabla\tcdot\Q$ that splay and bend induce, and the active force is the
@@ -893,12 +893,15 @@ mean gives the density noise, $\bEta_\rho=v_0(\bs P-\la\bs P\ra)$.
 % his \unclear on the exact moments answered by the covariance argument; force balance moved
 % back to sec:model-closure (his prompt).
 We simplify \cref{eq:model-rho,eq:model-Q} by dropping the elastic force, the nematic part of
-the passive force on the rods. The passive velocity of a rod is then $-B\nabla\rho/\xi_0$, the
-same for every orientation. Summed over the rods, without and with the weight $\hat\Q$, it
+the passive force on the rods. \unclear{The passive velocity of a rod is then $-B\nabla\rho/\xi_0$, the
+same for every orientation.} Summed over the rods, without and with the weight $\hat\Q$, it
 gives the passive fluxes of the density and of $\Q$, so the simplification drops the
 $\nabla\H$ terms consistently from both equations, $\Q\!:\!\nabla\H$ from the first and
 $\nabla\H$ from the second. The pressure becomes the only passive stress, and the force
-balance \cref{eq:velocity} loses its elastic term. Both $\nabla\H$ terms are usually dropped in
+balance \cref{eq:velocity} loses its elastic term. 
+\prompt{the paragraph above is too bad, very hard to read.}
+
+Both $\nabla\H$ terms are usually dropped in
 continuum models of dry active
 nematics~\cite{ramaswamy2003active,bertin2013,mishra2010dynamic,ngo2014large,putzig2014phase,shankar2018low},
 including those of \textit{M.\ xanthus} monolayers~\cite{copenhagen2021,han2025local}.
@@ -907,7 +910,7 @@ ordered state, so these terms enter at higher order in gradients than the active
 ones~\cite{shankar2018low,srivastava2016negative}.
 
 Here, however, the lowest-order closure forces the simplification on us, because, with the
-elastic force, \cref{eq:model-rho,eq:model-Q} are ill posed. The elastic force pushes the
+elastic force, \cref{eq:model-rho,eq:model-Q} are ill posed. \prompt{move the rest to appendix. These details heavily depend on eq:Q-dull, ant it will be better to arite about this in the appendix}In \cref{eq:model-rho}, the elastic force pushes the
 cells, and at large $B$ the pressure builds up until its gradient balances this push, so the
 cells barely move. Their alignment is still transported: the elastic force carries it
 through the $\nabla\H$ term of the flux of $\Q$, and the pressure gradient carries it back
@@ -917,8 +920,10 @@ gradient balances the elastic force, the return flux is set by $\Q\Q$,
 the product of two first moments. Their difference is therefore the covariance of $\hat\Q$
 over the rods, which cannot be negative. The closure replaces $\langle\hat\Q\hat\Q\rangle_\varrho$
 by $\rho\J$, which is too small at strong order, so the return flux outweighs the forward
-one wherever $S>1/\sqrt2$. Most of the monolayer is ordered this strongly, since outside
-the defect cores the order reaches $S=0.9$ (\cref{app:parameters}). The transport of the
+one wherever $S>1/\sqrt2$. 
+% Most of the monolayer is ordered this strongly, since outside
+% the defect cores the order reaches $S=0.9$ (\cref{app:parameters}). 
+The transport of the
 strength of the
 order then becomes anti-diffusive, and perturbations of the strength grow at a rate that
 increases without bound with their wavenumber (\cref{app:closure}). Keeping the $\nabla\H$
@@ -979,7 +984,7 @@ angle $\theta=\phi/2$ with this axis. The solution of the second equation is giv
   \Q(r,\phi) = S(r)\hat\Q(\phi/2),
   \qquad
   S(r) = S_0 f_\pade(r/\elld),
-  \nonumber\\
+  \label{eq:Q-pade}\\
   \label{eq:pade-approximation}
   f_\pade(x) = x \sqrt{\frac{0.34 + 0.07 x^2}{1 + 0.41 x^2+0.07 x^4}},
   \\
@@ -1016,10 +1021,8 @@ $(r/R)S(R)$ of \cref{eq:rho-analytic}, which pulls the density back to one at $r
 blocks the flux of cells. In either case the density departs from uniformity only at
 order $\zeta/B$.
 
-Restoring the cross-coupling sets the defect in motion. The analytic calculation in
-\cref{sec:defect-fluct} keeps the static profile of the defect, but the direction of the
-motion is a prediction of the field equations. To find it we need the active force at the
-defect. For the $+1/2$ defect
+Restoring the cross-coupling sets the defect in motion. To find the direction of the
+motion we need the active force at the defect. For the $+1/2$ defect
 \cref{eq:pade-approximation} gives
 \begin{align}
   \label{eq:active-force-defect}
@@ -1033,7 +1036,7 @@ the gradient cancels the active flux, $B\nabla\rho\simeq\fa$. Within the closure
 \cref{sec:model-closure}, however, the nematic order couples to the density gradient and not
 to the active force. The cross-coupling term of \cref{eq:model-Q} carries it with the
 velocity $-B\nabla\rho/\xi_0$, against the active force, so the defect moves along $+x$,
-toward its tail (\cref{app:comoving}).
+toward its tail (\cref{app:comoving}). 
 
 % 2026-10-12d, his prompt ("not coherent ... the paragraph below is long and convoluted ...
 % remove unnecessary details"): the 12b overview of the two transports was cut. The
@@ -1043,12 +1046,10 @@ In experiments, $+1/2$ defects move the other way, toward their head (Supplement
 of Ref.~\cite{copenhagen2021}). The difference comes from the closure approximation. Self-propulsion also
 transports nematic order: with reversals, each rod diffuses along its own axis and carries
 its alignment with it. At the
-tail the rods lie along the axis and carry their alignment into the core, whereas at the
+tail of the defect the rods lie along the axis and carry their alignment into the core, whereas at the
 head they lie across the axis, so this transport moves the defect toward its head. The
-lowest-order closure drops it, although it is comparable to the cross-coupling term, which
-the closure keeps.
-With the exact moments of the maximum-entropy angular distribution (\cref{app:closure}) in
-this transport term alone, the transport outweighs the cross-coupling, and the defect moves
+lowest-order closure drops it, although it is comparable to the cross-coupling term $QB\nabla\rho$ in \cref{eq:model-Q}.
+In \cref{app:drift}, we recover the term we dropped and we show that the transport outweighs the cross-coupling, and the defect moves
 toward its head as in experiments (\cref{app:drift}).
 
 
@@ -1093,7 +1094,7 @@ small: the director stays within a degree of the static profile, and the order $
 by at most $6\%$ of $S_0$ (\cref{app:comoving}). The analytic calculation there therefore
 starts from the static profile of the defect, and it is then also evaluated on the deformed
 one.
-With this profile, the analytic variance also does not depend on the direction in which the
+On the static profile, the analytic variance does not depend on the direction in which the
 defect moves.
 
 \begin{figure}[tbp]
@@ -1142,10 +1143,11 @@ are those of \cref{eq:model-rho,eq:model-Q} with their amplitudes evaluated on t
 state, which is their leading order in the fluctuation. This is a linear
 stochastic field theory on the background $(\rho_\ss,\Q_\ss)$. \Cref{app:lyapunov}
 obtains the equal-time covariance of $\delta\rho$ and $\delta\Q$ numerically, by solving
-a Lyapunov equation. Its noise covariance is built from the exact moments of the
-maximum-entropy angular distribution, because the lowest-order closure gives covariance
-matrices with a negative eigenvalue where the nematic order is strong
-(\cref{app:realizability}).
+a Lyapunov equation. 
+% Its noise covariance is built from the exact moments of the
+% maximum-entropy angular distribution, because the lowest-order closure gives covariance
+% matrices with a negative eigenvalue where the nematic order is strong
+% (\cref{app:realizability}).
 
 The main text presents the analytically tractable case, in which only the density
 fluctuates and $\delta\Q=0$. 
@@ -1276,8 +1278,7 @@ $\Omega(0)=0$, the point $\r$ itself does not count (\cref{fig:neighbors}(b)).
   \centering
   \includegraphics[width=\linewidth]{figures/neighbor_diagram_v3.pdf}
   \caption{Neighbors in the average of \cref{eq:total-gauss}. \textbf{(a)}~The angles at
-    a neighbor $\r+\bs d$ of the point $\r$, and two neighbors, joined to $\r$ by gray
-    lines: one whose rod points at $\r$ and counts with $+S$ (red), and one whose rod lies
+    a neighbor $\r+\bs d$ of the point $\r$, and two neighbors: one whose rod points at $\r$ and counts with $+S$ (red), and one whose rod lies
     across the line to $\r$ and counts with $-S$ (blue). \textbf{(b)}~The weight of all
     neighbors at distance $d$, per unit
     distance, for $\elln=0.5~\micron$. It is $2\pi d\,\Omega(d)$, because $\Omega$ of
@@ -1293,25 +1294,32 @@ $\Omega(0)=0$, the point $\r$ itself does not count (\cref{fig:neighbors}(b)).
 The defect modulates the variance around a uniform pedestal. The pedestal is the
 variance of a uniform monolayer, fixed by the noise amplitude $\zeta$, the stiffness $B$
 and the resolution $\elln$.
-\Cref{fig:variance} shows sections of \cref{eq:total-gauss}. The mirror image of the defect
-across the $y$ axis is the original defect with its director turned by a right angle
-everywhere, and this turn reverses the sign
-of $S\cos2(\theta_\text{nb}-\theta_{\bs d})$. Along the
-defect axis the modulation is therefore odd in $x$ and vanishes at the core, and
-along the $y$ axis the simplified model predicts no modulation at all. The variance is raised
-on the $-x$ side, where it peaks about $1.5~\micron$ from the core, at the point
-$\r_\mathrm{max}$, with the peak modulation
-$\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=2.9\%$
-(\cref{app:variance-ln}), and lowered by as much on the $+x$ side.
+We evaluate \cref{eq:total-gauss} on 
+\Cref{fig:variance} shows sections of \cref{eq:total-gauss} for two cases: when $\Q_\ss$ is the Pade profile in \cref{eq:Q-pade} (dashed line) and when $\Q_\ss$ is the the steady state profile obtained numerically in \cref{sec:defect-steady} (dotted line). Both of these profiles are visualized in \cref{fig:nematicaxis} \prompt{make sure no repetition with caption}. 
+
+
+% The mirror image of the defect
+% across the $y$ axis is the original defect with its director turned by a right angle
+% everywhere, and this turn reverses the sign
+% of $S\cos2(\theta_\text{nb}-\theta_{\bs d})$. Along the
+% defect axis the modulation is therefore odd in $x$ and vanishes at the core, and
+% along the $y$ axis the simplified model predicts no modulation at all. The variance is raised
+% on the $-x$ side, where it peaks about $1.5~\micron$ from the core, at the point
+% $\r_\mathrm{max}$, with the peak modulation
+% $\nu_0\equiv[\sigmarho(\r_\mathrm{max})/\sigmarho(\infty)]-1=2.9\%$
+% (\cref{app:variance-ln}), and lowered by as much on the $+x$ side. 
 
 The variance differs between head and tail because a cell runs back and forth along its
 own axis. It moves density into and out of the points ahead of it and behind it, but not
 those beside it, and this sets the sign with which a neighbor counts in
 \cref{eq:total-gauss} (\cref{fig:neighbors}(a)). In a uniform nematic, the neighbors that raise the variance above the
 pedestal and those that lower it below the pedestal balance (\cref{fig:aimed-rods}(a)). Around the defect, however, the
-director lines bend around the core: they cross the axis on the head side (\cref{fig:defects-layering}(a)), and run along it on the tail side. Seen from a point
-on the head side, the rods above and below the axis between the point and the core
-therefore turn toward the point, compared with a uniform nematic, and raise the variance
+director lines bend around the core
+% : they cross the axis on the head side (\cref{fig:defects-layering}(a)), and run along it on the tail side.
+\prompt{It is better to understand this by simultaneously looking to the figure. So I would move this entirely to the caption. and in the main text I would only direct the reader to read the caption.} 
+Seen from a point
+on the head side (\cref{fig:defects-layering}(a)), the rods above and below the axis between the point and the core
+therefore turn toward the point, and, compared with a uniform nematic, raise the variance
 there (\cref{fig:aimed-rods}(b)). Seen from a point on the tail side, the rods between the
 point and the core turn away from the point and lower the variance there
 (\cref{fig:aimed-rods}(d)). On the side of each point away from the core, the lines bend
@@ -1381,7 +1389,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
     $\delta\Q\ne0$ (\cref{app:lyapunov}).
     Along the axis the dashed modulation is odd and vanishes at the core, with its peak
     $\pm\nu_0$ on the two sides. The numerical modulation is not odd: it is weaker on the
-    $-x$ side, the head of the defect, and stronger on the $+x$ side, its tail. Across
+    $-x$ side, the head of the defect, and stronger on the $+x$ side, its tail \prompt{recover the numbers in this sentence}. Across
     the axis the dashed modulation vanishes identically and the numerical one is
     several times weaker than along the axis. The dotted curve follows the numerical one
     closely along the axis and across it.}
@@ -1501,13 +1509,13 @@ which we drop. \Cref{eq:p-layer} then gives
 \end{equation}
 Only the \emph{relative} modulation of the variance matters, and the large factor
 $z_\infty^2/2$ amplifies it.
-
 With the bulk modulus $B=90~\kPa\tcdot\micron$, fitted below, the cutoff $\elln=0.5~\micron$ and the parameters of
 \cref{app:parameters}, $\sigma_{p,\infty}=1.7~\kPa\tcdot\micron$ and
-$z_\infty=20.8$. A modulation of a few percent therefore produces an enhancement of two
+$z_\infty=20.8$. 
+A modulation of a few percent therefore produces an enhancement of two
 orders of magnitude. The numerical variance of \cref{eq:linearized}, on the steady state of
-the moving defect, peaks lower than \cref{eq:total-gauss} on the static profile, at
-$\nu_0\simeq2.4\%$ instead of $2.9\%$, off the core at the head of the defect
+the moving defect, peaks at
+$\nu_0\simeq2.4\%$, off the core at the head of the defect
 (\cref{fig:variance}), and \cref{eq:R-ratio} then gives the peak enhancement
 \begin{equation}
     \label{eq:R-value}
@@ -1530,17 +1538,18 @@ variance modulation nearly vanishes at the core (\cref{fig:variance}), so the pr
 centered there is small at $r=0$, peaks where the circle passes close to
 the maximum of the variance (\cref{fig:variance3d}(c)), and then decays (orange). Centered on
 $\r_\mathrm{max}$, the circle starts on the maximum and moves away from it as $r$ grows
-(\cref{fig:variance3d}(b)), so the profile starts at its maximum and decays (blue), as the
+(\cref{fig:variance3d}(b)), so the profile starts at its maximum and decays (\cref{fig:defects-layering}(b) blue), as the
 measured one does. We show both, without deciding which center the measurement corresponds to.
 Ref.~\cite{copenhagen2021} locates the core at the minimum of the order parameter in images
 smoothed over $1.7~\micron$, a length comparable to the distance between the core and
 $\r_\mathrm{max}$.
 
-In the snapshots of \cref{fig:defects-layering}(b), the new layer starts off the core, at
-the head of the defect, which is where the model places $\r_\mathrm{max}$, and
-\cref{fig:2examples} shows two more layer-formation events at the head of $+1/2$ defects. No
-quantitative measurement of the angle at which layers start around the defect has been
-published.
+% In the snapshots of \cref{fig:defects-layering}(b), the new layer starts off the core, at
+% the head of the defect, which is where the model places $\r_\mathrm{max}$, and
+% \cref{fig:2examples} shows two more layer-formation events at the head of $+1/2$ defects. No
+% quantitative measurement of the angle at which layers start around the defect has been
+% published.
+
 
 The comparison thus has one fitted parameter, the bulk modulus $B$, the stiffness of the
 incompressibility penalty in \cref{eq:free-energy-choice}. $B$ is a model parameter rather
@@ -1558,6 +1567,7 @@ makes the enhancement decay over a few micrometers, with no adjustable parameter
 % 2026-10-26 (his answers): B fitted to the peak enhancement only (about 2e2), no binning, both
 % centers shown without a claim; eq:R-value from the N200 ssDir run, nu0 = 2.424% -> 169.8
 % (z_inf = 20.831, p_crit = 35.26 kPa um); N180 gave 1.6e2.
+\todo{check this paragraph}
 The absolute rate of layering, in contrast, is beyond the reach of the model. It depends
 exponentially on $z_\infty^2$, so a small error in $\sigma_{p,\infty}$ or $\pcrit$ changes it by
 many orders of magnitude. Both quantities carry the approximations of the model: the
@@ -1900,12 +1910,13 @@ $T=20^\circ\mathrm C$,
   \frac{\Lambda\xir}{\rho_0\kB T}\simeq1.9\times10^3,
 \end{equation}
 with $\kB$ the Boltzmann constant, whereas in equilibrium the fluctuation-dissipation  
-theorem would make this ratio one~\cite{kubo1966fluctuation}. The rotational diffusion
-coefficient exceeds the reversal rate $\frev=0.1~\minute^{-1}$ that we use,
-$\Lambda/\frev=1.3$, so the cells do not reverse
-much faster than they turn. We nevertheless keep $\zeta$ of \cref{eq:active-force}, which
-holds for fast reversals, as part of the white-noise simplification of
-\cref{sec:model-micro}.
+theorem would make this ratio one~\cite{kubo1966fluctuation}. 
+% The rotational diffusion
+% coefficient exceeds the reversal rate $\frev=0.1~\minute^{-1}$ that we use,
+% $\Lambda/\frev=1.3$, so the cells do not reverse
+% much faster than they turn. We nevertheless keep $\zeta$ of \cref{eq:active-force}, which
+% holds for fast reversals, as part of the white-noise simplification of
+% \cref{sec:model-micro}.
 
 The values of $S_0$ and $\elld$ do not yet fix the coefficients $a'$, $b$ and $K'$ of the
 nematic free energy, since \cref{eq:S0-elld} gives only two relations among the three. We
@@ -2304,7 +2315,7 @@ angular integral used above,
   \nonumber\\
   &\quad=\frac{2\zeta}{\xi_0\rho_0}\bigl(Q_\ab+\rho\,\delta_\ab\bigr)\,
   \delta(\r-\r')\delta(t-t').
-  \nonumber
+  % \nonumber
 \end{align}
 
 The $\Q$ equation follows in the same way, except that we multiply
@@ -2461,6 +2472,8 @@ nematic part,
 $\bs\mu_Q=\partial\mathfrak f_n/\partial\Q-\partial_\beta[\partial\mathfrak f_n/\partial(\partial_\beta\Q)]$. Writing $\partial_\alpha\mathfrak f_n$ with the
 chain rule and inserting this $\bs\mu_Q$ turns the second term into the divergence of a
 stress,
+\prompt{isn't it to write similar equations for the p and $f_B$ and $mu_rho$? Start from gibbs duhem, then decompose it into two part using the property that free energy can also be split into density dependent and Q dependent parts.}
+
 \begin{align}
   \label{eq:gibbs-duhem}
   \Q\!:\!\partial_\alpha\bs\mu_Q &= -\partial_\beta\sigma^n_{\alpha\beta},
@@ -2923,7 +2936,9 @@ Supplementary Note of Ref.~\cite{copenhagen2021} reports that $+1/2$ defects mov
 axis toward $-x$, and in their polar coordinates, which are oriented as ours, $-x$ points
 toward the head of the defect. Here we show that the observed direction is recovered when a
 single term of the $\Q$ equation takes the exact moments of the maximum-entropy
-distribution, and we estimate the drift velocity analytically. The direction of the drift
+distribution, and we estimate the drift velocity analytically
+\prompt{this is appendix. do not write like you would write for the main text. Go directly to the point. For example, here directly say which term you take into account. Look at the other appendices, and make them concise too. In general, motivating sentences should be in the main text. Reader looks at the appendix for details. And reader should get those details very easy and fast, without useless sentences.}
+. The direction of the drift
 does not affect the analytic variance on the static profile (dashed in \cref{fig:variance}).
 It enters the variance on the steady state of the moving defect through the deformation of
 $\Q_\ss$, and the numerical variance also through the advection of $\delta\Q$ in
@@ -2950,6 +2965,7 @@ the term
   \label{eq:drift-U-term}
   T_\ab=\frac{\zeta}{\xi_0}\,\partial_i\partial_j\Bigl[\frac{g_2}{2\rho}\,U_{\ab ij}(\Q)\Bigr].
 \end{equation}
+\prompt{I first understand what is the T only in \cref{eq:drift-Q-split}, while it should be clear right here. Revise this section.}
 Since $T$ contains no density gradient, the large modulus $B$ does not suppress it. Its size
 is set instead by the amplitude $g_2S^2$ of the fourth angular harmonic of the distribution
 \cref{eq:von-mises}, which is $0.66$ at $S=0.9$. Near the core $T$ is therefore of order
@@ -3049,7 +3065,7 @@ $s_0=w(\zeta/2\xi_0)(F''+3F'/r)$, which gives
 \end{equation}
 With the parameters of \cref{tab:field-params} and $R=20~\micron$,
 $u_a=0.28~\micron/\minute$ and $u_b=-0.51~\micron/\minute$, so the estimate reverses the drift
-before $w$ reaches one. The strong order of the defect matters too. With the small-$S$ value $g_2=1/2$ of
+before $w$ reaches one \prompt{it is worth refering figure 13 somewhere here already}. The strong order of the defect matters too. With the small-$S$ value $g_2=1/2$ of
 \cref{eq:g-small-S} in place of $g_2(S)$, $u_b$ is smaller in magnitude.
 
 The full comoving problem confirms the trend of the estimate. We add $wT$ to the solver of
@@ -3485,7 +3501,7 @@ a larger region.
     Each row is a time series of reflectance images, with time counted from the first frame;
     red marks a $+1/2$ defect, with the dot at the core and the bar pointing to the tail,
 like a comet, and blue a $-1/2$ defect. In both rows the new layer
-    appears at the head of a $+1/2$ defect and grows within a few minutes. \textbf{Top
+    appears at $+1/2$ defect and grows within a few minutes. \textbf{Top
     row:} a
     second layer forms on the monolayer. \textbf{Bottom row:} a third layer forms on top of
     the second. It shows that third layers also form in the experiment; the model of
@@ -3570,6 +3586,12 @@ against $2.67\%$ on the head side of the $+1/2$ defect.
 % (net 0.26%); at r = 3.25 um, -0.18% against +1.53% (net 1.35%).
 % SW-TODO(FIG9): printed 15.1 cm wide (0.85 textwidth; the PNG is drawn 18.8 cm wide, scale 0.81); the vertical-axis title Var[rho]/Var[rho]_pedestal prints at about 6.4 pt and its subscript 'pedestal' at about 4-4.5 pt (11 px at 300 dpi; body 10 pt), the tick and color-bar labels at about 6.5 pt (FontSize 8 x 0.81): raise FontSize 8 to about 10 (../negative-defect/negative_defect.wls:195, 196, 213); the director streamlines the caption names print at about 0.48 pt and 60% opacity (AbsoluteThickness[0.6], Opacity[0.6], :189): use AbsoluteThickness[1.2] and full opacity, as asked for Fig. 8; regenerate figures/varrho3D_pm.png (want["varrho3D_pm"])
 
+% \prompt{I like that you used less quantitative detail in this section. But recover this figure, with suitable caption. Cite in the main text maybe with some more text.}
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{layering_pm.pdf}
+  \label{fig:negative-layering}
+\end{figure}
 
 \begin{figure*}[tbp]
   \centering
@@ -4075,12 +4097,15 @@ Away from the core the variance from the solver returns to the pedestal
 \cref{eq:pedestal}, as the calibration of \cref{app:lyapunov-cutoff} requires. Near the core
 it differs from \cref{eq:total-gauss} evaluated on the same steady state $\Q_\ss$ (dotted in
 \cref{fig:variance}) by at most $0.14\%$ of the pedestal along the axis and $0.05\%$ across
-it, a small fraction of the modulation itself. The solver modulation is slightly weaker on
-both sides of the core. The fluctuating order $\delta\Q$, which \cref{eq:total-gauss} drops,
-changes the variance by only about $10^{-4}$ of the pedestal, so this difference comes mostly
+it, a small fraction of the modulation itself. 
+% The solver modulation is slightly weaker on
+% both sides of the core. The fluctuating order $\delta\Q$, which \cref{eq:total-gauss} drops,
+% changes the variance by only about $10^{-4}$ of the pedestal, so 
+This difference comes mostly
 from the lattice correction of the anisotropic term (\cref{app:lyapunov-cutoff}). It shrinks
 as the grid is refined: from $N_\mathrm{int}=180$ to $200$, the peak of the solver rises from
 $2.39\%$ to $2.42\%$, toward the $2.56\%$ of \cref{eq:total-gauss} on $\Q_\ss$.
+\prompt{The difference also comes from the nematic order fluctuations, which is not accounted in \cref{eq:total-gauss}. Revise this paragraph.}
 
 The solver also returns the fluctuations of the nematic order, and with them those of the
 active force $\fa=-\zeta\bs f$, $f_\alpha=\partial_\beta Q_\ab$, which $\delta\Q$ carries as
