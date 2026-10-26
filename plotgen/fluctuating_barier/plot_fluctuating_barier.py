@@ -62,6 +62,7 @@ LEGEND_EDGE_LW = 0.5                 # its border, thinner than the frame
 FS = 6.0                             # every label in the house figures
 FS_ARROW = 4.5                       # the "increasing p" label, kept small
 LW_CURVE, LW_FRAME, LW_FAINT = 1.044, 0.8, 0.144
+MARK, LW_MARK = "#737373", 0.7          # the A* = A_cell drop line (2026-10-26)
 
 # manuscript.tex, tab:pcrit: energies in kPa um (= mN/m), lengths in um, so
 # e(A, p) comes out in kPa um^3 for A in um^2
@@ -157,7 +158,16 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     # faint reference line figures/ln_curve.pdf uses for the same job
     top = barrier_top(pc, P)
     if top:
-        ax.axvline(top[0], color=FAINT, lw=LW_FAINT, zorder=1)
+        # 2026-10-26 (his answer to SW-Q FIG8,FIG2: "annotate more explicitly"): the maximum of
+        # the critical curve is marked and labelled as the critical nucleus, A* = A_cell, and a
+        # dotted gray line (visible at print size) drops from it to the A_cell label on the axis.
+        ax.plot([top[0], top[0]], [ylim[0], top[1]], color=MARK, lw=LW_MARK, ls=(0, (1.2, 1.2)),
+                zorder=1)
+        ax.plot([top[0]], [top[1]], "o", ms=2.6, mfc=INK, mec=INK, zorder=7)
+        # the label sits in the clear band right of the drop line, below the bundles
+        ax.text(top[0] + 0.35, 0.42 * top[1], "critical nucleus\n" + r"$A^*\!=A_{\rm cell}$",
+                color=INK, fontsize=FS_ARROW, ha="left", va="center", linespacing=1.3,
+                zorder=7)
         # in the clear band below the bundles, beside the reference line
         tr = mpl.transforms.blended_transform_factory(ax.transData, ax.transAxes)
         ax.text(top[0]-1, 0.050, r"  $A_{\rm cell}$", transform=tr, color=INK,

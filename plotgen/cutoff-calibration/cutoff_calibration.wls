@@ -33,8 +33,8 @@ lamOf[t_] := Sqrt[2 Pi] t cI[t];      (* l_eff/l_n *)
 pts = Table[{xOf[t], lamOf[t]}, {t, Join[Subdivide[0.02, 3., 300], Subdivide[3., 20., 600]]}];
 pts = Select[pts, 0.075 <= #[[1]] <= 2.6 &];
 
-(* production grid: box 20, N_int = 180, l_n = 0.5 (was 150 until 2026-10-06) *)
-xProd = (40./181)/0.5;
+(* production grid: box 20, N_int = 200, l_n = 0.5 (180 until 2026-10-26, 150 until 2026-10-06) *)
+xProd = (40./201)/0.5;
 tProd = t /. FindRoot[xOf[t] == xProd, {t, 1/xProd}];
 lamProd = lamOf[tProd];
 lamMax = Max[pts[[All, 2]]];
