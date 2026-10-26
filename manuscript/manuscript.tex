@@ -188,7 +188,7 @@ instead lift off near $-1/2$ defects, where simulations show stress accumulating
   centers it, as drawn in \cref{fig:variance3d}(b,c). Only the first gives a monotonically
   decreasing profile,
     as in the experiment. The core position identified in the experiment may therefore lie
-    close to the point of maximum probability, where the layer in \textbf{(b)} also starts
+    close to the point of maximum probability, where the layer in (b) also starts
     (\cref{sec:nucleation-2}). Model parameters are as in
     \cref{app:parameters}. \todo{change legend of the figure (c)}
   }
@@ -196,7 +196,7 @@ instead lift off near $-1/2$ defects, where simulations show stress accumulating
 \end{figure*}
 % SW-TODO(FIG9,FIG10): (a) the black director lines the caption names print at about 0.5 pt on saturated red and blue (threshold 1 pt): stroke >= 1 pt in main.pdf p.2 (Illustrator); (c) the error bars of the red points, which the caption names, print at about 0.7 pt: Thickness[0.004] -> an AbsoluteThickness of >= 1 pt at print size in the .nb cell (../negative-defect/plotting_small_core+ln_2.nb near lines 3606 and 3612; your edit), then re-place the panel; (c) the x-axis title 'Distance from the core r' names the circle radius r, which the blue curve measures from r_max, not from the core (FS:R04:Fig2): title it as the caption words it, 'radius r of the circle (um)'
 % SW-Q(FIG2,FIG8) [run 9]: Fig. 2(b): the red +1/2 marker prints as a bare bar (no core dot), so a scan reader could not tell which end is the core or which side is the head, and the caption's 'The layer starts off the core, at the head of the defect' cannot be checked against the image (FS:R04:Fig2); Fig. 16 draws the marker with the dot at the core and the bar toward the tail and says so in its caption. a) redraw the marker in (b) as in Fig. 16 and add Fig. 16's clause ('with the dot at the core and the bar pointing to the tail, like a comet') to this caption, b) label the head in (b) as in (a), c) keep as is, or other?
-% SW-A:
+% SW-A: c
 
 Copenhagen \textit{et al.}~imaged \textit{M.\ xanthus} monolayers on a nutrient-rich
 substrate, where no fruiting bodies form, and still saw new layers and holes appear
@@ -222,7 +222,7 @@ pressure at a defect is of the order of
 the active stress, three to four orders of magnitude below the pressure needed to
 extrude a cell (\cref{sec:nucleation-1} and \cref{app:parameters-choice}).
 % SW-Q(F6,M1) [run 9]: 'the cells at its head (Fig. 2(a)) are aligned perpendicular to the flow and so feel a stronger friction than those at its tail, which makes the inflow toward the core stronger than the outflow': which flow, and on which side does it enter? Three first-time readers rebuilt it differently (R01#10, R02#15: along the axis from the tail through the core to the head, the head side being the outflow; R12: 'if the flow enters at the head, more friction there should weaken the inflow, not strengthen it'). a) name the flow and its direction at its first mention, as Ref. [3] describes it; b) keep as is; c) other.
-% SW-A:
+% SW-A: a
 
 The stress in these monolayers, however, fluctuates strongly. The divergence of this stress
 is the traction that the cells exert on the substrate. Han \textit{et al.}~measured this
@@ -317,9 +317,10 @@ form much more often near the defect. The variance is largest just
 off the core, at the head of the defect, on the side where the director bends around it (\cref{fig:defects-layering}(a)). 
 In unpublished observations, the authors of Refs.~\cite{copenhagen2021,han2025local} also
 find that layering starts more often at the head of the defect (private communication),
-as in the example of \cref{fig:defects-layering}(b). Besides the radial profile of
-\cref{fig:defects-layering}(c), the layering probability therefore has an angular profile around the
-defect, but there is no quantitative measurement.
+as in the example of \cref{fig:defects-layering}(b). 
+% Besides the radial profile of
+% \cref{fig:defects-layering}(c), the layering probability therefore has an angular profile around the
+% defect, but there is no quantitative measurement.
 Fluctuations of
 microscopic origin thus suffice to explain where layers form, although the calculation
 does not exclude other mechanisms.
@@ -391,7 +392,7 @@ elastic energy the bottom layer releases.
 \end{figure*}
 % SW-TODO(FIG9): (b) prints at scale 1.47; the 'increasing p' label prints at 6.6 pt (body 10 pt): use FS_ARROW = 6.0 like the other labels; the gray reference lines at A = A_cell and Delta E = 0 print at 0.21 pt in #cccccc (LW_FAINT = 0.144), so the line that ties A_cell to the maximum nearly vanishes: use LW_FAINT >= 0.7 and a darker gray (../plotgen/fluctuating_barier/plot_fluctuating_barier.py:63-64), then re-place the PDF in main.pdf p.3.
 % SW-Q(FIG8,FIG2) [run 9]: Fig. 4(b): 'Layers form only at the pressures of the orange curves' although those curves still show a barrier of 80-100 kPa um^3, and nothing in the figure or the caption ties p_crit to A_cell; a scan reader guessed 'p_crit is the pressure at which the barrier top sits at one cell's area' (FS:R04:Fig4), which is Eq. (2), A* = A_cell. a) add one clause to the caption, e.g. 'at p_crit the maximum of the curve, the critical nucleus, lies at A_cell, so that growth from one extruded cell is downhill' (text at lines 405-415), b) annotate the maximum of the black curve in the panel instead, c) keep as is, or other?
-% SW-A:
+% SW-A: b. Note that there is anotation at A=3. Maybe you can anotate more explicitly. code is in plotgen/fluctuating_barier/
 
 The cell-cell adhesion $\Wc$ enters twice with opposite signs: as a cost on
 the side faces and as a gain on the bottom face. For a circular patch, $\ell=\sqrt{4\pi A}$, and the energy cost of the new layer is therefore
@@ -743,13 +744,13 @@ the divergence of the active nematic stress $-\zeta\Q$. Positive $\zeta$ denotes
 The coefficient comes entirely from self-propulsion and reversal, so fast-reversing colonies are less active\footnote{The same coefficient follows for reversing rods that also diffuse rotationally, with $\zeta = {\xi_0 v_0^2}/{(4\frev+2\Lambda)}$~\cite{grossmann2016mesoscale,banerjee2026active}. In
 the white-noise limit  of \cref{sec:model-micro} the velocity of a cell decorrelates at
 once, before rotational diffusion can turn the cell.
-This is same as large $\frev$ limit, in which case \cref{eq:active-force} is the
+This is the same as the large-$\frev$ limit, in which case \cref{eq:active-force} is the
 leading order in $\Lambda/\frev$.}.
 %  \todo{$\Lambda/\frev=1.3$ with the parameters of App.~A.2:
 % separate the white-noise simplification (valid for large $\frev$) from the parameters taken
 % from experiment.}
-% SW-Q(L10) [run 8]: footnote at "fast-reversing colonies are less active": (1) the mark sits before the period, "active\footnote{...}.", where APS places it after: "active.\footnote{...}"; (2) "This is same as large $\frev$ limit" lacks two articles: "This is the same as the large-$\frev$ limit". a) fix both, b) fix only (2), c) keep as is.
-% SW-A:
+% SW-Q(L10) [run 8]: footnote at "fast-reversing colonies are less active": (1) the mark sits before the period, "active\footnote{...}.", where APS places it after: "active.\footnote{...}"; (2) "This is same as large $\frev$ limit" lacks two articles: "This is the same as the large-$\frev$ limit". a) fix both, b) fix only (2), c) keep as is. 
+% SW-A: a
 Unlike the passive terms, $\fa$ does not derive from the free energy $F$. Since
 $\fa\propto\nabla\!\cdot\!\Q$, it vanishes in a uniform nematic field and is largest where the
 field bends fastest, at a defect core (\cref{sec:defect-steady}).
@@ -834,7 +835,7 @@ relaxes $\Q$ toward a minimizer of the effective free energy, so it is $a'$ and 
 in
 \cref{sec:defect-steady}.
 % SW-Q(G8,P4) [run 9]: 'The relaxational term 4H^a/xi_r carries no flux. It turns the rods': App. C.2 (lines ~2320-2323) puts the self-propulsion transport (zeta/xi_0) nabla^2 Q of the flux of Q into K', so part of 4H^a/xi_r is a transport of alignment, not a rotation; three readers stopped here (R18#9 sev 2, R02#409 sev 2, R32#?: 'Why does only the relaxation carry the activity?'). a) say that the activity part of K' comes from the transport of alignment and the rest turns the rods; b) keep as is; c) other.
-% SW-A:
+% SW-A: what if we remove this sentence:"The relaxational term 4H^a/xi_r carries no flux. "?
 
 % 2026-10-23b, his request ("complete rewrite of sec:model-closure ... after definition of
 % eta^Q, everything is messed up"): the rod velocity now explains the flux of eq:model-Q
@@ -890,7 +891,7 @@ $\bs P_Q=-(v_0/4\frev)\nabla\tcdot\Q$ that splay and bend induce, and the active
 friction force of this polarity, $\fa=\xi_0v_0\bs P_Q$. Its fluctuation is the density
 noise, $\bEta_\rho=v_0\bs P$.
 % SW-Q(G8,P4) [run 9]: 'Its mean contains the polarity P_Q ... Its fluctuation is the density noise, eta_rho = v_0 P': the equation sets the noise equal to v_0 times the full P, whose mean P_Q was named one sentence earlier; both baseline readers and the current reader stopped (R01#408, R02#412 sev 2, R18#11: 'the fluctuation should be v_0(P - P_Q)'). a) eta_rho = v_0 (P - P_Q); b) keep, and say which P is meant (e.g. the white-noise part); c) other.
-% SW-A:
+% SW-A: launch a subagent for this: look at the artifact, where the full P equation is derived. I do not want to go into full details, just write here something consistent.
 
 \subsection{Dropping the elastic force}
 \label{sec:model-elastic}
@@ -912,7 +913,7 @@ The usual argument is that the nematic force field vanishes in the ordered state
 terms enter at higher order in gradients than the active
 ones~\cite{shankar2018low,srivastava2016negative}.
 % SW-Q(G8) [run 9]: 'The usual argument is that the nematic force field vanishes in the ordered state, so these terms enter at higher order in gradients than the active ones': in this model the steady ordered state has H^a = 0, not H; since a' = a + Lambda xi_r, H = Lambda xi_r Q there, so grad H is first order in gradients, like f^a (R18#217). a) scope the sentence to the cited models ('in those models'); b) it holds for this model too, as written; c) other.
-% SW-A:
+% SW-A: a
 
 Here, however, the lowest-order closure forces the simplification on us, because, with the
 elastic force, \cref{eq:model-rho,eq:model-Q} are ill posed. The elastic force pushes the
@@ -1356,7 +1357,8 @@ raise its variance, and those on the head side lie across the line to it and low
 static profile the two halves cancel, but in the moving defect the tail side, where the order
 is stronger, outweighs the head side. \Cref{fig:variance3d}(a) shows the two-dimensional profile of the density variance.
 % SW-Q(G6,G8) [run 9]: The head/tail inequality of the numerics (+2.4% vs -3.3%) and the lifted core value come from the order S of the moving defect, whose motion in this closure is tail-first, opposite to experiment (Sec. IV A); five reads ask whether a head-first defect would keep or flip this asymmetry, and with it the nu_0 = 2.4% of Sec. V (R36#510, R02#1410, R02#1607, R39, R42 at S4.2.P14.9, sev 2). App. E.3 says only 'we do not expect nu_0 to change much'. a) carry that sentence (or its reason) into this paragraph; b) keep it in App. E.3 only; c) other.
-% SW-A:
+% SW-A: a) do not carrty exactly. say that we do not know how much the closure approximation affects this assymetry. Would this resolve?
+
 
 A modulation of two to three percent is the entire position\nobreakdash-dependent signal in the density variance profile. In \cref{sec:nucleation-2} we show that it modulates the layering probability by two orders of magnitude.
 
@@ -1389,7 +1391,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 \end{figure}
 % (SW-TODO FIG9/FIG2 on the legend done 2026-10-23: labels match the caption, legend at about 9 pt.)
 % SW-Q(G8,P5) [run 9]: Fig. 8, dashed curve labelled Q_Pade with peak 2.9%: App. E.1 says Eq. (26), the main text's Pade profile, gives 3.06% and the 2.94% belongs to the exact profile (Eq. (E2)); plotgen/varrho/varrho.wls evaluates the dashed curve on Eq. (E2). Both readers stumbled (R01#521, R02#907: 'Pade approximant or exact solution?'; R01#1313). a) name the profile in the caption ('on the static profile, Eq. (E2)'); b) relabel the curve, e.g. Q_static; c) keep.
-% SW-A:
+% SW-A: recompute the values. correct them consistently.
 
 % fig:aimed-rods, moved from App F to the main text 2026-10-23 (his request "regenerate it with
 % Q_ss profile, the dotted line in Fig 8. Move to the main text"): plotgen/aimed_rods/
@@ -1500,7 +1502,9 @@ probabilities up to a slowly varying prefactor. \Cref{eq:p-layer} then gives
 Only the \emph{relative} modulation of the variance matters, and the large prefactor
 $z_\infty^2/2$ amplifies it.
 % SW-Q(P1,F9) [run 6]: "up to a slowly varying prefactor" (previous paragraph sentence): a reader asks "Which prefactor? Not tau_c, which was just called position-independent. Probably the 1/(sqrt(2 pi) z) of Eq. (40), but I am guessing" (severity 2). Which is meant? a) the ratio of the correlation times, whose change near the defect Sec. IV B neglects; b) the 1/(sqrt(2 pi) z) of Eq. (40), which Eq. (41) drops; c) both. I would name it in the sentence.
-% SW-A:
+% SW-A: b
+% SW-Q(P5) [run 9]: 'prefactor' names two things in Sec. V: 'up to a slowly varying prefactor' (S5.P2.2, the 1/z of Eq. (40) or the residual of tau_c), then 'the large prefactor z_inf^2/2 amplifies it' (S5.P2.4, the factor in the exponent), then 'the attempt time and the prefactors cancel from it' (S5.P5.11), so a reader may count z_inf^2/2 among the prefactors that cancel, the opposite of Eq. (41). a) write 'the large factor $z_\infty^2/2$' in S5.P2.4 and keep 'prefactor' for the slowly varying ones; b) keep; c) other.
+% SW-A: a
 
 \Cref{fig:defects-layering}(c) shows the layering probability averaged over a circle of radius $r$
 about a center $\r_\mathrm c$ (\cref{fig:variance3d}(b,c)), with $\phi$ the polar angle about that center,
@@ -1523,8 +1527,11 @@ to the distance between the core and $\r_\mathrm{max}$.
 The experiments point to the same center. In the snapshots of \cref{fig:defects-layering}(b),
 the new layer starts off the core, at the head of the defect. This
 is where the model places $\r_\mathrm{max}$. \Cref{fig:2examples}
-shows two more layer-formation events next to $+1/2$ defects. No quantitative measurement
+shows two more layer-formation events at the head of $+1/2$ defects. No quantitative
+measurement
 of the angle at which layers start around the defect has been published.
+% SW-Q(F2,B2) [run 9]: 'No quantitative measurement of the angle at which layers start around the defect has been published' (S5.P4) restates S1.P9 ('there is no quantitative measurement') and is restated in S6.P7 ('No quantitative measurement of where layers start has been published'); readers flag the repeats (R46#33, R01#809, R01#824, R02#908, sev 1). a) keep it in S1.P9 and S6.P7 and cut it in S5.P4; b) keep all three; c) other.
+% SW-A: S1.P9 and S6.P7 commented. Is fig:2examples referenced anywhere?
 
 With the fitted bulk modulus $B=90~\kPa\tcdot\micron$, the cutoff $\elln=0.5~\micron$ and
 the parameters of
@@ -1554,9 +1561,9 @@ single-cell perturbations (\cref{sec:nucleation-1}). Taken at face value, it giv
 below the observed one. The ratio is less sensitive, because the attempt time and the
 prefactors cancel from it, and the fit of $B$ below fixes $z_\infty$.
 % SW-Q(G8) [run 9]: Sec. V compares the peak value at r_max, Eq. (43) (1.6e2), with the first bin of Ref. [3], but the circle average about the core, which a histogram binned by distance from the core measures, first appears in Sec. VI ('rises by a factor of 83 at a +1/2 defect', S6.P8); both readers needed it here (R01#825, R02#1103: 'peaks at 83, not the 160 of Eq. (43)'). a) state the 83 and why the peak value is compared, next to Eq. (43); b) keep it in Sec. VI only; c) other.
-% SW-A:
+% SW-A: I do not want the reader concentrate on the quantitative values in this paper. So let's try to rewrite the paper in a way that such details are not important. There is a lot of ambiguity in the parameter choice first of all. We just aim for the qualitative picture. Leafe this question for now, we will resolve this at the very end with a separate pass.
 % SW-Q(F8,G8) [run 9]: Sec. V, 'The ratio is less sensitive, because the attempt time and the prefactors cancel from it', and its twin in Sec. VI ('The ratio of the layering probabilities at the defect and far from it is less sensitive, because the attempt time and the prefactors cancel from it'): every reader accepts the cancellation but objects that the amplification exp[z_inf^2 nu_0/2], which turns 2.4% into 1.6e2, is itself the Gaussian tail about 21 standard deviations out, where Sec. IV B (rho_0 ell_n^2 = 0.06, 'far from Gaussian') and Sec. VI concede the density is not Gaussian; a different tail would change the ratio too, not only the absolute rate (R46#37, R02#534, R01#821, R02#905; R01#815, sev 3: 'I no longer know what the comparison tests'; R01#802, R02#526 already at Eq. (40)). a) say at both places that the ratio, too, rests on the Gaussian tail, one of the deliberate simplifications of Sec. VI; b) give your reason why the ratio is less sensitive to the shape of the tail than the absolute rate, at both places; c) other.
-% SW-A:
+% SW-A: a) small mention of the Gaussian tail assumption. Where do we mention the non-Gaussianity?
 
 The match with the measured ratio is a one-parameter fit. Every quantity in \cref{eq:R-value} is fixed in advance 
 except the bulk modulus $B$, the stiffness of the incompressibility penalty in
@@ -1567,6 +1574,10 @@ turgor pressure and the effective cell modulus of \textit{E.\ coli}, close to th
 stiffness of \textit{M.\ xanthus} (\cref{app:parameters-choice}).
 The \emph{shape} of the variance profile in \cref{fig:variance} is not fitted.
 \Cref{eq:total-gauss} fixes it once $\Q_\ss$ is known, with no adjustable parameter.
+% SW-Q(F6,G8) [run 9]: 'With the fitted bulk modulus' (S5.P5) and 'The match with the measured ratio is a one-parameter fit' (S5.P6): every reader asks what B was fitted to, the first bin (then why 1.6e2 and not 2e2?) or the whole profile of Fig. 2(c), and so whether 'lies within the error bar' is a check or the fit itself (R46#38, R01#812, R02#532, R01#813, all sev 2); only App. A.2 says it ('We chose it by eye, comparing the computed layering probability with Fig. 3f of Ref. [3]'), where you moved that sentence from Sec. V on 2026-10-17. a) name the target, not the procedure, in S5.P6: 'The match with the measured ratio is a one-parameter fit to Fig. 3f of Ref. [3] (App. A.2)'; b) keep it in App. A.2 only; c) other.
+% SW-A: This binning is confusing, maybe do not mention the binning at all. What we fitted is that the maximum probability/rate is about 200 times the far-field value. So we didn't fit the entire curve. The unbiguity of choosing the center is in requiring a monitonic decay of the probability. We just present both cases, without claiming which one is the reality. Do you want to discuss with me?
+% SW-Q(F12,G8) [run 9]: 'The shape of the variance profile in Fig. 8 is not fitted' (S5.P6): R01#818 (sev 2) asks what the unfitted shape is then compared with, since no angular measurement exists and only the radial decay of the blue curve of Fig. 2(c) beyond the first bin meets data, with no stated measure of agreement. a) say that the decay beyond the first bin in Fig. 2(c) is the unfitted part of the comparison; b) keep; c) other.
+% SW-A: I am not sure. Related to the question above.
 
 
 % ============================================================
@@ -1631,7 +1642,7 @@ noise of its own, no fluctuation--dissipation relation ties it to the noise. The
 without the elastic force also remain linearly stable in a uniform nematic state
 (\cref{app:closure}).
 % SW-Q(G8) [run 9]: 'The equations without the elastic force also remain linearly stable in a uniform nematic state (App. D)': App. D shows only that the closed equations with the elastic force are ill posed (Eq. (D8)) and does not state the stability without it; a reader reaching App. D asks where it is (R01#1309). a) add one sentence to App. D that states it; b) drop the claim and its pointer here; c) other.
-% SW-A:
+% SW-A: a, but is this claim correct?
 
 Three further simplifications concern the reversals, the
 statistics of the density and the nucleus. The reversals are treated as white
@@ -1659,6 +1670,8 @@ asynchronous divisions make the onset stochastic~\cite{you2019mono}. In three-di
 models of cell monolayers, extrusion follows a local build-up of
 stress~\cite{monfared2023mechanical}. Criteria like these could be built on the same
 density and pressure fluctuations.
+% SW-Q(P1,P6) [run 9]: S6.P5 <2>-<3>, 'In growing biofilms, rods leave the plane by tilting ... [62]' then 'In growing colonies, the first cell leaves the monolayer ... [17]': both readers ask whether biofilms and colonies are two systems with two criteria or one tilting mechanism cited twice (R01#823, R02#906); the paper does not say how they differ (S1.P3 names [17] only as 'colonies that grow by cell division'). a) two different criteria (a mechanical instability above a length-dependent pressure in [62]; a single-cell tilting threshold with a stochastic onset from asynchronous divisions in [17]): mark it, e.g. 'In growing colonies, in contrast, the first cell ...'; b) the same tilting mechanism in two systems: 'Similarly, in growing colonies, ...'; c) other.
+% SW-A: read those references and write something consistent. ask me if you cannot find the text of the papers.
 
 In the coarse-grained equations the same coefficient $\zeta=\xi_0v_0^2/(4\frev)$ of
 \cref{eq:active-force} sets the active stress and the amplitude of the density noise, so the
@@ -1696,12 +1709,14 @@ measured, and layering around defects at several reversal rates would test it.
 
 Three observables beyond the radial profile of the layering probability in
 \cref{fig:defects-layering}(c) could test the mechanism. The first is the angular profile
-of layer formation, which would test the predicted maximum off the core, at the head of the
-defect. In the snapshots of \cref{fig:defects-layering}(b) the new layer
-starts there, and \cref{fig:2examples} shows two more layers forming next to $+1/2$ defects.
-No quantitative measurement of where layers start has been published, however, and the
-positions of new layers relative to the defect axis, taken from existing movies, would
-provide it. The second observable is the traction.
+of layer formation, which would test the predicted maximum off the core, at the head of the defect. 
+% In the snapshots of \cref{fig:defects-layering}(b) the new layer
+% starts there, and \cref{fig:2examples} shows two more layers forming at the head of $+1/2$
+% defects.
+% No quantitative measurement of where layers start has been published, however, and the
+% positions of new layers relative to the defect axis, taken from existing movies, would
+% provide it. 
+The second observable is the traction.
 Han \textit{et al.}~\cite{han2025local} measured traction fluctuations about ten times the
 mean around defects, and the fluctuations of the active force in our model also exceed its
 mean everywhere
@@ -1723,7 +1738,7 @@ instead see holes open at $-1/2$
 defects~\cite{copenhagen2021}. Holes need a mechanism that the present model does not
 contain.
 % SW-Q(G6,G8) [run 9]: 'At -1/2 defects the model raises the layering probability as well' (at most fourfold): both readers ask whether this prediction meets data (R01#826, R02#1308: 'is that compatible with the data, are layers at -1/2 defects counted at all in Ref. [3]?'). a) Ref. [3] reports the layering rate near -1/2 defects: give the comparison here; b) it does not: say that the fourfold rise is untested; c) other.
-% SW-A:
+% SW-A: We just say that -1/2 needs additional modelling. Ref [3] finds that instead of layering, holes open at -1/2 defect much more frequently. So there might be other factors at play, which I do not want to discuss in this paper. Try to rewrite in a way so no further questions are raised.
 
 % 2026-10-12c: ending option 2 chosen by him (option 1, a closing summary, deleted).
 Each simplification of the model can be relaxed within the same framework: a finite
@@ -1900,7 +1915,7 @@ $T=20^\circ\mathrm C$,
 with $\kB$ the Boltzmann constant, whereas in equilibrium the fluctuation-dissipation  
 theorem would make this ratio one~\cite{kubo1966fluctuation}.
 % SW-Q(G8) [run 7]: Lambda = 0.13/min exceeds frev = 0.1/min, but Sec. III C calls zeta = xi0 v0^2/(4 frev) the leading order in Lambda/frev (with 2(2frev+Lambda) it would be about 40% smaller), and a reader stopped here. a) keep 4frev and add one sentence on why the leading order is kept although Lambda/frev = 1.3; b) use 2(2frev+Lambda); c) other.
-% SW-A:
+% SW-A: it is the leading order when frev is very large. We used white noise approximation assuming  frev is large. That is not the case, this is just a simplification. What we discussed in III is comparison with other expressions and we want to point out the consistency in the limit we took. Rewrite whatever you think is necessary, based on this answer.
 
 The values of $S_0$ and $\elld$ do not yet fix the coefficients $a'$, $b$ and $K'$ of the
 nematic free energy, since \cref{eq:S0-elld} gives only two relations among the three. We
@@ -1950,7 +1965,9 @@ $10^4~\kPa\tcdot\micron$~\cite{yao1999thickness,deng2011direct}. The fitted $B$ 
 between the turgor pressure and the effective cell modulus, close to the envelope
 stiffness of \textit{M.\ xanthus}.
 % SW-Q(G8,P1) [run 9]: App. A.2, 'The fitted $B$ thus lies between the turgor pressure and the effective cell modulus, close to the envelope stiffness of M. xanthus': both readers object that the only colony-level modulus on the ladder, S. marcescens at 0.05-5 kPa um, is 20 to 2000 times softer than B = 90 kPa um, while the rungs around B are single-cell quantities that the M. xanthus sentence itself calls 'not the compressibility of the monolayer' (R01#1011, R02#1009: 'no comparable measurement constrains B'); Sec. V (S5.P6.5) repeats the placement, and Sec. VI (S6.P2) restates it as 'lies among the moduli measured in related systems' (R01#820, R02#902). a) keep it and add that B is stiffer than the measured colony moduli and of the order of single-cell stiffnesses; b) drop the 'thus' sentence here, in Sec. V and in Sec. VI, so the ladder stands without a verdict; or other?
-% SW-A:
+% SW-A: a
+% SW-Q(F6) [run 9]: App. A.2, 'because each value requires a long numerical evaluation' (your sentence): both readers ask why, since Eq. (43) gives the enhancement in closed form once nu_0 is known and App. A opens with B proportional to rho_0 p_crit^2 ell_n^2 nu_0/[(1+nu_0) zeta] at fixed enhancement; both conclude, uneasily, that the numerical nu_0 must change with B, which the text never says (R01#1010, R02#1008). a) say what each value of B recomputes (the steady state and the numerical variance of App. H?), for example in the opening paragraph of App. A; b) keep as is; or other?
+% SW-A: do not give reason, skip this
 
 
 \begin{table}[h!]
@@ -2026,12 +2043,11 @@ of \cref{eq:pressure-definition}, which also comes from the compression term alo
 In the last step of \cref{eq:dEe} we drop $\mathfrak f_B$. This is consistent at leading
 order, because $\mathfrak f_B$ is quadratic in $\epsilon$ while $p$ is linear, and
 \cref{eq:dE-of-A} works at this order. At the pressure where a layer forms, $p=\pcrit$ (\cref{eq:pcrit}), however, the correction is not
-small: there $\epsilon=\pcrit/B\simeq0.39$, and the dropped term adds about $16\%$ to $pA$.
+small: at leading order, $\epsilon=\pcrit/B\simeq0.39$ there, and the dropped term adds
+about $20\%$ to $pA$.
 The correction lowers the pressure at which a layer forms. Like the other simplifications
 of the nucleus in \cref{sec:nucleation-1}, the disc of one cell area and the pressure taken
 at a point, this shift is absorbed by the fit of $B$.
-% SW-Q(P12,G8) [run 9]: App. B, 'there $\epsilon=\pcrit/B\simeq0.39$, and the dropped term adds about 16% to pA' (your sentence): R01#1101 redid the arithmetic and found two orders mixed: epsilon = p_crit/B uses the linear p = B epsilon, for which f_B/p = epsilon/2, about 20%, while 16% = epsilon/(2+epsilon) uses the exact p = (B/2)(rho^2-1), for which p = p_crit gives epsilon of about 0.34 and about 14%. a) keep epsilon of about 0.39 and write 'about 20%'; b) use the exact pressure: epsilon of about 0.34 and about 14%; or other?
-% SW-A:
 
 
 \section{Coarse-graining}
@@ -2281,7 +2297,13 @@ standard deviation of only $1.9\%$ (\cref{eq:pedestal}). We therefore keep the l
 order in $\rho-1$ at fixed pressure, counting $B(\rho-1)$ as of order one. This truncation
 removes the diffusion, whose ratio to $B\nabla^2\rho/\xi_0$ is $\zeta/B$, and it reduces
 $\nabla p=B\rho\nabla\rho$ to $B\nabla\rho$, so that \cref{eq:rho-full} becomes
-\cref{eq:model-rho}. The noise correlator \cref{eq:eta-rho-autocorrelation}, in contrast,
+\cref{eq:model-rho}. These truncated equations give the variance of
+\cref{sec:defect-fluct}. Layers, however, form far out in the tail of the density
+distribution, where
+$\rho-1\simeq\pcrit/B\simeq0.39$ (\cref{app:extrusion}), so the layering
+probability is a Gaussian extrapolation of these equations, one of the deliberate
+simplifications of \cref{sec:discussion}. The noise correlator
+\cref{eq:eta-rho-autocorrelation}, in contrast,
 needs neither the truncation nor a closure. It follows from
 \cref{eq:eta-rho-chi}, the correlator \cref{eq:dean-noise-sum} of $\bs\chi$ and the
 angular integral used above,
@@ -2539,6 +2561,8 @@ follows from $\Q$ through
 \end{equation}
 The left side increases monotonically from $0$ to $1$, so this equation has exactly one
 root for every $S<1$.
+% SW-Q(P5) [run 9]: App. D, 'with a scalar and a tensor Lagrange multiplier, gives $\varrho\propto\exp[\bs\lambda\!:\!\hat\Q(\theta)]$': both readers first took the bold $\bs\lambda$ for the rotational noise $\lambda_i$, $\lambda$ of Eqs. (5), (10), (11) and settled it only from 'Lagrange multiplier' (R01#1305, R02#1307 severity 2); the symbol appears nowhere else. a) rename the multiplier to a symbol the paper does not use, e.g. $\bs\Pi$; b) drop the symbol: '... gives a $\varrho$ proportional to the exponential of a linear function of $\hat\Q(\theta)$'; c) keep as is; or other?
+% SW-A: c
 
 The other moments follow from the same harmonics. Each is an isotropic tensor function
 of $\Q$, so it can be built from the $\J$ of \cref{eq:J-definition} and three further
@@ -2607,6 +2631,8 @@ usually do \cite{baskaran2008hydrodynamics,bertin2013,grossmann2016mesoscale,pes
 correlators are a different matter, because there the closure produces covariance
 matrices with a negative eigenvalue, which makes the stochastic equations ill defined.
 \Cref{app:realizability} shows this and builds the noise from the exact moments instead.
+% SW-Q(F8) [run 9]: App. D, 'We nevertheless keep the closed equation Eq. (22), without its $\nabla\H$ terms, as continuum theories derived from particle models usually do' and 'builds the noise from the exact moments instead': R01 asks what the inaccurate closure changes in $\Q_\ss$, on which the head/tail asymmetry rests, and notes that drift and noise now use two angular distributions (R01#1306, R01#1307, severity 2). App. E.3 answers part of it ('The static profile ... is therefore a coarser approximation of the core with the exact moments'; 'we do not expect $\nu_0$ to change much'). a) add one sentence here that points to App. E.3 for what the exact moments change in the steady state; b) keep as is; or other?
+% SW-A:b
 
 % 2026-10-22, his request: the lowest-order closure forces the drop of the grad-H terms.
 % Source: ../report_full_solution/report.tex sec:wellposed; numbers from
@@ -2675,7 +2701,7 @@ $\Q=S(r)\hat\Q(\phi/2)$. Since the components of $\hat\Q(\theta)$ are $\cos2\the
 $\sin2\theta$, this ansatz has the components $Q_{xx}=S\cos\phi$ and
 $Q_{xy}=S\sin\phi$. Both are angular harmonics of order one, on which the Laplacian acts
 as $S''+S'/r-S/r^2$, so $\nabla^2\Q=(S''+S'/r-S/r^2)\,\hat\Q(\phi/2)$. At the same time
-$\Q\!:\!\Q=2S^2$ turns the cubic term of \cref{eq:H-active} into $2bS^3\hat\Q(\phi/2)$.
+$\Q\!:\!\Q=2S^2$ turns the cubic term of \cref{eq:H-active} into $-2bS^3\hat\Q(\phi/2)$.
 With $S_0$ and $\elld$ of \cref{eq:S0-elld}, the condition $\Ha=0$ therefore reduces to the
 radial equation
 \begin{align}
@@ -2687,7 +2713,7 @@ closed-form solution, which is why \cref{sec:defect-steady} uses the Pad\'e prof
 from the core the equation gives $S\simeq S_0(1-\elld^2/2r^2)$, and the profile
 \cref{eq:pade-approximation} has the same far field. It departs from the numerical
 solution of \cref{eq:S-radial} by less than $10^{-2}\,S_0$, with the largest departure near
-$r\simeq1.5\,\elld$. A higher-order approximant, rational in $x^2$,
+$r\simeq1.5\,\elld$. A higher-order approximant of $f_\pade$ with $x=r/\elld$,
 \begin{equation}
   \label{eq:pade-accurate}
   f(x)=x\left[\tfrac{0.34011+0.04517\,x^2+0.00234\,x^4}
@@ -2698,7 +2724,8 @@ only where a small modulation is quoted to a few percent. With
 \cref{eq:pade-accurate}, as with the exact profile, \cref{eq:total-gauss} gives
 $\nu_0=2.94\%$ at $\elln=0.5~\micron$, whereas \cref{eq:pade-approximation} gives
 $3.06\%$, because its $S$ rises slightly too fast near the core. We therefore quote
-$\nu_0$ for the exact profile and use \cref{eq:pade-approximation} everywhere else for simplicity, where
+$\nu_0$ for the exact profile, which \cref{eq:pade-accurate} reproduces, and use
+\cref{eq:pade-approximation} everywhere else for simplicity, where
 its error is small against the effects we discuss.
 
 With $\Q$ known, the first equation of \cref{eq:simplified-noiseless} reads
@@ -2719,6 +2746,8 @@ We therefore write the density as
 with $h$ regular inside the boundary, $r\le R$, and let the boundary condition fix $h$. Every
 condition below is proportional to $\cos\phi$, and the only regular harmonic function with
 this angular dependence is $r\cos\phi$, up to an added constant, so $h=c+A\,r\cos\phi$.
+% SW-Q(P5) [run 9]: App. E.1 reuses two symbols of §II: $A$ (here the slope of the harmonic part; in §II the patch area, $A^*=\pi h^2\dots$) and $h$ (here the harmonic part of $\rho$; in §II the length in $A^*$ and $p_\mathrm{crit}$). Both are defined on the spot. a) rename locally, e.g. $h\to\rho_h$ and $c+A\,r\cos\phi\to c_0+c_1r\cos\phi$ (also in E.1's later lines); b) keep; c) other.
+% SW-A: b
 
 The reservoir boundary of \cref{sec:defect-steady}, $\rho(R,\phi)=1$, requires
 $h(R,\phi)=(\zeta/B)S(R)\cos\phi$. This gives $c=0$ and $A=(\zeta/B)S(R)/R$, which is
@@ -2728,14 +2757,16 @@ density at the core and the mean density are then both one.
 A reservoir lets cells cross the boundary. One might instead leave the density free at the
 boundary, $\partial_r\rho=0$, but this condition is inconsistent. It exerts no pressure
 gradient, so the active flux $\fa/\xi_0$ still crosses the boundary, and once the
-cross-coupling of \cref{app:comoving} breaks the antisymmetry of the defect, the inflow
+cross-coupling term $(B/\xi_0)\nabla\tcdot(\Q\nabla\rho)$ of \cref{eq:model-Q}
+(\cref{sec:defect-steady}) breaks the
+antisymmetry of the defect, the inflow
 and the outflow no longer cancel. Cells then enter or leave the box, and no steady state
 is reached.
 
 A no-flux boundary blocks the cells and imposes zero normal flux,
 $\nh\tcdot(B\nabla\rho-\fa)=0$, that is $B\,\partial_r\rho=f^\text{a}_r$ at $r=R$, with
 the radial active force $f^\text{a}_r=-\zeta(S'+S/r)\cos\phi$. This requires
-$A=-(\zeta/B)S(R)/R$, while the number of cells is conserved, so the mean density
+$A=-(\zeta/B)S(R)/R$, and the number of cells is conserved, so the mean density
 stays one and $c=0$. Thus
 \begin{align}
   \label{eq:rho-noflux}
@@ -2746,22 +2777,29 @@ term has the slope of the reservoir boundary with the opposite sign, and the mod
 boundary doubles. \Cref{fig:rho1d-dirichlet-neumann} compares the two boundaries in the
 numerical solution. They change the density across the whole box, but under both boundaries it
 stays of order $\zeta/B$, far below the scale of its fluctuations.
+% SW-Q(P1) [run 9]: App. E.1, 'and the modulation at the boundary doubles' (your sentence): doubles relative to what? By Eq. (E5) the modulation at $r=R$ is $2(\zeta/B)S(R)\cos\phi$, while the reservoir solution vanishes there (R57#7). a) 'and at the boundary the modulation, $2(\zeta/B)S(R)$, is twice the term $(\zeta/B)S(R)$ of the particular solution'; b) 'and at the boundary the modulation is $2(\zeta/B)S(R)$ instead of zero'; c) other.
+% SW-A: what if we drop that part?
+% SW-Q(P5) [run 9]: App. E.1 solves on a disk, $r\le R$, but says 'Cells then enter or leave the box' (A5.1.P4) and 'They change the density across the whole box' (A5.1.P5), while the square box is the numerical domain of App. E.2 (Fig. 11, $x=\pm20~\micron$). a) both sentences mean the numerical square box: keep; b) the disk is meant: 'disk' in both; c) other.
+% SW-A: b
 
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.pdf}
   \caption{
-  Steady-state density along the defect axis, at $y=0$, for two types of boundary
+  Steady-state density along the defect axis, $(\rho-1)/(\zeta/B)$ at $y=0$, for two types
+  of boundary
   conditions. The blue curves are the same as in \cref{fig:rho1d-dirichlet} corresponding
-  to the reservoir boundary $\rho=1$. The orange curve corresponds to the no-flux boundary
+  to the reservoir boundary $\rho=1$. The orange curves show the density for the no-flux
+  boundary
   condition
     $\nh\tcdot(B\nabla\rho-\fa)=0$ at $x=\pm20~\micron$. 
     Solid lines are the full numerical solution of \cref{app:comoving}; dashed lines are the closed forms \cref{eq:rho-analytic} and
     \cref{eq:rho-noflux}. The reservoir pulls the density back to one at the boundaries, while
-    the no-flux boundary lets the modulation grow toward them.}
+    the no-flux boundary lets the modulation grow toward them. \todo{update legend}}
   \label{fig:rho1d-dirichlet-neumann}
 \end{figure}
 % SW-TODO(FIG9,FIG10): the y-axis title sets zeta/B as a stacked fraction whose parts print at about 6.2 pt (body 10 pt): write the title on one line, '(rho-1)/(zeta/B)' as in the caption, in the Export cell 'rho1d_Dirichlet_Neumann' (../negative-defect/plotting_small_core+ln_2.nb near line 1141; .nb: your edit); the legend reads 'Dirichlet b.c.', 'Neumann b.c.', 'Analytical' while the caption and App. E.1 say 'reservoir boundary rho=1', 'no-flux boundary', 'closed forms', so no text pointer can name a legend entry (FS:R03:Fig11): legend entries 'reservoir (rho = 1)', 'no-flux', 'closed form'; regenerate figures/rho1d_Dirichlet_Neumann.pdf
+% SW-A: update the caption, I will update the legend. Keep this todo.
 
 
 \subsection{Solving the noiseless equations in the comoving frame}
@@ -2796,7 +2834,8 @@ comoving frame.
 
 Dropping the $\nabla\H$ terms as in \cref{sec:model-elastic}, dropping all the noise
 terms, and substituting
-$\partial_t\to\partial_t-(\u\tcdot\nabla)$ in \cref{eq:model-rho,eq:model-Q}, we solve the following equations
+$\partial_t\to\partial_t-(\u\tcdot\nabla)$ in \cref{eq:model-rho,eq:model-Q}, we obtain
+the steady-state equations
 \begin{subequations}
     \label{eq:comoving-equations}
 \begin{align}
@@ -2817,9 +2856,9 @@ $B$, and $\rho_\ss-1\propto1/B$ (see \cref{fig:rho1d-dirichlet}).
 
 
 The frame velocity $\u$ is not available in closed form; \cref{app:drift} estimates it
-only at first order. It is fixed implicitly, by
+only at first order in the cross-coupling. It is fixed implicitly, by
 requiring that the defect core stay pinned at the origin, and enters the numerical
-problem as the Lagrange multiplier conjugate to that constraint.
+problem as an extra unknown, determined by that constraint.
 
 We solve in the square box of side $40~\micron$, and
 impose on its boundaries the density condition of \cref{sec:defect-steady}, the reservoir
@@ -2830,22 +2869,30 @@ $\nh\tcdot\nabla\Q=0$, so that the boundary does not force any nematic axis.
 We impose the shape of the defect only by pinning the core, $Q_1(0,0)=Q_2(0,0)=0$, and
 by setting $Q_2(x,0)=0$ on the axis, with $x Q_1(x,0)>0$. These constraints turn
 out to be enough to keep the solution a $+1/2$ defect.
+% SW-Q(F7) [run 9]: App. E.2, 'by setting $Q_2(x,0)=0$ on the axis, with $xQ_1(x,0)>0$': both readers ask whether the inequality is imposed (how, in a Newton solve?) or only describes the solution (R01#1319, R02#1407); the solver imposes only $Q_2(x,0)=0$ and starts from the Pad\'e profile (comoving_defect/comoving_core.m, cdInitial). a) say so, e.g. 'by setting $Q_2(x,0)=0$ on the axis and starting from the Pad\'e profile, which has $xQ_1(x,0)>0$'; b) keep; or other?
+% SW-A: we start with pade, and constrain the Q_2 and Q_1 as above.
 
 The fields vary fastest near the core, where $S$ rises over the length $\elld$, and
 slowly far from it. We therefore solve \cref{eq:comoving-equations} by finite differences
 on a graded grid, which is finer near the core and coarser far from it. The unknowns are
 $\rho$, $Q_1$ and $Q_2$ at every node, together with $u_x$ and $u_y$.
+% SW-Q(F8) [run 9]: App. E.2, 'finite differences on a graded grid, which is finer near the core': both readers ask for the grid and a convergence check (R02#1408; R01#1320: Fig. 6 says 'converged comoving solution', 'converged against what?'); the paper gives one only in the Fig. 13 caption ('Refining the grid changes $u_x$ by less than $10^{-4}~\micron/\minute$'). a) add the number of nodes and the finest spacing, and that refining the grid changes $u_x$ by less than $10^{-4}~\micron/\minute$; b) keep; or other?
+% SW-A: 'on a graded grid, which is finer near the core' we do not need this
 
-With the cross-coupling the core cannot stay at rest, so the multiplier $\u$ is nonzero.
+With the cross-coupling the core cannot stay at rest, so $\u$ is nonzero.
 It points along $+x$, as \cref{sec:defect-steady} explains, and with the exact moments of the
 closure it reverses (\cref{app:drift}). In our box
-$u_x=0.24~\micron/\minute$, while $u_y=7\times10^{-12}~\micron/\minute$ vanishes to
+$u_x=0.24~\micron/\minute$, whereas $u_y=7\times10^{-12}~\micron/\minute$ vanishes to
 round-off, as the mirror symmetry requires. The value of $u_x$ depends on the box size and
 on the boundary conditions. The coupling also deforms the defect: the deformation is weak near the core, but away
-from it the solution deviates from the Pad\'e profile used in \cref{sec:defect-steady}.
-This can be seen in \cref{fig:comoving-deformation}(a,b) and \cref{fig:nematicaxis}. The active
+from it the solution deviates from the Pad\'e profile used in \cref{sec:defect-steady}
+(\cref{fig:comoving-deformation}(a,b) and \cref{fig:nematicaxis}). The active
 force is deformed too: the cross-coupling and the motion of the defect shift it along the
 axis, away from \cref{eq:active-force-defect} (\cref{fig:comoving-deformation}(c)).
+% SW-Q(F8) [run 9]: App. E.2, 'The value of $u_x$ depends on the box size and on the boundary conditions' (your sentence): both readers ask 'by how much?' and whether the deformation of $\Q_\ss$, and with it the head/tail asymmetry of the numerical variance (dotted curve of Fig. 8), depends on the box too (R01#1321, R02#1409); the Fig. 13(b) caption gives $u_x$ between $0.21$ and $0.24~\micron/\minute$ at $w=0$ for $L$ from $10$ to $40~\micron$. a) add that range here with a pointer to Fig. 13(b); b) keep; or other?
+% SW-A: just point to fig 13 b, no need to repeat.
+% SW-Q(P1) [run 9]: App. E.2, '$u_y$ ... vanishes to round-off, as the mirror symmetry requires': the solver imposes $Q_2(x,0)=0$ on the whole axis, so a reader takes $u_y=0$ as a consequence of that constraint, not as a check (R58#5; the axis condition itself is your open SW-Q(F7)). a) 'as the condition $Q_2(x,0)=0$ imposes'; b) keep: the mirror symmetry of the equations requires it and the number is a check; c) other.
+% SW-A: what if we just say u_y=0 without reason, it is what we find. or |u_y| < 10^-?
 
 % ============================================================
 % Appendix "Direction of the defect drift" (app:drift), added 2026-10-10 (round 2026-10-09e)
@@ -2908,6 +2955,8 @@ variance of \cref{sec:defect-fluct}. That variance keeps the static profile and 
 $\delta\Q=0$, and the drift reaches the fluctuations only through the advection of $\delta\Q$
 in \cref{eq:linearized-Q}. The direction of the drift is nevertheless a prediction of the
 field equations. Here we show that the closure of the $\Q$ equation decides it.
+% SW-Q(P1) [run 9]: App. E.3, 'the drift reaches the fluctuations only through the advection of $\delta\Q$ in Eq. (30b)': true for the analytic variance ($\delta\Q=0$), but Sec. IV B traces the head/tail asymmetry of the numerical variance to the deformed $\Q_\ss$ of the moving defect, so 'only' reads false for the numbers (R59#2; related to your open SW-Q(G6,G8) at manuscript.tex:1358). a) 'and in the numerical variance the drift enters through the advection of $\delta\Q$ and through the deformation of $\Q_\ss$'; b) narrow to the analytic variance and drop 'only'; c) other.
+% SW-A:a
 
 The closure enters through the transport of nematic order by self-propulsion. With
 reversals, self-propulsion makes each rod diffuse along its own axis, with the diffusivity
@@ -2920,7 +2969,8 @@ anisotropic, because the alignment moves along the axis of the rods and not acro
 depends on the angular distribution of the rods. The lowest-order closure
 \cref{eq:leading-closure} reduces it to
 $(\zeta/\xi_0)(\partial_\alpha\partial_\beta-\tfrac12\delta_\ab\nabla^2)\rho$. This term is
-smaller than the retained transport by $\zeta/B$ and is dropped (\cref{app:dean-angle}). The
+smaller than the retained transport $(B/\xi_0)\nabla\tcdot(\Q\nabla\rho)$ by $\zeta/B$ and
+is dropped (\cref{app:dean-angle}). The
 exact moments \cref{eq:exact-moments}, by contrast, add $(g_2/2\rho)\,\U(\Q)$ to
 $\langle\hat\Q\hat\Q\rangle_\varrho$, where $\U$ is the fourth-harmonic tensor of
 \cref{eq:tensor-basis} and $g_2$ the coefficient of \cref{eq:g-coefficients}. With it comes
@@ -2940,6 +2990,8 @@ the drift, we add $wT$ to the right-hand side of \cref{eq:comoving-equations-Q}.
 $w$ runs from $w=0$, the closure of the main text, to $w=1$, the exact moments in this
 term. Everything
 else, including the parameters of \cref{tab:field-params}, stays as it is.
+% SW-Q(F8,G8) [run 9]: App. E.3: at w=1 only the friction term T takes the exact moments, 'Everything else ... stays as it is'. Two reads ask whether all other terms keep the lowest-order closure (R01#1326, R59 at A5.3.P2, sev 2), because Sec. IV A says the defect moves head-first 'with the exact moments of the maximum-entropy angular distribution', which reads broader than this one-term test. a) only T switches: say 'including the closure of all other terms' here and narrow Sec. IV A to the transport term; b) the full exact-moment solution (comoving_defect_full, u_x of about -0.23 um/min) supports Sec. IV A as written: cite it here; c) other.
+% SW-A: figure out whether the fig 13 the points are obtained by considering the exact moments at all places. Let me know and I will decide.
 
 On the defect, $T$ takes a simple form. We combine $Q_1=Q_{xx}$ and $Q_2=Q_{xy}$ of
 \cref{app:comoving} into the complex field $\Psi=Q_1+\ii Q_2$ and write
@@ -3003,7 +3055,8 @@ shows the estimate (dashed lines) next to the numerical drift (markers).
     weight $w$ of the closure term \cref{eq:drift-U-term}, from the closure of the main text,
     $w=0$, to the exact moments, $w=1$, in the box of \cref{app:comoving}. Markers: comoving
     solutions with the exact $g_2(S)$ (blue) and with $g_2=1/2$ (orange). Dashed lines: the
-    first-order estimate $u_a+w\,u_b$ of \cref{eq:drift-ua,eq:drift-ub} for $R=20~\micron$.
+    first-order estimate \cref{eq:drift-solvability}, linear in $w$ as $u_a+w\,u_b$
+    (\cref{eq:drift-ua,eq:drift-ub}), for $R=20~\micron$.
     Positive $u_x$ moves the defect toward its tail and negative $u_x$ toward its head. With
     the exact $g_2(S)$, $u_x$ falls from $0.24~\micron/\minute$ at $w=0$ to
     $-0.14~\micron/\minute$ at $w=1$ and changes sign at $w_*=0.61$. With $g_2=1/2$ it
@@ -3030,7 +3083,8 @@ a disk of radius $R$, \cref{eq:drift-solvability} then reads
   u_x\simeq-\frac{\int_0^R\bigl[(S'+S/r)\,s_0+(S'-S/r)\,s_2\bigr]\,r\,\d r}
   {\int_0^R(S'^2+S^2/r^2)\,r\,\d r}.
 \end{equation}
-Its denominator grows as $S_0^2\ln(R/\elld)$, the elastic energy of the far field. This is one
+Its denominator grows as $S_0^2\ln(R/\elld)$, the elastic energy of the far field. This
+growth is one
 reason why $u_x$ depends on the size of the box (\cref{app:comoving}).
 
 Since $s$ is linear in $w$, so is the estimate, $u_x\simeq u_a+w\,u_b$, where $u_a$ comes
@@ -3057,6 +3111,8 @@ contributions far from it, because the pressure field decays slowly toward the b
 strong order of the defect matters too. With the small-$S$ value $g_2=1/2$ of
 \cref{eq:g-small-S} in place of $g_2(S)$, $u_b$ is smaller in magnitude, and the sign changes
 only at $w\simeq0.79$.
+% SW-Q(P5) [run 9]: App. E.3 defines three symbols that the paper already uses: $T_\ab$ (Eq. (E7); bold $\bT$ is the linear tensor of Eq. (D3)), $F=g_2S^2$ (the free energy is $F[\rho,\Q]$, and the 'effective free energy' appears two paragraphs later), and $P=S-(r/R)S(R)$ (polarity $\bs P$, layering probability). Readers stopped at $T$ and $P$ (R59#3, R59#6). a) rename the local ones to unused symbols, e.g. $T\to\Theta$, $F\to\Sigma$, $P\to\Pi$; b) rename only $F$ (the clash with the free energy is in the same subsection); c) keep; or other.
+% SW-A: c
 
 The full comoving problem confirms the estimate. We add $wT$ to the solver of
 \cref{app:comoving}, keep its box, boundary conditions and grid, and continue the steady state from $w=0$
@@ -3066,18 +3122,27 @@ overshoots the numerical drift, but it places the sign change close to the numer
 With $g_2=1/2$ the sign changes later, and at $w=1$ the defect moves toward its head only
 slowly. The direction of the drift does not depend on the size of the box
 (\cref{fig:drift-closure}(b)). In larger boxes the sign change moves to larger $w$, because
-the retained transport still collects contributions far from the core while $T$ does not. In
+the retained transport still collects contributions far from the core whereas $T$ does
+not. In
 the first-order estimate the sign change stays below $w=1$ however large the disk, so with
 the exact moments the defect keeps moving toward its head, while its speed decreases as
 $1/\ln R$.
+% SW-Q(F8) [run 9]: App. E.3, 'the sign change stays below $w=1$ however large the disk': both readers ask for the limiting $w_*$ (R01#1328, R02#1414); your source comment (large_R.py, manuscript.tex:2877-2879) gives $w_*=0.545$, $0.692$, $0.754$, $0.790$, $0.815$, $0.825$ at $R=20$, $50$, $100$, $200$, $500$, $1000~\micron$. a) add 'and reaches $w_*\simeq0.83$ at $R=1~\mathrm{mm}$'; b) keep; or other?
+% SW-A: the w_* is not important here. it is just to visualize the transition between the two regimes. I do not think w_* have any physical meaning. Do not discuss it at all.
+% SW-Q(P1) [run 9]: App. E.3, 'In larger boxes the sign change moves to larger $w$': Fig. 13(b) shows $u_x$ only at $w=0$ and $w=1$, so the trend of $w_*$ with the box is not shown for the numerics (R59#7); your source comment gives it for the first-order estimate only. Not the open question on the limiting $w_*$. a) attribute it to the estimate: 'In the first-order estimate the sign change moves to larger $w$ for larger disks'; b) give the numerical $w_*$ at $L=10$ and $40~\micron$; c) other.
+% SW-A: simplify this section. the main point of this section is to show that the experimentally observed drift is recovered when the exact moments in one place is recovered. This is the main point of this section. The second important point is the analytical approximate form of drift velocity. I would remove Fig 13b and just leave a short comment that u in fact depend on the size of the boundary. Rewrite this subsection!
 
-Unlike the cross-coupling, the term $T$ rotates the director near the core by several
+Unlike the retained transport above, which is the cross-coupling, the term $T$ rotates the
+director
+near the core by several
 degrees, mostly on the sides of the defect, $\phi\simeq\pm90^\circ$
 (\cref{fig:drift-deformation}). The cross-coupling alone barely rotates it there, and
 in the opposite direction. The
 strength $S$ of the order changes less. The static profile used for the variance in
 \cref{sec:defect-fluct} is therefore a coarser approximation of the core with the exact
 moments than with the lowest-order closure.
+% SW-Q(P1) [run 9]: App. E.3, 'The strength $S$ of the order changes less': less than what? Readers split between 'less than the director angle' and 'less than under the cross-coupling alone (5% of $S_0$, Fig. 12(a))' (R59#10). a) give the number: 'With $T$, $S$ changes by at most __% of $S_0$'; b) 'S changes less than the director'; c) other.
+% SW-A: compared to w=0 case
 
 % fig:drift-deformation: plotgen/drift_deformation/drift_deformation.wls (2026-10-12b), from the
 % box-20 run r1_exact_v2 of claude_experiments/drift_closure_2026_10_09. Extrema of theta-phi/2:
@@ -3095,24 +3160,29 @@ moments than with the lowest-order closure.
 
 The exact moments also change the rotational friction, the second line of \cref{eq:Q-full},
 through $\langle\hat\Q'\hat\Q'\rangle_\varrho=4\rho\J-(2g_2/\rho)\U(\Q)$. This correction acts
-on the nematic force field at each point. On the static defect it is therefore
+on the nematic force field $\H$ at each point. On the static defect it is therefore
 proportional to
 $\ee^{\ii\phi}$, like $\Psi_0$, and drops out of \cref{eq:drift-radial}. It reshapes the
 profile $S(r)$ instead and changes the drift only through it. Including it moves the drift
 further toward the head, although with the parameters of \cref{tab:field-params} unchanged it
 also lowers the far-field order.
+% SW-Q(F8) [run 9]: App. E.3, 'Including it moves the drift further toward the head ... it also lowers the far-field order': both readers ask by how much (R01#1333, R02#1604: 'the w = 1 comparison is no longer at fixed S0; how much?'). a) give $u_x$ at $w=1$ with this correction and the far-field order it gives; b) keep; or other?
+% SW-A:b
 
-Ref.~\cite{copenhagen2021} attributes the asymmetry of the flows around defects to a friction
-that is stronger across the cells than along them, $\xi_0(\I-\varepsilon\Q)$ in its continuum
-model, with $\varepsilon\simeq0.8$ fitted at $+1/2$ defects. For a single rod this friction
-reads $\xi_0(\I-\varepsilon\hat\Q)$. In our model it acts only on the passive force, because
-self-propulsion sets the velocity of the rods directly. To first order in $\varepsilon$ and in
-the activity, it adds to the $\Q$ equation terms with the angular harmonics $\ee^{\pm\ii\phi}$
-and $\ee^{\pm3\ii\phi}$. These do not project onto the translation mode
-\cref{eq:drift-translation}, so the drift changes only at higher order. Indeed, at
-$\varepsilon=0.8$ the numerics change $u_x$ by only a few percent at $w=0$, and also at $w=1$
-when the friction term is kept at the lowest-order closure. Friction anisotropy therefore
-reverses neither direction.
+Friction anisotropy reverses the drift neither at $w=0$ nor at $w=1$.
+Copenhagen \textit{et al.}~\cite{copenhagen2021} attribute the asymmetry of the flows
+around defects to a friction that is stronger across the cells than along them,
+$\xi_0(\I-\varepsilon\Q)$ in their continuum model, with $\varepsilon\simeq0.8$ fitted at
+$+1/2$ defects. For a single
+rod this friction reads $\xi_0(\I-\varepsilon\hat\Q)$. In our model it acts only on the
+passive force, because self-propulsion sets the velocity of the rods directly. To first
+order in $\varepsilon$ and in the activity, it adds to the $\Q$ equation terms with the
+angular harmonics $\ee^{\pm\ii\phi}$ and $\ee^{\pm3\ii\phi}$. These do not project onto
+the translation mode \cref{eq:drift-translation}, so the drift changes only at higher
+order. Indeed, at $\varepsilon=0.8$ the numerics change $u_x$ by only a few percent at
+$w=0$, and also at $w=1$ when the friction term is kept at the lowest-order closure.
+% SW-Q(P1) [run 9]: App. E.3, 'and also at $w=1$ when the friction term is kept at the lowest-order closure': which run is meant (R59#15)? a) at $w=1$, $T$ takes the exact moments while the angular moments inside the friction term keep the lowest-order closure: 'and also at $w=1$, with the friction term itself at the lowest-order closure'; b) the friction check at $w=1$ was run only in a variant with everything at the lowest-order closure; c) other.
+% SW-A: I would remove the sentence "Indeed, at ..."
 
 The direction of the drift is thus set by the fourth angular harmonic of the rod
 distribution, which the lowest-order closure drops. Without it the defect moves toward its
@@ -3370,9 +3440,9 @@ The filter interpolates between two branches,
 \end{align}
 with $\gamma_\mathrm{E}$ Euler's constant. Variations of the nematic field on scales
 larger than $\elln$ are therefore weighted logarithmically, and those below $\elln$
-are cut off exponentially. In real space the same two branches appear as the shape of
-$\kappa$: it is finite at the origin, $\kappa(0)=1/(\pi\elln^2)$, and beyond $\elln$ it
-falls off as $1/(2\pi d^2)$, whose integral produces the logarithm.
+are cut off exponentially.
+% SW-Q(P5) [run 9]: z = p^2 ell_n^2/8 in App. F.4 (Eqs. F17-F18) reuses the symbol of z(r) = p_crit/sigma_p(r) in Eq. (40) of Sec. V (and z_inf); a reader paused on it (R60#2). a) rename the local variable here, e.g. $u=p^2\elln^2/8$ (4 occurrences, lines 3367-3389); b) keep z (local and defined on the spot); c) other.
+% SW-A: b
 
 The inverse transform of $\hat\Phi$ is the
 isotropic real-space kernel, a function of the distance $d$ between two points,
@@ -3380,6 +3450,9 @@ isotropic real-space kernel, a function of the distance $d$ between two points,
   \label{eq:kappa-real}
   \kappa(d) = \frac{1-\ee^{-2d^2/\elln^2}}{2\pi\,d^2}.
 \end{equation}
+In real space the same two branches appear as the shape of
+$\kappa$: it is finite at the origin, $\kappa(0)=1/(\pi\elln^2)$, and beyond $\elln$ it
+falls off as $1/(2\pi d^2)$, whose integral produces the logarithm.
 With the convolution $(\kappa\star g)(\r)=\int\!\d^2\bs d\,\kappa(d)\,g(\r+\bs d)$, dividing by
 the pedestal gives
 \begin{equation}
@@ -3387,7 +3460,8 @@ the pedestal gives
   \frac{\sigmarho(\r)}{\sigmarho|_\text{pedestal}}
   = 1 + \frac{\elln^2}{4}\bigl(\kappa\star\partial_i\partial_jQ^\ss_{ij}\bigr)(\r).
 \end{equation}
-In the next subsection, we will show that this kernel can be written as an average over neighbors of \cref{eq:total-gauss}.
+In the next subsection, we will show that this convolution can be written as the average
+over neighbors in \cref{eq:total-gauss}.
 
 % 2026-10-22, his request: the head/tail argument in the appendix, his real-space
 % eq:total-gauss rewritten in the neighbor form of the artifact (Question 3). Checks: scratchpad
@@ -3439,12 +3513,13 @@ neighborhood of a point survives the average. This change grows with the distanc
 point, and the neighbors farther than two cell widths therefore supply most of the modulation
 at its peak, although they carry only a small part of the weight $\Omega$. Around a $+1/2$
 defect the change comes from the bending of the director lines (\cref{fig:aimed-rods}(b,d)).
-Seen from a point on the axis, the rods beyond it tilt the opposite way from those between
-it and the core, but less, because the director turns at a rate inversely proportional to
-the distance from the core. The far side therefore offsets the core side only in part. The
-loss of
+The rods beyond a point on the axis tilt the other way than those between the point and the
+core, but less, because the director turns at a rate inversely proportional to the distance
+from the core, and this is why the far side offsets the core side only in part. The loss of
 order near the core only weakens the modulation: with $S$ held at $S_0$ everywhere,
 \cref{eq:variance-neighbors} would give a larger one.
+% SW-Q(P1,P12) [run 9]: App. F.5 ¶2: both final readers stop twice (sev 2). (1) 'the neighbors farther than two cell widths': is a cell width ell_n = 0.5 um here (so 1 um) or the cell width of M. xanthus (so about 2 um)? (2) 'The rods beyond a point on the axis tilt the other way than those between the point and the core': tilt measured against what, the line from the rod to the point (the sign of cos 2alpha in Eq. (F28)) or the defect axis? My rewording ('Seen from a point on the axis, … tilt the opposite way') caused a regression in the checkpoint read and was reverted. a) name the length and the reference direction in your words; b) keep; c) other.
+% SW-A: drop that statement
 
 \subsection{Dependence on the cutoff}
 \label{app:variance-ln}
@@ -3483,7 +3558,9 @@ a larger region.
 \end{figure}
 % SW-TODO(FIG9,FIG7,FIG2): printed 7.2 cm wide (0.85 linewidth, scale 1.16); tick labels print at about 6.9 pt, the exponents of 10^-3 to 10^-6 at about 4.5 pt, the legend at about 6.5 pt with subscripts near 4.7 pt (body 10 pt): raise FontSize 8 to about 9.5 (../plotgen/ln_curve_fig/ln_curve_adaptive.wls:129, 140, 141); the gray operating-point lines that the caption names print at about 0.25 pt in light gray (default GridLines style, :132) and nearly vanish: use GridLinesStyle -> Directive[GrayLevel[0.5], AbsoluteThickness[1]]; the y ticks mix decimals (0.1, 0.01) and powers (10^-3 to 10^-6): label all as powers of ten (yTicks = logTicks[-6, -1, 0], :117); the y title 'maximum variation nu_0' differs from the caption's and the text's 'peak variance modulation nu_0' (:131): use that term; regenerate figures/ln_curve.pdf
 % SW-Q(FIG1) [run 9]: Figs. 15 (fig:ln_curve) and 16 (fig:2examples) have their source in App. F.6 but are first cited in the main text: Fig. 15 in Sec. IV B (line 1279, 'as shown in Fig. 15'), before Fig. 10 (line 1309) and Figs. 11-14; Fig. 16 only in Sec. V (line 1466) and Sec. VI (line 1632), so a reader meets Fig. 15 before Fig. 10 and Fig. 16 before Figs. 11-14. a) move both floats to their first-citing paragraphs (Fig. 15 after the paragraph at line 1279, Fig. 16 after the one at line 1466; they become Figs. 10 and 12 and the appendix figures renumber), b) move only Fig. 16 (Fig. 15 stays an appendix figure deliberately cited from Sec. IV B), c) keep both where they are and accept the order.
-% SW-A:
+% SW-A:for fig 15, refer to app:variance-ln instead of the figure. Add a todo for fig 16, we will do it later.
+% SW-Q(F9) [run 9]: Both readers, meeting Fig. 15 at its first citation in Sec. IV B, cannot tell from 'the small-ℓn asymptote Eq. (F25), with ℓd the core size of the defect' how ℓd enters: a) give the form in the caption, ν0 ≃ ℓn²[¼ max|∂i∂jQ^ss_ij| ln(ℓd/ℓn) + c] with c a constant set by the shape of the profile; b) keep the pointer only; c) other.
+% SW-A: we cite the figure only in the appendix.
 
 % fig:2examples (his handmade figure, 2026-10-09c): placed here so that its number follows
 % fig:ln_curve, in the order of first citation among the appendix figures (first cited in
@@ -3496,7 +3573,8 @@ a larger region.
     Each row is a time series of reflectance images, with time counted from the first frame;
     red marks a $+1/2$ defect, with the dot at the core and the bar pointing to the tail,
 like a comet, and blue a $-1/2$ defect. In both rows the new layer
-    appears next to a $+1/2$ defect and grows within a few minutes. \textbf{Top row:} a
+    appears at the head of a $+1/2$ defect and grows within a few minutes. \textbf{Top
+    row:} a
     second layer forms on the monolayer. \textbf{Bottom row:} a third layer forms on top of
     the second. It shows that third layers also form in the experiment; the model of
     \cref{sec:nucleation-1} describes only the formation of the second layer. The darker shading is an annotation that marks the new layer and is not part
@@ -3521,6 +3599,8 @@ probability. Here we compute that modulation at the parameters of \cref{app:para
 and compare it with the one at a $+1/2$ defect. We stay with the analytic treatment of
 \cref{sec:defect-fluct}, at $\delta\Q=0$, and compare it with the same treatment at a
 $+1/2$ defect, which gives $\nu_0=2.94\%$ variance modulation (\cref{app:variance-ln}).
+% SW-Q(B2) [run 9]: Both readers note that sentences 4 and 5 of App. G's opening paragraph both say that the −1/2 modulation is compared with the +1/2 one: a) merge them into 'Here we compute that modulation at the parameters of App. A with the analytic treatment of Sec. IV B, at δQ = 0, and compare it with the same treatment at a +1/2 defect, which gives ν0 = 2.94% variance modulation (App. F 6).'; b) keep both; c) other.
+% SW-A: a
 
 
 % 2026-10-23f, his prompt ("using the results of app:variance-neighbors, the equations in this
@@ -3546,8 +3626,8 @@ $S\cos2(\theta_\text{nb}-\theta_{\bs d})$ in \cref{eq:total-gauss}. At a $-1/2$ 
 variance is therefore raised in three lobes and lowered in three lobes between them
 (\cref{fig:negative-3d}(b)).
 
-At a point on the ray $\phi=0$, the director lies along the ray. Between the point and the
-core, the rods above and below the ray tilt toward the point, and beyond the point
+At a point on the ray $\phi=0$ the director lies along the ray. Between the point and the
+core the rods above and below the ray tilt toward the line to the point, and beyond the point
 they tilt away from it, but less, as around the $+1/2$ defect
 (\cref{app:variance-neighbors}). The variance is therefore raised on this ray, and
 \cref{eq:total-gauss}, evaluated on the profile \cref{eq:pade-accurate}, confirms it at every
@@ -3569,6 +3649,10 @@ $r=\elld$ the $-1/2$ modulation is only $0.26\%$, against $2.67\%$ on the head s
 $+1/2$ defect, and it peaks only farther out, where the director bends more slowly.
 \Cref{fig:negative-3d} shows the two surfaces on a common scale.
 % SW-TODO(FIG9): printed 15.1 cm wide (0.85 textwidth; the PNG is drawn 18.8 cm wide, scale 0.81); the vertical-axis title Var[rho]/Var[rho]_pedestal prints at about 6.4 pt and its subscript 'pedestal' at about 4-4.5 pt (11 px at 300 dpi; body 10 pt), the tick and color-bar labels at about 6.5 pt (FontSize 8 x 0.81): raise FontSize 8 to about 10 (../negative-defect/negative_defect.wls:195, 196, 213); the director streamlines the caption names print at about 0.48 pt and 60% opacity (AbsoluteThickness[0.6], Opacity[0.6], :189): use AbsoluteThickness[1.2] and full opacity, as asked for Fig. 8; regenerate figures/varrho3D_pm.png (want["varrho3D_pm"])
+% SW-Q(B2) [run 9]: One reader takes 'Figure 17 shows the two surfaces on a common scale.' as the third pointer to Fig. 17, after '(Fig. 17(b))' and the caption's 'on the same vertical and color scales': a) delete the sentence; b) keep it; c) other.
+% SW-A: a
+% SW-Q(P6) [run 9]: App. G, 'and it peaks only farther out, where the director bends more slowly': R01 cannot tell whether the where-clause gives the reason the −1/2 peak is lower (slow bending, weak modulation) or only says where the peak lies: a) the reason: '..., and it peaks only farther out, where the director bends more slowly, so its peak is lower'; b) only the place: keep the sentence as it is; c) other.
+% SW-A: now we have a way to explain the magnitude of the fluctuations. how does this apply to the -1/2 case? Can you vome up with a reason?
 
 
 \begin{figure*}[tbp]
@@ -3688,6 +3772,8 @@ a positive definite $\mathbf N$, the equation has a positive definite solution
 $\mathbf C=\int_0^\infty\!\d t\,\ee^{\A t}\,\mathbf N\,\ee^{\A^\T t}$, adds up the noise
 injected at every earlier time and carried to the present by the drift
 \cite{zhou1996robust,simoncini2016computational}.
+% SW-Q(F7) [run 9]: App. H.1 ¶1, 'Eq. (H2) is the Lyapunov equation of control theory, where it tests stability: ...': one reader found the stability theorem textbook before the conditions needed here (R02#1809; R01 passed). a) keep; b) cut the stability theorem and keep the integral solution C = ∫ e^{At} N e^{A^T t} dt; or other?
+% SW-A: a
 
 On a grid, \cref{eq:lyapunov} becomes a matrix equation. It has a unique positive
 semi-definite solution if two conditions hold:
@@ -3705,6 +3791,8 @@ Schur decomposition of the discretized $\A$ is followed by a recursive Bartels--
 back-substitution \cite{bartels1972solution}, which keeps most of the work in matrix
 products. The Schur decomposition also yields the spectrum of $\A$, which checks
 condition ($i$): in our run every eigenvalue has a negative real part.
+% SW-Q(F8) [run 9]: App. H.1, 'in our run every eigenvalue has a negative real part': both readers ask how small the slowest decay rate is, because the defect's translation mode is nearly neutral and its weight in C grows as 1/|Re lambda| (R02#1811, R01#1903). a) quote the slowest decay rate, max Re lambda, of the run (the solver records it); b) keep as is; or other?
+% SW-A:b
 
 \subsection{Realizability of the noise covariance}
 \label{app:realizability}
@@ -3729,6 +3817,8 @@ correlators \cref{eq:Q-noise-correlators}, and the stochastic equations
 \cref{eq:model-rho,eq:model-Q} would be ill defined. For any genuine angular distribution
 the local covariance is valid automatically, but for the lowest-order closure
 \cref{eq:leading-closure} of \cref{app:closure} it is not.
+% SW-Q(F3) [run 9]: App. H.2 says that a genuine distribution (the exact moments) gives a valid covariance and the closure does not in ¶1, in ¶2's last sentence, in ¶3 and again in ¶8's first sentence; both readers flagged ¶2's last sentence and ¶8's first as repeats (R01#1904, R02#1812, R01#1909, R02#1818). a) cut ¶2's last sentence and open ¶8 with 'The solver therefore builds the noise covariance from the exact moments Eq. (D4), solving Eq. (D2) once per node, while ...'; b) keep both; or other?
+% SW-A: a
 
 We collect the three flux noises at a point, $\eta^\rho_i$, $\eta^Q_{11i}$ and
 $\eta^Q_{12i}$, into a vector with six components $(a,i)$. Each is an angular integral of
@@ -3784,6 +3874,8 @@ negative above
 Above $S_\star$, no non-negative distribution has the moments of the closure, and its
 $\bs M$ acquires a negative eigenvalue. We checked numerically that the smallest
 eigenvalue of $\bs M$ changes sign exactly at $S_\star$, so the bound is sharp.
+% SW-Q(F8) [run 9]: App. H.2 ¶5, 'Its M is valid only if some non-negative distribution has these harmonics': both readers had to derive this direction themselves (R01#1907, R02#1814). a) add after Eq. (H6) one clause: since the six components of u span e^{±iθ} and e^{±3iθ} (¶4), M is, up to a positive factor, a congruence of the Toeplitz matrix, so M is positive semi-definite exactly when it is; b) keep (the numerical check backs it); or other?
+% SW-A: b
 
 The defect steady state lies far above this bound. In the steady state of
 \cref{app:comoving}, $S$ rises from $0.10$ next to the core to $0.90$ far from it,
@@ -3801,8 +3893,7 @@ wherever $S>S_\star$.
 
 The von Mises distribution itself is a genuine density, so its exact moments
 \cref{eq:exact-moments} give a Gram matrix at every $S$. The solver builds the noise
-covariance from them, solving \cref{eq:kappa-S} once per node, while its drift, like the
-steady state, keeps the lowest-order closure of \cref{eq:model-Q}.
+covariance from them, solving \cref{eq:kappa-S} once per node.
 
 \subsection{Consistent difference operators}
 \label{app:lyapunov-operators}
@@ -3837,6 +3928,8 @@ $(-G^\T F)_n=(F_{n+1/2}-F_{n-1/2})/\Delta x$, takes a face flux $F$ back to the 
 divergence (\cref{fig:staggered-grid}(b)), so that whatever leaves one node enters its
 neighbor. Applying $G$ and then $-G^\T$ gives the compact Laplacian exactly, $L=-G^\T G$. This is the staggered grid of computational fluid dynamics, which avoids the
 decoupling of neighboring nodes that $D^2$ produces \cite{ferziger2020computational}.
+% SW-Q(F7) [run 9]: App. H.3 ¶2-¶3 and Fig. 19 explain that D applied twice is not L and that the staggered grid gives L = -G^T G; both readers called this standard numerics and wanted to be told at once what the solver does (R01#2001, R02#2001). a) keep; b) shorten ¶2-¶3 to: 'The drift uses the compact Laplacian L. Applying the central difference D twice does not give L (Fig. 19(a)), but the forward difference G to the faces followed by its negative transpose does, L = -G^T G (Fig. 19(b)), the staggered grid of computational fluid dynamics [92].'; or other?
+% SW-A: I want to be more explicit in explaining this. so keep it.
 
 The density noise in \cref{eq:ou-model} is the divergence of the flux noise $\bEta_\rho$, so
 its covariance contains a first difference on each side. If this divergence is taken with
@@ -3848,20 +3941,22 @@ $u_n=\ee^{\ii kn\Delta x}$ the two symbols are \cite{leveque2007finite}
   \label{eq:fd-symbols}
   |\hat D(k)|^2&=\frac{\sin^2k\Delta x}{\Delta x^2}=-\hat L(k)\cos^2\frac{k\Delta x}{2},
 \end{align}
-so the noise power of $D$ falls short of the drift by $\cos^2(k\Delta x/2)$. The
+so the noise power of $D$ falls short of the drift by the factor $\cos^2(k\Delta x/2)$.
+The
 driving by the noise and the damping by the drift then disagree at short wavelengths. We fix
 this by taking the divergence with $G$ instead, as is done in fluctuating hydrodynamics
 \cite{donev2010accuracy,balboa2012staggered,kim2017stochastic}, so that the noise and the
 drift share one operator and the spectrum is exactly flat.
 
 The solver is built this way. In two dimensions, with $G_x$ and $G_y$ taking the nodes to the
-faces between horizontal and vertical neighbors, the drift of the density is
+faces between horizontal and vertical neighbors, respectively, the drift of the density is
 $(B/\xi_0)L$ with
 \begin{equation}
   \label{eq:fd-identity}
   L=-G_x^\T G_x-G_y^\T G_y .
 \end{equation}
-The noise flux $\bEta_\rho$ lives on the faces, independent from face to face, with the
+Without the spatial correlation of \cref{app:lyapunov-cutoff}, the noise flux $\bEta_\rho$
+lives on the faces, independent from face to face, with the
 local covariance $M_\ab=(2\zeta/\xi_0\rho_0)(\delta_\ab+Q^\ss_\ab)$ of \cref{eq:eta-rho-ss}
 sampled there, so the diagonal part of the density noise is
 \begin{equation}
@@ -3870,12 +3965,20 @@ sampled there, so the diagonal part of the density noise is
 \end{equation}
 where $1/\Delta x^2$ is the grid form of $\delta(\r-\r')$. For an isotropic noise the noise
 matrix is then a multiple of the drift matrix, the spectrum is flat on the grid, and every
-node, including those next to the boundary, has the same variance. The solver builds both sides
-of \cref{eq:fd-identity} in exact arithmetic and stops if they differ.
+node has the same variance. 
+% To check that the drift
+% and the noise share one operator, the solver builds both sides
+% of \cref{eq:fd-identity} in exact arithmetic and stops if they differ.
+% SW-Q(P5) [run 9]: App. H.3 ¶5, 'the local covariance $M_\ab=(2\zeta/\xi_0\rho_0)(\delta_\ab+Q^\ss_\ab)$': $\bs M$ of Eq. (H5) is the 6x6 flux covariance, and here $M_\ab$ is a 2x2 density-flux covariance; one reader takes it as the density block of Eq. (H5), another as a new matrix (R63#3). a) say so: 'the density block $M_\ab=\dots$ of $\bs M$ (\cref{eq:gram-matrix}), which reduces to \cref{eq:eta-rho-ss}'; b) rename the 2x2 matrix (e.g. $M^\rho_\ab$) here and in Eq. (H10) and ¶6; c) keep; or other?
+% SW-A: b
+% SW-Q(P1) [run 9]: App. H.3 ¶5, 'the solver builds both sides of Eq. (H9)': Eq. (H9) reads as the definition of L, so one reader asks what the two sides are (R63#5; this sentence was rewritten in Round A this run). a) name them: '... the solver builds the compact five-point Laplacian of the drift and the product $-\sum_iG_i^\T G_i$ in exact arithmetic and stops if they differ' (lyapunov_solver.m:948-956 compares Lap with -(Gx^T Gx + Gy^T Gy)); b) keep; or other?
+% SW-A: I just commented that part
 
 The other divergence terms of \cref{eq:linearized} follow the same construction. A drift term
-$\nabla\tcdot(c\nabla\,\cdot\,)$, such as $(B/\xi_0)\nabla\tcdot(\Q_\ss\nabla\delta\rho)$,
-becomes $-\sum_iG_i^\T\,\mathrm{diag}(c)\,G_i$ with $c$ on the faces, and the advection
+$\nabla\tcdot(c\nabla\,\cdot\,)$ with a scalar coefficient $c$ becomes
+$-\sum_iG_i^\T\,\mathrm{diag}(c)\,G_i$ with $c$ on the faces. In the equation for $\delta
+Q_\ab$, the transport term $(B/\xi_0)\nabla\tcdot(Q^\ss_\ab\nabla\delta\rho)$ has this
+form, with $c=(B/\xi_0)Q^\ss_\ab$. The advection
 $\nabla\tcdot(\delta\Q\,\bs w_\ss)$ is $-G^\T$ applied to the face flux $\bs w_\ss\,\delta\Q$,
 with $\delta\Q$ averaged onto the faces. The noise of $\delta\Q$ and its correlation with
 $\bEta_\rho$ are assembled in the same way. Only the mixed noise terms,
@@ -3884,11 +3987,17 @@ proportional to $\sin(k_x\Delta x)\sin(k_y\Delta x)$, which is odd in $k_x$ and 
 zero, as in the continuum, where uniform nematic order leaves the variance unchanged
 (\cref{app:variance-uniform}). Derivatives taken on different faces would instead add a
 spurious pedestal proportional to $Q^\ss_{xy}$.
+% SW-Q(P6) [run 9]: App. H.3 ¶6, 'Only the mixed noise terms ... keep the central difference at the nodes': after ¶4 ('the noise and the drift share one operator') one reader is surprised that these terms use D, and notes that the odd-symbol argument holds for uniform $Q^\ss$, not obviously in the defect field (R63#6). a) add one clause saying why it carries over to the defect field (your reason, e.g. that $Q^\ss$ varies slowly on the grid scale); b) keep; or other?
+% SW-A:
+% SW-Q(P1) [run 9]: App. H.3 ¶6, 'Derivatives taken on different faces would instead add a spurious pedestal': one reader asks which faces and why a pedestal (R63#7). a) name both: 'Taking the $x$ and $y$ derivatives with $G_x$ and $G_y$ would place them on faces half a cell apart, which multiplies the symbol by a factor even in $k_x$ and adds a spurious pedestal proportional to $Q^\ss_{xy}$' (dean.tex:1720: 'Staggering the two derivatives would place them half a cell apart and attach a factor cos((q-p)/2), destroying the parity'); b) name only the faces ('with $G_x$ and $G_y$'); c) keep; or other?
+% SW-A: c
 
 Each diagonal term of \cref{eq:fd-noise} is a congruence, so it is positive semi-definite
 wherever the local covariance is. With the exact moments of \cref{app:realizability} the
 local covariance is valid at every node, and the solver checks it there with a
 $6\times6$ eigensolve.
+% SW-Q(F8) [run 9]: App. H.3 ¶7, 'Each diagonal term of Eq. (H10) is a congruence': both readers note that the mixed noise terms (central difference at the nodes) lie outside the congruence, so condition (ii) for the assembled N is not shown (R01#2007, R02#2005). a) state how the assembled N was checked, e.g. by its smallest eigenvalue (lyapunov_solver.m:1366-1375 computes it by Arnoldi, but skips it for n > 20 000); b) say that only the local covariance is checked; or other?
+% SW-A: skip
 
 
 % the source code of this image is in plotgen/staggered-grid
@@ -3937,7 +4046,10 @@ $\mathbf N$ evaluated on $W\bs v$, so the correlated covariance is positive semi
 whenever $\mathbf N$ is. Moreover, $W$ commutes with the drift $(B/\xi_0)\nabla^2$ of the
 density, so the correlated noise gives the same density covariance as the density smoothed
 with $W$, which is what \cref{app:variance-cutoff} computes.
+% SW-Q(F8) [run 9]: App. H.4 ¶2, 'W commutes with the drift (B/xi_0) nabla^2 of the density, so the correlated noise gives the same density covariance as the density smoothed with W': both readers note that the coupled drift of Eq. (30) (the Q_ss and advection terms) does not commute with W, so the equivalence holds only at delta Q = 0 (R01#2010, R02#2007). a) say so: '..., so at delta Q = 0 the correlated noise gives the same density covariance ...'; b) keep; or other?
+% SW-A: a
 
+\todo{check this part}
 On the grid we replace $\nabla^2$ in $W$ by the discrete Dirichlet Laplacian
 $\nabla^2_{\Delta x}$, and the correlation then comes out too short. The discrete Laplacian
 measures the curvature of a wave from three neighboring nodes, so it underestimates the
@@ -3948,6 +4060,8 @@ therefore damps the shortest waves too little, and since these set the variance,
 comes out too high. The error depends on the ratio $\Delta x/\elln$, and it
 disappears on fine grids, where all the waves that $W$ lets through are long compared with
 $\Delta x$. 
+% SW-Q(F8) [run 9]: App. H.4 ¶3, 'On the grid we replace nabla^2 in W by the discrete Dirichlet Laplacian': both readers expected the Gaussian kernel to be laid down on the grid directly and ask why it is not (R02#2008, R01#2011). a) give your reason in one clause, e.g. 'so that W stays symmetric, commutes with the grid drift and vanishes at the boundary (App. H.5)' (dean.tex:2079 lists symmetry, the Dirichlet boundary and the factorization E x E); b) keep; or other?
+% SW-A:
 
 A finer grid, however, is out of reach: the covariance is a dense matrix with
 $(3N_\mathrm{int}^2)^2$ entries, so its memory grows as $N_\mathrm{int}^4$, and at
@@ -3987,6 +4101,8 @@ The calibration fixes the isotropic pedestal only. The anisotropic term of
 \cref{eq:total-gauss} keeps a lattice correction of its own, so the peak modulation $\nu_0$
 of the solver approaches its continuum value only as the grid is refined, which accounts for
 part of the difference from the analytic $\nu_0$ (\cref{app:lyapunov-results}).
+% SW-Q(F8) [run 9]: App. H.4 ¶7, 'the peak modulation nu_0 of the solver approaches its continuum value only as the grid is refined, which accounts for part of the difference': both readers ask how you know and how large that part is, since finer grids are out of reach and no coarser grid is shown; App. H.6 gives no number either (R01#2012, R02#2009, R01#2103, R02#2011). a) add one sentence with nu_0 from your runs at other N_int (e.g. 150 and 180) and the grid share of the 2.94% to 2.4% gap; b) keep 'part' without a number; or other?
+% SW-A: "which accounts for part of the difference from the analytic $\nu_0$" this is wrong. That difference is due to Q_ss and Q_pade diference. No need for any number.
 
 \begin{figure}[tbp]
   \centering
@@ -4015,12 +4131,14 @@ colony. A sealed boundary blocks both, like a container.
 We use the reservoir. Its
 boundary nodes are removed, so $\delta\rho=\delta\Q=0$ there, the noise flux through the faces
 next to the boundary is kept, and $W$ is built on the Dirichlet Laplacian, so the correlated
-noise vanishes at the boundary too. The steady state of \cref{app:comoving} has the same density condition, $\rho_\ss=1$, so
-the density sector is coherent throughout. Only the nematic condition differs: the steady state
+noise vanishes at the boundary too. The boundary condition of the density is consistent with the one we used for the steady state in \cref{app:comoving}. Only the nematic condition differs: the steady state
 leaves $\Q_\ss$ free at the boundary, $\nh\tcdot\nabla\Q_\ss=0$, whereas the fluctuations are
-anchored there, $\delta\Q=0$. The fluctuations see the steady state only through
-$\rho_\ss$, $\Q_\ss$, $\u$ and $\bs w_\ss=\u+(B/\xi_0)\nabla\rho_\ss$, and we assume that
-this difference does not reach the core.
+anchored there, $\delta\Q=0$. 
+% The fluctuations see the steady state only through
+% $\rho_\ss$, $\Q_\ss$, $\u$ and $\bs w_\ss=\u+(B/\xi_0)\nabla\rho_\ss$, and we assume that
+% this difference does not reach the core.
+% SW-Q(F8) [run 9]: App. H.5 ¶2: (1) 'the noise flux through the faces next to the boundary is kept, ... so the correlated noise vanishes at the boundary too' (your sentence): both readers paused at 'kept' against 'vanishes' and settled on 'the face flux carries noise, the smoothed noise is zero on the removed boundary nodes' (R01#2101, R02#2012); a) write 'vanishes on the boundary nodes too'; b) keep. (2) 'we assume that this difference does not reach the core': both readers call it unchecked where App. E.2 ran a box-size series for u (R01#2102, R02#2013); a) keep it as a deliberate simplification; b) add a box-size or boundary check of nu_0 if you have one; or other?
+% SW-A: 1a, skip 2
 
 \begin{figure}[tbp]
   \centering
@@ -4049,17 +4167,25 @@ this difference does not reach the core.
 
 \subsection{Results}
 \label{app:lyapunov-results}
-\Cref{fig:variance,fig:variance3d} compare the solver with \cref{eq:total-gauss}.
+\ptompt{rewrite this section, do not repeat what is already in the main text}
+\Cref{fig:variance} compares the variance from the solver with \cref{eq:total-gauss}, and
+\cref{fig:variance3d} shows the variance from the solver in the plane around the core.
 Away from the core the pedestal agrees with \cref{eq:pedestal}, as the calibration of
 \cref{app:lyapunov-cutoff} requires. Along the axis the modulation has the structure of the
-analytic result: it is raised on the $-x$ side and lowered on the $+x$ side, by a few
+analytic result: it is raised on the $-x$ side, the head of the defect, and lowered on the
+$+x$ side, its tail, by a few
 percent within a couple of micrometers of the core. The two sides, however, are no longer
 equal. The modulation is weaker and closer to the core on the $-x$ side, and stronger and
 farther out on the $+x$ side. Part of this difference is the grid
-(\cref{app:lyapunov-cutoff}). The rest comes from $\delta\Q$, which the analytic result
-drops, and from the drift, which makes the steady state unequal on the two sides
-(\cref{app:comoving}). Across the axis, where \cref{eq:total-gauss} gives no modulation,
+(\cref{app:lyapunov-cutoff}). The rest comes from the drift of the defect, which makes the
+steady state unequal on the two sides (\cref{app:comoving}; dotted in
+\cref{fig:variance}), and from $\delta\Q$, which the analytic result drops. Across the
+axis, where \cref{eq:total-gauss} gives no modulation,
 the solver gives a weak one, several times weaker than that along the axis.
+% SW-Q(F8) [run 9]: App. H.6 ¶1, 'Part of this difference is the grid. The rest comes from the drift ... and from delta Q': both readers ask how a mirror-symmetric grid can make the -x and +x sides unequal (R02#2014, R01#2103), and Sec. IV.B says the differences 'come from the steady state rather than from delta Q', with the dotted curve following the solver (R01#2109). a) align with Sec. IV.B ('The rest comes from the drift ..., not from delta Q') and say in one clause how the grid enters the head/tail difference; b) keep; or other?
+% SW-A: review this question after the rewrite
+% SW-Q(P1) [run 9]: App. H.6 ¶1, 'by a few percent within a couple of micrometers' / 'weaker and closer to the core on the -x side, and stronger and farther out on the +x side': the main text cites H.6 for 'ν0 ≃ 2.4%, about 1.2 µm off the core' (line 1539), but H.6 gives no number, and R64 expected the solver-vs-analytic comparison here (R64#3). a) put the numbers of the Fig. 8 caption (lines 1380-1384) into the sentence: '... on the -x side, with a peak of about 2.4% at 1.2 µm, and stronger and farther out on the +x side, with a dip of about -3.3% at 1.7 µm, against ±2.9% at 1.5 µm in Eq. (37)'; b) cite Fig. 8 instead of App. H.6 at line 1539; c) keep; or other?
+% SW-A: review this question after the rewrite
 
 The solver also returns the fluctuations of the nematic order, and with them those of the
 active force $\fa=-\zeta\bs f$, $f_\alpha=\partial_\beta Q_\ab$, which $\delta\Q$ carries as
@@ -4067,12 +4193,17 @@ $\delta f_\alpha=\partial_\beta\delta Q_\ab$. This fluctuating force tests the a
 \Cref{fig:force-axis} compares its fluctuations with the mean force along the axis of the
 defect. The fluctuations exceed the mean everywhere. Near the core they are a few times
 larger, and away from it the difference grows, because the mean force decays with the
-distance from the core while the fluctuations level off at a uniform value. The fluctuating
-force is therefore strongest around the core, where the mean force is, but relative to the
+distance from the core, whereas the fluctuations level off at a uniform value. The
+fluctuating
+force is therefore strongest around the core, like the mean force, but relative to the
 mean it dominates most in the aligned regions far from the defect. The traction measured in
 Ref.~\cite{han2025local} shows the same pattern, with fluctuations far above the mean around
 defects that stay strong in aligned regions, where the mean traction nearly vanishes. The
 traction also contains the pressure gradient, however, so this resemblance is qualitative.
+% SW-Q(F8) [run 9]: App. H.6 ¶2: (1) 'The fluctuations exceed the mean everywhere': delta f is a gradient of delta Q, so its size depends on the cutoff l_n (l_eff), and R01 asks how (R01#2106); a) add 'at l_n = 0.5 um'; b) state the l_n dependence; c) keep. (2) 'The traction measured in Ref. [18] shows the same pattern': R02 argues that the model's traction fluctuations are dominated by the pressure gradient, so 'qualitative' undersells the gap (R02#2016); a) keep; b) add that the comparison concerns only the active part, as Sec. VI says the traction variance is not computed; or other?
+% SW-A: a
+% SW-Q(P6) [run 9]: App. H.6 ¶2, 'This fluctuating force tests the approximation δQ=0 of Sec. IV.B, and it is not small': R64 reads it as undermining Sec. IV.B ('The simplified model captures its main features', line 1340) and carries the doubt for two paragraphs and two figures until ¶4 ('The density variance nevertheless changes little', R64#4 sev 2, R64#7); literally a force cannot test an approximation (P4). a) resolve it in place: 'The approximation δQ=0 of Sec. IV.B drops this fluctuating force, which is not small; it nevertheless changes the density variance little, because δQ evolves much more slowly than the density relaxes (last paragraph).'; b) move ¶4 (the quasi-static argument) to directly after ¶2; c) keep; or other?
+% SW-A: a 
 
 The two components of the fluctuating force differ near the core. Along the axis
 (\cref{fig:force-axis}), $f_x$ fluctuates most on either side of the core and less at the
@@ -4081,12 +4212,16 @@ forms a ring around the core (\cref{fig:force-map}), and on this ring the varian
 is much larger than that of $f_y$. Around the core the force thus fluctuates mostly along
 the axis of the defect, the direction of the mean active force. At the core and far from it,
 the two components fluctuate equally.
+% SW-Q(F12) [run 9]: App. H.6 ¶3 (the two force components and the ring of Fig. 22): both readers found it descriptive with no consequence for layering or for the traction comparison, and marked it not needed (R01#2108, R02#2019); the captions of Figs. 21-22 say the same (R02#2018). a) shorten ¶3 to 'Around the core the force fluctuates mostly along the axis of the defect, the direction of the mean active force (Figs. 21 and 22).'; b) add one sentence on what follows from it (your content); c) keep; or other?
+% SW-A: 
 
 The density variance nevertheless changes little, because $\delta\Q$ evolves orders of
 magnitude more slowly than the density relaxes over $\tau_c$. Over a correlation time of the
 density the $\delta\Q$ force therefore acts like a static active force, and the density
 responds to a static force only at order $\zeta/B$, as \cref{eq:rho-analytic} shows for the
 mean, while $\sigma_\rho\propto B^{-1/2}$.
+% SW-Q(P1) [run 9]: App. H.6 ¶4, 'the density responds to a static force only at order ζ/B, as Eq. (28) shows for the mean, while σ_ρ ∝ B^{-1/2}': R64 has to do the comparison alone (ζ/B ≈ 1e-4 times a force fluctuation of unstated size, against σ_ρ ∝ B^{-1/2}) and finds no number for how small the δQ part of the density variance is (R64#8, sev 2). a) state the outcome with your number, e.g. '..., whereas σ_ρ ∝ B^{-1/2}, so δQ changes σ_ρ² by only about __ (your value at the parameters of App. A)'; b) state only the scaling of the ratio (relative δQ contribution ∝ ζ²/B, your prefactor) and say it is small at B = 90 kPa·µm; c) keep; or other?
+% SW-A: 
 
 
 
