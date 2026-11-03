@@ -19,15 +19,29 @@
    Without an argument it exports to <repoRoot>/figures, as ln_curve_draft.wls does.
    Runtime: ~30 min (about 30 two-dimensional integrals per lN, 21 values of lN). The
    results are cached in <outputDir>/ln_curve_data.m and reused on the next run, so
-   restyling the plot takes seconds; pass "recompute" as the second argument to redo them. *)
+   restyling the plot takes seconds; pass "recompute" as the second argument to redo them.
+
+   2026-11-01 (the author's request: the axis labels sit too far from the axes): FrameLabel replaced by
+   frame_labels.wl, which puts the labels about 4 pt (printed) from the tick labels, with an
+   explicit ImagePadding; the frame grows at the same width.
+   2026-11-02 (the author's rule: no line thinner than about 1 px; a line meant to look
+   thinner is gray): frame and ticks print at
+   0.75 pt (0.17 pt before), the grid lines gray at 0.75 pt (frame_labels.wl); the legend
+   sample as thick as the dashed curve (1.4 pt for 1.7 pt before).
+   2026-11-02, the author's later request: grid lines 0.6 pt in a darker gray (gridStyle of
+   frame_labels.wl). *)
 
 SetEnvironment["QT_QPA_PLATFORM" -> "offscreen"];   (* headless front end for Export *)
 
 << MaTeX`
 w = 8.6*72/2.54;
-tex[s_, fs_ : 11] :=
+(* 2026-11-01, the author's request for one font and one set of sizes in all figures: all text
+   in MaTeX Computer Modern (newtx Times and plain Times ticks until then); tick and axis labels
+   print at 9 pt, the legend at 8 pt, at 0.85 \linewidth (246 pt) *)
+{fsT, fsL} = {9, 8} w/(0.85*246.);
+tex[s_, fs_ : fsT] :=
   MaTeX[s, FontSize -> fs,
-   "Preamble" -> {"\\usepackage{amsmath,siunitx,newtxtext,newtxmath}"}];
+   "Preamble" -> {"\\usepackage{amsmath,siunitx,upgreek}"}];
 colors = ColorData[97, "ColorList"];
 magnify[m_ : 2] := Function[{fig}, Magnify[fig, m]];
 
@@ -39,6 +53,7 @@ If[Length[$ScriptCommandLine] >= 2, figDir = $ScriptCommandLine[[2]]];
 If[! DirectoryQ[figDir], CreateDirectory[figDir]];
 
 Get[FileNameJoin[{repoRoot, "binaryReadTools.m"}]];
+Get[FileNameJoin[{repoRoot, "plotgen", "frame_labels.wl"}]];
 Import[FileNameJoin[{repoRoot, "RemoteExport.m"}]];
 export[name_, fig_] :=
  Block[{}, RemoteExport[FileNameJoin[{figDir, name <> ".pdf"}], fig];
@@ -107,41 +122,42 @@ nuFn[lN_] := Exp[nuLog[Log[lN]]];
 
 (* log ticks without trailing zeros: decimals down to decLimit, powers of ten below it;
    unlabelled minor ticks at 2..9 per decade; the top and right frames carry the same
-   ticks without labels *)
-tickLabel[k_, decLimit_] := Which[k >= 0, ToString[10^k], k >= decLimit,
-   "0." <> StringRepeat["0", -k - 1] <> "1", True, Superscript[10, k]];
+   ticks without labels. Labels in MaTeX, trimmed at the sides (frame_labels.wl). *)
+tickLabel[k_, decLimit_] := trimSides[tex[Which[k >= 0, ToString[10^k], k >= decLimit,
+     "0." <> StringRepeat["0", -k - 1] <> "1", True, "10^{" <> ToString[k] <> "}"]], 1.];
 logTicks[kmin_, kmax_, decLimit_, labelled_ : True] := Join[
    Table[{10.^k, If[labelled, tickLabel[k, decLimit], ""], {0.02, 0}}, {k, kmin, kmax}],
    Flatten[Table[{m 10.^k, "", {0.01, 0}}, {k, kmin - 1, kmax}, {m, 2, 9}], 1]];
 xTicks = logTicks[-3, 0, -3];     (* 0.001, 0.01, 0.1, 1 *)
-yTicks = logTicks[-6, -1, -2];    (* 10^-6 ... 10^-3, 0.01, 0.1 *)
-frameTicks = {{yTicks, logTicks[-6, -1, -2, False]}, {xTicks, logTicks[-3, 0, -3, False]}};
+yTicks = logTicks[-6, -1, 0];     (* 10^-6 ... 10^-1; until 2026-11-01 0.01 and 0.1 as decimals *)
+frameTicks = {{yTicks, logTicks[-6, -1, 0, False]}, {xTicks, logTicks[-3, 0, -3, False]}};
 
 Block[{lineStyle, aStr, cStr},
- lineStyle = {Directive[Black, Dashed, Thickness[0.01]],
-   Directive[colors[[1]], Thickness[0.008]]};
+ (* Thickness 0.01 and 0.008 of the frame width (200 pt) until 2026-11-02, the same widths *)
+ lineStyle = {Directive[Black, Dashed, AbsoluteThickness[2.]],
+   Directive[colors[[1]], AbsoluteThickness[1.6]]};
  aStr = ToString@NumberForm[aCoef, {3, 3}];
  cStr = ToString@NumberForm[cCoef, {3, 3}];
  fig = Show[
    LogLogPlot[nuFn[lN], {lN, 0.001, 3},
     PlotStyle -> lineStyle[[2]],
     Frame -> True,
-    FrameStyle -> Directive[Black, FontFamily -> "Times", FontSize -> 8],
-    FrameLabel -> {tex["\\ell_{\\rm n}~(\\upmu \\rm{m})"],
-      tex["\\text{maximum variation }~ \\nu_0"]},
-    GridLines -> {{0.5}, {g05}},
+    FrameStyle -> frameStyle[w/(0.85*246.)],
+    Epilog -> frameLabels[{tex["\\ell_{\\rm n}~(\\upmu \\rm{m})"],
+       tex["\\text{maximum variation }~ \\nu_0"]}, {15.8, 25.3}],
+    PlotRangeClipping -> False,   (* the labels lie outside the frame; the curves stay inside *)
+    GridLines -> {{0.5}, {g05}}, GridLinesStyle -> gridStyle[w/(0.85*246.)],
     FrameTicks -> frameTicks,
     PlotRange -> All],
    LogLogPlot[asym[lN], {lN, 0.001, 1},
     PlotStyle -> lineStyle[[1]],
     PlotLegends -> Placed[LineLegend[
-       {Directive[Black, Dashed, Thickness[0.005]]},
+       {lineStyle[[1]]},
        {tex["\\ell_{\\rm n}^2\\left[" <> aStr <> "\\,\\ln(\\ell_{\\rm d}/\\ell_{\\rm n})+" <>
-          cStr <> "\\right]", 8]},
-       LabelStyle -> {FontSize -> 8, FontFamily -> "Times"},
-       LegendMarkerSize -> 30,
+          cStr <> "\\right]", fsL]},
+       LegendMarkerSize -> {30, 9},
        Spacings -> {0, 0.1}], {0.62, 0.2}]],
-   ImageSize -> w
+   ImageSize -> w, ImagePadding -> {{37.9, 6}, {29, 6}}
    ]];
 
 export["ln_curve", fig];

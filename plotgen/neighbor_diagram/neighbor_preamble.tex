@@ -1,0 +1,32 @@
+% neighbor_preamble.tex -- shared by neighbor_diagram_v1/v2/v3.tex.
+% Notation as in manuscript/definitions.tex: \r = \mathbf{r}, \bs = \boldsymbol,
+% \elln = \ell_{\rm n}, \micron = \upmu\mathrm{m}. The body font is Computer Modern, as in
+% revtex (no font package), and standalone sets 10 pt, so \small = 9 pt and
+% \footnotesize = 8 pt print at those sizes when the pdf is included at its natural width.
+\usepackage{amsmath,amssymb,upgreek}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\newcommand{\bs}{\boldsymbol}
+\renewcommand{\r}{\mathbf{r}}
+\newcommand{\elln}{\ell_{\rm n}}
+\newcommand{\micron}{\upmu\mathrm{m}}
+% the two sign colors of fig:aimed-rods (aimed_rods_exact.wls): the ends of Mathematica's
+% TemperatureMap, cmap[0.97] (raises the variance) and cmap[0.03] (lowers it)
+\definecolor{plusS}{rgb}{0.832,0.248,0.178}
+\definecolor{minusS}{rgb}{0.226,0.355,0.936}
+% the curve color of fig:omega-weight (omega_weight.wls)
+\definecolor{curve}{rgb}{0.20,0.40,0.70}
+\tikzset{
+  >={Stealth[length=4.5pt,width=3.6pt]},
+  rod/.style={line width=2.2pt, line cap=round},
+  ref/.style={gray!75, line width=0.4pt},
+  ang/.style={line width=0.5pt},
+  pt/.style={fill=white, draw=black, line width=0.8pt},
+  dvec/.style={->, line width=0.7pt},
+  panel/.style={font=\small\bfseries},
+}
+% the point r: white disk with a black ring, as in fig:aimed-rods
+\newcommand{\pointr}[1]{\filldraw[pt] (#1) circle (2.3pt);}
+% the center of a neighbor rod
+\newcommand{\nbdot}[1]{\fill (#1) circle (1.3pt);}

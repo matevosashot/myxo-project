@@ -1,0 +1,92 @@
+% neighbor_diagram_v3.tex -- fig:neighbors of the manuscript (2026-10-23, his choice; it
+% replaces fig:omega-weight). run.sh copies the pdf to manuscript/figures/.
+% Single column: the bounding box is 246 pt wide (the revtex \linewidth), so
+% \includegraphics[width=\linewidth] prints every size 1:1.
+%
+% (a) the point r and three neighbors: a generic one at r + d, with the angle theta_d of d
+%     and the angle theta_nb of its rod, both from the x axis, and the angle
+%     theta_nb - theta_d between the rod and the line through r and r + d (dashed beyond the
+%     neighbor), as in v1; one whose rod points at r (+S, red) and one whose rod lies across
+%     the line to r (-S, blue). Colors as in fig:aimed-rods.
+% (b) the weight per unit distance, 2 pi d Omega(d), from omega_curve.dat (omega_data.py,
+%     which checks: area 1, median 0.682 um, 93.75% within 2 um, peak at 0.538 um). Shaded:
+%     the half of the weight within the median radius; dashed: the median and 2 um. As in
+%     fig:omega-weight (omega_weight.wls), whose curve color it keeps.
+% Build with ./run.sh.
+\documentclass[tikz,border=0pt]{standalone}
+\input{neighbor_preamble}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\input{omega_marks}
+\begin{document}
+\begin{tikzpicture}[font=\small]
+  \useasboundingbox (0,-0.05) rectangle ++(246pt,4.25);
+  % ------------------------------------------------------------- (a) geometry
+  \node[panel, anchor=north west, inner sep=0pt] at (0,4.20) {(a)};
+  \def\thd{40}\def\thn{80}\def\L{2.15}\def\hr{0.62}
+  \begin{scope}[shift={(0.95,1.45)}]
+    \coordinate (r) at (0,0);
+    \coordinate (n) at (\thd:\L);
+    % x axis through r, and its parallel through the neighbor
+    \draw[ref, ->] (-0.15,0) -- (2.50,0) node[right=-1pt, text=black] {$x$};
+    \draw[ref, dashed] (n) -- ++(0.45,0);
+    % the line through r and r + d, continued beyond the neighbor
+    \draw[ref, dashed] (n) -- ++(\thd:0.78);
+    % theta_d at r, theta_nb at the neighbor, both from the x axis
+    \draw[ang] (0.72,0) arc[start angle=0, end angle=\thd, radius=0.72];
+    \node at (\thd/2:1.00) {$\theta_{\bs d}$};
+    \draw[ang] ($(n)+(0.36,0)$) arc[start angle=0, end angle=\thn, radius=0.36];
+    \node[anchor=west, inner sep=1pt] at ($(n)+(0.50,0.09)$) {$\theta_\text{nb}$};
+    % theta_nb - theta_d at the neighbor, from the line to r to the rod
+    \draw[ang] ($(n)+(\thd:0.58)$) arc[start angle=\thd, end angle=\thn, radius=0.58];
+    \node[anchor=south west, inner sep=1pt] at ($(n)+(70:0.70)$) {$\theta_\text{nb}\!-\!\theta_{\bs d}$};
+    % the generic neighbor
+    \draw[dvec, shorten >=1.4pt] (r) -- (n)
+      node[pos=0.5, above left=-1pt, inner sep=2pt] {$\bs d$};
+    \draw[rod] ($(n)+(\thn:\hr)$) -- ($(n)+(\thn+180:\hr)$);
+    \nbdot{n}
+    \node[anchor=south east, inner sep=1pt] at ($(n)+(168:0.22)$) {$\r\!+\!\bs d$};
+    % a neighbor whose rod points at r, and one whose rod lies across the line to r
+    \def\hs{0.36}
+    \coordinate (np) at (125:0.98);
+    \coordinate (nm) at (290:1.05);
+    \draw[ref] (r) -- (np);
+    \draw[ref] (r) -- (nm);
+    \draw[rod, plusS] ($(np)+(125:\hs)$) -- ($(np)-(125:\hs)$);
+    \draw[rod, minusS] ($(nm)+(20:\hs)$) -- ($(nm)-(20:\hs)$);
+    \nbdot{np}\nbdot{nm}
+    \node[text=plusS, anchor=south west, inner sep=1pt] at ($(np)+(35:0.14)$) {$+S$};
+    \node[text=minusS, anchor=west, inner sep=1pt] at ($(nm)+(20:0.40)$) {$-S$};
+    \pointr{r}
+    \node[anchor=north east, inner sep=1pt] at (-0.06,-0.06) {$\r$};
+  \end{scope}
+  % ------------------------------------------------------------- (b) the weight
+  \node[panel, anchor=north west, inner sep=0pt] at (3.95,4.20) {(b)};
+  \begin{axis}[
+      at={(4.98cm,0.85cm)}, anchor=south west,
+      scale only axis, width=3.52cm, height=2.95cm,
+      xmin=0, xmax=3, ymin=0, ymax=1.5,
+      xtick={0,1,2,3}, ytick={0,0.5,1,1.5},
+      extra x ticks={0.5}, extra x tick labels={$\elln$},
+      extra x tick style={tick label style={yshift=0.5pt}},
+      yticklabels={$0$,$0.5$,$1$,$1.5$},
+      tick label style={font=\footnotesize},
+      tick align=inside, tick style={black, line width=0.4pt},
+      major tick length=2.5pt,
+      axis line style={line width=0.5pt},
+      xlabel={$d~(\micron)$}, ylabel={$2\pi d\,\Omega(d)~(\micron^{-1})$},
+      label style={font=\small},
+      xlabel style={yshift=3pt}, ylabel style={yshift=-3pt},
+      clip=false,
+    ]
+    \addplot[draw=none, fill=curve, fill opacity=0.22] table[x=d, y=rad] {omega_shade.dat}
+      \closedcycle;
+    \addplot[curve, line width=1.1pt, line cap=round, line join=round]
+      table[x=d, y=rad] {omega_curve.dat};
+    \draw[gray!70!black, dashed, line width=0.6pt] (axis cs:\dmed,0) -- (axis cs:\dmed,1.5);
+    \draw[gray!70!black, dashed, line width=0.6pt] (axis cs:2,0) -- (axis cs:2,1.5);
+    \node[anchor=west, font=\footnotesize, inner sep=1.5pt] at (axis cs:\dmed,1.38) {$50\%$};
+    \node[anchor=west, font=\footnotesize, inner sep=1.5pt] at (axis cs:2,1.38) {$94\%$};
+  \end{axis}
+\end{tikzpicture}
+\end{document}

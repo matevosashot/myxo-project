@@ -1,0 +1,58 @@
+% neighbor_diagram_v2.tex -- "Neighborhood" version of the diagram for eq:total-gauss.
+% Drawn to scale in um (1 um = 1.25 cm). The gray shading is Omega(d), the weight per unit
+% area, linear in gray (omega_rings.tex, written by omega_data.py): it vanishes at r, peaks at
+% d = 0.43 um and fades by 1.5 um. Dashed circles: half of the weight lies within 0.68 um, 94%
+% within 2 um. Rods (headless) at a few neighbors, each joined to r by a thin gray line (the
+% line to r); color by the sign of cos 2(theta_nb - theta_d) as in fig:aimed-rods, opacity
+% 0.25 + 0.75 |cos 2(theta_nb - theta_d)|, faint outside 2 um as in fig:aimed-rods.
+% Width: natural size, about 171 pt (0.69 of the revtex \linewidth); include it at that size
+% (\includegraphics without a width) so the fonts print at 8-9 pt.
+% Build with ./run.sh.
+\documentclass[tikz,border=0pt]{standalone}
+\input{neighbor_preamble}
+\input{omega_marks}
+% \nbrod{phi}{rho}{alpha}: a neighbor at polar angle phi (deg) and distance rho (um) from r,
+% its rod at angle alpha = theta_nb - theta_d from the line to r
+\newcommand{\nbrod}[3]{%
+  \pgfmathsetmacro{\cc}{cos(2*(#3))}%
+  \pgfmathsetmacro{\op}{min(1,(#2 > 2 ? 0.30 : 1)*(0.25+0.75*abs(\cc)))}%
+  \pgfmathsetmacro{\pos}{\cc > 0 ? 1 : 0}%
+  \ifdim\pos pt>0.5pt\def\rodcol{plusS}\else\def\rodcol{minusS}\fi
+  \draw[ref, line width=0.35pt, gray!55] (0,0) -- (#1:#2);
+  \draw[rod, \rodcol, draw opacity=\op, line width=2.0pt]
+    ($(#1:#2)+(#1+#3:\hrod)$) -- ($(#1:#2)-(#1+#3:\hrod)$);
+  \fill[draw opacity=\op, opacity=\op] (#1:#2) circle (1.1pt);}
+\def\hrod{0.28}
+\begin{document}
+\begin{tikzpicture}[x=1.25cm, y=1.25cm, font=\small]
+  % ---------------------------------------------------------------- weight Omega
+  \input{omega_rings}
+  \draw[ref, dashed, gray!70!black, line width=0.5pt] (0,0) circle (\dmed);
+  \draw[ref, dashed, gray!70!black, line width=0.5pt] (0,0) circle (2);
+  \node[font=\footnotesize, anchor=north, inner sep=1.5pt] at (-90:\dmed) {$50\%$};
+  \node[font=\footnotesize, anchor=north east, inner sep=1pt] at (-112:2) {$94\%$};
+  \node[inner sep=0pt] at (323:0.43) {$\Omega$};
+  % ---------------------------------------------------------------- neighbors
+  %       phi  rho  alpha
+  \nbrod{112}{1.05}{0}
+  \nbrod{172}{1.55}{90}
+  \nbrod{238}{1.15}{0}
+  \nbrod{292}{1.55}{90}
+  \nbrod{355}{0.95}{62}
+  \nbrod{72}{1.75}{35}
+  \nbrod{140}{1.90}{-28}
+  \nbrod{205}{2.45}{0}
+  \nbrod{318}{2.45}{90}
+  % the labeled neighbor: d drawn as the vector from r
+  \nbrod{30}{1.25}{90}
+  \draw[dvec, shorten >=1.4pt] (0,0) -- (30:1.25)
+    node[pos=0.55, above left=-1pt, inner sep=1.5pt] {$\bs d$};
+  \node[text=minusS, anchor=west, inner sep=1pt] at ($(30:1.25)+(0:0.20)$) {$-S$};
+  \node[text=minusS, anchor=south, inner sep=2pt] at ($(172:1.55)+(90:0.30)$) {$-S$};
+  \node[text=plusS, anchor=west, inner sep=1pt] at ($(112:1.05)+(10:0.16)$) {$+S$};
+  \node[text=plusS, anchor=north west, inner sep=1pt] at ($(238:1.15)+(-30:0.12)$) {$+S$};
+  % ---------------------------------------------------------------- the point r
+  \pointr{0,0}
+  \node[anchor=north east, inner sep=1pt] at (-0.07,-0.07) {$\r$};
+\end{tikzpicture}
+\end{document}

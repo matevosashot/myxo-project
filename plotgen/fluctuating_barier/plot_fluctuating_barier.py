@@ -50,19 +50,26 @@ import os
 # ColorData[97] palette.  Sizes below are in points on that 176 pt canvas, so
 # the figure drops into the manuscript at the same scale as its siblings.
 BLUE, GOLD, GREEN, RED = "#5e81b5", "#e19c24", "#8fb131", "#ff0000"
-INK, FAINT, SURF = "#000000", "#cccccc", "#ffffff"
+INK, SURF = "#000000", "#ffffff"
 
 WIDTH_PT, HEIGHT_PT = 126.0, 126.0   # figures/final.pdf page size
 ARROW_TAIL = (12.75, 56.25)             # "increasing p" arrow, data coords
 ARROW_HEAD = (6.75, 14.25)
 LEGEND_XY = (0.99, 0.99)             # top-right corner, in axes fraction
-LEGEND_PAD = (0.3, 0.3)              # x, y padding inside the legend plate
+LEGEND_PAD = (0.2, 0.2)              # x, y padding inside the legend plate (0.3 until 2026-11-02)
 LEGEND_ALPHA = 0.1              # opacity of that white plate
-LEGEND_EDGE_LW = 0.5                 # its border, thinner than the frame
+LEGEND_EDGE_LW = 0.52                # its border, thinner than the frame (0.76 pt in print)
 FS = 6.0                             # every label in the house figures
 FS_ARROW = 4.5                       # the "increasing p" label, kept small
-LW_CURVE, LW_FRAME, LW_FAINT = 1.044, 0.8, 0.144
+LW_CURVE, LW_FRAME = 1.044, 0.8
 MARK, LW_MARK = "#737373", 0.7          # the A* = A_cell drop line (2026-10-26)
+# 2026-11-02 (the author's request: the line at Delta E = 0 was too thin; 0.144 pt in #cccccc,
+# 0.21 pt in print): the grid-line style of the other figures (plotgen/frame_labels.wl,
+# gridStyle), 0.6 pt in print and gray 0.5. The panel is placed by hand into
+# figures/handmade/main.pdf p.3 at 1.47 times this canvas (measured), so 0.6 pt there is
+# 0.41 pt here.
+PRINT_SCALE = 1.47
+GRID, LW_GRID = "#808080", 0.6 / PRINT_SCALE
 
 # manuscript.tex, tab:pcrit: energies in kPa um (= mN/m), lengths in um, so
 # e(A, p) comes out in kPa um^3 for A in um^2
@@ -94,7 +101,7 @@ def barrier_top(p, P):
 def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
          legend_xy=LEGEND_XY, legend_pad=LEGEND_PAD, legend_alpha=LEGEND_ALPHA,
          width_pt=WIDTH_PT, height_pt=HEIGHT_PT,
-         arrow_tail=ARROW_TAIL, arrow_head=ARROW_HEAD):
+         arrow_tail=ARROW_TAIL, arrow_head=ARROW_HEAD, xlabelpad=3.5, ylabelpad=3.5):
     import numpy as np
     import matplotlib
     matplotlib.use("Agg")
@@ -103,6 +110,9 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     import matplotlib.pyplot as plt
     from matplotlib.collections import LineCollection
     from matplotlib.ticker import MultipleLocator
+    from matplotlib.textpath import TextPath
+    from matplotlib.font_manager import FontProperties
+    from matplotlib.patches import FancyBboxPatch, PathPatch
 
     # CMU Serif registers at weight 500; the lookup warning is noise
     logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
@@ -144,7 +154,7 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
         ax.add_collection(LineCollection(segs, colors=colour, linewidths=0.5,
                                          alpha=0.05, rasterized=True, zorder=2))
 
-    ax.axhline(0.0, color=FAINT, lw=LW_FAINT, zorder=1)
+    ax.axhline(0.0, color=GRID, lw=LW_GRID, zorder=1)     # under the bundles and curves
     ax.plot(A, e(pc), color=INK, lw=LW_CURVE, solid_capstyle="round", zorder=4)
 
     # raising p lowers every curve, so the arrow crosses the beam from the blue
@@ -159,18 +169,16 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     top = barrier_top(pc, P)
     if top:
         # 2026-10-26 (his answer to SW-Q FIG8,FIG2: "annotate more explicitly"): the maximum of
-        # the critical curve is marked and labelled as the critical nucleus, A* = A_cell, and a
-        # dotted gray line (visible at print size) drops from it to the A_cell label on the axis.
+        # the critical curve is marked, and a dotted gray line (visible at print size) drops
+        # from it to the A_cell label on the axis. 2026-11-02, the author's request: the label
+        # "critical nucleus A* = A_cell" beside the line is removed.
         ax.plot([top[0], top[0]], [ylim[0], top[1]], color=MARK, lw=LW_MARK, ls=(0, (1.2, 1.2)),
                 zorder=1)
         ax.plot([top[0]], [top[1]], "o", ms=2.6, mfc=INK, mec=INK, zorder=7)
-        # the label sits in the clear band right of the drop line, below the bundles
-        ax.text(top[0] + 0.35, 0.42 * top[1], "critical nucleus\n" + r"$A^*\!=A_{\rm cell}$",
-                color=INK, fontsize=FS_ARROW, ha="left", va="center", linespacing=1.3,
-                zorder=7)
-        # in the clear band below the bundles, beside the reference line
+        # in the clear band below the bundles, just right of the drop line (2026-11-02, the
+        # author's request: it sat on the line, at top[0] - 1 after two spaces)
         tr = mpl.transforms.blended_transform_factory(ax.transData, ax.transAxes)
-        ax.text(top[0]-1, 0.050, r"  $A_{\rm cell}$", transform=tr, color=INK,
+        ax.text(top[0] + 0.25, 0.050, r"$A_{\rm cell}$", transform=tr, color=INK,
                 fontsize=FS, ha="left", va="center", zorder=6)
 
     handles = [plt.Line2D([], [], color=BLUE, lw=LW_CURVE),
@@ -190,7 +198,9 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
                     bbox_transform=ax.transAxes,
                     frameon=True, fancybox=True,
                     facecolor=SURF, edgecolor=INK, fontsize=FS,
-                    handlelength=1.5, handletextpad=0.5, labelspacing=0.35,
+                    # 2026-11-02, the author's request: tighter rows (labelspacing 0.35 and
+                    # handletextpad 0.5 before), about 1.2 times the font size apart
+                    handlelength=1.5, handletextpad=0.4, labelspacing=0.05,
                     borderpad=legend_pad[1], borderaxespad=0.0)
     leg.set_zorder(6)
     # framealpha (and its rcParam fallback) sets ONE alpha on the whole patch,
@@ -207,8 +217,8 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     ax.set_xlim(-1, amax)
     ax.set_ylim(*ylim)
     ax.xaxis.set_major_locator(MultipleLocator(3.0))
-    ax.set_xlabel(r"Patch area  $A$  ($\mu\mathrm{m}^2$)", fontsize=FS, labelpad=3.5)
-    ax.set_ylabel(r"Energy cost  $\Delta E(A)$  ($\mathrm{kPa}\cdot\mu\mathrm{m}^3$)", fontsize=FS, labelpad=3.5)
+    ax.set_xlabel(r"Patch area  $A$  ($\mu\mathrm{m}^2$)", fontsize=FS, labelpad=xlabelpad)
+    ax.set_ylabel(r"Energy cost  $\Delta E(A)$  ($\mathrm{kPa}\cdot\mu\mathrm{m}^3$)", fontsize=FS, labelpad=ylabelpad)
 
     # full frame; ticks inward on the left and bottom only
     for sp in ax.spines.values():
@@ -223,10 +233,28 @@ def plot(out_path, P, pc, n, amax, ylim, sigma_lo, sigma_hi, seed, raster_dpi,
     (x0, y0), (x1, y1) = ax.transData.transform([arrow_tail, arrow_head])
     angle = math.degrees(math.atan2(y0 - y1, x0 - x1))     # reads uphill, left to right
     mid = ((arrow_tail[0] + arrow_head[0]) / 2, (arrow_tail[1] + arrow_head[1]) / 2)
-    ax.text(*mid, r"increasing $p$", color=INK, fontsize=FS_ARROW, rotation=angle,
-            rotation_mode="anchor", ha="center", va="center", zorder=6,
-            bbox=dict(boxstyle="round,pad=0.15,rounding_size=0.2", facecolor=SURF,
-                      edgecolor=INK, linewidth=LEGEND_EDGE_LW))
+    # 2026-11-02 (the author's request: the text was not centred in its plate): the plate is
+    # built around the ink of the text, not around its line box. A text bbox frames the font's
+    # full ascent and descent, which left the glyphs near its upper edge. The label is drawn as
+    # its glyph outlines (TextPath, in pt about the left end of the baseline), shifted so that
+    # the centre of their extent lies on the shaft midpoint, and the plate is centred there
+    # with the same margin on all four sides. (Placed as text with an offset, the pdf backend
+    # put the baseline on the shaft, unlike Agg.)
+    label = TextPath((0, 0), r"increasing $p$", size=FS_ARROW, prop=FontProperties())
+    ink = label.get_extents()
+    at_mid = (mpl.transforms.Affine2D().rotate_deg(angle).scale(1 / 72.0) + fig.dpi_scale_trans
+              + mpl.transforms.ScaledTranslation(*mid, ax.transData))      # pt about mid
+    ax.add_patch(FancyBboxPatch((-ink.width / 2, -ink.height / 2), ink.width, ink.height,
+                                boxstyle=f"round,pad={0.15 * FS_ARROW},rounding_size={0.2 * FS_ARROW}",
+                                facecolor=SURF, edgecolor=INK, linewidth=LEGEND_EDGE_LW,
+                                transform=at_mid, zorder=6))
+    ax.add_patch(PathPatch(label, facecolor=INK, edgecolor="none", linewidth=0, zorder=6.1,
+                           transform=mpl.transforms.Affine2D().translate(
+                               -(ink.x0 + ink.x1) / 2, -(ink.y0 + ink.y1) / 2) + at_mid))
+
+    # 2026-10-26 a label "layers form" sat below the arrow head (his prompt: an annotation
+    # instead of a caption sentence); removed 2026-11-02 at the author's request. The arrow
+    # stays: it belongs to "increasing p".
 
     fig.savefig(out_path, facecolor=SURF, dpi=raster_dpi)
     return top
@@ -260,6 +288,10 @@ def main():
     ap.add_argument("--arrow-head", type=float, nargs=2, default=ARROW_HEAD,
                     metavar=("A", "E"), help="head of the increasing-p arrow, data coords")
     ap.add_argument("--width-pt", type=float, default=WIDTH_PT)
+    # main.pdf p.3 (Illustrator) has the axis labels moved closer to the frame than labelpad 3.5;
+    # fig4_compose.tex uses --xlabelpad 0.7 --ylabelpad 0 to match it (2026-10-26)
+    ap.add_argument("--xlabelpad", type=float, default=3.5, help="x-axis label padding, pt")
+    ap.add_argument("--ylabelpad", type=float, default=3.5, help="y-axis label padding, pt")
     ap.add_argument("--height-pt", type=float, default=HEIGHT_PT)
     for k, v in PARAMS.items():
         ap.add_argument(f"--{k}", type=float, default=v)
@@ -269,7 +301,8 @@ def main():
     pc = a.pc if a.pc is not None else critical_pressure(P)
     top = plot(a.out, P, pc, a.n, a.amax, tuple(a.ylim), a.sigma_lo, a.sigma_hi, a.seed, a.raster_dpi,
                tuple(a.legend_xy), tuple(a.legend_pad), a.legend_alpha,
-               a.width_pt, a.height_pt, tuple(a.arrow_tail), tuple(a.arrow_head))
+               a.width_pt, a.height_pt, tuple(a.arrow_tail), tuple(a.arrow_head),
+               a.xlabelpad, a.ylabelpad)
     print(f"pc = {pc:.4f}")
     if top:
         print(f"barrier top at A* = {top[0]:.4f}, e = {top[1]:.4f}")

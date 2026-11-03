@@ -15,14 +15,23 @@
    Top axis: interior nodes per direction for the box [-20,20]^2 and l_n = 0.5 um,
    dx = 40/(N+1), i.e. dx/l_n = 80/(N+1).
 
-   Output: cutoff_calibration.pdf and .png next to this script.
-   Run:  ./run.sh, which also copies them to manuscript/figures/. *)
+   2026-11-01 (the author's request: the axis labels sit too far from the axes): FrameLabel replaced by
+   frame_labels.wl, which puts the three labels about 4 pt (printed) from the tick labels;
+   the padding shrinks to fit at the same width.
+   2026-11-02 (the author's rule: no line thinner than about 1 px; a line meant to look
+   thinner is gray): frame and ticks print at 0.75 pt
+   (0.66 pt before), the gray lines at 0.75 pt (0.49 pt before; frame_labels.wl).
+
+   Output: cutoff_calibration.pdf and .png next to this script, or in out=<dir>.
+   Run:  ./run.sh [out=<dir>]; without out= it also copies them to manuscript/figures/. *)
 
 $HistoryLength = 0;
 If[!StringQ[Environment["QT_QPA_PLATFORM"]],
    SetEnvironment["QT_QPA_PLATFORM" -> "offscreen"]];
 thisDir  = DirectoryName[$InputFileName];
 figDir   = thisDir;
+Scan[If[StringStartsQ[#, "out="], figDir = StringDrop[#, 4]] &, Rest[$ScriptCommandLine]];
+Get[FileNameJoin[{ParentDirectory[thisDir], "frame_labels.wl"}]];
 
 scaledI0[x_?NumericQ] := If[x <= 50., Exp[-N[x]] BesselI[0, N[x]],
    With[{xp = SetPrecision[x, 40]}, N[Exp[-xp] BesselI[0, xp]]]];
@@ -47,43 +56,54 @@ Print["max l_eff/l_n = ", lamMax, " at dx/l_n = ", xAtMax, ";  l_eff/l_n = 1 aga
 tFine = t /. FindRoot[xOf[t] == 0.05, {t, 20.}];
 Print["fine-grid check: dx/l_n = 0.05 -> l_eff/l_n = ", lamOf[tFine], "  vs 1 + x^2/8 = ", 1 + 0.05^2/8];
 
-base  = {FontFamily -> "Times", FontSize -> 11};
 blue  = RGBColor[0.20, 0.40, 0.70];
 orange = RGBColor[0.85, 0.37, 0.01];
-italic[x_] := Style[x, Italic];
-lblX = Row[{"\[CapitalDelta]", italic["x"], "/", Style["\[ScriptL]", Italic], Subscript["", "n"]}];
-lblY = Row[{Style["\[ScriptL]", Italic], Subscript["", "eff"], "/", Style["\[ScriptL]", Italic],
-   Subscript["", "n"]}];
-lblA = Row[{"1 + (\[CapitalDelta]", italic["x"], "/", Style["\[ScriptL]", Italic],
-   Subscript["", "n"], ")", Superscript["", 2], "/8"}];
+(* all text in MaTeX (2026-11-01). First in the Times of newtx, like the plain-text ticks: the
+   plain-text Rows they replaced mixed glyph sizes, "1 + (" small and "x", "/8" large, and set a
+   gap in "l n". Then, on the author's request for one font and one set of sizes in all figures,
+   everything in Computer Modern, ticks included: tick and axis labels print at 9 pt, the legend
+   at 8 pt (ImageSize 300 printed at \linewidth = 246 pt) *)
+<< MaTeX`
+{fsT, fsL} = {9, 8} 300/246.;
+texT[str_, fs_ : fsT] := MaTeX[str, FontSize -> fs, "Preamble" -> {"\\usepackage{amsmath,upgreek}"}];
+lblX = texT["\\Delta x/\\ell_\\mathrm{n}"];
+lblY = texT["\\ell_\\mathrm{eff}/\\ell_\\mathrm{n}"];
+lblA = texT["1+(\\Delta x/\\ell_\\mathrm{n})^2/8", fsL];
+lblTop = texT["N_\\mathrm{int}"];
 
 nTicks = {50, 100, 200, 500};
-topTicks = {Log[80./(# + 1)], ToString[#]} & /@ nTicks;
-botTicks = {Log[#], ToString[#]} & /@ {0.1, 0.2, 0.5, 1, 2};
+topTicks = {Log[80./(# + 1)], trimSides[texT[ToString[#]], 1.]} & /@ nTicks;
+botTicks = {Log[#], trimSides[texT[ToString[#]], 1.]} & /@ {0.1, 0.2, 0.5, 1, 2};
 minorBot = {Log[#], "", {0.006, 0}} & /@ Flatten[Table[k 10^e, {e, -2, 0}, {k, 2, 9}]];
+(* y: the automatic ticks of the plain-text version, majors every 0.2, minors every 0.05 *)
+yMajor = Range[0, 1.2, 0.2];
+yMinor = Complement[Range[0, 1.25, 0.05], yMajor, SameTest -> (Abs[#1 - #2] < 10^-9 &)];
+leftTicks = Join[texTicks[yMajor, texT, ToString[NumberForm[#, {2, 1}]] &], minorTicks[yMinor]];
+rightTicks = Join[{#, ""} & /@ yMajor, minorTicks[yMinor]];
 
 Print["curve points: ", Length[pts], "  dx/l_n range ", MinMax[pts[[All, 1]]]];
 curve = ListLogLinearPlot[SortBy[pts, First], Joined -> True, PlotRange -> All,
    PlotStyle -> Directive[blue, AbsoluteThickness[1.4]]];
 asym  = LogLinearPlot[1 + x^2/8, {x, 0.075, 1.25},
    PlotStyle -> Directive[Black, Dashed, AbsoluteThickness[1.4]]];
-one   = LogLinearPlot[1, {x, 0.075, 2.6}, PlotStyle -> Directive[GrayLevel[0.6], AbsoluteThickness[0.6]]];
-edge  = Graphics[{GrayLevel[0.55], Dotted, AbsoluteThickness[0.9],
+one   = LogLinearPlot[1, {x, 0.075, 2.6}, PlotStyle -> refStyle[300/246.]];
+edge  = Graphics[{GrayLevel[0.55], Dotted, thinLine[300/246.],
     Line[{{Log[Sqrt[2 Pi]], 0}, {Log[Sqrt[2 Pi]], 1.3}}]}];
 prod  = Graphics[{orange, Disk[{Log[xProd], lamProd}, Offset[{3.5, 3.5}]]}];
 
 fig = Show[one, edge, curve, asym, prod,
    Frame -> True, Axes -> False,
-   GridLines -> {{Log[xProd]}, None}, GridLinesStyle -> Directive[GrayLevel[0.6], AbsoluteThickness[0.6]],
+   GridLines -> {{Log[xProd]}, None}, GridLinesStyle -> refStyle[300/246.],
    PlotRange -> {{Log[0.075], Log[2.9]}, {0, 1.25}},
-   FrameTicks -> {{Automatic, Automatic}, {Join[botTicks, minorBot], topTicks}},
-   FrameLabel -> {{lblY, None}, {lblX, Row[{italic["N"], Subscript["", "int"]}]}},
-   FrameStyle -> Directive[Black, AbsoluteThickness[0.8]],
-   FrameTicksStyle -> base, LabelStyle -> base,
-   ImageSize -> 300, ImagePadding -> {{48, 10}, {40, 34}}];
+   FrameTicks -> {{leftTicks, rightTicks}, {Join[botTicks, minorBot], topTicks}},
+   (* the axis labels, close to the frame (frame_labels.wl); the curves stay inside the range *)
+   Epilog -> frameLabels[{lblX, lblY, lblTop}, {16.6, 19.3, 16.7}],
+   PlotRangeClipping -> False,
+   FrameStyle -> frameStyle[300/246.],
+   ImageSize -> 300, ImagePadding -> {{34, 10}, {30, 30}}];   (* {{48, 10}, {40, 34}} until 2026-11-01 *)
 fig = Legended[fig, Placed[LineLegend[{Directive[blue, AbsoluteThickness[1.4]],
-     Directive[Black, Dashed, AbsoluteThickness[1.4]]}, {"exact", lblA},
-    LabelStyle -> base, LegendMarkerSize -> {22, 10}], {0.32, 0.35}]];
+     Directive[Black, Dashed, AbsoluteThickness[1.4]]}, {texT["\\text{exact}", fsL], lblA},
+    LegendMarkerSize -> {22, 10}], {0.27, 0.35}]];   (* 0.32 until 2026-11-01 *)
 
 Export[FileNameJoin[{figDir, "cutoff_calibration.pdf"}], fig];
 Export[FileNameJoin[{figDir, "cutoff_calibration.png"}], fig, ImageResolution -> 300];
