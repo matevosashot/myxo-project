@@ -1,0 +1,41 @@
+% ============================================================
+% slides.tex: discussion deck on manuscript/manuscript.tex
+%
+% Source version: git commit e09f87b ("final version of the draft").
+% Every statement, equation and number is taken from that version of the manuscript.
+% definitions.tex is a copy of manuscript/definitions.tex at the same commit.
+% Figures are read from ../manuscript/figures/ (not copied).
+%
+% Build:   latexmk slides.tex          (slides only; lualatex, see latexmkrc)
+%          latexmk slides-notes.tex    (slides + speaker notes on a second screen)
+%
+% Reveals: the deck is static. To turn every itemize into item-by-item reveals,
+% uncomment \beamerdefaultoverlayspecification below. Frames are top-aligned ([t]),
+% so content does not jump when items appear. Equations and figures sit in their own
+% items or columns, so a \pause can be dropped in anywhere. The class option
+% `handout` collapses all overlays again.
+% ============================================================
+\documentclass[aspectratio=169,10pt,t]{beamer}
+
+\input{preamble}
+
+\begin{document}
+
+\maketitle
+
+\input{sections/00-roadmap}
+\input{sections/01-motivation}
+\input{sections/02-nucleation}
+\input{sections/03-model}
+\input{sections/04-steady}
+\input{sections/05-fluctuations}
+\input{sections/06-layering}
+\input{sections/07-discussion}
+
+\appendix
+% metropolis switches off numbering and the frame-title progress bar in the appendix, but
+% not the one on the section page, which divides by an unknown frame total there.
+\metroset{sectionpage=simple}
+\input{sections/90-backup}
+
+\end{document}

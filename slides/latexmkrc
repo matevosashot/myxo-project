@@ -1,0 +1,4 @@
+# lualatex: Fira fonts for metropolis. (xelatex's backend xdvipdfmx crashes on the
+# multi-page figure PDF handmade/main_v3.pdf.)
+$pdf_mode = 4;
+$lualatex = 'lualatex -interaction=nonstopmode -halt-on-error -synctex=1 %O %S';

@@ -1,0 +1,86 @@
+% Preamble shared by slides.tex, slides-notes.tex and per-section test wrappers.
+\usetheme[progressbar=frametitle,numbering=counter,block=fill]{metropolis}
+\usefonttheme[onlymath]{serif}
+% ---------------- layout: more room per slide ----------------
+% Narrow side margins, a lower frame-title bar, and a thin footline that carries the
+% source line of each frame (\src) next to the frame number, so that the source no
+% longer takes space from the body.
+\setbeamersize{text margin left=0.9em,text margin right=0.9em}
+\makeatletter
+\setlength{\metropolis@frametitle@padding}{1.3ex}
+% Tighter lists and displays than the beamer defaults.
+\def\@listi{\leftmargin\leftmargini \topsep 2pt \parsep 0pt \itemsep 1.5pt}
+\let\@listI\@listi
+\def\@listii{\leftmargin\leftmarginii \topsep 1pt \parsep 0pt \itemsep 0.5pt}
+\g@addto@macro\normalsize{%
+  \setlength\abovedisplayskip{3pt plus 1pt}\setlength\belowdisplayskip{3pt plus 1pt}%
+  \setlength\abovedisplayshortskip{1pt}\setlength\belowdisplayshortskip{1pt}}
+\makeatother
+\newcommand{\framesrc}{}
+\addtobeamertemplate{frame begin}{\gdef\framesrc{}}{}
+\newcommand{\setsrcfootline}{%
+\setbeamertemplate{footline}{%
+  \hbox to \paperwidth{%
+    \hskip0.9em%
+    \parbox[b][16pt][b]{0.86\paperwidth}{\raggedright\scriptsize\color{srcgray}\framesrc\strut}%
+    \hfill
+    {\usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}%
+      \usebeamertemplate*{frame numbering}}%
+    \hskip0.9em}%
+  \vskip3pt}}
+\setsrcfootline
+% metropolis' \appendix hook resets the footline to its plain template; restore ours.
+\AtBeginDocument{\apptocmd{\appendix}{\setsrcfootline}{}{}}
+
+\usepackage{amsmath,amssymb}
+\usepackage{upgreek}
+\usepackage{booktabs}
+\usepackage{appendixnumberbeamer}
+\usepackage{pgfpages}
+
+% \beamerdefaultoverlayspecification{<+->}   % <- one switch for item-by-item reveals
+
+\ifdefined\shownotes
+  \setbeameroption{show notes on second screen=right}
+\fi
+\setbeamertemplate{note page}[plain]
+\setbeamerfont{note page}{size=\small}
+
+\graphicspath{{../manuscript/figures/}{../manuscript/figures/handmade/}}
+% definitions.tex \newcommand's a few names that beamer/pgf leave behind as
+% scratch macros (e.g. \x); release them first.
+\let\x\relax
+\input{definitions}
+
+% ---------------- colors ----------------
+\definecolor{issuecolor}{RGB}{196,90,0}     % open issues
+\definecolor{keycolor}{RGB}{0,110,110}      % key results
+\definecolor{srcgray}{gray}{0.45}
+
+% ---------------- environments ----------------
+% Open issue for discussion with the supervisors. Optional argument = title.
+\newenvironment{openissue}[1][Open]{%
+  \setbeamercolor{block title alerted}{fg=white,bg=issuecolor}%
+  \setbeamercolor{block body alerted}{fg=black,bg=issuecolor!10}%
+  \setbeamerfont{itemize/enumerate body}{size=\small}%
+  \setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}%
+  \begin{alertblock}{\small #1}\small}{\end{alertblock}}
+
+% Key result box. Optional argument = title.
+\newenvironment{keyresult}[1][Key point]{%
+  \setbeamercolor{block title example}{fg=white,bg=keycolor}%
+  \setbeamercolor{block body example}{fg=black,bg=keycolor!8}%
+  \begin{exampleblock}{\small #1}}{\end{exampleblock}}
+
+% ---------------- small macros ----------------
+% Source / pointer line of a frame: printed in the footline (at most two lines).
+\newcommand{\src}[1]{\gdef\framesrc{#1}}
+% Transition to the next frame: one line at the bottom of the body.
+\newcommand{\bridge}[1]{\par\vfill\hfill{\small\color{keycolor}\itshape$\rightarrow$~#1}\par}
+% Link from a main frame to a backup frame, and back.
+\newcommand{\backuplink}[2]{\hyperlink{#1}{\beamergotobutton{#2}}}
+\newcommand{\backto}[1]{\hyperlink{#1}{\beamerreturnbutton{back}}}
+
+\title{Fluctuating active nematics account for layer formation in \textit{Myxococcus xanthus} colonies}
+\author{Ashot Matevosyan, Ricard Alert}
+\date{\today}

@@ -1,0 +1,119 @@
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+
+
+
+\renewcommand{\CancelColor}{\color{red}} %change cancel color to red
+
+\makeatletter
+\let\my@cancelto\cancelto %copy over the original cancelto command
+\newcommand<>{\cancelto}[2]{\alt#3{\my@cancelto{#1}{#2}}{\mathrlap{#2}\phantom{\my@cancelto{#1}{#2}}}}
+% redefine the cancelto command, using \phantom to assure that the
+% result doesn't wiggle up and down with and without the arrow
+\makeatother
+
+
+
+\newenvironment{wide}[1]{\begin{columns}\column{\dimexpr\paperwidth-#1}}{\end{columns}}
+
+\newenvironment{wide2}[2][1ex]{\begin{columns}\column{\dimexpr\paperwidth-#2}
+\begin{minipage}[t][\textheight-#1]{\textwidth}
+}{\end{minipage}\end{columns}}
+
+
+% \definecolor{beamer@blendedblue}{rgb}{0.07,0.20,0.47}
+% \setbeamercolor{structure}{fg=beamer@blendedblue}
+
+\definecolor{bblue}{rgb}{0.2,0.2,0.7} % beamer blue
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{litered}{rgb}{0.2,1,1}
+\definecolor{Darkred}{rgb}{0.7,0,0}
+\definecolor{liteyellow}{rgb}{1,1,0.7}
+\definecolor{litegreen}{rgb}{0.8,1,0.8}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{litelitegray}{rgb}{0.8,0.8,0.8}
+\definecolor{litegray}{rgb}{0.6,0.6,0.6}
+\definecolor{purple}{rgb}{0.58,0,0.58}
+\definecolor{darkmag}{rgb}{0.5,0.0,0.5}
+\definecolor{darkorange}{rgb}{0.68,0.28,0.04}
+\definecolor{darkbrown}{rgb}{0.55,0.35,0.15}
+
+
+
+
+
+\newcommand<>{\altfixed}[2]{\alt#3{#1}{\mathrlap{#2}\phantom{#1}}}
+\newcommand<>{\altfixedother}[2]{\alt#3{\mathrlap{#1}\phantom{#2}}{#2}}
+
+
+
+\renewcommand<>{\mathcolorboxalt}[2]{
+	\altfixed#3{{ \setlength{\fboxsep}{0pt} \colorbox{#1}{$\displaystyle #2$}}}{#2}
+}
+
+
+
+
+\renewcommand<>\hlbox[2]{%
+  \alt#3{\colorbox{#1}{#2}}%
+  {\makebox[\dimexpr\width+2\fboxsep]{#2}\vphantom{\colorbox{#1}{#2}}}%
+}
+\newcommand<>{\mathhlbox}[2]{%
+	\alt#3{\colorbox{#1}{$\displaystyle #2$}}%
+	{\makebox[\dimexpr\width+2\fboxsep]{$\displaystyle #2$}\vphantom{\colorbox{#1}{$\displaystyle #2$}}}%
+}
+\newcommand<>{\mathhlboxRGB}[2]{%
+	\alt#3{\colorbox[RGB]{#1}{$\displaystyle #2$}}%
+	{\makebox[\dimexpr\width+2\fboxsep]{$\displaystyle #2$}\vphantom{\colorbox[RGB]{#1}{$\displaystyle #2$}}}%
+}
+\newcommand<>{\hlboxRGB}[2]{%
+	\alt#3{\colorbox[RGB]{#1}{#2}}%
+	{\makebox[\dimexpr\width+2\fboxsep]{#2}\vphantom{\colorbox[RGB]{#1}{#2}}}%
+}
+
+\newcommand<>{\mathcolorbox}[2]{
+	\alt#3{\colorbox{#1}{$\displaystyle #2$}}{\colorbox{white}{$\displaystyle #2$}}%
+}
+\newcommand<>{\mathcolorboxRGB}[2]{
+	\alt#3{\colorbox[RGB]{#1}{$\displaystyle #2$}}{\colorbox{white}{$\displaystyle #2$}}%
+}
+
+\newcommand<>{\mathaltcolorbox}[3]{% color, expr1, expr2 
+	\altfixed#4{\colorbox{#1}{$\displaystyle #2$}}{\colorbox{white}{$\displaystyle #3$}}%
+}
+
+% define backslash symbol $/$
+\newcommand{\bsh}[0]{\textbackslash}
+
+
+
+
+% hide navigation symbols
+\setbeamertemplate{navigation symbols}{}
+\addtobeamertemplate{navigation symbols}{}{%
+	\usebeamerfont{footline}%
+	\usebeamercolor[fg]{footline}%
+	\hspace{1em}%
+	\insertframenumber/\inserttotalframenumber
+}
+
+% make boxes rounded
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+
+
+% footnote without number
+\addtobeamertemplate{footnote}{\hskip -2em}{}
+\newcommand{\footnotetextrelaxed}[1]{{\let\thefootnote\relax\footnotetext{#1}}}
+
+
+\usepackage{catchfile}
+
+
+% \usepackage{catchfile}
+% make animate work in Texpad compiler
+\CatchFileDef{\CompilationMode}{mode.txt}{}
+\ifthenelse{\equal{\CompilationMode}{make }}{}{
+    \renewcommand{\animategraphics}[5][]{\ErrorsOff[xkeyval]\ErrorsOff[keyval]\includegraphics[#1]{#3#4}}
+    }
+
