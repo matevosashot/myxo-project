@@ -1,0 +1,1 @@
+white noise approximation of translational noise ito interpretation of the multiplicative noise is inconsistent.

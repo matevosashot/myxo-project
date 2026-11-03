@@ -1,0 +1,99 @@
+% Archived Discussion of manuscript/manuscript.tex, 2026-10-05, verbatim.
+% Replaced in the manuscript by the topic menu D1-D8, N1-N7; each paragraph is tagged
+% [P#] so the menu can point to it. Reference only: this file is not \input.
+
+\section{Discussion}
+\label{sec:discussion}
+% Pages ~1.5. New. structure.md \S4, four closing moves.
+% ============================================================
+% [P1]
+The fit in \cref{sec:nucleation-2} fixes only the combination
+$\rho_0\pcrit^2\elln^2\nu_0/[(1+\nu_0)B\zeta]$. It therefore does not test the nucleation
+condition \cref{eq:nucleation-condition}: a different $\pcrit$ would only shift the
+fitted $B$. The stricter condition $\Delta E(\Acell)=0$, for example, doubles $\pcrit$,
+raises the fitted $B$ about fourfold, and leaves the predicted profile unchanged.
+
+% [P2]
+The coarse-graining fixes the tensor structure of the noise, $\Q_\ss+\I$ in
+\cref{eq:eta-rho-ss}. A noise added at the continuum level would leave it free. This
+structure sets the shape of the variance profile, and the comparison tests that shape.
+The peak $\nu_0$ and the noise amplitude enter only through the fitted combination, so
+the comparison does not test them.
+
+% [P3]
+The reversal rate enters through $\zeta\propto1/\frev$ (\cref{eq:active-force}) and
+shifts $\nu_0$ slightly through $K'$ (\cref{eq:H-active}). At fixed $B$ and $\elln$, the
+logarithm of the enhancement \cref{eq:R-value} is then nearly proportional to $\frev$.
+Slower reversals make layers more frequent everywhere, but less concentrated at the
+defect. Reversal-frequency mutants of the \textit{frz} pathway can test this.
+Ref.~\cite{han2025local} reports that non-reversing cells show larger traction
+fluctuations and more layer formation. This agrees in sign, but non-reversing cells lie
+outside the model, since $\zeta$ diverges as $\frev\to0$.
+\todo{confirm the non-reversing (frzE) traction and layering observation is in
+Ref.~\cite{han2025local} and not in a companion paper before this sentence stands.}
+
+% [P4]
+Two inputs of the combination, $B$ and $\elln$, are model parameters rather than
+measured constants. We set $\elln$ to the width of a cell and fit $B$. No measurement
+exists of the compressibility of a bacterial monolayer at this scale. The velocity fit
+of Ref.~\cite{copenhagen2021} constrains only the product of $B$ with an undetermined cell
+flux, so it does not fix $B$ either. The fitted $B=90~\kPa\tcdot\micron$ lies
+within a factor of two of the effective cell modulus fitted to the planar-to-bulk transition of growing
+\textit{E.\ coli} colonies \cite{grant2014}. We do not count this as support. That
+transition is driven by growth, whereas \textit{M.\ xanthus} layers form by migration
+\cite{copenhagen2021}. The fitted $B$ also moves with $\elln$, roughly as $\elln^{3.3}$
+(\cref{eq:R-value,fig:ln_curve}).
+
+% [P5]
+The energetics idealize the nucleus. The patch is taken as circular, although one cell is
+a rod with about twice the perimeter of a disc of the same area.
+\Cref{eq:dE-of-A} needs the pressure averaged over the patch, while $p(\r)$ is
+resolved at $\elln$. Averaged over $\Acell$, its variance is three times smaller. These
+choices and the energies of \cref{app:parameters-extrusion} all move $\pcrit$ or $\sigma_p$, and so the fitted $B$.
+The criterion \cref{eq:nucleation-condition} does not say how the first cell leaves. At
+$p=\pcrit$, one cell still faces $\Delta E(\Acell)\simeq10^5~\Pa\tcdot\micron^3$
+(\cref{fig:main-2}(c)), about $2\times10^7\,\kB T$. The single-cell perturbations of
+\cref{sec:nucleation-1}, which \cref{eq:dE-of-A} does not describe, must carry the
+cell over this barrier.
+
+% [P6]
+We drop both $\nabla\H$ terms of \cref{eq:model-rho,eq:model-Q} (\cref{sec:model-closure}).
+The analytic calculation of \cref{sec:defect-fluct} sets $\delta\Q=0$. We have no bound
+on the resulting error and check the calculation against the coupled numerical solution.
+The maximum-entropy closure is accurate to relative $O(S^2)$, and $S_0=0.9$ is not small.
+The closure sets the relaxational term of \cref{eq:model-Q}, and so $\Q_\ss$. For $S>0.62$ its noise
+covariance has a negative eigenvalue, which makes the stochastic equations ill defined,
+and around the defect $S$ exceeds this bound everywhere except within about
+$1.5~\micron$ of the core. We therefore build the noise covariance of the coupled
+equations from the exact moments (\upd{\cref{app:realizability}}). The
+analytic result needs neither, since it uses the exact density-noise correlator
+\cref{eq:eta-rho-autocorrelation}. The
+Gaussian tail is used twenty-one standard deviations out, where the monolayer is
+compressed by $\pcrit/B\simeq39\%$. There the exact equation of state
+\cref{eq:pressure-definition} lowers the predicted ratio from
+$1.4\times10^2$ to $37$ at the same $B$.
+
+% [P7]
+A $-1/2$ defect feels no net active force, so it does not drift. The double divergence of
+its nematic field has threefold symmetry, and so does the variance modulation that
+\cref{eq:total-gauss} gives for it: three lobes of raised variance, where the director
+points away from the core, alternate with three lobes of lowered variance
+(\cref{app:negative}). Because this source vanishes as $r^3$ at the core, the
+modulation peaks farther out than at a $+1/2$ defect, at $1.35\%$ about $3~\micron$ from
+the core. The model therefore predicts layers near $-1/2$ defects too, but far fewer:
+the peak enhancement is $17$ against $4.5\times10^2$ at a $+1/2$ defect in the same
+analytic treatment, and averaged over circles about the core it is at most a factor of
+four. Fig.~3f of Ref.~\cite{copenhagen2021} records no layers within $10~\micron$ of
+$-1/2$ defects, which so few events cannot distinguish from a factor of four, and
+Fig.~3g no hole enrichment near $+1/2$ defects. The second observation is the more
+serious one. The variance carries no sign: where it rises, both tails of the pressure
+distribution rise. The variance alone therefore cannot produce layers at $+1/2$ defects
+and holes at $-1/2$ defects.
+
+% [P8]
+The variance field is also an observable. Ref.~\cite{han2025local} maps the standard
+deviation of the traction around $\pm1/2$ defects and finds it larger at $+1/2$ than at
+$-1/2$ defects. The traction is the divergence of the stress, not the pressure. A
+comparison needs the traction variance at the resolution and frame time of the
+measurement. We have not computed it. Its normalized profile would not depend on $B$ but
+would depend on $\elln$.
