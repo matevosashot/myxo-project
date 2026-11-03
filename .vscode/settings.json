@@ -1,0 +1,74 @@
+{
+    "files.watcherExclude": {
+        "data": true,
+        "manuscript": true,
+        "figures": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/.vscodetmp/**": true
+    },
+
+    // Beamer: build only the frames changed since the last build (see .vscode/fastbeamer.py).
+    // Non-beamer files fall back to the plain latexmk build, so the manuscript is unaffected.
+    "latex-workshop.latex.tools": [
+        {
+            // LaTeX Workshop's own default tool (latexmk with pdflatex), redefined here
+            // because this list replaces the extension's built-in tools
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": ["-synctex=1", "-interaction=nonstopmode", "-file-line-error", "-pdf", "-outdir=%OUTDIR%", "%DOC%"],
+            "env": {}
+        },
+        {
+            "name": "fastbeamer",
+            "command": "python3",
+            "args": ["%WORKSPACE_FOLDER%/.vscode/fastbeamer.py", "%DOC_EXT%", "%OUTDIR%"],
+            "env": {}
+        },
+        {
+            // --context N: also compile N frames before and after each changed frame
+            "name": "fastbeamer-context",
+            "command": "python3",
+            "args": ["%WORKSPACE_FOLDER%/.vscode/fastbeamer.py", "--context", "2", "%DOC_EXT%", "%OUTDIR%"],
+            "env": {}
+        },
+        {
+            "name": "fastbeamer-full",
+            "command": "python3",
+            "args": ["%WORKSPACE_FOLDER%/.vscode/fastbeamer.py", "--full", "%DOC_EXT%", "%OUTDIR%"],
+            "env": {}
+        },
+        {
+            // latexdiff against a git commit (see .vscode/latexdiff_build.sh); the viewer shows the diff.
+            // LATEXDIFF_COMMIT: any git revision (hash, HEAD~1, branch, tag), or "staged" = the staged
+            // (git add-ed, uncommitted) version; empty = staged, which is HEAD when nothing is staged
+            "name": "latexdiff",
+            "command": "bash",
+            "args": ["%WORKSPACE_FOLDER%/.vscode/latexdiff_build.sh", "%DOC_EXT%", "%OUTDIR%"],
+            // "env": { "LATEXDIFF_COMMIT": "664d848" }
+            "env": { "LATEXDIFF_COMMIT": "" }
+        },
+        {
+            // same, but deleted (red) text hidden: only the additions (blue) are shown
+            "name": "latexdiff-new",
+            "command": "bash",
+            "args": ["%WORKSPACE_FOLDER%/.vscode/latexdiff_build.sh", "%DOC_EXT%", "%OUTDIR%", "--hide-deleted"],
+            // "env": { "LATEXDIFF_COMMIT": "664d848" }
+            "env": { "LATEXDIFF_COMMIT": "" }
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        { "name": "changed frames", "tools": ["fastbeamer"] },
+        { "name": "changed frames +-1", "tools": ["fastbeamer-context"] },
+        { "name": "full", "tools": ["latexmk"] },
+        { "name": "beamerfull", "tools": ["fastbeamer-full"] },
+        { "name": "diff", "tools": ["latexdiff"] },
+        { "name": "diff2", "tools": ["latexdiff-new"] }
+    ],
+    // onSave hooks the editor's save event; onFileChange relies on the remote file watcher,
+    // which stopped reporting changes to slides2.tex over ssh-remote
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.latex.recipe.default": "full"
+    // "latex-workshop.latex.recipe.default": "changed frames +-1"
+    
+}
