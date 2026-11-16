@@ -1,5 +1,5 @@
 \documentclass[aps,pre,reprint,superscriptaddress,longbibliography,nofootinbib
-% ,draft
+,draft
 ]{revtex4-2}
 
 \usepackage{graphicx}
@@ -300,10 +300,7 @@ form as ours.
 
 Solved around a $+1/2$ defect, these equations give a density variance, and hence, through
 the stiffness of the monolayer, a pressure variance. 
-% The defect changes this variance only
-% slightly, but since layers form
-% in the far tail of the pressure distribution, this small change is enough to make layers
-% form much more often near the defect. 
+So the fluctuations reach pressure to $\pcrit$.
 The variance is largest just
 off the core, at the head of the defect, on the side where the director bends around it (\cref{fig:defects-layering}(a)). 
 In unpublished observations, the authors of Refs.~\cite{copenhagen2021,han2025local} also
@@ -316,7 +313,7 @@ Fluctuations of
 microscopic origin can thus account for where layers form, although the calculation
 does not exclude other mechanisms.
 % SW-Q(G8,M1) [run 11]: Both readers (abstract and this paragraph, severity 2) expect to learn whether the fluctuations actually reach p_crit, three to four orders above the mean pressure; the Introduction now says only where layers form. a) restore your commented-out clause in the Han paragraph ("the mean pressure stays of the order of the active stress, whereas the fluctuations of the pressure are much larger, so that during such a fluctuation the pressure can exceed the pressure needed ..."); b) keep as is.
-% SW-A:
+% SW-A: I wrote something short, polish it and in the abstract too. The commented text had too much detail.
 
 This paper is organized as follows. The next section describes layer formation as
 nucleation, which reduces the
@@ -408,15 +405,20 @@ Since $\Delta E(A)$ grows with the patch area below the critical nucleus, the ra
 
 In the experiments, new layers continuously appear and disappear~\cite{copenhagen2021}. We assume that single cells are extruded frequently, but that only few of them grow into a new layer.
 There is a second effect of the activity, which manifests itself in the fluctuations of the pressure in the monolayer. Increasing pressure brings the critical nucleus area $A^*$ down, making it more likely to extrude a growing patch.
-We know very little about the extrusion of single cells, and we do not model it here. We simply assume that the single-cell extrusion rate is $\calJ_{\!\Acell}$ and that the two-cell extrusion rate $\calJ_{2\Acell}$ is much smaller.\footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$ are rate densities with units $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the average number of cells extruded in the area $\d A$ during the time interval $\d t$.} Thus, we approximate the layering rate as
+We know very little about the extrusion of single cells, and we do not model it here. We simply assume that the single-cell extrusion rate $\calJ_{\!\Acell}$ is constant and uniform over the monolayer, and that the two-cell extrusion rate $\calJ_{2\Acell}$ is much smaller.\footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$ are rate densities with units $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the average number of cells extruded in the area $\d A$ during the time interval $\d t$.} Thus, we approximate the layering rate as
 \begin{equation}
   \label{eq:layering-rate-approximation}
  \calJ \approx \calJ_{\!\Acell} \times \Prob(A^* < \Acell),
 \end{equation}
 where $\Prob(A^* < \Acell)$ is the probability (also the fraction of time) that the critical nucleus is smaller than one cell.
-This captures the dominant layering pathway, which is sufficient for our analysis. It omits other pathways, such as the extrusion of two cells at once and growth from there.
+This is a simplification, and strictly speaking, \cref{eq:layering-rate-approximation} underestimates the layer formation rate for two reasons:
+($i$) it does not account for the extrusion of larger patches that also require larger critical nucleus area to grow into a new layer, and
+($ii$) partially extruded cells have higher rate ($\calJ_{\!\Acell/2} > \calJ_{\!\Acell}$) but still accounted with the same rate as one cell extrusion\footnote{
+  $\calJ\!=\!\int_0^\infty \calJ_A \calP(A)\d A \geq \int_0^\Acell \!\calJ_A \calP(A)\d A \geq \calJ_{\!\Acell} \!\int_0^\Acell\! \calP(A)\d A$
+}.
+Accounting for these details doesn't make it more faithful representation though, because of the lack of experimental evidence; \cref{eq:layering-rate-approximation} is sufficient for our analysis. 
 % SW-Q(F8,M1) [run 11]: Your new rate argument: both readers (severity 2) expected the Boltzmann factor exp(-Delta E(A*)/E_0) of the previous paragraph to be averaged over the pressure, and stall when Eq. (layering-rate-approximation) replaces it by J_Acell x P; both also ask why one cell is the dominant pathway, since a two-cell patch has a lower threshold and its tail probability is exponentially larger. a) add one sentence saying that E_0 enters only through the ratio J_2Acell/J_Acell, and why the single-cell pathway dominates (please give the reason); b) keep, and leave it to the Discussion (Sec. VI A).
-% SW-A:
+% SW-A: I have rewritten this part. polish it
 
 The critical nucleus area $A^*$ depends on the monolayer pressure $p$, so the condition $A^* < \Acell$ defines a critical pressure $\pcrit$, which is the pressure at which extruded cells start to grow into a new layer (\cref{fig:nucleation}(b)):
 \begin{equation}
@@ -715,7 +717,7 @@ The first term also sets the pressure of the monolayer. In an incompressible mon
 pressure is the Lagrange multiplier of the incompressibility constraint, and at large $B$
 the first term takes over the role of that constraint. We therefore take the pressure from
 this term alone, $p=\rho\,\partial_\rho\mathfrak f_B-\mathfrak f_B$ with $\mathfrak
-f_B=\tfrac B2(\rho-1)^2$,
+f_B=\tfrac B2(\rho-1)^2$, \prompt{this explanation is weak and partially true. I think I address this in other parts and also in appendix. How can we give a short and correct explanation?}
 \begin{align}
   \label{eq:pressure-definition}
   p=\frac B2\left(\rho^2-1\right)\simeq B(\rho-1),
@@ -783,22 +785,22 @@ The
 rotational noise does not appear in \cref{eq:model-rho}: every term it produces is a $\theta$ derivative, and
 $\int\!\d\theta\,\partial_\theta(\cdot)=0$. 
 
-% 2026-10-23c, his prompt ("I would write this in the previous section, maybe after density
-% equation, including the elastic part"): the force balance is back here, with Q:grad H.
-Writing the flux of the continuity equation \cref{eq:model-rho},
+\Cref{eq:model-rho} can be viewed as a force balance: writing the flux of the continuity equation \cref{eq:model-rho},
 $\partial_t\rho+\nabla\cdot\bs j=0$, as $\bs j=\rho\v$ defines the velocity field $\v(\r,t)$
-of the cells, and setting $\rho\approx1$ in the incompressible limit gives the
-force balance
+of the cells, and setting $\rho\approx1$ in the incompressible limit gives
 \begin{align}
   \label{eq:velocity}
-  \xi_0 \v = -B\nabla\rho + \Q\!:\!\nabla\H + \fa + \xi_0 \bEta_{\rho}.
+  \xi_0 \v = \fp + \fa + \xi_0 \bEta_{\rho}.
 \end{align}
-The friction force density $\xi_0\v$ on the cells is balanced by the pressure gradient
-$B\nabla\rho\simeq\nabla p$ of \cref{eq:pressure-definition}, the elastic force, the active
-force and the noise. The elastic force is the divergence of the nematic stresses, see \cref{app:pressure}. 
-% Only the pressure of \cref{eq:pressure-definition}
-% enters the layering probability \cref{eq:p-layer-def}, because these nematic stresses stay
-% far below the fluctuations of the pressure (\cref{app:pressure}).
+where $\fp$ is the force denity due to interactions between cells: 
+\begin{align}
+  \fp = \la \rho_0 \F \ra_\varrho = -B\nabla\rho + \Q\!:\!\nabla\H
+\end{align}
+where we used \cref{eq:force-torque-F,eq:chain-rule,eq:free-energy-choice} and $\la \cdot \ra_\varrho = \int \cdot \varrho_t \d\theta $ \footnote{For example, $\rho=\la 1 \ra_\varrho$ and $\Q=\langle \hat\Q \rangle_\varrho$.}. 
+Thus, the friction force density $\xi_0\v$ on the cells is balanced by the passive force, the active
+force and the noise. 
+Moreover, the passive force can be written as the divergence of a stress.
+
 
 We also need a dynamical equation for the nematic order parameter $\Q$. Multiplying
 \cref{eq:final-langevin} by $\hat\Q(\theta)$ and integrating over $\theta$ does not close
@@ -1436,25 +1438,6 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 \end{figure*}
 % SW-TODO(FIG9,FIG7): (a-d) the gray director lines the caption names print at 0.49 pt as hairlines behind the rods (threshold 1 pt): ../plotgen/aimed_rods/aimed_rods_qss.wls:180 AbsoluteThickness[0.5] -> [1.05]; the dashed 2 um circle and its legend sample print at 0.59 pt: :171 and :249 AbsoluteThickness[0.6] -> [1.05]; (c) the dotted divider between head- and tail-side neighbors prints at 0.59 pt: :235 AbsoluteThickness[0.6] -> [1.05]; (c) the corner parts -11.6% and +12.3% sum to +0.7% while the title says +0.6% (FS:R03:Fig9 'it makes me pause'): round the three numbers so that they add up; .wls: your edit, regenerate figures/aimed_rods_qss.pdf
 
-% 2026-10-12c, his prompt: fig:circle-average merged into this figure, all panels from the
-% numerical solution on one color scale. plotgen/variance_map/variance_map.wls redraws (a) in
-% the style of varrho3D_high.png on the absolute scale of the maps; varrho3D_high.png is unused.
-% 2026-10-26: N200 ssDir run (peak 2.424% at r_max = (-1.25, 0), trough -3.32% at (1.67, 0)).
-\begin{figure*}[tbp]
-  \centering
-  \includegraphics[width=0.9\textwidth]{variance_map.pdf}
-  \caption{Equal-point density variance around a $+1/2$ defect, normalized by the
-    pedestal of \cref{eq:pedestal}: the numerical Lyapunov solution retaining $\delta\Q\ne0$
-    (\cref{app:lyapunov}) at the parameters of \cref{app:parameters}. The black curves are
-    director lines. \textbf{(b,c)} Panel (a) seen from above, with a circle of radius
-    $r$ over which the layering rate is averaged in
-    \cref{eq:p-layer-radial}, in the color of the corresponding curve in
-    \cref{fig:defects-layering}(c), centered on the maximum of the variance,
-    $\r_\mathrm{max}$, in (b) and on the core in (c).}
-  \label{fig:variance3d}
-\end{figure*}
-% SW-TODO(FIG6,FIG8,FIG9): (a) the faint dashed surface mesh prints as scattered gray dash marks that no caption clause explains and that a scanner may take for a director field next to the black director lines: add Mesh -> None to the Plot3D (MeshStyle -> Directive[Dashed, Opacity[0.15]], ../plotgen/variance_map/variance_map.wls:160); the director lines print at about 0.53 pt and the frames at about 0.44 pt (AbsoluteThickness[0.6] and [0.5] at print scale 0.89, variance_map.wls:153, 191, 214): use AbsoluteThickness[1.2] for the director lines; tick labels print at about 7.1 pt and subscripts at about 5 pt (MaTeX default size 8, variance_map.wls:108; body 10 pt), see the question on the width below; regenerate variance_map.pdf with plotgen/variance_map/run.sh
-% SW-TODO(FIG9,FIG10): the subscripts 'pedestal' (z title, color-bar title), 'max' and 'c' (titles of (b), (c)) print at about 5.0-5.6 pt (body 10 pt); they come from the explicit tex[..., 9] of the labels and titles, not from the default size the open TODO names (its width question is gone): raise ../plotgen/variance_map/variance_map.wls:165-166, 201, 209-211 from 9 to 10-11, or write the normalization without a subscript; the titles '(b) r_c = r_max', '(c) r_c = 0' use r_c, the circle center of eq:p-layer-radial, which the caption does not introduce (FS:R03:Fig10): title them 'about r_max' and 'about the core', as the caption words it; .wls: your edit
 
 
 \section{Layer formation rate from the pressure fluctuations}
@@ -1587,6 +1570,29 @@ cells unmodeled (\cref{sec:nucleation-1}).
 % pressure distribution.
 
 
+
+% 2026-10-12c, his prompt: fig:circle-average merged into this figure, all panels from the
+% numerical solution on one color scale. plotgen/variance_map/variance_map.wls redraws (a) in
+% the style of varrho3D_high.png on the absolute scale of the maps; varrho3D_high.png is unused.
+% 2026-10-26: N200 ssDir run (peak 2.424% at r_max = (-1.25, 0), trough -3.32% at (1.67, 0)).
+\begin{figure*}[tbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{variance_map.pdf}
+  \caption{Equal-point density variance around a $+1/2$ defect, normalized by the
+    pedestal of \cref{eq:pedestal}: the numerical Lyapunov solution retaining $\delta\Q\ne0$
+    (\cref{app:lyapunov}) at the parameters of \cref{app:parameters}. The black curves are
+    director lines. \textbf{(b,c)} Panel (a) seen from above, with a circle of radius
+    $r$ over which the layering rate is averaged in
+    \cref{eq:p-layer-radial}, in the color of the corresponding curve in
+    \cref{fig:defects-layering}(c), centered on the maximum of the variance,
+    $\r_\mathrm{max}$, in (b) and on the core in (c).}
+  \label{fig:variance3d}
+\end{figure*}
+% SW-TODO(FIG6,FIG8,FIG9): (a) the faint dashed surface mesh prints as scattered gray dash marks that no caption clause explains and that a scanner may take for a director field next to the black director lines: add Mesh -> None to the Plot3D (MeshStyle -> Directive[Dashed, Opacity[0.15]], ../plotgen/variance_map/variance_map.wls:160); the director lines print at about 0.53 pt and the frames at about 0.44 pt (AbsoluteThickness[0.6] and [0.5] at print scale 0.89, variance_map.wls:153, 191, 214): use AbsoluteThickness[1.2] for the director lines; tick labels print at about 7.1 pt and subscripts at about 5 pt (MaTeX default size 8, variance_map.wls:108; body 10 pt), see the question on the width below; regenerate variance_map.pdf with plotgen/variance_map/run.sh
+% SW-TODO(FIG9,FIG10): the subscripts 'pedestal' (z title, color-bar title), 'max' and 'c' (titles of (b), (c)) print at about 5.0-5.6 pt (body 10 pt); they come from the explicit tex[..., 9] of the labels and titles, not from the default size the open TODO names (its width question is gone): raise ../plotgen/variance_map/variance_map.wls:165-166, 201, 209-211 from 9 to 10-11, or write the normalization without a subscript; the titles '(b) r_c = r_max', '(c) r_c = 0' use r_c, the circle center of eq:p-layer-radial, which the caption does not introduce (FS:R03:Fig10): title them 'about r_max' and 'about the core', as the caption words it; .wls: your edit
+
+
+
 % ============================================================
 \section{Discussion}
 \label{sec:discussion}
@@ -1633,7 +1639,7 @@ across it (\cref{eq:eta-rho-ss}). Following the director field of the defect, th
 anisotropic noise places the peak of the variance off the core and makes the modulation
 decay over a few micrometers (\cref{eq:total-gauss}).
 
-\subsection{Model assumptions and simplifications}
+\subsection{Model simplifications}
 \label{sec:model-assumptions}
 % 2026-11-01, author's prompts on this subsection: opening sentence dropped; the background
 % assumptions only mentioned; each deliberate simplification with its reason and its cost.
@@ -2441,38 +2447,29 @@ $(B/\xi_0)\nabla^2\delta\rho$, and for $\delta\rho$ varying over a length $L$ th
 ratio is $\xi_0|\u|L/B$. Our steady
 state has $|\u|=0.24~\micron/\minute$, so the ratio is $2.7\times10^{-4}$ at $L=20~\micron$, the half-width of our box
 (\cref{app:comoving}), and we drop it. 
-% In the $\Q$-equation the advection
-% $\nabla\tcdot(\delta\Q\,\bs w_\ss)$ competes with the much slower elastic relaxation
-% $(4K'/\xir)\nabla^2\delta\Q$. Since $|\bs w_\ss|$ reaches $0.96~\micron/\minute$, their
-% ratio $|\bs w_\ss|\,\xir L/(4K')$ is already $0.19$ at $L=\elld$, so we keep it.
 
-% 2026-10-22, his request: formal definition of the pressure (Gibbs-Duhem), the terms the
-% main text drops and why. Numbers: scratchpad round1022/checks_round.py (sigma^n <= 5.9 Pa um
-% on the simple Pade profile, bare a, b, K).
 \subsection{The pressure and the passive stress}
 \label{app:pressure}
-% 2026-10-23e, his prompts ("It is hard to read until here, rewrite and simplify this
-% section", "ij -> alpha beta"): the passive flux is split by the two parts of the free energy
-% first; the total pressure p_f and the chemical potential of a rod are gone; Greek indices.
-% Identity checked by hand: Q:d_a mu_Q = d_a(Q:mu_Q - f_n) + d_b[d_aQ : df_n/d(d_bQ)].
-% 2026-10-26, his prompt ("Start from gibbs duhem, then decompose it into two part using the
-% property that free energy can also be split"): the Gibbs-Duhem relation of the whole free
-% energy comes first and splits, by f = f_B(rho) + f_n(Q, dQ), into parallel relations for p
-% and sigma^n; the opening paragraph on the two roles of p was cut.
+
+
+
+
 The interaction terms of \cref{eq:rho-full} form the passive flux
 $-\xi_0^{-1}(\rho\nabla\mu_\rho+\Q\!:\!\nabla\bs\mu_Q)$, with the chemical potentials
-$\mu_\rho=\delta F/\delta\rho$ and $\bs\mu_Q=\delta F/\delta\Q=-\H$. For a free energy
-density $\mathfrak f(\rho,\Q,\partial_\r\Q)$ they are $\mu_\rho=\partial\mathfrak f/\partial\rho$
-and
-$\bs\mu_Q=\partial\mathfrak f/\partial\Q-\partial_\beta[\partial\mathfrak f/\partial(\partial_\beta\Q)]$.
+\begin{align}
+\mu_\rho =& \frac{\delta F}{\delta \rho}=\pd{f}{\rho}
+\\
+\bmu_\Q=&\frac{\delta F}{\delta \Q}=\pd{f}{\Q}-\partial_\beta \pd{f}{(\partial_\beta \Q)}.
+\end{align}
+where $\mathfrak f(\rho,\Q,\partial_\r\Q)$ is the free energy density.
 Writing $\partial_\alpha\mathfrak f$ with the chain rule and inserting them gives the
 Gibbs--Duhem relation~\cite{callen1985thermodynamics}, which turns the passive force density into the divergence of a
 stress,
 \begin{align}
   \label{eq:gibbs-duhem}
-  \rho\,\partial_\alpha\mu_\rho+\Q\!:\!\partial_\alpha\bs\mu_Q &= -\partial_\beta\sigma_{\alpha\beta},
+  \rho\,\partial_\alpha\mu_\rho+\Q\!:\!\partial_\alpha\bmu_\Q &= -\partial_\beta\sigma_{\alpha\beta},
   \nonumber\\
-  \sigma_{\alpha\beta} &= -\bigl(\rho\mu_\rho+\Q\!:\!\bs\mu_Q-\mathfrak f\bigr)\,\delta_{\alpha\beta}
+  \sigma_{\alpha\beta} &= -\bigl(\rho\mu_\rho+\Q\!:\!\bmu_\Q-\mathfrak f\bigr)\,\delta_{\alpha\beta}
   \nonumber\\
   &\quad-\partial_\alpha\Q\!:\!\frac{\partial\mathfrak f}{\partial(\partial_\beta\Q)} .
 \end{align}
@@ -3536,7 +3533,7 @@ Ref.~\cite{copenhagen2021} observes mainly holes opening, which need additional 
   \label{fig:negative-layering}
 \end{figure}
 % SW-Q(FIG8) [run 11]: Fig. 17 caption: both readers (severity 2) cannot tell which measured points are plotted against the -1/2 curve, since the text says -1/2 defects show mainly holes. a) "Experiment: the +1/2 data of Fig. 3f of Ref. [3]"; b) the data cover both defect types: say so; c) keep.
-% SW-A:
+% SW-A: a
 
 \begin{figure*}[tbp]
   \centering
