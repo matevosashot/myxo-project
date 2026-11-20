@@ -203,7 +203,7 @@ Copenhagen \textit{et al.}~explained the preference for $+1/2$ defects with an a
 nematic model in
 which the friction with the substrate is weaker along the cells than across them
 \cite{copenhagen2021}. 
-This friction anisotropy creates a net influx of cells around the defect. It was assumed that cells were readily extruded, so this net influx was interpreted as a new layer formation.
+This friction anisotropy creates a net inflow of cells at the defect. Cells were assumed to be readily extruded, so this net inflow was interpreted as the formation of a new layer.
 The measured flows~\cite{copenhagen2021,han2025local} also
 converge at $+1/2$ defects, but a converging
 flow is what layer formation itself requires, since the cells that leave the monolayer must
@@ -233,27 +233,33 @@ during large, and hence rare, pressure fluctuations that originate in the self-p
 % $+1/2$
 % defect.
 
-In the experiments, it is seen that patches of cells are frequently extruded, but most of them shrink back to the monolayer. Only few of them grow and form a new layer. 
-In the view of classical nucleation theory, fluctuations would randomly extrude patches of cells, and a patch grows only if its area is greater than a critical area set by the energy barrier~\cite{debenedetti2020metastable}.
-Therefore, we treat layer formation as a nucleation event.
+In the experiments, patches of cells are extruded frequently, but most of them shrink back
+into the monolayer, and only a few grow into a new layer~\cite{copenhagen2021}. In the view
+of classical nucleation theory, fluctuations would extrude patches of cells at random, and a
+patch grows only if its area exceeds a critical area set by an energy
+barrier~\cite{debenedetti2020metastable}. We
+therefore treat layer formation as a nucleation event. In our system, however, the energy
+cost of a patch depends on the pressure in the monolayer: a larger pressure decreases the
+critical area (\cref{sec:nucleation-1}), so the nucleation rate is higher where the pressure
+is high.
 
-In our system, however, the energy cost of a patch depends on the pressure in the monolayer: a larger pressure decreases the critical area of the patch (\cref{sec:nucleation-1}). Therefore, at regions of high pressure nucleation rate is increased.
-
-So we model the layering in terms of two processes:
-a stochastic evolution of pressure at long time-scales and long length-scales, and layer formation as a nucleation event at short time-scales and short length-scales. Thus, the pressure as a slow variable and uniform over the length-scales at which nucleation process is considered.
-Thus, the layering rate in space and time depends on the instantaneous pressure at that position and time.
-This clear time- and length-scale separation is a model simplification, because the layering rate changes over the length-scales comparable to the cell size (\cref{fig:defects-layering}(c)). 
-
-
+We thus model layering as two processes: a stochastic evolution of the pressure over long
+times and long length scales, and the nucleation of a layer over short times and short
+length scales. On the scales of nucleation, the pressure is then a slow variable and uniform in
+space, so the layering rate at a given position and time depends on the instantaneous
+pressure there. This separation of time and length scales is a simplification of the model,
+because the layering rate changes over distances comparable to the size of a cell
+(\cref{fig:defects-layering}(c)).
 
 A defect can thus favor layers through the statistics of the pressure around it. We therefore compute the distribution of the pressure fluctuations around a defect.
 This requires a fluctuating version of the active nematic equations, which contain a noise term.
 In equilibrium, the fluctuation-dissipation theorem (FDT) fixes that noise by
-tying it to the dissipative terms in the equations of motion \cite{kubo1966fluctuation}. Even tough an active nematic
+tying it to the dissipative terms in the equations of motion \cite{kubo1966fluctuation}. Even though an active nematic
 is out of equilibrium and the theorem does not apply, phenomenological theories add the noise
-to the continuum equations using the FDT, with a free amplitude and a chosen tensor structure
-\cite{ramaswamy2003active}. We derive the
-noise systemmatically from the dynamics of the cells. 
+to the continuum equations as if the FDT held, or by hand, with a free amplitude and a chosen
+tensor structure
+\cite{ramaswamy2003active,mishra2010dynamic,shankar2018low,marchetti2013hydrodynamics,basu2008thermal}. We derive the
+noise systematically from the dynamics of the cells.
 
 Kinetic theories derive continuum equations of
 active matter from particle models, including self-propelled rods that reverse, but
@@ -304,7 +310,8 @@ Banerjee \textit{et al.}~\cite{banerjee2026active} derived the active stress in 
 form as ours.
 
 Solved around a $+1/2$ defect, these equations give a density variance, and hence, through
-the stiffness of the monolayer\footnote{or through equation of state}, a pressure variance. 
+the stiffness of the monolayer,\footnote{More generally, through the equation of state of the
+monolayer, which relates its pressure to its density (\cref{sec:pressure}).} a pressure variance.
 The variance is largest just
 off the core, at the head of the defect, on the side where the director bends around it (\cref{fig:defects-layering}(a)). 
 A larger variance makes high pressures more likely and so raises the layering rate (\cref{sec:nucleation-1}).
@@ -398,65 +405,81 @@ is the critical nucleus, of area $A^*=\pi h^2(\Wc+\gammaw)^2/(p+\Wc-\Ws)^2$. A l
 lowers its energy by growing, a smaller one by shrinking.
 
 
-We now have the form of the energy barrier.
-In classical nucleation theory, the probability of randomly extruding a patch of area $A$ is given by the Boltzmann factor $\ee^{-\Delta E(A)/E_0}$, where $E_0$ is the characteristic energy of the fluctuations. Accordingly, the rate of layer formation is proportional to $\ee^{-\Delta E(A^*)/E_0}$, where $\Delta E(A^*)$ is the height of the barrier~\cite{debenedetti2020metastable}.
-For thermal fluctuations, for example, $E_0=\kB T$, with $\kB$ the Boltzmann constant. But, self-propelled bacteria are far from equilibrium, and $E_0$ would corresponds to the active fluctuations in the monolayer. 
+In classical nucleation theory, the probability that fluctuations extrude a patch of area
+$A$ is proportional to the Boltzmann factor $\ee^{-\Delta E(A)/E_0}$, where $E_0$ is the
+characteristic energy of the fluctuations. Accordingly, the rate of layer formation is
+proportional to $\ee^{-\Delta E(A^*)/E_0}$, where $\Delta E(A^*)$ is the height of the
+barrier~\cite{debenedetti2020metastable}. For thermal fluctuations, $E_0=\kB T$, with $\kB$
+the Boltzmann constant. Self-propelled bacteria, however, are far from equilibrium, and
+$E_0$ would be set by the active fluctuations in the monolayer.
 
+The shape and the height of the barrier depend on the pressure in the monolayer, and the
+pressure changes slowly and stochastically in time; the following sections compute its
+statistics. Layer formation can therefore be viewed as an escape over a fluctuating barrier
+(\cref{fig:nucleation}(b))~\cite{reimann1995thermally}.
 
-Note that the shape and the height of the energy barrier depend on the pressure in the monolayer. And the pressure has a slow stochastic dynamics over time, which we study in the following sections. Therefore, the layer formation can be viewed as a escape over a fluctuating barrier (\cref{fig:nucleation}(b)) \cite{reimann1995thermally}.
-
-
-In experiments, altough the layer formation is rare, patches of cells are extruded frequently~\cite{copenhagen2021}. One source of this out-of-plane motion is the activity of the cells. Another source could be the substrate roughness, but other sources are unclear.
-Therefore, we simplify the process by assuming that only single cells are randomly extruded in the monolayer with a constant and uniform extrusion rate $\calJ_\Acell$ and neglect the extrusion of the larger patches. This means that the layer forms when the critical area is smaller than one cell. In other words, the layering rate \footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$ are rate densities with units $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the average number of cells extruded in the area $\d A$ during the time interval $\d t$.}
+In experiments, although layers form rarely, patches of cells are extruded
+frequently~\cite{copenhagen2021}. One source of this out-of-plane motion is the activity of the
+cells. Another could be the roughness of the substrate, but other sources are unclear. We
+therefore simplify the process: we assume that only single cells are extruded, at random
+and at a constant and uniform rate $\calJ_{\!\Acell}$, and we neglect the extrusion of
+larger patches. A layer then forms when the critical nucleus is smaller than one cell,
+$A^*<\Acell$, so the layering rate is\footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$ are rate densities with units $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the average number of cells extruded in the area $\d A$ during the time interval $\d t$.}
 \begin{equation}
   \label{eq:layering-rate-approximation}
  \calJ \approx \calJ_{\!\Acell}  \Prob(A^* < \Acell) = \calJ_{\!\Acell}  \Prob(p>\pcrit),
 \end{equation}
-where $\Prob(A^* < \Acell)$ is the probability that the critical nucleus is smaller than one cell.
-The condition $A^* < \Acell$ is equivalent to $p > \pcrit$, where 
+where $\Prob$ denotes the probability measure over the fluctuations of the pressure. The condition
+$A^*<\Acell$ is equivalent to $p>\pcrit$, with the critical pressure
 \begin{equation}
   \label{eq:pcrit}
   \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
 \end{equation}
-is the critical pressure.
+% SW-Q(B2) [sw-write 014, quote updated 015]: "In experiments, although layers form rarely, patches of cells are extruded frequently [copenhagen2021]" repeats Sec. I ("In the experiments, patches of cells are extruded frequently, but most of them shrink back into the monolayer, and only a few grow into a new layer [copenhagen2021]"). a) keep the observation in Sec. I and open this paragraph with "The sources of this frequent extrusion are unclear: one is the activity of the cells, another could be the roughness of the substrate."; b) keep both.
+% SW-A:
 
-\Cref{eq:layering-rate-approximation} is a simplification;
-having a sophisticated model for the patch extrusion process would not make it more faithful representation, because of the lack of experimental evidence. 
-In this work, we focus on the effect of the monolayer pressure on the layer formation.
-However, below we outline a better model that might be useful in understanding \cref{eq:layering-rate-approximation} and its limitations. Let $\calJ_p(\r)$ be the layering rate at point $\r$ and at pressure $p$ in the monolayer. Then the average layering rate at point $\r$ is given by
+\Cref{eq:layering-rate-approximation} is a simplification, but a more detailed model of the
+extrusion of patches would not be more faithful, because experimental evidence on this
+process is lacking. We therefore focus on the effect of the pressure in the monolayer on
+layer formation. A more general model, outlined below, might nonetheless help to understand
+\cref{eq:layering-rate-approximation} and its limitations. Let $\calJ_p(\r)$ be the layering
+rate at the point $\r$ when the pressure there is $p$. The average layering rate at $\r$ is
+then
 \begin{equation}
   \label{eq:layering-rate-average}
-  \calJ(\r) = \int_{-\infty}^\infty \calJ_p(\r) \calP_\r(p) \d p,
+  \calJ(\r) = \int_{-\infty}^\infty \calJ_p(\r)\,\calP_\r(p)\,\d p,
 \end{equation}
-where $\calP(p)$ is the probability density of the pressure at point $\r$.
-\Cref{eq:layering-rate-approximation} underestimates the layering rate for two reasons:
-($i$) it does not account for the extrusion of larger patches that also require larger critical nucleus area to grow into a new layer, and
-($ii$) partially extruded cells have higher rate but still accounted with the same rate as one cell extrusion:
+where $\calP_\r(p)$ is the probability density of the pressure at $\r$.
+\Cref{eq:layering-rate-approximation} underestimates this rate for two reasons:
+(\textit{i}) it does not account for the extrusion of larger patches that also require a
+larger critical nucleus area to grow into a new layer, and (\textit{ii}) it counts partially extruded
+cells, which have a higher rate, with the same rate as one extruded cell. Hence
 \begin{align}
   \label{eq:underestimates}
-  \calJ \geq \int_{\pcrit}^\infty \calJ_p \calP(p) \d p \geq \calJ_{\pcrit} \int_{\pcrit}^\infty \calP(p) \d p
+  \calJ(\r) \geq \int_{\pcrit}^\infty \calJ_p(\r)\,\calP_\r(p)\,\d p
+  \geq \calJ_{\pcrit} \int_{\pcrit}^\infty \calP_\r(p)\,\d p ,
 \end{align}
-where in the second inequality, we use the fact that $\calJ_p$ monotonically increases with $p$. Note that $\calJ_{\pcrit} = \calJ_\Acell$ and the lower bound is same as \cref{eq:layering-rate-approximation}.
-
-
-
+where the second inequality uses that $\calJ_p$ increases monotonically with $p$. Since
+$\calJ_{\pcrit}=\calJ_{\!\Acell}$, the lower bound is \cref{eq:layering-rate-approximation}.
 
 Some remarks:
 \begin{itemize}
-  \item In \cref{eq:layering-rate-average} spatial dependence comes from the pressure profile $p(\r)$ as well as the layering rate at fixed pressure, while in \cref{eq:layering-rate-approximation} we took a constant and uniform $\calJ_\Acell$.
-  Indeed, the single-cell extrusion rate $\calJ_\Acell$ can be enhanced near the topological defects.
-  Since the critical pressure does not depend on position (\cref{eq:pcrit}), the inhomogeneity of the layering rate comes only from the inhomogeneity of the pressure fluctuations around the defect.
+  \item In \cref{eq:layering-rate-average}, the layering rate depends on position through the
+  statistics of the pressure, $\calP_\r(p)$, and through the rate $\calJ_p(\r)$ at fixed
+  pressure. \Cref{eq:layering-rate-approximation} instead takes a constant and uniform
+  $\calJ_{\!\Acell}$, although the single-cell extrusion rate can itself be enhanced near
+  topological defects. Since the critical pressure does not depend on position either
+  (\cref{eq:pcrit}), the layering rate of \cref{eq:layering-rate-approximation} varies in
+  space only through the statistics of the pressure fluctuations around the defect.
 
-
-  \item \Cref{eq:layering-rate-approximation}
-  Slow pressure evolution copared to the process of patch extrusion is required. Escape over a fluctuating
-barrier follows the instantaneous barrier only in this slow
-limit~\cite{reimann1995thermally}; when the barrier changes fast, the crossing sees the
-average barrier instead~\cite{doering1992resonant}.
+  \item \Cref{eq:layering-rate-approximation} requires the pressure to change slowly compared
+  with the extrusion of a patch, because escape over a fluctuating barrier follows the
+  instantaneous barrier only in this slow limit~\cite{reimann1995thermally}; when the barrier
+  changes fast, the crossing sees the average barrier instead~\cite{doering1992resonant}.
 
 \item
 With the parameter values of \cref{app:parameters-extrusion},
-$\pcrit=35~\kPa\cdot\micron$. The surface tension of water dominates it. The mean pressure in the monolayer is far below $\pcrit$: at a defect it is of the order of the active stress, three to four orders of magnitude below
+$\pcrit=35~\kPa\tcdot\micron$. The surface tension of water dominates it. The mean pressure in the monolayer is far below $\pcrit$: at a defect it is of the order of the active stress, three to four orders of magnitude below
 $\pcrit$ (\cref{app:parameters-choice}). Layers therefore form predominantly during large, and
 hence rare, fluctuations of the pressure.
 
@@ -498,7 +521,7 @@ with $\p(\theta)=(\cos\theta,\sin\theta)$ the unit vector along the rod axis. He
 translational and rotational friction coefficients, respectively ($\rho_0$ a reference
 density
 carried along for later convenience), and $\lambda_i$ is Gaussian white
-noise, $\la\lambda_i(t)\lambda_j(t')\ra=2\Lambda\delta_{ij}\delta(t-t')$, with $\Lambda$
+noise, $\langle\lambda_i(t)\lambda_j(t')\rangle=2\Lambda\delta_{ij}\delta(t-t')$, with $\Lambda$
 the rotational diffusion coefficient. The rods
 interact through a pairwise potential $V(\r-\r',\theta,\theta')$, so that
 $V_\mathrm{tot}=\tfrac12\sum_{i,j=1}^N V(\r_i-\r_j,\theta_i,\theta_j)$. The force and
@@ -528,7 +551,7 @@ equal probability, switching at rate $\frev$,
 This models the reversals of \textit{Myxococcus xanthus} gliding motility
 \cite{blackhart1985frizzy,guzzo2018gated}. At time scales long compared with $\frev^{-1}$,
 we approximate $k_i$ by Gaussian white noise,
-$\la k_i(t)k_j(t')\ra \approx \frev^{-1}\delta_{ij}\delta(t-t')$. The coarse-graining of
+$\langle k_i(t)k_j(t')\rangle \approx \frev^{-1}\delta_{ij}\delta(t-t')$. The coarse-graining of
 \cref{sec:model-coarse} uses It\^o calculus and therefore requires this approximation.
 Refs.~\cite{bressloff2024global,spinney2025dean} derive
 density equations for particles that switch between discrete states, as our rods do at
@@ -782,24 +805,30 @@ The
 rotational noise does not appear in \cref{eq:model-rho}: every term it produces is a $\theta$ derivative, and
 $\int\!\d\theta\,\partial_\theta(\cdot)=0$. 
 
-\Cref{eq:model-rho} can be viewed as a force balance: writing the flux of the continuity equation \cref{eq:model-rho},
-$\partial_t\rho+\nabla\cdot\bs j=0$, as $\bs j=\rho\v$ defines the velocity field $\v(\r,t)$
-of the cells, and setting $\rho\approx1$ in the incompressible limit gives
+\Cref{eq:model-rho} can be viewed as a force balance: writing the flux of this continuity
+equation, $\partial_t\rho+\nabla\cdot\bs j=0$, as $\bs j=\rho\v$ defines the velocity field
+$\v(\r,t)$ of the cells, and setting $\rho\approx1$ in the incompressible limit gives
 \begin{align}
   \label{eq:velocity}
-  \xi_0 \v = \bfp + \bfa + \xi_0 \bEta_{\rho}.
+  \xi_0 \v = \bfp + \bfa + \xi_0 \bEta_{\rho},
 \end{align}
-where $\bfp$ is the force denity due to interactions between cells: 
+where $\bfp$ is the passive force density, due to the interactions between the cells. By
+\cref{eq:force-torque-F,eq:chain-rule,eq:free-energy-choice}, a rod of orientation $\theta$
+at $\r$ feels the force $\F(\r,\theta)$, and averaging this force over the orientations
+gives $\bfp$,
 \begin{align}
-  \F(\r,\theta) = \rho_0^{-1}(&-B\nabla\rho + \hat\Q(\theta)\!:\!\nabla\H)
+  \F(\r,\theta) &= \rho_0^{-1}\bigl(-B\nabla\rho + \hat\Q(\theta)\!:\!\nabla\H\bigr),
   \label{eq:force-on-cells}
   \\
-  \bfp = \la \rho_0 \F \ra_\varrho =& -B\nabla\rho + \Q\!:\!\nabla\H
+  \bfp = \la \rho_0 \F \ra_\varrho &\simeq -B\nabla\rho + \Q\!:\!\nabla\H ,
+  \label{eq:passive-force}
 \end{align}
-where we used \cref{eq:force-torque-F,eq:chain-rule,eq:free-energy-choice} and $\la \cdot \ra_\varrho = \int \cdot\; \varrho_t \d\theta ~$\footnote{For example, $\rho=\la 1 \ra_\varrho$ and $\Q=\langle \hat\Q \rangle_\varrho$.}. 
-Thus, the friction force density $\xi_0\v$ on the cells is balanced by the passive force, the active
-force and the noise. 
-Moreover, the passive force can be written as the divergence of a stress.
+with the average over orientations
+$\langle \cdot \rangle_\varrho = \int\!\d\theta\,\varrho_t(\r,\theta)\,(\cdot)$, so that
+$\rho=\langle 1 \rangle_\varrho$ and $\Q=\langle \hat\Q \rangle_\varrho$.
+The friction force density $\xi_0\v$ on the cells is thus balanced by the passive force,
+the active force and the noise. The passive force can also be written as the divergence of
+a stress (\cref{sec:pressure}).
 
 
 We also need a dynamical equation for the nematic order parameter $\Q$. Multiplying
@@ -895,7 +924,7 @@ $\bs P$ follows $\rho$ and $\Q$ instantaneously, and eliminating it gives back
 \cref{eq:model-rho,eq:model-Q}. The mean of $\bs P$ contains the polarity
 $\bs P_Q=-(v_0/4\frev)\nabla\cdot\Q$ that splay and bend induce, and the active force is the
 friction force of this polarity, $\bfa=\xi_0v_0\bs P_Q$. The fluctuation of $\bs P$ about its
-mean gives the density noise, $\bEta_\rho=v_0(\bs P-\la\bs P\ra)$.
+mean gives the density noise, $\bEta_\rho=v_0(\bs P-\langle\bs P\rangle)$.
 
 \subsection{Dropping the nematic part of the force}
 \label{sec:model-elastic}
@@ -933,19 +962,14 @@ in both directions, through $\bfa\propto\nabla\cdot\Q$ in one equation and throu
 $\Q B\nabla\rho$ in the other. This coupling sets a $+1/2$ defect in motion
 (\cref{sec:defect-steady}).
 
-Everything that follows comes from solving \cref{eq:model-rho,eq:model-Q} at a $+1/2$
-defect, with the parameters collected in \cref{app:parameters}.
-
-
-
 \subsection{Passive stress and pressure}
 \label{sec:pressure}
 
 The layering rate of \cref{sec:nucleation-1} depends on the pressure $p$ in the monolayer,
 which we now define through the free energy. By \cref{eq:force-torque-F,eq:chain-rule}, the
-passive force density is $\bfp=-\rho\nabla\mu_\rho-\Q\!:\!\nabla\bmu_\Q$, with the chemical
-potentials $\mu_\rho=\delta F/\delta\rho=\partial\mathfrak f/\partial\rho$ and
-$\bmu_\Q=\delta F/\delta\Q=-\H$; at $\rho\simeq1$ this is the sum of \cref{eq:force-on-cells} over the rods. Expanding
+passive force density is $\bfp=\langle\rho_0\F\rangle_\varrho=-\rho\nabla\mu_\rho-\Q\!:\!\nabla\bmu_\Q$,
+with the chemical potentials $\mu_\rho=\delta F/\delta\rho=\partial\mathfrak f/\partial\rho$
+and $\bmu_\Q=\delta F/\delta\Q=-\H$; at $\rho\simeq1$ it reduces to \cref{eq:passive-force}. Expanding
 $\partial_\alpha\mathfrak f$ in the derivatives of $\rho$, $\Q$ and $\partial_\r\Q$ turns this
 force density into the divergence of a stress, $\bfp=\nabla\cdot\bsigma$, through the Gibbs--Duhem
 relation~\cite{callen1985thermodynamics}
@@ -986,6 +1010,10 @@ pressure of the monolayer is
 \end{equation}
 where the last form is the leading order in $\rho-1$ that \cref{eq:model-rho} keeps. This is
 the two-dimensional pressure $p$ of \cref{eq:dE-of-A} (\cref{app:extrusion}).
+
+\bigskip
+Everything that follows comes from solving \cref{eq:model-rho,eq:model-Q} at a $+1/2$
+defect, with the parameters collected in \cref{app:parameters}.
 
 % ============================================================
 \section{Fluctuations around a $+1/2$ defect}
@@ -1214,7 +1242,7 @@ Taking the Fourier transform of \cref{eq:linearized-rho} over space and time giv
 with $\k$ the wavevector and $k=|\k|$. The noise is conservative, so its power carries a
 factor $k^2$ that cancels the $k^2$ of the relaxation rate $\gamma_0k^2$. The spectrum is
 then flat in $\k$, and the equal-time variance
-$\la\delta\rho(\r,t)\delta\rho(\r',t)\ra_\ss$ diverges as $\r'\to\r$.
+$\langle\delta\rho(\r,t)\delta\rho(\r',t)\rangle_\ss$ diverges as $\r'\to\r$.
 
 The divergence comes from treating the monolayer as a continuum down to arbitrarily short
 length scales. The theory therefore needs a cutoff, and the system supplies one: there is no length
@@ -1272,8 +1300,8 @@ within $\tau_c$, and an excursion of the pressure above $\pcrit$ lasts only a fr
 whereas the bottom layer needs about $\Acell/(2\gamma_0)\simeq5~\mathrm{ms}$ to relax around
 an extruded cell, so within the model the slow limit assumed in \cref{sec:nucleation-1} does
 not hold either. Real cells push in one direction for minutes between reversals and cross
-$\elln$ in about half a minute, so the pressure they build would change slowly enough for the
-validity of \cref{eq:layering-rate-approximation}. Lifting the white-noise limit would also change the
+$\elln$ in about half a minute, so the pressure they build would change slowly enough for
+\cref{eq:layering-rate-approximation} to hold. Lifting the white-noise limit would also change the
 amplitude of the fluctuations;
 \cref{sec:model-assumptions} discusses what these limits mean for the comparison with experiment.
 
@@ -1501,18 +1529,18 @@ variance of \cref{eq:total-gauss}, so the pressure $p$ is Gaussian too, with
 \end{equation}
 the second expression its far-field value, from the isotropic pedestal
 \cref{eq:pedestal}.
-As we argued for the average density, in the large-$B$ limit the mean pressure is $\la p(\r) \ra \ll \sigma_p(\r)$. We therefore set it to zero.%
+As we argued for the average density, in the large-$B$ limit the mean pressure is $\langle p(\r) \rangle \ll \sigma_p(\r)$. We therefore set it to zero.%
 \footnote{Far in the tail of the distribution, the mean shifts the exponent by
-$\pcrit|\la p\ra|/\sigma_{p,\infty}^2\lesssim0.14$, which changes the probability by less
+$\pcrit|\langle p\rangle|/\sigma_{p,\infty}^2\lesssim0.14$, which changes the probability by less
 than $15\%$, far less than the modulation of the variance does. The nematic stresses dropped
-in \cref{sec:pressure} are of the same order as $\la p\ra$: on the Pad\'e profile
+in \cref{sec:pressure} are of the same order as $\langle p\rangle$: on the Pad\'e profile
 \cref{eq:pade-approximation}, with the bare $a$, $b$ and $K$ (\cref{app:parameters}), every
 component stays below about $6~\Pa\tcdot\micron$.}
 The probability in \cref{eq:layering-rate-approximation} is then a Gaussian
 tail, and the layering rate is
 \begin{align}
     \label{eq:p-layer}
-    \calJ(\r) &=\calJ_{\!\Acell} \frac1{\sqrt{2\pi}\,z(\r)}\ee^{-z(\r)^2/2},
+    \calJ(\r) &\simeq\calJ_{\!\Acell} \frac1{\sqrt{2\pi}\,z(\r)}\ee^{-z(\r)^2/2},
     \quad
     z(\r)= \frac{\pcrit}{\sigma_p(\r)}.
 \end{align}
@@ -1608,6 +1636,8 @@ cells unmodeled (\cref{sec:nucleation-1}).
 % below the observed one. While the ratio is meaningfulis less sensitive, because rate prefactors cancel from it and
 % the remaining prefactor varies slowly, although it too rests on the Gaussian tail of the
 % pressure distribution.
+% SW-Q(F8) [sw-write 014]: "The rate predicted by the model is far below the observed one": since Sec. II now leaves the single-cell extrusion rate J_Acell unmodeled (and tau_c no longer turns the probability into a rate), the model predicts only the probability factor of eq:p-layer, and the sentence before calls the absolute rate "beyond the reach of the model". a) "The probability factor of eq:p-layer is so small that no plausible single-cell extrusion rate brings the rate up to the observed one" (no number); b) delete the sentence; c) keep.
+% SW-A:
 
 
 
@@ -1658,7 +1688,7 @@ cells unmodeled (\cref{sec:nucleation-1}).
 % seems to be a repetition"; second paragraph "shortened, 50-60 percent").
 Layers in \textit{M.\ xanthus} monolayers form preferentially at $+1/2$
 defects~\cite{copenhagen2021}. Above a critical pressure $\pcrit$ (\cref{eq:pcrit}) a new
-layer grows from a single extruded cell, whereas below it an extruded patch shrinks back. This threshold is the same
+layer grows from a single extruded cell, whereas below it the extruded cell returns to the monolayer. This threshold is the same
 everywhere in the monolayer, and the mean pressure at a defect stays three to four orders of
 magnitude below it. We have therefore proposed that layers form when fluctuations of the
 pressure exceed $\pcrit$. A defect then favors layers only because the pressure fluctuates
@@ -2309,7 +2339,7 @@ $\Q$-equation they leave angular moments, which we write as
 \begin{equation}\label{eq:average-def}
 \la X\ra_\varrho\equiv\int\!\d\theta\,\varrho_t(\r,\theta)X(\theta).
 \end{equation}
-For example, the density and the nematic order of \cref{eq:density-definition} read $\rho=\la1\ra_\varrho$ and $\Q=\langle\hat\Q\rangle_\varrho$.
+For example, the density and the nematic order of \cref{eq:density-definition} read $\rho=\langle1\rangle_\varrho$ and $\Q=\langle\hat\Q\rangle_\varrho$.
 
 Integrating \cref{eq:final-langevin} over $\theta$ removes every
 $\theta$ derivative, and the self-propulsion term needs only
@@ -2711,7 +2741,7 @@ we use \cref{eq:pade-accurate} in place of \cref{eq:pade-approximation}.
 With $\Q$ known, the first equation of \cref{eq:simplified-noiseless} reads
 $B\nabla^2\rho=\nabla\cdot\bfa$. The active force \cref{eq:active-force-defect} points along
 $x$ and depends on $r$ alone, so
-$\nabla\cdot\bfa=\partial_xf^\text{a}_x=-\zeta\,(S'+S/r)'\cos\phi$. The radial factor
+$\nabla\cdot\bfa=\partial_x\fa_x=-\zeta\,(S'+S/r)'\cos\phi$. The radial factor
 $(S'+S/r)'$ equals $S''+S'/r-S/r^2$, the operator of \cref{eq:S-radial}, so
 $\nabla\cdot\bfa=-\zeta\nabla^2(S\cos\phi)$ whatever the profile $S$, and the density obeys
 \begin{align}
@@ -2738,8 +2768,8 @@ the antisymmetry of the defect, inflow and outflow no longer cancel. Cells then 
 the disk, and no steady state is reached.
 
 A no-flux boundary imposes $\nh\cdot(B\nabla\rho-\bfa)=0$, that is
-$B\,\partial_r\rho=f^\text{a}_r$ at $r=R$, with the radial active force
-$f^\text{a}_r=-\zeta(S'+S/r)\cos\phi$. This gives $A=-(\zeta/B)S(R)/R$, and since the number
+$B\,\partial_r\rho=\fa_r$ at $r=R$, with the radial active force
+$\fa_r=-\zeta(S'+S/r)\cos\phi$. This gives $A=-(\zeta/B)S(R)/R$, and since the number
 of cells is conserved, the mean density stays one and $c=0$. Thus
 \begin{align}
   \label{eq:rho-noflux}
@@ -3590,7 +3620,7 @@ Both contain derivatives, $\mathbf N$ because the flux noises $\bEta_\rho$ and $
 through their divergence. The flux correlators are \cref{eq:eta-rho-ss,eq:Q-noise-correlators},
 evaluated with the exact moments of \cref{app:realizability}. Since the noise is white in
 time, It\^o's lemma applied to $\psi\psi^\T$ turns stationarity into an algebraic condition
-on the equal-time covariance $\mathbf C(\r,\r')=\la\psi(\r,t)\,\psi(\r',t)^\T\ra$,
+on the equal-time covariance $\mathbf C(\r,\r')=\langle\psi(\r,t)\,\psi(\r',t)^\T\rangle$,
 \begin{equation}
   \label{eq:lyapunov}
   \A\,\mathbf C+\mathbf C\,\A^\T+\mathbf N=0,
@@ -3943,8 +3973,8 @@ fluctuations are anchored there, $\delta\Q=0$.
   \centering
   \includegraphics[width=0.95\linewidth]{fActiveMeanAndStd.pdf}
   \caption{Mean and standard deviation of $\bs f$ along the axis of the defect, in
-    $\micron^{-1}$; the active force is $-\zeta\bs f$. The mean $\la f_x\ra$ is that of the
-    static profile of the defect, and $\la f_y\ra$ vanishes on the axis by symmetry. The
+    $\micron^{-1}$; the active force is $-\zeta\bs f$. The mean $\langle f_x\rangle$ is that of the
+    static profile of the defect, and $\langle f_y\rangle$ vanishes on the axis by symmetry. The
     standard deviations come from $\delta\Q$ in the Lyapunov solution behind
     \cref{fig:variance}.}
   \label{fig:force-axis}
@@ -3954,8 +3984,8 @@ fluctuations are anchored there, $\delta\Q=0$.
   \centering
   \includegraphics[width=0.85\linewidth]{f2_high.png}
   \caption{Total variance of the fluctuating force,
-    $\la|\delta\bs f|^2\ra=\la(\partial_\beta\delta Q_{x\beta})^2\ra
-    +\la(\partial_\beta\delta Q_{y\beta})^2\ra$, in $\micron^{-2}$, from the same solution
+    $\langle|\delta\bs f|^2\rangle=\langle(\partial_\beta\delta Q_{x\beta})^2\rangle
+    +\langle(\partial_\beta\delta Q_{y\beta})^2\rangle$, in $\micron^{-2}$, from the same solution
     as \cref{fig:force-axis}. On the ring around the core the $x$ component carries most of
     the variance, so there the force fluctuates mostly along the axis of the defect.}
   \label{fig:force-map}
