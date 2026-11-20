@@ -1,5 +1,5 @@
 \documentclass[aps,pre,reprint,superscriptaddress,longbibliography,nofootinbib
-,draft
+% ,draft
 ]{revtex4-2}
 
 \usepackage{graphicx}
@@ -107,7 +107,7 @@ layering rate is proportional to the probability that the pressure exceeds it. P
 fluctuation-dissipation theorem does not fix that noise. We derive it instead by
 coarse-graining self-propelled rods that reverse their direction of motion, and we keep
 the noise through Dean's equation. As a result, the reversals set the active stress and
-the noise amplitude together. The pressure fluctuates more strongly close to a $+1/2$ defect, which enhances the layering rate there. The enhancement
+the noise amplitude together. The pressure fluctuates more strongly close to a $+1/2$ defect, which makes pressures above the critical pressure more likely there and so enhances the layering rate. The enhancement
 peaks off the defect core and, once the stiffness of the monolayer against compression is
 fitted, matches
 the measured one.
@@ -202,19 +202,17 @@ the layers at $+1/2$ defects.
 Copenhagen \textit{et al.}~explained the preference for $+1/2$ defects with an active
 nematic model in
 which the friction with the substrate is weaker along the cells than across them
-\cite{copenhagen2021}. In this model the active flow around a $+1/2$ defect runs along its
-axis, from the tail through the core toward the head (\cref{fig:defects-layering}(a)). The
-cells enter at the tail, where they lie along the flow, and leave at the head, where they
-lie across it and feel a stronger friction, so the inflow toward the core is stronger than
-the outflow. The model assumes that cells are readily extruded, so that the net inflow
-becomes a new layer. The measured flows~\cite{copenhagen2021,han2025local} also
+\cite{copenhagen2021}. 
+This friction anisotropy creates a net influx of cells around the defect. It was assumed that cells were readily extruded, so this net influx was interpreted as a new layer formation.
+The measured flows~\cite{copenhagen2021,han2025local} also
 converge at $+1/2$ defects, but a converging
 flow is what layer formation itself requires, since the cells that leave the monolayer must
 be replaced \cite{han2025local}. The measured flows therefore cannot tell whether the inflow
-causes the layers or follows from them. Moreover, extrusion has an energy cost, and the mean
-pressure at a defect is of the order of
-the active stress, three to four orders of magnitude below the pressure needed for an
-extruded cell to grow into a new layer (\cref{sec:nucleation-1} and \cref{app:parameters-choice}).
+causes the layers or follows from them. 
+% Moreover, extrusion has an energy cost, and the mean
+% pressure at a defect is of the order of
+% the active stress, three to four orders of magnitude below the pressure needed for an
+% extruded cell to grow into a new layer (\cref{sec:nucleation-1} and \cref{app:parameters-choice}).
 
 The stress in these monolayers, however, fluctuates strongly. The divergence of this stress
 is the traction that the cells exert on the substrate. Han \textit{et al.}~measured this
@@ -224,9 +222,9 @@ aligned regions away from defects, where the mean traction nearly vanishes. Han 
 al.}~attributed these fluctuations
 to local polar order, whose magnitude the cells tune through their reversal rate, and found
 them stronger at $+1/2$ than at $-1/2$ defects. They proposed that the fluctuating polar
-forces build up local pressure, which can trigger new layers, and noted that active nematic
-theory, which explains the mean flows, must be extended to capture these fluctuations and
-the stochasticity of layer formation. Here we provide such an extension. We propose that layers form
+forces build up local pressure, which can trigger new layers.
+In this work, we extend the active nematic theory to capture these fluctuations and the stochasticity of layer formation.
+We propose that layers form
 during large, and hence rare, pressure fluctuations that originate in the self-propulsion and reversals of single cells.
 % : the mean pressure stays of the order of the active stress, whereas the
 % fluctuations of the pressure are much larger,
@@ -234,19 +232,28 @@ during large, and hence rare, pressure fluctuations that originate in the self-p
 % cell (\cref{sec:nucleation-2}). We compute the statistics of these fluctuations around a
 % $+1/2$
 % defect.
-We treat layer formation as a nucleation event. In classical nucleation theory, fluctuations would randomly extrude patches of cells, but a patch grows only if its area is greater than a critical area set by the energy barrier~\cite{debenedetti2020metastable}.
-In our system, fluctuations affect the energy barrier too: a larger pressure decreases the critical area of the patch (\cref{sec:nucleation-1}). Fluctuations make higher pressures accessible, and thus make it more likely that a new layer grows.
-% SW-Q(P1,M1) [run 11]: Your new nucleation paragraph, "fluctuations affect the energy barrier too": the test reader (severity 2) cannot tell whether the pressure fluctuations cross the barrier, lower it, or both. a) "In our system, the fluctuations of the pressure also change the barrier itself: a larger pressure decreases the critical area ..."; b) keep.
-% SW-A: I want to phrase this as there is actifity in the system, which appears in two processes: (1) randomly extruding the cells (2) changing the energy barrier and decreasing the critical area. I think later I write this more cleanly. Here I just need a concise statement.
+
+In the experiments, it is seen that patches of cells are frequently extruded, but most of them shrink back to the monolayer. Only few of them grow and form a new layer. 
+In the view of classical nucleation theory, fluctuations would randomly extrude patches of cells, and a patch grows only if its area is greater than a critical area set by the energy barrier~\cite{debenedetti2020metastable}.
+Therefore, we treat layer formation as a nucleation event.
+
+In our system, however, the energy cost of a patch depends on the pressure in the monolayer: a larger pressure decreases the critical area of the patch (\cref{sec:nucleation-1}). Therefore, at regions of high pressure nucleation rate is increased.
+
+So we model the layering in terms of two processes:
+a stochastic evolution of pressure at long time-scales and long length-scales, and layer formation as a nucleation event at short time-scales and short length-scales. Thus, the pressure as a slow variable and uniform over the length-scales at which nucleation process is considered.
+Thus, the layering rate in space and time depends on the instantaneous pressure at that position and time.
+This clear time- and length-scale separation is a model simplification, because the layering rate changes over the length-scales comparable to the cell size (\cref{fig:defects-layering}(c)). 
+
+
 
 A defect can thus favor layers through the statistics of the pressure around it. We therefore compute the distribution of the pressure fluctuations around a defect.
 This requires a fluctuating version of the active nematic equations, which contain a noise term.
-In equilibrium, the fluctuation-dissipation theorem fixes that noise by
-tying it to the dissipative terms in the equations of motion \cite{kubo1966fluctuation}. An active nematic
-is out of equilibrium, so the theorem does not apply, and phenomenological theories add the noise
-to the continuum equations by hand, with a free amplitude and a chosen tensor structure
-\cite{ramaswamy2003active}. We therefore derive the
-noise from the dynamics of the cells. 
+In equilibrium, the fluctuation-dissipation theorem (FDT) fixes that noise by
+tying it to the dissipative terms in the equations of motion \cite{kubo1966fluctuation}. Even tough an active nematic
+is out of equilibrium and the theorem does not apply, phenomenological theories add the noise
+to the continuum equations using the FDT, with a free amplitude and a chosen tensor structure
+\cite{ramaswamy2003active}. We derive the
+noise systemmatically from the dynamics of the cells. 
 
 Kinetic theories derive continuum equations of
 active matter from particle models, including self-propelled rods that reverse, but
@@ -277,20 +284,18 @@ coarse-graining.
   $\p(\theta_i)$ the unit vector along the axis, and $k_i$ a sign that flips each time the
   rod reverses, at rate $\frev$. It feels the force $\F_i$ and the torque $\Gamma_i$ of
   its neighbors (light blue); $\F^\mathrm{s}_i=-(\xi_0/\rho_0)\dot\r_i$ is the
-  friction force from the substrate, with $\xi_0/\rho_0$ the translational friction
-  coefficient of a rod, \cref{eq:model}.}
+  friction force from the substrate, with $\xi_0$ the friction coefficient per unit area,
+  \cref{eq:model}.}
   \label{fig:model-micro}
 \end{figure}
 % SW-TODO(FIG9,FIG4): printed 5.5 cm wide (0.65 linewidth, scale 0.96); labels pass (~10 pt). Neighbor rods: outlines ~0.3-0.5 pt and a fill (#EBF3F8) barely darker than the white gaps, so the neighbors the caption names may fade in print: use outlines >= 1 pt or a darker fill; the theta_i arc ends on the dashed rod axis but starts from no drawn reference line, close to a red nematic-axis line, so theta_i can be read as the angle to the nematic axis rather than to the x axis of p(theta)=(cos theta, sin theta): add a short x-direction reference line at the rod's center (source: Illustrator file main.pdf p.1)
 % SW-TODO(FIG8,FIG4): relabel the black friction arrow as F^s_i (the caption now defines F^s_i = -(xi_0/rho_0) r_i-dot); you said you will fix the picture
-% SW-Q(F9) [run 11]: Fig. 3 caption: both readers (severity 2, again in the test-read) cannot place xi_0 and rho_0 separately ("why is a single rod friction written as a ratio with a density?"). a) add "with rho_0 the mean number density of rods and xi_0 the friction coefficient per unit area" (please confirm the meanings); b) keep.
-% SW-A: yes, instead of explaining the ratio, just explain the xi_0 as friction coefficient per unit area.
 
 
 The result is a pair of stochastic equations for the density and the nematic order
 parameter. Self-propulsion and reversals together drive an extensile active stress. The active stress
 coefficient grows with the distance a cell glides between reversals, and the same
-coefficient sets the amplitude of the density noise. Neither can therefore be tuned
+coefficient sets the amplitude of the noise. Neither can therefore be tuned
 without the other. The coarse-graining also fixes
 how this noise depends on the local nematic order.
 Fluctuating cell forces are also known to produce extensile stress
@@ -299,10 +304,10 @@ Banerjee \textit{et al.}~\cite{banerjee2026active} derived the active stress in 
 form as ours.
 
 Solved around a $+1/2$ defect, these equations give a density variance, and hence, through
-the stiffness of the monolayer, a pressure variance. 
-So the fluctuations reach pressure to $\pcrit$.
+the stiffness of the monolayer\footnote{or through equation of state}, a pressure variance. 
 The variance is largest just
 off the core, at the head of the defect, on the side where the director bends around it (\cref{fig:defects-layering}(a)). 
+A larger variance makes high pressures more likely and so raises the layering rate (\cref{sec:nucleation-1}).
 In unpublished observations, the authors of Refs.~\cite{copenhagen2021,han2025local} also
 find that layering starts more often at the head of the defect (private communication),
 as in the example of \cref{fig:defects-layering}(b). 
@@ -312,8 +317,6 @@ profile around the defect, but there is no quantitative measurement of it.
 Fluctuations of
 microscopic origin can thus account for where layers form, although the calculation
 does not exclude other mechanisms.
-% SW-Q(G8,M1) [run 11]: Both readers (abstract and this paragraph, severity 2) expect to learn whether the fluctuations actually reach p_crit, three to four orders above the mean pressure; the Introduction now says only where layers form. a) restore your commented-out clause in the Han paragraph ("the mean pressure stays of the order of the active stress, whereas the fluctuations of the pressure are much larger, so that during such a fluctuation the pressure can exceed the pressure needed ..."); b) keep as is.
-% SW-A: I wrote something short, polish it and in the abstract too. The commented text had too much detail.
 
 This paper is organized as follows. The next section describes layer formation as
 nucleation, which reduces the
@@ -396,62 +399,64 @@ lowers its energy by growing, a smaller one by shrinking.
 
 
 We now have the form of the energy barrier.
-In classical nucleation theory, the probability of randomly extruding a patch of area $A$ is given by the Boltzmann factor $\ee^{-\Delta E(A)/E_0}$, where $E_0$ is the characteristic energy of the fluctuations. Accordingly, the rate of layer formation is proportional to $\ee^{-\Delta E(A^*)/E_0}$~\cite{debenedetti2020metastable}.
-For thermal fluctuations, for example, $E_0=\kB T$, with $\kB$ the Boltzmann constant.
-However, self-propelled bacteria are out of thermal equilibrium, so $E_0$ is related to the activity of the system.
-Additionally, a single cell can also be extruded by substrate roughness or bending of the cell body, and in our model the energy scale $E_0$ represents all these processes.
-Since $\Delta E(A)$ grows with the patch area below the critical nucleus, the rate of extrusion falls steeply with the size of the patch.
+In classical nucleation theory, the probability of randomly extruding a patch of area $A$ is given by the Boltzmann factor $\ee^{-\Delta E(A)/E_0}$, where $E_0$ is the characteristic energy of the fluctuations. Accordingly, the rate of layer formation is proportional to $\ee^{-\Delta E(A^*)/E_0}$, where $\Delta E(A^*)$ is the height of the barrier~\cite{debenedetti2020metastable}.
+For thermal fluctuations, for example, $E_0=\kB T$, with $\kB$ the Boltzmann constant. But, self-propelled bacteria are far from equilibrium, and $E_0$ would corresponds to the active fluctuations in the monolayer. 
 
 
-In the experiments, new layers continuously appear and disappear~\cite{copenhagen2021}. We assume that single cells are extruded frequently, but that only few of them grow into a new layer.
-There is a second effect of the activity, which manifests itself in the fluctuations of the pressure in the monolayer. Increasing pressure brings the critical nucleus area $A^*$ down, making it more likely to extrude a growing patch.
-We know very little about the extrusion of single cells, and we do not model it here. We simply assume that the single-cell extrusion rate $\calJ_{\!\Acell}$ is constant and uniform over the monolayer, and that the two-cell extrusion rate $\calJ_{2\Acell}$ is much smaller.\footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$ are rate densities with units $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the average number of cells extruded in the area $\d A$ during the time interval $\d t$.} Thus, we approximate the layering rate as
+Note that the shape and the height of the energy barrier depend on the pressure in the monolayer. And the pressure has a slow stochastic dynamics over time, which we study in the following sections. Therefore, the layer formation can be viewed as a escape over a fluctuating barrier (\cref{fig:nucleation}(b)) \cite{reimann1995thermally}.
+
+
+In experiments, altough the layer formation is rare, patches of cells are extruded frequently~\cite{copenhagen2021}. One source of this out-of-plane motion is the activity of the cells. Another source could be the substrate roughness, but other sources are unclear.
+Therefore, we simplify the process by assuming that only single cells are randomly extruded in the monolayer with a constant and uniform extrusion rate $\calJ_\Acell$ and neglect the extrusion of the larger patches. This means that the layer forms when the critical area is smaller than one cell. In other words, the layering rate \footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$ are rate densities with units $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the average number of cells extruded in the area $\d A$ during the time interval $\d t$.}
 \begin{equation}
   \label{eq:layering-rate-approximation}
- \calJ \approx \calJ_{\!\Acell} \times \Prob(A^* < \Acell),
+ \calJ \approx \calJ_{\!\Acell}  \Prob(A^* < \Acell) = \calJ_{\!\Acell}  \Prob(p>\pcrit),
 \end{equation}
-where $\Prob(A^* < \Acell)$ is the probability (also the fraction of time) that the critical nucleus is smaller than one cell.
-This is a simplification, and strictly speaking, \cref{eq:layering-rate-approximation} underestimates the layer formation rate for two reasons:
-($i$) it does not account for the extrusion of larger patches that also require larger critical nucleus area to grow into a new layer, and
-($ii$) partially extruded cells have higher rate ($\calJ_{\!\Acell/2} > \calJ_{\!\Acell}$) but still accounted with the same rate as one cell extrusion\footnote{
-  $\calJ\!=\!\int_0^\infty \calJ_A \calP(A)\d A \geq \int_0^\Acell \!\calJ_A \calP(A)\d A \geq \calJ_{\!\Acell} \!\int_0^\Acell\! \calP(A)\d A$
-}.
-Accounting for these details doesn't make it more faithful representation though, because of the lack of experimental evidence; \cref{eq:layering-rate-approximation} is sufficient for our analysis. 
-% SW-Q(F8,M1) [run 11]: Your new rate argument: both readers (severity 2) expected the Boltzmann factor exp(-Delta E(A*)/E_0) of the previous paragraph to be averaged over the pressure, and stall when Eq. (layering-rate-approximation) replaces it by J_Acell x P; both also ask why one cell is the dominant pathway, since a two-cell patch has a lower threshold and its tail probability is exponentially larger. a) add one sentence saying that E_0 enters only through the ratio J_2Acell/J_Acell, and why the single-cell pathway dominates (please give the reason); b) keep, and leave it to the Discussion (Sec. VI A).
-% SW-A: I have rewritten this part. polish it
+where $\Prob(A^* < \Acell)$ is the probability that the critical nucleus is smaller than one cell.
+The condition $A^* < \Acell$ is equivalent to $p > \pcrit$, where 
+\begin{equation}
+  \label{eq:pcrit}
+  \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
+\end{equation}
+is the critical pressure.
 
-The critical nucleus area $A^*$ depends on the monolayer pressure $p$, so the condition $A^* < \Acell$ defines a critical pressure $\pcrit$, which is the pressure at which extruded cells start to grow into a new layer (\cref{fig:nucleation}(b)):
+\Cref{eq:layering-rate-approximation} is a simplification;
+having a sophisticated model for the patch extrusion process would not make it more faithful representation, because of the lack of experimental evidence. 
+In this work, we focus on the effect of the monolayer pressure on the layer formation.
+However, below we outline a better model that might be useful in understanding \cref{eq:layering-rate-approximation} and its limitations. Let $\calJ_p(\r)$ be the layering rate at point $\r$ and at pressure $p$ in the monolayer. Then the average layering rate at point $\r$ is given by
 \begin{equation}
-    \label{eq:pcrit}
-    \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
+  \label{eq:layering-rate-average}
+  \calJ(\r) = \int_{-\infty}^\infty \calJ_p(\r) \calP_\r(p) \d p,
 \end{equation}
-So the probability in \cref{eq:layering-rate-approximation} can be written as $\Prob(p>\pcrit)$.
-The rate of layer formation at a point $\r$ is therefore
-\begin{equation}
-  \label{eq:p-layer-def}
- \calJ(\r) \propto \Prob\bigl(p(\r)>\pcrit\bigr).
-\end{equation}
+where $\calP(p)$ is the probability density of the pressure at point $\r$.
+\Cref{eq:layering-rate-approximation} underestimates the layering rate for two reasons:
+($i$) it does not account for the extrusion of larger patches that also require larger critical nucleus area to grow into a new layer, and
+($ii$) partially extruded cells have higher rate but still accounted with the same rate as one cell extrusion:
+\begin{align}
+  \label{eq:underestimates}
+  \calJ \geq \int_{\pcrit}^\infty \calJ_p \calP(p) \d p \geq \calJ_{\pcrit} \int_{\pcrit}^\infty \calP(p) \d p
+\end{align}
+where in the second inequality, we use the fact that $\calJ_p$ monotonically increases with $p$. Note that $\calJ_{\pcrit} = \calJ_\Acell$ and the lower bound is same as \cref{eq:layering-rate-approximation}.
+
+
+
 
 Some remarks:
 \begin{itemize}
-  \item In \cref{eq:layering-rate-approximation} we assume that the single-cell extrusion rate $\calJ_{\!\Acell}$ is homogeneous. Near a topological defect, however, $\calJ_{\!\Acell}$ can be enhanced. Further experimental evidence will allow us to model this effect; here we neglect it as a simplification.
-  Additionally, the critical pressure does not depend on position (\cref{eq:pcrit}), so the inhomogeneity of the layering rate comes only from the inhomogeneity of the pressure fluctuations around the defect.
-  \item \Cref{eq:layering-rate-approximation} requires the pressure to change slowly compared
-with the time an extruded cell takes to grow into a layer, because escape over a fluctuating
+  \item In \cref{eq:layering-rate-average} spatial dependence comes from the pressure profile $p(\r)$ as well as the layering rate at fixed pressure, while in \cref{eq:layering-rate-approximation} we took a constant and uniform $\calJ_\Acell$.
+  Indeed, the single-cell extrusion rate $\calJ_\Acell$ can be enhanced near the topological defects.
+  Since the critical pressure does not depend on position (\cref{eq:pcrit}), the inhomogeneity of the layering rate comes only from the inhomogeneity of the pressure fluctuations around the defect.
+
+
+  \item \Cref{eq:layering-rate-approximation}
+  Slow pressure evolution copared to the process of patch extrusion is required. Escape over a fluctuating
 barrier follows the instantaneous barrier only in this slow
 limit~\cite{reimann1995thermally}; when the barrier changes fast, the crossing sees the
-average barrier instead~\cite{doering1992resonant}. We assume the slow limit and compare it
-with the time scales of the model in \cref{sec:defect-fluct}.
-  % SW-Q(M1) [run 11]: "We assume the slow limit and compare it with the time scales of the model in Sec. IV B": both readers (severity 2) then expect a confirmation and stall when Sec. IV B says the slow limit fails within the model and only real cells would satisfy it. a) "We assume the slow limit, which the model itself does not satisfy at the scale of a cell but the slowly building pressure of real cells would (Sec. IV B)."; b) keep.
-  % SW-A:
+average barrier instead~\cite{doering1992resonant}.
 
 \item
 With the parameter values of \cref{app:parameters-extrusion},
-$\pcrit=35~\kPa\tcdot\micron$. The surface tension of water dominates it. With
-$\gammaw=65~\kPa\tcdot\micron$, the measured surface tension of the growth
-medium~\cite{bourque2025active}, the second term of \cref{eq:pcrit} contributes
-$33~\kPa\tcdot\micron$. The mean pressure in the monolayer is far below $\pcrit$: at a
-defect it is of the order of the active stress, three to four orders of magnitude below
+$\pcrit=35~\kPa\cdot\micron$. The surface tension of water dominates it. The mean pressure in the monolayer is far below $\pcrit$: at a defect it is of the order of the active stress, three to four orders of magnitude below
 $\pcrit$ (\cref{app:parameters-choice}). Layers therefore form predominantly during large, and
 hence rare, fluctuations of the pressure.
 
@@ -461,13 +466,10 @@ at a point rather than averaged over a cell. Other choices would mainly shift $\
 width of the pressure fluctuations. The layering profile depends on the two only through
 their ratio (\cref{sec:nucleation-2}), so such shifts are absorbed by the one parameter that
 we fit, the stiffness of the monolayer against compression.
-% 2026-11-01, author's prompt ("forward reference I would avoid"): the bulk modulus is named in
-% words, without the forward reference to eq:free-energy-choice.
-
 \end{itemize}
 
 
-In the following sections we set up a microscopic model of the monolayer and calculate the pressure fluctuations around a defect. Then, in \cref{sec:nucleation-2}, we compute the spatial profile of the layering rate \eqref{eq:p-layer-def}.
+In the following sections we set up a microscopic model of the monolayer and calculate the pressure fluctuations around a defect. Then, in \cref{sec:nucleation-2}, we compute the spatial profile of the layering rate \eqref{eq:layering-rate-approximation}.
 
 
 
@@ -713,34 +715,29 @@ nematic term,
 The first term enforces near-incompressibility of the monolayer with a large bulk
 modulus $B$; the rest is the standard nematic free energy, with $a<0$ favoring order and $K$ penalizing distortion. The single $K$ is the one-constant approximation of the Frank free energy, in which the splay and bend moduli of the two-dimensional nematic are taken equal \cite{degennes1993physics,frank1958liquid}.
 
-The first term also sets the pressure of the monolayer. In an incompressible monolayer the
-pressure is the Lagrange multiplier of the incompressibility constraint, and at large $B$
-the first term takes over the role of that constraint. We therefore take the pressure from
-this term alone, $p=\rho\,\partial_\rho\mathfrak f_B-\mathfrak f_B$ with $\mathfrak
-f_B=\tfrac B2(\rho-1)^2$, \prompt{this explanation is weak and partially true. I think I address this in other parts and also in appendix. How can we give a short and correct explanation?}
-\begin{align}
-  \label{eq:pressure-definition}
-  p=\frac B2\left(\rho^2-1\right)\simeq B(\rho-1),
-\end{align}
-where the last form is the leading order in $\rho-1$.
-This is the two-dimensional pressure $p$ of \cref{eq:dE-of-A} (\cref{app:extrusion}).
+% The same separation is also seen in the force on the cells: with \cref{eq:force-torque-F,eq:chain-rule,eq:free-energy-choice}, the force on the cells is given by
+% \begin{align}
+%   \label{eq:force-on-cells}
+%   \F(\r,\theta) = \rho_0^{-1}\left(-B\nabla\rho + \Q\!:\!\nabla\H\right),
+% \end{align}
+% where the first term is the isotropic part from compressibility and the second term is the elastic part from the nematic free energy.
 
 Integrating \cref{eq:final-langevin} over $\theta$ and keeping the leading terms in
-$1/B$ at fixed pressure $B(\rho-1)$ (\cref{app:dean-angle}) gives a continuity equation for
+$1/B$ at fixed $B(\rho-1)$ (\cref{app:dean-angle}) gives a continuity equation for
 the density,
 \begin{align}
   \label{eq:model-rho}
   \partial_t\rho = -\nabla\cdot\Bigl[
-    \frac1{\xi_0}\bigl(-B\nabla\rho + \Q\!:\!\nabla\H + \fa\bigr)
+    \frac1{\xi_0}\bigl(-B\nabla\rho + \Q\!:\!\nabla\H + \bfa\bigr)
     + \bEta_{\rho}(\r,t)\Bigr].
 \end{align}
 The first two terms in the bracket are passive, inherited from the pair potential through
-the free energy. The term $-B\nabla\rho$ resists compression, and the elastic force
+the free energy. The isotropic part $-B\nabla\rho$ resists compression, and the nematic part
 $\Q\!:\!\nabla\H$ carries cells along gradients of the nematic force field
 $\H(\r)=-\delta F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$ \cite{degennes1993physics}. The third term is the active force density
 \begin{align}
   \label{eq:active-force}
-  f^\text{a}_\alpha(\r) = -\zeta\,\partial_\beta Q_\ab(\r)
+ \fa_\alpha(\r) = -\zeta\,\partial_\beta Q_\ab(\r)
   \quad\text{with}\quad
   \zeta = \frac{\xi_0v_0^2}{4\frev},
 \end{align}
@@ -754,8 +751,8 @@ the limit of fast reversals on which the white-noise approximation of
 %  \todo{$\Lambda/\frev=1.3$ with the parameters of App.~A.2:
 % separate the white-noise simplification (valid for large $\frev$) from the parameters taken
 % from experiment.}
-Unlike the passive terms, $\fa$ does not derive from the free energy $F$. Since
-$\fa\propto\nabla\cdot\Q$, it vanishes in a uniform nematic field and is largest where the
+Unlike the passive terms, $\bfa$ does not derive from the free energy $F$. Since
+$\bfa\propto\nabla\cdot\Q$, it vanishes in a uniform nematic field and is largest where the
 field bends fastest, at a defect core (\cref{sec:defect-steady}).
 
 The last term is the noise of the density flux,
@@ -790,13 +787,16 @@ $\partial_t\rho+\nabla\cdot\bs j=0$, as $\bs j=\rho\v$ defines the velocity fiel
 of the cells, and setting $\rho\approx1$ in the incompressible limit gives
 \begin{align}
   \label{eq:velocity}
-  \xi_0 \v = \fp + \fa + \xi_0 \bEta_{\rho}.
+  \xi_0 \v = \bfp + \bfa + \xi_0 \bEta_{\rho}.
 \end{align}
-where $\fp$ is the force denity due to interactions between cells: 
+where $\bfp$ is the force denity due to interactions between cells: 
 \begin{align}
-  \fp = \la \rho_0 \F \ra_\varrho = -B\nabla\rho + \Q\!:\!\nabla\H
+  \F(\r,\theta) = \rho_0^{-1}(&-B\nabla\rho + \hat\Q(\theta)\!:\!\nabla\H)
+  \label{eq:force-on-cells}
+  \\
+  \bfp = \la \rho_0 \F \ra_\varrho =& -B\nabla\rho + \Q\!:\!\nabla\H
 \end{align}
-where we used \cref{eq:force-torque-F,eq:chain-rule,eq:free-energy-choice} and $\la \cdot \ra_\varrho = \int \cdot \varrho_t \d\theta $ \footnote{For example, $\rho=\la 1 \ra_\varrho$ and $\Q=\langle \hat\Q \rangle_\varrho$.}. 
+where we used \cref{eq:force-torque-F,eq:chain-rule,eq:free-energy-choice} and $\la \cdot \ra_\varrho = \int \cdot\; \varrho_t \d\theta ~$\footnote{For example, $\rho=\la 1 \ra_\varrho$ and $\Q=\langle \hat\Q \rangle_\varrho$.}. 
 Thus, the friction force density $\xi_0\v$ on the cells is balanced by the passive force, the active
 force and the noise. 
 Moreover, the passive force can be written as the divergence of a stress.
@@ -844,14 +844,12 @@ solved for in \cref{sec:defect-steady}.
 % here, before the noises; the drop of the grad-H terms, the force balance and the summary
 % form the new subsection sec:model-elastic. The relaxational/transport paragraph went into
 % the H^a paragraph above and the summary; the Onsager sentence was removed (his prompt).
-The passive terms in the flux of $\Q$ have the same origin as those of \cref{eq:model-rho}.
-By \cref{eq:chain-rule}, the interaction term of \cref{eq:final-langevin} moves a rod of
-orientation $\theta$ with the velocity $\xi_0^{-1}[-B\nabla\rho+\hat\Q(\theta)\!:\!\nabla\H]$.
-Its first part comes from the pressure gradient, which pushes every rod alike, and its second
-part from the elastic force, which depends on the orientation of the rod. Summed over the
-rods, this velocity gives the passive flux of the density in \cref{eq:model-rho}, and weighted
-with $\hat\Q$ it gives the passive flux of $\Q$ in \cref{eq:model-Q}. The pressure gradient
-thus carries the alignment of the rods through $\Q B\nabla\rho$, and the elastic force
+The passive terms in the flux of $\Q$ have the same origin as those of \cref{eq:model-rho}:
+the force \cref{eq:force-on-cells} moves a rod of orientation $\theta$ with the velocity
+$\rho_0\F(\r,\theta)/\xi_0$ (\cref{eq:langevin-position}). Averaged over angle, this velocity gives the
+passive flux $\bfp/\xi_0$ of the density, and weighted with $\hat\Q(\theta)$ it gives the
+passive flux of $\Q$. 
+The diffusive flux thus carries the alignment of the rods through $\Q B\nabla\rho$, and the nematic part of the force 
 carries it through $\nabla\H$.
 
 The two noises of \cref{eq:model-Q} enter differently. $\bEta^\Q$ is a flux, the
@@ -896,29 +894,19 @@ the rate $2\frev$, and splay and bend of the director drive it. In the white-noi
 $\bs P$ follows $\rho$ and $\Q$ instantaneously, and eliminating it gives back
 \cref{eq:model-rho,eq:model-Q}. The mean of $\bs P$ contains the polarity
 $\bs P_Q=-(v_0/4\frev)\nabla\cdot\Q$ that splay and bend induce, and the active force is the
-friction force of this polarity, $\fa=\xi_0v_0\bs P_Q$. The fluctuation of $\bs P$ about its
+friction force of this polarity, $\bfa=\xi_0v_0\bs P_Q$. The fluctuation of $\bs P$ about its
 mean gives the density noise, $\bEta_\rho=v_0(\bs P-\la\bs P\ra)$.
 
-\subsection{Dropping the elastic force}
+\subsection{Dropping the nematic part of the force}
 \label{sec:model-elastic}
-% 2026-10-23c, his prompt: the subsection now opens with the drop as a simplification (the
-% nematic part of the force, both grad-H terms consistently), then the closure that forces it;
-% his \unclear on the exact moments answered by the covariance argument; force balance moved
-% back to sec:model-closure (his prompt).
-% 2026-10-26, his prompt ("too bad, very hard to read") and \unclear on the passive velocity:
-% rewritten from the velocity of a rod of sec:model-closure; the elastic force is dropped from
-% that velocity, so both grad-H terms go at once.
-% \todo{rewiew this paragraph}
-With the elastic force, the lowest-order closure makes \cref{eq:model-rho,eq:model-Q} ill
+
+With the nematic part $\hat\Q(\theta)\!:\!\nabla\H$ of the force on a rod,
+\cref{eq:force-on-cells}, the lowest-order closure makes \cref{eq:model-rho,eq:model-Q} ill
 posed: in \cref{app:closure} we show that they become antidiffusive wherever the nematic
-order is strong, $S>1/\sqrt2$. To resolve this consistently, we drop the elastic part of
-the force on a rod. By \cref{eq:langevin-position,eq:force-torque-F,eq:chain-rule,eq:free-energy-choice},
-this force is $\F_i = \F(\r_i,\theta_i) =\rho_0^{-1} \bigl(- B \nabla\rho +
-\hat\Q(\theta_i)\!:\!\nabla\H\bigr)$, and its second, elastic part gives the $\nabla\H$
-terms of the passive fluxes in both equations (\cref{sec:model-closure}). Dropping it
-therefore removes them at once: $\Q\!:\!\nabla\H$ from the flux of the density and $\nabla\H$
-from the flux of $\Q$. The pressure becomes the only passive stress, and the force balance
-\cref{eq:velocity} loses its elastic term.
+order is strong, $S>1/\sqrt2$. To resolve this consistently, we drop this part, which
+removes both $\nabla\H$ terms of the passive fluxes at once (\cref{sec:model-closure}):
+$\Q\!:\!\nabla\H$ from the flux of the density and $\nabla\H$ from the flux of $\Q$. The
+passive force density then reduces to its isotropic part, $\bfp=-B\nabla\rho$.
 
 Both $\nabla\H$ terms are usually dropped in
 continuum models of dry active
@@ -937,11 +925,11 @@ the simplification on us.
 \par
 
 \Cref{eq:model-rho,eq:model-Q}, without their $\nabla\H$ terms, are the fluctuating active
-nematic equations this paper solves. Activity enters them in three places: the force $\fa$,
+nematic equations this paper solves. Activity enters them in three places: the force $\bfa$,
 the amplitude of the reversal noises $\bEta_\rho$ and $\bEta^\Q$, and the renormalization of
 the nematic force field $\Ha$ in \cref{eq:H-active}. The transport terms leave the shape of a
 defect, which $\Ha$ sets, almost unchanged, but they couple the density and the nematic field
-in both directions, through $\fa\propto\nabla\cdot\Q$ in one equation and through
+in both directions, through $\bfa\propto\nabla\cdot\Q$ in one equation and through
 $\Q B\nabla\rho$ in the other. This coupling sets a $+1/2$ defect in motion
 (\cref{sec:defect-steady}).
 
@@ -949,6 +937,55 @@ Everything that follows comes from solving \cref{eq:model-rho,eq:model-Q} at a $
 defect, with the parameters collected in \cref{app:parameters}.
 
 
+
+\subsection{Passive stress and pressure}
+\label{sec:pressure}
+
+The layering rate of \cref{sec:nucleation-1} depends on the pressure $p$ in the monolayer,
+which we now define through the free energy. By \cref{eq:force-torque-F,eq:chain-rule}, the
+passive force density is $\bfp=-\rho\nabla\mu_\rho-\Q\!:\!\nabla\bmu_\Q$, with the chemical
+potentials $\mu_\rho=\delta F/\delta\rho=\partial\mathfrak f/\partial\rho$ and
+$\bmu_\Q=\delta F/\delta\Q=-\H$; at $\rho\simeq1$ this is the sum of \cref{eq:force-on-cells} over the rods. Expanding
+$\partial_\alpha\mathfrak f$ in the derivatives of $\rho$, $\Q$ and $\partial_\r\Q$ turns this
+force density into the divergence of a stress, $\bfp=\nabla\cdot\bsigma$, through the Gibbs--Duhem
+relation~\cite{callen1985thermodynamics}
+\begin{align}
+  \label{eq:gibbs-duhem}
+  \rho\,\partial_\alpha\mu_\rho+\Q\!:\!\partial_\alpha\bmu_\Q &= -\partial_\beta\sigma_{\alpha\beta},
+  \nonumber\\
+  \sigma_{\alpha\beta} &= -\bigl(\rho\mu_\rho+\Q\!:\!\bmu_\Q-\mathfrak f\bigr)\,\delta_{\alpha\beta}
+  \nonumber\\
+  &\quad-\partial_\alpha\Q\!:\!\frac{\partial\mathfrak f}{\partial(\partial_\beta\Q)} .
+\end{align}
+
+The free energy density \cref{eq:free-energy-choice} is the sum of the compressibility
+penalty $\mathfrak f_B(\rho)=\tfrac B2(\rho-1)^2$ and a nematic part
+$\mathfrak f_\rn(\Q,\partial_\r\Q)$. Since $\mu_\rho$ depends on $\mathfrak f_B$ alone and
+$\bmu_\Q$ on $\mathfrak f_\rn$ alone, the stress splits into an isotropic and a nematic part,
+\begin{align}
+  \bsigma &= -p\,\I+\bsigma^\rn,
+  \qquad p=\rho\mu_\rho-\mathfrak f_B,
+  \nonumber\\
+  \sigma^\rn_{\alpha\beta} &= -\bigl(\Q\!:\!\bmu_\Q-\mathfrak f_\rn\bigr)\,\delta_{\alpha\beta}
+  -K\,\partial_\alpha\Q\!:\!\partial_\beta\Q ,
+\end{align}
+and \cref{eq:gibbs-duhem} splits into one relation for each part. The first,
+$\rho\nabla\mu_\rho=\nabla p$, is the Gibbs--Duhem relation of a simple
+fluid~\cite{callen1985thermodynamics}. In the second, $\Q\!:\!\nabla\bmu_\Q=-\nabla\cdot\bsigma^\rn$,
+the nematic stress $\bsigma^\rn$ is the sum of an isotropic nematic pressure and the
+anisotropic Ericksen stress~\cite{degennes1993physics,doostmohammadi2018active}. Since
+$\bmu_\Q=-\H$, its divergence is the nematic part of the passive force,
+$\nabla\cdot\bsigma^\rn=\Q\!:\!\nabla\H$.
+
+Dropping the nematic part of the force (\cref{sec:model-elastic}) drops $\bsigma^\rn$ and
+leaves $-p\,\I$ as the passive stress, so that $\bfp=-\nabla p$. With $\mathfrak f_B$, the
+pressure of the monolayer is
+\begin{equation}
+  \label{eq:pressure-definition}
+  p=\frac B2\left(\rho^2-1\right)\simeq B(\rho-1),
+\end{equation}
+where the last form is the leading order in $\rho-1$ that \cref{eq:model-rho} keeps. This is
+the two-dimensional pressure $p$ of \cref{eq:dE-of-A} (\cref{app:extrusion}).
 
 % ============================================================
 \section{Fluctuations around a $+1/2$ defect}
@@ -973,7 +1010,7 @@ We first solve a simplified system: dropping the cross-coupling term in the $\Q$
 leaves a static problem:
 \begin{align}
   \label{eq:simplified-noiseless}
-  0 = \nabla\cdot\left[B\nabla\rho - \fa\right] , \qquad \Ha = 0.
+  0 = \nabla\cdot\left[B\nabla\rho - \bfa\right] , \qquad \Ha = 0.
 \end{align}
 We use polar coordinates $(r,\phi)$ centered on the core, with $\phi$ measured from the
 $+x$ axis, the symmetry axis of the defect, which points from its head to its tail
@@ -1022,13 +1059,13 @@ motion we need the active force at the defect. For the $+1/2$ defect
 \cref{eq:pade-approximation} gives
 \begin{align}
   \label{eq:active-force-defect}
-  f^\text{a}_x(r, \phi) = -\zeta \left(S'(r) +S(r)/r\right),
-  \qquad f^\text{a}_y = 0,
+ \fa_x(r, \phi) = -\zeta \left(S'(r) +S(r)/r\right),
+  \qquad\fa_y = 0,
 \end{align}
 a vector field along the defect axis with no transverse component. It points along $-x$,
 toward the head of the defect (\cref{fig:defects-layering}(a)). The active force moves
 the cells, not the defect. The cells build up a density gradient until the flux driven by
-the gradient cancels the active flux, $B\nabla\rho\simeq\fa$ (cf.~\cref{eq:velocity}). Within the closure of
+the gradient cancels the active flux, $B\nabla\rho\simeq\bfa$ (cf.~\cref{eq:velocity}). Within the closure of
 \cref{sec:model-closure}, however, the nematic order couples to the density gradient and not
 to the active force. The cross-coupling term of \cref{eq:model-Q} carries it with the
 velocity $-B\nabla\rho/\xi_0$, against the active force, so the defect moves along $+x$,
@@ -1447,7 +1484,7 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 % comparison with experiment from the former sec:nucleation-results
 % (dean.tex 1392-1487). Former fig:match is panel (c) of fig:defects-layering.
 % ============================================================
-\Cref{sec:nucleation-1} reduced the layering rate \eqref{eq:p-layer-def} to the probability that
+\Cref{sec:nucleation-1} reduced the layering rate \eqref{eq:layering-rate-approximation} to the probability that
 the pressure at a point exceeds the critical pressure $\pcrit$, and \cref{sec:model,sec:defect}
 gave the variance of the density around a $+1/2$ defect (\cref{sec:defect-fluct}). We now turn
 this variance into the statistics of the pressure, compute the layering rate and compare its
@@ -1467,8 +1504,11 @@ the second expression its far-field value, from the isotropic pedestal
 As we argued for the average density, in the large-$B$ limit the mean pressure is $\la p(\r) \ra \ll \sigma_p(\r)$. We therefore set it to zero.%
 \footnote{Far in the tail of the distribution, the mean shifts the exponent by
 $\pcrit|\la p\ra|/\sigma_{p,\infty}^2\lesssim0.14$, which changes the probability by less
-than $15\%$, far less than the modulation of the variance does.}
-The probability in \cref{eq:p-layer-def} is then a Gaussian
+than $15\%$, far less than the modulation of the variance does. The nematic stresses dropped
+in \cref{sec:pressure} are of the same order as $\la p\ra$: on the Pad\'e profile
+\cref{eq:pade-approximation}, with the bare $a$, $b$ and $K$ (\cref{app:parameters}), every
+component stays below about $6~\Pa\tcdot\micron$.}
+The probability in \cref{eq:layering-rate-approximation} is then a Gaussian
 tail, and the layering rate is
 \begin{align}
     \label{eq:p-layer}
@@ -1656,14 +1696,14 @@ The first is the lowest-order closure of the angular moments in the field equati
 inaccurate where the nematic order is strong, away from the defect core (\cref{app:closure}),
 and the higher-order terms it drops reverse the direction in which the defect drifts
 (\cref{sec:defect-steady}), on which the head--tail asymmetry of the variance depends
-(\cref{sec:defect-fluct}). The closure also requires us to drop the elastic force that moves
-the cells, so that the pressure is the only passive stress (\cref{sec:model-elastic}). This
+(\cref{sec:defect-fluct}). The closure also requires us to drop the nematic part of the force
+that moves the cells, so that the pressure is the only passive stress (\cref{sec:model-elastic,sec:pressure}). This
 breaks the Onsager symmetry of the passive transport: the pressure-driven flow still carries
 the alignment of the cells, but gradients of the nematic force field no longer move the
 cells. Despite the broken symmetry, the model stays consistent: since it is active, its free
 energy need not decrease in time, and since the passive transport has no noise of its own,
-no fluctuation--dissipation relation ties it to the noise. The equations without the elastic
-force also remain linearly stable in a uniform nematic state (\cref{app:closure}).
+no fluctuation--dissipation relation ties it to the noise. The equations without the nematic
+part of the force also remain linearly stable in a uniform nematic state (\cref{app:closure}).
 
 Like the closure, the white-noise limit of the reversals serves to close the theory on the
 density and the nematic order (\cref{sec:model-micro}), and the dichotomous noise behind it
@@ -2088,7 +2128,7 @@ cell area and the pressure taken at a point, it is absorbed by the fit of $B$.
 In this appendix we obtain Dean's equation for
 the joint density of positions and orientations, then integrate out the orientation to
 reach the field equations for $\rho$ and $\Q$ of \cref{sec:model-coarse,sec:model-closure},
-identify the pressure and the passive stress they contain, and finally explain why we work
+and finally explain why we work
 with the unnormalized order parameter.
 
 \subsection{Derivation of Dean's equation}
@@ -2295,7 +2335,7 @@ Replacing $\bs\chi$ by $\sqrt{\varrho_t}\,\p\,k$ gives \cref{eq:eta-rho-def}. Wi
 \cref{eq:free-energy-choice}, the first term of \cref{eq:rho-full},
 $\rho\nabla(\delta F/\delta\rho)=B\rho\nabla\rho=\nabla p$, is the gradient of the exact
 pressure \cref{eq:pressure-definition}, and the second is $-\Q\!:\!\nabla\H$, which is
-minus the divergence of the nematic stresses (\cref{app:pressure}). The $\zeta$
+minus the divergence of the nematic stresses (\cref{sec:pressure}). The $\zeta$
 term splits into the diffusion $\zeta\nabla^2\rho/\xi_0$ and the divergence of
 the active force \cref{eq:active-force}.
 
@@ -2448,64 +2488,6 @@ ratio is $\xi_0|\u|L/B$. Our steady
 state has $|\u|=0.24~\micron/\minute$, so the ratio is $2.7\times10^{-4}$ at $L=20~\micron$, the half-width of our box
 (\cref{app:comoving}), and we drop it. 
 
-\subsection{The pressure and the passive stress}
-\label{app:pressure}
-
-
-
-
-The interaction terms of \cref{eq:rho-full} form the passive flux
-$-\xi_0^{-1}(\rho\nabla\mu_\rho+\Q\!:\!\nabla\bs\mu_Q)$, with the chemical potentials
-\begin{align}
-\mu_\rho =& \frac{\delta F}{\delta \rho}=\pd{f}{\rho}
-\\
-\bmu_\Q=&\frac{\delta F}{\delta \Q}=\pd{f}{\Q}-\partial_\beta \pd{f}{(\partial_\beta \Q)}.
-\end{align}
-where $\mathfrak f(\rho,\Q,\partial_\r\Q)$ is the free energy density.
-Writing $\partial_\alpha\mathfrak f$ with the chain rule and inserting them gives the
-Gibbs--Duhem relation~\cite{callen1985thermodynamics}, which turns the passive force density into the divergence of a
-stress,
-\begin{align}
-  \label{eq:gibbs-duhem}
-  \rho\,\partial_\alpha\mu_\rho+\Q\!:\!\partial_\alpha\bmu_\Q &= -\partial_\beta\sigma_{\alpha\beta},
-  \nonumber\\
-  \sigma_{\alpha\beta} &= -\bigl(\rho\mu_\rho+\Q\!:\!\bmu_\Q-\mathfrak f\bigr)\,\delta_{\alpha\beta}
-  \nonumber\\
-  &\quad-\partial_\alpha\Q\!:\!\frac{\partial\mathfrak f}{\partial(\partial_\beta\Q)} .
-\end{align}
-The free energy density \cref{eq:free-energy-choice} is the sum of the compression term
-$\mathfrak f_B(\rho)=\tfrac B2(\rho-1)^2$ and a nematic part $\mathfrak f_n(\Q,\partial_\r\Q)$.
-Since $\mu_\rho$ depends on $\mathfrak f_B$ alone and $\bs\mu_Q$ on $\mathfrak f_n$ alone,
-\cref{eq:gibbs-duhem} splits into one relation for each part,
-\begin{align}
-  \rho\,\partial_\alpha\mu_\rho &= \partial_\alpha p,
-  \qquad p=\rho\mu_\rho-\mathfrak f_B,
-  \nonumber\\
-  \Q\!:\!\partial_\alpha\bs\mu_Q &= -\partial_\beta\sigma^n_{\alpha\beta},
-  \nonumber\\
-  \sigma^n_{\alpha\beta} &= -\bigl(\Q\!:\!\bs\mu_Q-\mathfrak f_n\bigr)\,\delta_{\alpha\beta}
-  -K\,\partial_\alpha\Q\!:\!\partial_\beta\Q ,
-\end{align}
-and the stress of \cref{eq:gibbs-duhem} is $\bs\sigma=-p\,\I+\bs\sigma^n$. The first relation is
-the Gibbs--Duhem relation of a simple fluid~\cite{callen1985thermodynamics}, and its $p$ is
-the pressure \cref{eq:pressure-definition}. In the second, the last term of $\bs\sigma^n$ is
-$-\partial_\alpha\Q\!:\!\partial\mathfrak f_n/\partial(\partial_\beta\Q)$ for the Frank term
-of \cref{eq:free-energy-choice}. The nematic stress $\bs\sigma^n$ is thus the sum of an
-isotropic nematic pressure, whose local part is
-$\tfrac a2\Q\!:\!\Q+\tfrac{3b}4(\Q\!:\!\Q)^2$, and the anisotropic Ericksen
-stress~\cite{degennes1993physics,doostmohammadi2018active}. Since
-$\bs\mu_Q=-\H$, its divergence is the elastic force, $\nabla\cdot\bs\sigma^n=\Q\!:\!\nabla\H$,
-and the passive flux is $\xi_0^{-1}\nabla\cdot\bs\sigma$.
-
-Dropping the elastic force (\cref{sec:model-elastic,app:closure}) drops $\bs\sigma^n$ and
-leaves $-p\,\I$ as the passive stress of \cref{eq:velocity}, so the pressure that drives the
-cells is the same $p$ whose work releases the elastic energy in \cref{app:extrusion}. The
-nematic stresses are also small. On the Pad\'e profile \cref{eq:pade-approximation}, with the
-bare $a$, $b$ and $K$ of \cref{tab:field-params}, every component stays below about
-$6~\Pa\tcdot\micron$, of the order of the mean pressure. Both are far below the standard
-deviation of the pressure, $\sigma_{p,\infty}=1.7~\kPa\tcdot\micron$, which is why
-\cref{sec:nucleation-2} sets the mean pressure to zero.
-
 \subsection{Definitions of the nematic order parameter}
 \label{app:dean-normalisation}
 We use the unnormalized $\Q$ of \cref{eq:density-definition} because it is linear in
@@ -2644,15 +2626,15 @@ negative eigenvalue, which makes the stochastic equations ill defined, so
 % his prompt ("move the rest to appendix").
 The closure also decides which passive terms the closed equations can keep. The first line
 of \cref{eq:Q-full} is the transport of alignment by the force on a rod,
-\cref{eq:force-torque-F}, whose elastic part \cref{sec:model-elastic} drops. Its pressure part
-enters with the coefficient $\Q$, the same coefficient with which the elastic force
+\cref{eq:force-on-cells}, whose nematic part \cref{sec:model-elastic} drops. Its isotropic part
+enters with the coefficient $\Q$, the same coefficient with which the nematic part
 $\Q\!:\!\nabla\H$ enters the flux of the density in \cref{eq:model-rho}, so the two cross
 terms are Onsager partners.
 
 To see what the closure does to this transport, we linearize about a uniform state with
 $\rho=1$ and order $\Q_0$ of strength $S$, keeping both $\nabla\H$ terms. At large $B$ and short wavelengths the pressure builds up until its
-gradient balances the elastic force on the cells, $B\,\delta\rho\simeq\Q_0\!:\!\delta\H$,
-so the cells barely move. Their alignment is still transported: the elastic force carries
+gradient balances the nematic part of the force on the cells, $B\,\delta\rho\simeq\Q_0\!:\!\delta\H$,
+so the cells barely move. Their alignment is still transported: the nematic part carries
 it forward with the second moment $\langle\hat\Q\hat\Q\rangle_\varrho$, and the balancing
 pressure gradient carries it back with $\Q_0\Q_0$, the product of two first moments. The
 first line of \cref{eq:Q-full} becomes
@@ -2675,8 +2657,8 @@ the wavenumber $k$, so the equations are ill posed.
 
 The failure is of the same kind as that of the noise covariance in
 \cref{app:realizability}: the closure breaks the positivity of a matrix of second moments,
-here above $S=1/\sqrt2$ and there already above $S\simeq0.62$. Without the elastic force
-(\cref{sec:model-elastic}), neither the forward flux nor the balancing pressure gradient
+here above $S=1/\sqrt2$ and there already above $S\simeq0.62$. Without the nematic part of
+the force (\cref{sec:model-elastic}), neither the forward flux nor the balancing pressure gradient
 arises.
 % 2026-10-26: checked with claude_experiments/round_2026_10_26/stability_paper.py (imports
 % report_full_solution/dispersion.py, case (0,0,0,0)): max Re lambda < 0 for k = 1e-3..1e4 /um,
@@ -2727,11 +2709,11 @@ we use \cref{eq:pade-accurate} in place of \cref{eq:pade-approximation}.
 % give 3.06%). The drift estimate of app:drift was recomputed on it (u_a 0.277, u_b -0.514).
 
 With $\Q$ known, the first equation of \cref{eq:simplified-noiseless} reads
-$B\nabla^2\rho=\nabla\cdot\fa$. The active force \cref{eq:active-force-defect} points along
+$B\nabla^2\rho=\nabla\cdot\bfa$. The active force \cref{eq:active-force-defect} points along
 $x$ and depends on $r$ alone, so
-$\nabla\cdot\fa=\partial_xf^\text{a}_x=-\zeta\,(S'+S/r)'\cos\phi$. The radial factor
+$\nabla\cdot\bfa=\partial_xf^\text{a}_x=-\zeta\,(S'+S/r)'\cos\phi$. The radial factor
 $(S'+S/r)'$ equals $S''+S'/r-S/r^2$, the operator of \cref{eq:S-radial}, so
-$\nabla\cdot\fa=-\zeta\nabla^2(S\cos\phi)$ whatever the profile $S$, and the density obeys
+$\nabla\cdot\bfa=-\zeta\nabla^2(S\cos\phi)$ whatever the profile $S$, and the density obeys
 \begin{align}
   \label{eq:rho-harmonic}
   \nabla^2\Bigl[\rho+\frac{\zeta}{B}\,S(r)\cos\phi\Bigr]=0 .
@@ -2750,12 +2732,12 @@ $A=(\zeta/B)S(R)/R$, which is \cref{eq:rho-analytic}. Since $S(0)=0$ and $\cos\p
 to zero over the disk, the density at the core and the mean density are both one.
 
 Leaving the density free at the boundary, $\partial_r\rho=0$, is not consistent. This
-condition exerts no pressure gradient, so the active flux $\fa/\xi_0$ crosses the boundary, and
+condition exerts no pressure gradient, so the active flux $\bfa/\xi_0$ crosses the boundary, and
 once the cross-coupling term $(B/\xi_0)\nabla\cdot(\Q\nabla\rho)$ of \cref{eq:model-Q} breaks
 the antisymmetry of the defect, inflow and outflow no longer cancel. Cells then enter or leave
 the disk, and no steady state is reached.
 
-A no-flux boundary imposes $\nh\cdot(B\nabla\rho-\fa)=0$, that is
+A no-flux boundary imposes $\nh\cdot(B\nabla\rho-\bfa)=0$, that is
 $B\,\partial_r\rho=f^\text{a}_r$ at $r=R$, with the radial active force
 $f^\text{a}_r=-\zeta(S'+S/r)\cos\phi$. This gives $A=-(\zeta/B)S(R)/R$, and since the number
 of cells is conserved, the mean density stays one and $c=0$. Thus
@@ -2774,7 +2756,7 @@ only at order $\zeta/B$, far below the scale of its fluctuations, and
   \includegraphics[width=0.85\linewidth]{rho1d_Dirichlet_Neumann.pdf}
   \caption{Steady-state density along the defect axis, $y=0$, for two boundary conditions
     at $x=\pm20~\micron$: the reservoir, $\rho=1$ (blue, as in \cref{fig:rho1d-dirichlet}),
-    and the no-flux boundary, $\nh\cdot(B\nabla\rho-\fa)=0$ (orange). Solid: the numerical
+    and the no-flux boundary, $\nh\cdot(B\nabla\rho-\bfa)=0$ (orange). Solid: the numerical
     solution of \cref{app:comoving}. Dashed: the closed forms
     \cref{eq:rho-analytic,eq:rho-noflux}.}
   \label{fig:rho1d-dirichlet-neumann}
@@ -2812,7 +2794,7 @@ equations
     \label{eq:comoving-equations}
 \begin{align}
     0 ={}& \u\cdot\nabla\rho + \frac1{\xi_0}\nabla\cdot
-    \bigl(B\nabla\rho - \fa\bigr),
+    \bigl(B\nabla\rho - \bfa\bigr),
     \\
     0 ={}& \nabla\cdot\Bigl[\Q\Bigl(\u+\frac B{\xi_0}\nabla\rho\Bigr)\Bigr]
     + \frac4{\xir}\Ha .
@@ -2821,7 +2803,7 @@ equations
 \end{subequations}
 
 We drop the advection term $\u\cdot\nabla\rho$ of the density equation. At large $B$ the
-pressure gradient balances the active force, $B\nabla\rho\simeq\fa$, so at distance $r$ from
+pressure gradient balances the active force, $B\nabla\rho\simeq\bfa$, so at distance $r$ from
 the core the dropped term is smaller than the flux divergence by $\xi_0ur/B$. $B$ then drops out of the problem: $\Q_\ss$ and $\u$ do not
 depend on $B$, and $\rho_\ss-1\propto1/B$ (\cref{fig:rho1d-dirichlet}).
 
@@ -2938,7 +2920,7 @@ Since $\Y$ contains no density gradient, the large modulus $B$ does not suppress
 is set instead by the amplitude $g_2S^2$ of the fourth angular harmonic of the distribution
 \cref{eq:von-mises}, which is $0.66$ at $S=0.9$. Near the core $\Y$ is therefore of order
 $\zeta g_2S^2/(\xi_0\elld^2)$, the same order as the cross-coupling,
-$\zeta S^2/(\xi_0\elld^2)$, because $B\nabla\rho\simeq\fa=-\zeta\nabla\cdot\Q$
+$\zeta S^2/(\xi_0\elld^2)$, because $B\nabla\rho\simeq\bfa=-\zeta\nabla\cdot\Q$
 (\cref{sec:defect-steady}). The lowest-order closure thus drops a term as large as the one
 that moves the defect.
 
@@ -3527,13 +3509,11 @@ Ref.~\cite{copenhagen2021} observes mainly holes opening, which need additional 
   \caption{Layering rate averaged over a circle of radius $r$ about the core, from
     the analytic variance \cref{eq:total-gauss} on the order profile
     \cref{eq:pade-accurate} and
-    the Gaussian tail \cref{eq:p-layer}. Experiment: Fig.~3f of Ref.~\cite{copenhagen2021},
+    the Gaussian tail \cref{eq:p-layer}. Experiment: the $+1/2$ data of Fig.~3f of Ref.~\cite{copenhagen2021},
     with the standard errors given there. Centered on the core, the $+1/2$ curve misses the
     first measured bin, like the core-centered curve of \cref{fig:defects-layering}(c).}
   \label{fig:negative-layering}
 \end{figure}
-% SW-Q(FIG8) [run 11]: Fig. 17 caption: both readers (severity 2) cannot tell which measured points are plotted against the -1/2 curve, since the text says -1/2 defects show mainly holes. a) "Experiment: the +1/2 data of Fig. 3f of Ref. [3]"; b) the data cover both defect types: say so; c) keep.
-% SW-A: a
 
 \begin{figure*}[tbp]
   \centering
@@ -4018,7 +3998,7 @@ the anisotropic term (\cref{app:lyapunov-cutoff}). It shrinks as the grid is ref
 $N_\mathrm{int}=180$ to $200$, the peak of the solver rises from $2.39\%$ to $2.42\%$,
 toward the $2.56\%$ of \cref{eq:total-gauss} on $\Q_\ss$.
 
-The solver also gives the fluctuations of the active force $\fa=-\zeta\bs f$,
+The solver also gives the fluctuations of the active force $\bfa=-\zeta\bs f$,
 $f_\alpha=\partial_\beta Q_\ab$, which $\delta\Q$ carries as
 $\delta f_\alpha=\partial_\beta\delta Q_\ab$ and which the approximation $\delta\Q=0$ of
 \cref{sec:defect-fluct} drops. This force is not small. Its
