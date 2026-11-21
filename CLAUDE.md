@@ -15,6 +15,9 @@ In order to export an image with wolframscript, unset DISPLAY environment variab
 ## Intermediate files
 make the intermediate files in a temporary folder ./.tmp next to tex file. Move the pdf next to the tex file.
 
+## Line width
+Keep every line of running text in .tex files below 60 characters; break at a space, and refill the paragraph you edit to this width. This applies only to the text: leave the preamble (configs), headings, equations and figure environments as they are. Do not break inside \cref, \ref or \label key lists; a \cite key list may break after a comma, and inline math may break before = or after a comma at its top level.
+
 ## Highlight the changes
 
 Use \upd{...} for smaller changes or \begin{updenv}... \end{updenv} for larger blocks of text to highlight the changes.
