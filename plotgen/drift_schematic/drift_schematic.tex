@@ -1,0 +1,69 @@
+\documentclass[border=1pt]{standalone}
+\usepackage{amsmath,bm}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc}
+\definecolor{bblue}{rgb}{0.2,0.2,0.7}
+\definecolor{darkred}{rgb}{0.8,0,0}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{litelitegray}{rgb}{0.8,0.8,0.8}
+\definecolor{softgray}{rgb}{0.35,0.35,0.35}
+\definecolor{laneS}{rgb}{0.55,0.35,0.15}
+\newcommand{\plusdefect}{%
+  \begin{scope}
+    \clip (0,0) circle (2.1);
+    \foreach \c in {0.03,0.12,0.27,0.48,0.75,1.08,1.47,1.92}{%
+      \pgfmathsetmacro{\T}{2*sqrt(\c*(2.3+\c))}%
+      \draw[gray!65,line width=0.6pt] plot[domain=-\T:\T,samples=90,smooth,variable=\t]
+        ({\t*\t/(4*\c)-\c},{\t});}%
+    \draw[gray!65,line width=0.6pt] (0,0) -- (2.2,0);
+  \end{scope}%
+  \fill[black] (0,0) circle (1.6pt);}
+\pgfmathdeclarefunction{fpade}{1}{\pgfmathparse{#1*sqrt((0.34+0.07*#1*#1)/(1+0.41*#1*#1+0.07*#1*#1*#1*#1))}}
+\pgfmathdeclarefunction{factive}{1}{\pgfmathparse{(fpade(#1+0.01)-fpade(#1-0.01))/0.02+fpade(#1)/#1}}
+\pgfmathdeclarefunction{rhoaxis}{1}{\pgfmathparse{-sign(#1)*(fpade(abs(#1))-abs(#1)*fpade(20)/20)}}
+\tikzset{rod/.style={draw=#1,line width=2.6pt,line cap=round}}
+\begin{document}
+\sffamily\footnotesize
+\begin{tikzpicture}[scale=0.78]
+  % ---------------- (a) lowest-order closure
+  \node[font=\normalsize\bfseries\rmfamily] at (-2.75,4.1) {(a)};
+  \draw[litelitegray] (-2.4,2.75) -- (2.4,2.75);
+  \draw[darkred,thick] plot[domain=-2.35:2.35,samples=94,smooth]
+    (\x,{2.75+1.0*factive(abs(\x)/0.6)/1.166});
+  \node[text=darkred,anchor=west,align=left] at (1.3,3.95) {$|\bm f_{\!\text{active}}|$\\on the axis};
+  \plusdefect
+  \node[softgray,anchor=east] at (-2.15,0) {head};
+  \node[softgray,anchor=west] at (2.15,0) {tail};
+  \draw[darkred,line width=2.2pt,-{Stealth[length=3mm]}] (0.15,0.32) -- (-1.3,0.32)
+     node[above,fill=white,inner sep=1pt] {active force};
+  \draw[bblue,line width=2.2pt,-{Stealth[length=3mm]}] (-0.15,-0.32) -- (1.3,-0.32)
+     node[below,fill=white,inner sep=1pt] {diffusive flux};
+  \draw[litelitegray] (-2.4,-3.3) -- (2.4,-3.3);
+  \draw[laneS,thick] plot[domain=-2.35:2.35,samples=94,smooth]
+    (\x,{-3.3+1.3*rhoaxis(\x/0.6)});
+  \node[text=laneS,anchor=west] at (0.5,-2.65) {$\rho-1$ on the axis};
+  \draw[bblue,line width=2.2pt,-{Stealth[length=3mm]}] (-0.75,-4.75) -- (0.75,-4.75);
+  \node[align=center,anchor=north] at (0,-4.95)
+    {defect: $\mathbf Q$ convected\\ with the diffusive flux};
+  % ---------------- (b) higher-order closure
+  \begin{scope}[xshift=6.9cm]
+  \node[font=\normalsize\bfseries\rmfamily] at (-2.75,4.1) {(b)};
+  \plusdefect
+  \node[softgray,anchor=east] at (-2.15,0) {head};
+  \node[softgray,anchor=west] at (2.15,0) {tail};
+  \foreach \xx in {0.85,1.6}{
+    \draw[rod=darkred] (\xx-0.28,0) -- (\xx+0.28,0);
+    \draw[darkred,thick,{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}] (\xx-0.4,0.3) -- (\xx+0.4,0.3);}
+  \foreach \xx in {-0.85,-1.6}{
+    \draw[rod=bblue] (\xx,-0.28) -- (\xx,0.28);
+    \draw[bblue,thick,{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}] (\xx+0.25,-0.4) -- (\xx+0.25,0.4);}
+  \node[align=center,anchor=north] at (0,-2.45)
+    {$\mathbf Q$ diffuses more along the director\\than across it\\[1pt]
+     \textcolor{darkred}{tail: along the axis, into the core}\\[1pt]
+     \textcolor{bblue}{head: across the axis, sideways}};
+  \draw[darkgreen,line width=2.2pt,-{Stealth[length=3mm]}] (0.75,-4.75) -- (-0.75,-4.75);
+  \node[align=center,anchor=north] at (0,-4.95)
+    {defect: more $\mathbf Q$ enters\\ the core from the tail};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

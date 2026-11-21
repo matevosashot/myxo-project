@@ -270,13 +270,10 @@ short length scales. On the scales of nucleation, the
 pressure is then a slow variable and uniform in space, so
 the layering rate at a given position and time depends on
 the instantaneous pressure there. This separation of time
-and length scales is a rough simplification, for two
-reasons. First, the measured layering rate varies over
-distances comparable to the size of a cell
-(\cref{fig:defects-layering}(c)). Second, the extrusion of
-patches is a fast process that is not well understood.
-% SW-Q(you) [run 2]: Your Q4 answer, rewritten: "a rough simplification, for two reasons: the measured rate varies over a cell; patch extrusion is fast and not well understood". You wrote "do not have four references"; I read it as "do not add forward references" and added none. a) keep; b) also point to Sec. VI A, where the slow-pressure premise is discussed; c) shorter: one sentence without "First/Second"; other [hl: This separation of time || not well understood]
-% SW-A:
+and length scales is a simplification, because the measured
+layering rate varies over distances comparable to the size
+of a cell (\cref{fig:defects-layering}(c)) and the
+extrusion of patches is not well understood.
 
 A defect can thus favor layers through the statistics of
 the pressure around it. We therefore compute the
@@ -325,7 +322,7 @@ the same coarse-graining.
   $\p(\theta_i)$ the unit vector along the axis, and $k_i$ a sign that flips each time the
   rod reverses, at rate $\frev$. It feels the force $\F_i$ and the torque $\Gamma_i$ of
   its neighbors (light blue); $\F^\mathrm{s}_i=-(\xi_0/\rho_0)\dot\r_i$ is the
-  friction force from the substrate, with $\xi_0$ the friction coefficient per unit area and $\rho_0$ the monolayer density,
+  friction force from the substrate, with $\xi_0$ the friction coefficient per unit area and $\rho_0$ the reference density of the monolayer,
   \cref{eq:model}.}
   \label{fig:model-micro}
 \end{figure}
@@ -544,9 +541,9 @@ Some remarks:
   pressure, $\calP_\r(p)$, and through the rate
   $\calJ_p(\r)$ at fixed pressure.
   \Cref{eq:layering-rate-approximation} instead takes a
-  constant and uniform $\calJ_{\!\Acell}$, although we
-  speculate that the single-cell extrusion rate could
-  itself be enhanced near topological defects. Since the
+  constant and uniform $\calJ_{\!\Acell}$, although it is
+  possible that the single-cell extrusion rate is itself
+  enhanced near topological defects. Since the
   critical pressure does not depend on position either
   (\cref{eq:pcrit}), the layering rate of
   \cref{eq:layering-rate-approximation} varies in
@@ -619,8 +616,6 @@ reversal. Here $\xi_0/\rho_0$ and $\xir/\rho_0$
 are translational and rotational friction coefficients,
 respectively ($\rho_0$ a reference density carried along
 for later convenience),
-% SW-Q(you) [run 2]: You changed the Fig. 3 caption to "$\rho_0$ the monolayer density". Sec. III A still says "$\rho_0$ a reference density carried along for later convenience". a) same here: "$\rho_0$ the monolayer density, carried along for later convenience"; b) keep "reference density" here and in the caption say "the reference density of the monolayer"; c) keep both as they are now; other [hl: $\rho_0$ a reference density || for later convenience]
-% SW-A: and $\lambda_i$ is Gaussian white
 noise,
 $\langle\lambda_i(t)\lambda_j(t')\rangle
 =2\Lambda\delta_{ij}\delta(t-t')$, with $\Lambda$ the
@@ -658,15 +653,16 @@ probability, switching at rate $\frev$,
 \end{equation}
 This models the reversals of \textit{Myxococcus xanthus}
 gliding motility \cite{blackhart1985frizzy,guzzo2018gated}.
-At time scales long compared with $\frev^{-1}$, we
-approximate $k_i$ by Gaussian white noise, $\langle
+On time scales long compared with $\frev^{-1}$, $k_i$ acts
+as Gaussian white noise, $\langle
 k_i(t)k_j(t')\rangle \approx
-\frev^{-1}\delta_{ij}\delta(t-t')$. The coarse-graining of
+\frev^{-1}\delta_{ij}\delta(t-t')$, and we take this
+white-noise limit throughout: the coarse-graining of
 \cref{sec:model-coarse} uses It\^o calculus and therefore
-requires this approximation.
-Density equations for particles that switch between
-discrete states, as our rods do at each reversal, have been
-derived without taking this
+needs it.
+Density equations for particles that switch
+between discrete states, as our rods do at each reversal,
+have been derived without taking this
 limit~\cite{bressloff2024global,spinney2025dean}.
 
 The dichotomous noise also simplifies the reversals
@@ -706,8 +702,6 @@ equation for the joint density over the state space
 $(\r,\theta)$; the only simplification it relies on is the
 Gaussian white-noise limit taken in the previous
 subsection.
-% SW-Q(you) [run 2]: You asked where the paper says "approximation" instead of "simplification". I changed it here. The other places: Sec. III A "approximate $k_i$ by Gaussian white noise" and "requires this approximation"; Sec. III C "one-constant approximation" and the footnote "the white-noise approximation of Sec. III A"; Sec. IV A "the closure approximation"; Sec. IV B "Relaxing the closure approximation"; Sec. V "carry the approximations of the model"; Apps. C, E, F, H (5 more, technical). a) say "simplification" for the modeling choices (white-noise limit, closure, "approximations of the model"), keep the technical names (Padé approximation, one-constant approximation) and the appendix uses; b) replace every non-technical use, appendices included; c) only the one changed here; other [hl: the only simplification it relies on || white-noise limit]
-% SW-A:
 
 Write the single-particle density
 $\varrho^{(i)}_t(\r,\theta) =
@@ -906,8 +900,8 @@ density,
 \end{align}
 The first two terms in the bracket are passive, inherited
 from the pair potential through the free energy. The
-isotropic part $-B\nabla\rho$ resists compression, and the
-nematic part $\Q\!:\!\nabla\H$ carries cells along
+compressibility part $-B\nabla\rho$ resists compression,
+and the nematic part $\Q\!:\!\nabla\H$ carries cells along
 gradients of the nematic force field $\H(\r)=-\delta
 F/\delta\Q= -a\Q - b(\Q\!:\!\Q)\Q + K\nabla^2\Q$
 \cite{degennes1993physics}. The third term is the active
@@ -928,8 +922,8 @@ Refs.~\cite{grossmann2016mesoscale,banerjee2026active} find
 $\zeta={\xi_0v_0^2}/{(4\frev+2\Lambda)}$. This coefficient
 reduces to that of \cref{eq:active-force} when the cells
 reverse much faster than they turn, $\frev\gg\Lambda$, the
-limit of fast reversals on which the white-noise
-approximation of \cref{sec:model-micro} relies.}
+limit of fast reversals that the white-noise limit of
+\cref{sec:model-micro} assumes.}
 Unlike the passive terms, $\bfa$ does not derive from the
 free energy $F$. Since $\bfa\propto\nabla\cdot\Q$, it
 vanishes in a uniform nematic field and is largest where
@@ -1104,20 +1098,20 @@ noise, $\bEta_\rho=v_0(\bs P-\langle\bs P\rangle)$.
 \subsection{Dropping the nematic part of the force}
 \label{sec:model-elastic}
 
-With the nematic part $\hat\Q(\theta)\!:\!\nabla\H$ of the
-force on a rod, \cref{eq:force-on-cells}, the lowest-order
-closure makes \cref{eq:model-rho,eq:model-Q} ill posed: in
+With the lowest-order closure,
+\cref{eq:model-rho,eq:model-Q} are ill posed: in
 \cref{app:closure} we show that they become antidiffusive
-wherever the nematic order is strong, $S>1/\sqrt2$. This
-part of the force gives both $\nabla\H$ terms of the
-passive fluxes (\cref{sec:model-closure}),
-$\Q\!:\!\nabla\H$ in the flux of the density and
-$\nabla\H$ in the flux of $\Q$, and we drop it as a whole,
-which removes both terms at once. The passive force
-density then reduces to its isotropic part,
-$\bfp=-B\nabla\rho$.
-% SW-Q(you) [run 2]: Your Q8 answer: the force part gives both $\nabla$H terms, so it is dropped as a whole; the literature that drops them follows in the next paragraph, without saying explicitly that dropping only one would be inconsistent. a) keep; b) say outright that only one term is antidiffusive but both come from the same force; other [hl: This || which removes both terms at once]
-% SW-A:
+wherever the nematic order is strong, $S>1/\sqrt2$. The
+closure underestimates the term $\nabla\H$ in the passive
+flux of $\Q$, which carries the alignment of the rods
+forward. To keep the model simple, we drop this term. To do
+so consistently, we must also drop the term
+$\Q\!:\!\nabla\H$ in the flux of the density, because both
+terms come from the nematic part
+$\hat\Q(\theta)\!:\!\nabla\H$ of the force on a rod,
+\cref{eq:force-on-cells}. We therefore drop the nematic
+part of the force as a whole, and the passive force density
+reduces to its compressibility part, $\bfp=-B\nabla\rho$.
 
 Both $\nabla\H$ terms are usually dropped in continuum
 models of dry active
@@ -1168,8 +1162,8 @@ compressibility penalty $\mathfrak f_B(\rho)=\tfrac
 B2(\rho-1)^2$ and a nematic part $\mathfrak
 f_\rn(\Q,\partial_\r\Q)$. Since $\mu_\rho$ depends on
 $\mathfrak f_B$ alone and $\bmu_\Q$ on $\mathfrak f_\rn$
-alone, the stress splits into an isotropic and a nematic
-part,
+alone, the stress splits into a compressibility part and
+a nematic part,
 \begin{align}
   \bsigma &= -p\,\I+\bsigma^\rn,
   \qquad p=\rho\mu_\rho-\mathfrak f_B,
@@ -1182,8 +1176,6 @@ nematic pressure and the anisotropic Ericksen
 stress~\cite{degennes1993physics,doostmohammadi2018active},
 and its divergence is the nematic part of the passive
 force, $\nabla\cdot\bsigma^\rn=\Q\!:\!\nabla\H$.
-% SW-Q(you) [run 2]: Sec. III E shortened (your Q9): I removed the general Gibbs-Duhem display (eq:gibbs-duhem, not cited elsewhere) and the "simple fluid" sentence, kept the display of p and the nematic stress, and name the Ericksen stress. a) keep; b) shorter still: drop the display and give the nematic stress in words only; other [hl: Through the || divergence of a stress ;; The nematic stress || Ericksen stress]
-% SW-A:
 
 Dropping the nematic part of the force
 (\cref{sec:model-elastic}) drops $\bsigma^\rn$ and leaves
@@ -1302,26 +1294,50 @@ gradient cancels the active flux, $B\nabla\rho\simeq\bfa$
 (cf.~\cref{eq:velocity}). Within the closure of
 \cref{sec:model-closure}, however, the nematic order
 couples to the density gradient and not to the active
-force. The cross-coupling term of \cref{eq:model-Q} carries
-the nematic order with the velocity $-B\nabla\rho/\xi_0$,
-against the active force, so the defect moves along $+x$,
-toward its tail (\cref{app:comoving}).
+force. The cross-coupling term of \cref{eq:model-Q}
+convects the nematic order with the diffusive flux
+$-B\nabla\rho/\xi_0$, against the active force, so the
+defect moves along $+x$, toward its tail
+(\cref{fig:drift-schematic}(a) and \cref{app:comoving}).
 
 In experiments, $+1/2$ defects move the other way, toward
 their head (Supplementary Note of
 Ref.~\cite{copenhagen2021}). The difference comes from the
-closure approximation. Self-propulsion also transports
-nematic order: with reversals, each rod diffuses along its
-own axis and carries its alignment with it. At the tail of
-the defect the rods lie along the axis and carry their
-alignment into the core, whereas at the head they lie
-across the axis, so this transport moves the defect toward
-its head. The lowest-order closure drops it, although it is
-comparable to the cross-coupling term $QB\nabla\rho$ in
-\cref{eq:model-Q}. In \cref{app:drift}, we recover the term
-we dropped and we show that the transport outweighs the
-cross-coupling, and the defect moves toward its head as in
-experiments.
+lowest-order closure. Self-propulsion moves each rod along
+its own axis, and the reversals make this motion diffusive,
+so the rods diffuse more along their axis than across it.
+Each rod carries its alignment with it, so the nematic
+order also diffuses more along the director than across it.
+At a $+1/2$ defect, this anisotropic diffusion moves the
+defect toward its head, against the convection by the
+diffusive flux (\cref{fig:drift-schematic}(b)). The
+lowest-order closure neglects it. In \cref{app:drift}, we
+recover it with the higher-order terms of the closure and
+show that it outweighs the cross-coupling, so the defect
+moves toward its head as in experiments.
+% SW-Q(you) [run 6]: Split between text and caption of Fig. 5: the text says why the nematic order diffuses anisotropically and that this moves the defect toward its head (your Q2: now before "The lowest-order closure neglects it"); caption (b) only reads the mechanism off the figure (tail: into the core, head: sideways, so more order enters from the tail). Caption (a) still retells the first paragraph of this subsection (active force, diffusive flux, convection). a) keep; b) also cut caption (a) to the marks (red arrow, blue arrow, brown curve, bottom arrow) and leave the explanation to the text; other [hl: this anisotropic diffusion moves the || lowest-order closure neglects it]
+% SW-A:
+
+% Source: plotgen/drift_schematic/drift_schematic.tex (from slides/slides4.tex, frames m-drift and m-Y)
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\linewidth]{drift_schematic.pdf}
+  \caption{Why the closure sets the direction in which a $+1/2$ defect drifts. In both
+    panels the gray lines are the director lines of the defect, with its head on the left
+    ($-x$) and its tail on the right. \textbf{(a)} Lowest-order closure. The active force (red
+    arrow) points toward the head and pushes the cells there. The density rises at the head
+    (brown curve, \cref{eq:rho-analytic}) until the diffusive flux $-B\nabla\rho/\xi_0$ down
+    this gradient (blue arrow) balances the active force. The cross-coupling term of
+    \cref{eq:model-Q} convects the nematic order $\Q$ with the diffusive flux, so the defect
+    moves toward its tail (bottom arrow; \cref{app:comoving}). \textbf{(b)} Higher-order
+    closure. The nematic order diffuses more along the director than across it (double
+    arrows). At the tail the director lies along the axis, and the
+    order diffuses into the core; at the head it lies across the axis, and the order diffuses
+    sideways, past the core. More order thus enters the core from the tail than from the
+    head, which moves the defect toward its head (bottom arrow), against the convection of
+    \textbf{(a)} (\cref{app:drift}).}
+  \label{fig:drift-schematic}
+\end{figure}
 
 
 A drifting defect has no steady state in the laboratory
@@ -1673,16 +1689,15 @@ and those on the head side lie across the line to it and
 lower the variance there (\cref{fig:aimed-rods}(c)). On the
 static Pad\'e profile the two halves cancel, but in the
 moving defect the tail side, where the order is stronger,
-outweighs the head side. Both the head--tail asymmetry and
-the raised core thus come from the motion of the defect,
-whose direction the lowest-order closure of
-\cref{sec:model-closure} sets (\cref{sec:defect-steady}).
-Relaxing the closure approximation reverses the drift
-(\cref{app:drift}), but in the frame comoving with the
-defect we believe that it changes the modulation
-quantitatively, not qualitatively.
-% SW-Q(you) [run 2]: Your Q12 answer, here: "Relaxing the closure approximation reverses the drift (App. E 3), but in the frame comoving with the defect we believe that it changes the modulation quantitatively, not qualitatively." Sec. VI A still says the dropped terms reverse the drift "on which the head-tail asymmetry of the variance depends", which readers take as: reversed drift, reversed asymmetry. a) Sec. VI A: "... reverse the direction in which the defect drifts (Sec. IV A), which we expect to change the head-tail asymmetry of the variance only quantitatively (Sec. IV B)"; b) Sec. VI A: drop "on which the head-tail asymmetry of the variance depends"; c) keep Sec. VI A; other [hl: Relaxing the closure approximation reverses || not qualitatively ;; reverse the direction in which the defect drifts || asymmetry of the variance depends]
-% SW-A:
+outweighs the head side. The head--tail asymmetry and the
+raised core thus come from the deformation of the moving
+defect, a small correction to the static profile, on which
+the variance already peaks at the head and dips at the tail
+(dashed in \cref{fig:variance}). Keeping the higher-order
+terms of the closure reverses the drift and changes this
+deformation (\cref{app:drift}), but we believe that the
+modulation then changes only quantitatively, not
+qualitatively.
 
 
 A modulation of two to three percent is the entire
@@ -1867,16 +1882,14 @@ exponent $z_\infty^2/2$ that amplifies a modulation of a
 few percent into an enhancement of two orders of magnitude
 also makes the absolute rate so sensitive that a small
 variation in $\sigma_{p,\infty}$ or $\pcrit$ changes it by
-many orders of magnitude. Both quantities carry the
-approximations of the model: the white-noise limit of the
+many orders of magnitude. Both quantities depend on the
+simplifications of the model: the white-noise limit of the
 reversals, Gaussian statistics at the scale of a cell, and
-the idealized nucleus. We speculate, moreover, that the
-single-cell extrusion rate could itself be enhanced near
+the idealized nucleus. It is possible, moreover, that the
+single-cell extrusion rate is itself enhanced near
 topological defects, which
 \cref{eq:layering-rate-approximation} neglects; such an
 enhancement would raise the layering rate there further.
-% SW-Q(you) [run 2]: You asked whether "speculate" suits (Sec. II remark and here). It follows your earlier rule (a speculation, never a fact). It is correct English and used in physics papers, but it can sound weaker than meant. a) keep "we speculate that ... could"; b) "we hypothesize that ... could"; c) "it is possible that the single-cell extrusion rate is itself enhanced ..."; d) "we do not exclude that ... could"; other [hl: speculate that the single-cell extrusion rate could || topological ;; We speculate, moreover, that the || near]
-% SW-A:
 
 
 % Source: plotgen/variance_map/variance_map.wls, run.sh
@@ -1957,17 +1970,15 @@ moments in the field equations. It is inaccurate where the
 nematic order is strong, away from the defect core
 (\cref{app:closure}), and the higher-order terms it drops
 reverse the direction in which the defect drifts
-(\cref{sec:defect-steady}), on which the head--tail
-asymmetry of the variance depends
-(\cref{sec:defect-fluct}). The closure also requires us to
-drop the nematic part of the force on the cells, so that
-the pressure is the only passive stress
+(\cref{sec:defect-steady}). The closure also requires
+us to drop the nematic part of the force on the cells, so
+that the pressure is the only passive stress
 (\cref{sec:model-elastic,sec:pressure}). This breaks the
 Onsager symmetry of the passive transport: the
-pressure-driven flow still carries the alignment of the
-cells, but gradients of the nematic force field no longer
-move the cells. Despite the broken symmetry, the model
-stays consistent: since it is active, its free energy need
+diffusive flux still carries the alignment of the cells,
+but gradients of the nematic force field no longer move the
+cells. Despite the broken symmetry, the model stays
+consistent: since it is active, its free energy need
 not decrease in time, and since the passive transport has
 no noise of its own, no fluctuation--dissipation relation
 ties it to the noise. The equations without the nematic
@@ -2015,10 +2026,10 @@ deviation of the pressure (\cref{eq:sigma-p}): a small
 change of $\sigma_p$ or $\pcrit$ changes it by many orders
 of magnitude (\cref{sec:nucleation-2}). We therefore
 compare only the ratio of the layering rates at the defect
-and far from it with experiment, although this ratio too
-rests on the Gaussian tail of the pressure distribution.
-% SW-Q(you) [run 2]: Your Q13: I rewrote this paragraph along the last paragraph of Sec. V, kept your opening sentence and dropped "less sensitive". a) keep; b) add why the ratio is still meaningful, e.g. "it depends only on the relative modulation of the variance (Eq. (48))"; c) shorter: end after "many orders of magnitude"; other [hl: Their cost falls || pressure distribution]
-% SW-A:
+and far from it with experiment. This ratio depends only on
+the relative modulation of the variance
+(\cref{eq:R-ratio}), but it still assumes that the pressure
+is Gaussian far in its tail.
 
 \subsection{Outlook and future work}
 \label{sec:overlook-and-future-work}
@@ -2073,8 +2084,6 @@ core, but less than a $+1/2$ defect does
 absent from the model, may override this enhancement and
 open holes there instead; identifying them needs additional
 modeling, which we leave aside.
-% SW-Q(you) [run 2]: Your Q14 explanation as a sentence. a) keep; b) name the candidates if you have any in mind; c) back to the earlier "Why holes open there instead needs additional modeling, which we leave aside."; other [hl: Other factors || open holes there instead]
-% SW-A:
 
 In future work we will improve the crudest simplifications
 of \cref{sec:model-assumptions}. With the approach of
@@ -2102,8 +2111,10 @@ through the fluctuations of the pressure rather than
 through its mean, and the self-propulsion and reversals of
 single cells set those fluctuations.
 
-% SW-Q(you) [run 2]: You wrote "drop this" on the acknowledgments placeholder; I removed the whole acknowledgments environment. a) fine, I add acknowledgments later; b) restore the empty environment with the placeholder; other
-% SW-A:
+\begin{acknowledgments}
+\skel{TODO.}
+\end{acknowledgments}
+
 
 \appendix
 \crefalias{section}{appendix}
@@ -2636,7 +2647,7 @@ Integrating \cref{eq:final-langevin} over $\theta$ removes
 every $\theta$ derivative, and the self-propulsion term
 needs only $\int\!\d\theta\,\varrho_t\,p_\alpha
 p_\beta=\tfrac12(Q_\ab+\rho\,\delta_\ab)$, which follows
-from $\p\p=\tfrac12(\hat\Q+\I)$. Before any approximation,
+from $\p\p=\tfrac12(\hat\Q+\I)$. Before any closure,
 and with $\zeta=\xi_0v_0^2/(4\frev)$ of
 \cref{eq:active-force}, the density obeys
 \begin{align}
@@ -3005,11 +3016,11 @@ The closure also decides which passive terms the closed
 equations can keep. The first line of \cref{eq:Q-full} is
 the transport of alignment by the force on a rod,
 \cref{eq:force-on-cells}, whose nematic part
-\cref{sec:model-elastic} drops. Its isotropic part enters
-with the coefficient $\Q$, the same coefficient with which
-the nematic part $\Q\!:\!\nabla\H$ enters the flux of the
-density in \cref{eq:model-rho}, so the two cross terms are
-Onsager partners.
+\cref{sec:model-elastic} drops. Its compressibility part
+enters with the coefficient $\Q$, the same coefficient with
+which the nematic part $\Q\!:\!\nabla\H$ enters the flux of
+the density in \cref{eq:model-rho}, so the two cross terms
+are Onsager partners.
 
 To see what the closure does to this transport, we
 linearize about a uniform state with $\rho=1$ and order
@@ -3259,23 +3270,24 @@ of the defect also shift the active force away from
 % Source: claude_experiments/drift_closure_2026_10_09/ (run_lambda.wls: comoving solutions;
 % analyze_deformation.wls: core deformation); drift estimate:
 % claude_experiments/round_2026_10_26/solvability_accurate.py
-In one term of the $\Q$-equation, the anisotropic transport
+In one term of the $\Q$-equation, the anisotropic diffusion
 of nematic order by self-propulsion, we replace the
 lowest-order closure by the exact moments of the
 maximum-entropy distribution in \cref{eq:exact-moments},
 which \cref{app:realizability} already uses for the noise.
 With this term the defect moves along $-x$, toward its
-head, instead of toward its tail as in \cref{app:comoving}.
-This is the direction that the Supplementary Note of
-Ref.~\cite{copenhagen2021} reports, in polar coordinates
-oriented as ours.
+head, instead of toward its tail as in \cref{app:comoving}
+(\cref{fig:drift-schematic}). This is the direction that
+the Supplementary Note of Ref.~\cite{copenhagen2021}
+reports, in polar coordinates oriented as ours.
 
 With reversals, self-propulsion makes each rod diffuse
 along its own axis, with the diffusivity
 $v_0^2/(2\frev)=2\zeta/\xi_0$ of the second line of
 \cref{eq:final-langevin}, and each rod carries its
-alignment with it. In the $\Q$-equation this diffusion
-gives the third line of \cref{eq:Q-full},
+alignment with it (\cref{fig:drift-schematic}(b)). In the
+$\Q$-equation this diffusion gives the third line of
+\cref{eq:Q-full},
 $(\zeta/\xi_0)(\nabla^2Q_\ab+\partial_\mu\partial_\nu\langle\hat
 Q_\ab\hat Q_\mn\rangle_\varrho)$. The first part is
 isotropic and enters $K'$ in \cref{eq:H-active}. The second
@@ -3296,12 +3308,14 @@ add to the right-hand side of the $\Q$-equation the term
   \label{eq:drift-U-term}
   Y_\ab=\frac{\zeta}{\xi_0}\,\partial_\mu\partial_\nu\Bigl[\frac{g_2}{2\rho}\,U_{\ab \mu\nu}(\Q)\Bigr].
 \end{equation}
-We add $w\Y$ to the right-hand side of the comoving
-equation \cref{eq:comoving-equations-Q}, with a weight $w$
-that runs from $w=0$, the closure of the main text, to
-$w=1$, the exact moments in this term. Everything else,
-including the closure of all other terms and the parameters
-of \cref{tab:field-params}, stays as it is.
+This is the anisotropic diffusion of
+\cref{fig:drift-schematic}(b). We add $w\Y$ to the
+right-hand side of the comoving equation
+\cref{eq:comoving-equations-Q}, with a weight $w$ that runs
+from $w=0$, the closure of the main text, to $w=1$, the
+exact moments in this term. Everything else, including the
+closure of all other terms and the parameters of
+\cref{tab:field-params}, stays as it is.
 
 Since $\Y$ contains no density gradient, the large modulus
 $B$ does not suppress it. Its size is set instead by the
@@ -3339,8 +3353,10 @@ director lies along the axis, $Q_1>0$, and in the head,
 where the director lies across, $Q_1<0$. A positive source
 of $Q_1$ therefore shifts the zero of $\Psi$, the core,
 toward $-x$. The cross-coupling acts the other way: it
-carries $\Q$ with the velocity $-B\nabla\rho/\xi_0$, which
-points along $+x$ at the core (\cref{sec:defect-steady}).
+convects $\Q$ with the diffusive flux $-B\nabla\rho/\xi_0$,
+which points along $+x$ at the core
+(\cref{sec:defect-steady} and
+\cref{fig:drift-schematic}(a)).
 
 The drift has no closed form (\cref{app:comoving}), but the
 competition between the two transports can be estimated at
@@ -3459,9 +3475,9 @@ whereas the cross-coupling alone barely rotates it there,
 and in the opposite direction. The strength $S$ of the
 order, in contrast, stays closer to the static profile than
 at $w=0$. Because of the rotation, the static profile used
-for the variance in \cref{sec:defect-fluct} is a coarser
-approximation of the core with the exact moments than with
-the lowest-order closure. We did not compute the variance
+for the variance in \cref{sec:defect-fluct} describes the
+core less well with the exact moments than with the
+lowest-order closure. We did not compute the variance
 about the $w=1$ state.
 
 % Source: plotgen/drift_deformation/drift_deformation.wls (run r1_exact_v2 of
@@ -3963,15 +3979,12 @@ which need additional modeling
   \centering
   \includegraphics[width=0.85\linewidth]{layering_pm.pdf}
   \caption{Layering rate averaged over a circle of radius $r$ about the core of a $+1/2$ and a $-1/2$ defect, from
-    the analytic variance \cref{eq:total-gauss} on the order profile
+    the analytic variance \cref{eq:total-gauss} on the Pad\'e profile
     \cref{eq:pade-accurate} and
     the Gaussian tail \cref{eq:p-layer}. Experiment: the $+1/2$ data of Fig.~3f of Ref.~\cite{copenhagen2021},
-    with the standard errors given there. Centered on the core, the $+1/2$ curve is small at $r=0$ and lies below the
-    first measured bin, like the core-centered curve of \cref{fig:defects-layering}(c).}
+    with the standard errors given there.}
   \label{fig:negative-layering}
 \end{figure}
-% SW-Q(you) [run 2]: Fig. 17 caption (from the earlier fix): "Centered on the core, the +1/2 curve is small at r=0 and lies below the first measured bin". I took "below" from Sec. V; please check against the plot. a) correct; b) it lies above the first bin; other
-% SW-A:
 
 \begin{figure*}[tbp]
   \centering
@@ -3990,7 +4003,7 @@ which need additional modeling
 The analytic variance \cref{eq:total-gauss} neglects the
 force $-\zeta\nabla\cdot\delta\Q$ of the nematic
 fluctuations (\cref{sec:defect-fluct}). To test this
-approximation, we solve the linearized equations
+simplification, we solve the linearized equations
 \cref{eq:linearized} numerically for the equal-time
 covariance of $(\delta\rho,\delta\Q)$ on the steady
 background of \cref{app:comoving}.
@@ -4524,8 +4537,8 @@ $\Q_\ss$.
 The solver also gives the fluctuations of the active force
 $\bfa=-\zeta\bs f$, $f_\alpha=\partial_\beta Q_\ab$, which
 $\delta\Q$ carries as $\delta f_\alpha=\partial_\beta\delta
-Q_\ab$ and which the approximation $\delta\Q=0$ of
-\cref{sec:defect-fluct} drops. This force is not small. Its
+Q_\ab$ and which \cref{sec:defect-fluct} drops by setting
+$\delta\Q=0$. This force is not small. Its
 fluctuations exceed the mean force everywhere along the
 axis of the defect, a few times near the core and
 increasingly away from it, where the mean force decays and
