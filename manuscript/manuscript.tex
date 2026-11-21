@@ -81,28 +81,26 @@ preferentially at $+1/2$ topological defects of the cell
 orientation. However, the mean pressure at a defect falls
 three to four orders of magnitude short of the pressure
 needed for an extruded cell to grow into a new layer,
-whereas the stress in the monolayer fluctuates strongly. We
-therefore propose that layers form during large, and hence
-rare, pressure fluctuations, and we compute the statistics
-of these fluctuations. Treating layer formation as
-nucleation gives this threshold, the critical pressure, so
-the layering rate is proportional to the probability that
-the pressure exceeds it. The pressure fluctuations depend
-on the activity of the cells, so we systematically derive
-fluctuating active-nematic equations for the monolayer by
-coarse-graining self-propelled rods that reverse their
-direction of motion, as in the derivation of Dean's
-equation. As a result, one coefficient, which grows with
-the distance a cell glides between reversals, sets both the
-active stress and the noise amplitude, so neither can be
-tuned without the other. The pressure fluctuates more
-strongly close to a $+1/2$ defect, which makes pressures
-above the critical pressure more likely there and so
-enhances the layering rate. The enhancement peaks off the
-defect core, and we compare its profile with the measured
-layering rate.
-% SW-Q(P1,P5) [run 1]: "the stress in the monolayer fluctuates strongly": three readers asked whether stress = pressure here, and strongly relative to what. a) keep "stress" (measured traction fluctuations, std ~10x mean [Han]); b) say what is compared, e.g. "fluctuates far more than its mean"; c) leave as is; other
-% SW-A:
+whereas the stress in the monolayer fluctuates far more
+than its mean. We therefore propose that layers form during
+large, and hence rare, pressure fluctuations, and we
+compute the statistics of these fluctuations. Treating
+layer formation as nucleation gives this threshold, the
+critical pressure, so the layering rate is proportional to
+the probability that the pressure exceeds it. The pressure
+fluctuations depend on the activity of the cells, so we
+systematically derive fluctuating active-nematic equations
+for the monolayer by coarse-graining self-propelled rods
+that reverse their direction of motion, as in the
+derivation of Dean's equation. As a result, one
+coefficient, which grows with the distance a cell glides
+between reversals, sets both the active stress and the
+noise amplitude, so neither can be tuned without the other.
+The pressure fluctuates more strongly close to a $+1/2$
+defect, which makes pressures above the critical pressure
+more likely there and so enhances the layering rate. The
+enhancement peaks off the defect core, and we compare its
+profile with the measured layering rate.
 \end{abstract}
 
 \maketitle
@@ -212,14 +210,14 @@ migration of the cells \cite{copenhagen2021}. Nor does cell
 division drive them: over the one to three hours of
 imaging, the colony does not grow substantially, because at
 the temperature of the experiments the cells divide only
-about every $10~\mathrm h$ \cite{copenhagen2021}. The new
-layers form, however, about $200$ times more often near
-$+1/2$ defects than far from them
-(\cref{fig:defects-layering}(c), red), whereas holes open
-about $80$ times more often near $-1/2$ defects. Here we
-address the layers at $+1/2$ defects. Copenhagen \textit{et
-al.}~explained the preference for $+1/2$ defects with an
-active nematic model in which the friction with the
+about every $10~\mathrm h$ \cite{copenhagen2021}. Although
+they appear throughout the colony, the new layers form
+about $200$ times more often near $+1/2$ defects than far
+from them (\cref{fig:defects-layering}(c), red), whereas
+holes open about $80$ times more often near $-1/2$ defects.
+Here we address the layers at $+1/2$ defects. Copenhagen
+\textit{et al.}~explained the preference for $+1/2$ defects
+with an active nematic model in which the friction with the
 substrate is weaker along the cells than across them
 \cite{copenhagen2021}. This friction anisotropy creates a
 net inflow of cells at the defect. Cells were assumed to be
@@ -231,10 +229,6 @@ formation itself requires, since the cells that leave the
 monolayer must be replaced \cite{han2025local}. The
 measured inflow is therefore a consequence of layer
 formation, not its cause.
-% SW-Q(F8,G8) [run 1]: "The measured inflow is therefore a consequence of layer formation, not its cause": four reads (A and B) objected that 'layering requires inflow' does not exclude 'inflow also causes layering'. a) soften, e.g. "... is therefore at least partly a consequence of layer formation and cannot by itself show that the inflow causes it"; b) add the evidence that excludes inflow as the cause (cite it); c) keep; other
-% SW-A:
-% SW-Q(P7,P6) [run 1]: S1.P3.6 "The new layers form, however, about 200 times more often near +1/2 defects": what does "however" turn against? a) the global causes just excluded (colony size, cell division), e.g. "Where they form, however, is not random: the new layers form about $200$ times more often near ..."; b) "throughout the colony" in S1.P3.1, e.g. "Although they appear throughout the colony, the new layers form about $200$ times more often near ..."; c) no turn intended: delete "however"; other
-% SW-A:
 
 The stress in these monolayers, however, fluctuates
 strongly. The divergence of this stress is the traction
@@ -276,10 +270,12 @@ short length scales. On the scales of nucleation, the
 pressure is then a slow variable and uniform in space, so
 the layering rate at a given position and time depends on
 the instantaneous pressure there. This separation of time
-and length scales is a simplification of the model, because
-the layering rate changes over distances comparable to the
-size of a cell (\cref{fig:defects-layering}(c)).
-% SW-Q(P1,M1) [run 1]: "This separation of time and length scales is a simplification of the model, because the layering rate changes over distances comparable to the size of a cell": readers cannot tell whether this is a caveat (the separation is only approximate) or a justification, and then ask how rough it is. Three tested rewordings failed. a) caveat: say what the approximation costs (e.g. "... so the rate on the scale of one cell is only approximate; Sec. VI A"); b) justification: state why it is still acceptable; other
+and length scales is a rough simplification, for two
+reasons. First, the measured layering rate varies over
+distances comparable to the size of a cell
+(\cref{fig:defects-layering}(c)). Second, the extrusion of
+patches is a fast process that is not well understood.
+% SW-Q(you) [run 2]: Your Q4 answer, rewritten: "a rough simplification, for two reasons: the measured rate varies over a cell; patch extrusion is fast and not well understood". You wrote "do not have four references"; I read it as "do not add forward references" and added none. a) keep; b) also point to Sec. VI A, where the slow-pressure premise is discussed; c) shorter: one sentence without "First/Second"; other [hl: This separation of time || not well understood]
 % SW-A:
 
 A defect can thus favor layers through the statistics of
@@ -329,7 +325,7 @@ the same coarse-graining.
   $\p(\theta_i)$ the unit vector along the axis, and $k_i$ a sign that flips each time the
   rod reverses, at rate $\frev$. It feels the force $\F_i$ and the torque $\Gamma_i$ of
   its neighbors (light blue); $\F^\mathrm{s}_i=-(\xi_0/\rho_0)\dot\r_i$ is the
-  friction force from the substrate, with $\xi_0$ the friction coefficient per unit area and $\rho_0$ a reference density,
+  friction force from the substrate, with $\xi_0$ the friction coefficient per unit area and $\rho_0$ the monolayer density,
   \cref{eq:model}.}
   \label{fig:model-micro}
 \end{figure}
@@ -357,8 +353,7 @@ state of the monolayer, which relates its pressure to its
 density (\cref{sec:pressure}).} a pressure variance. The
 variance is largest just off the core, at the head of the
 defect, the side where the director bends around it
-(\cref{fig:defects-layering}(a)). In the linearized theory
-the pressure is Gaussian, so a larger variance makes
+(\cref{fig:defects-layering}(a)). A larger variance makes
 high pressures more likely and so raises the layering rate
 (\cref{sec:nucleation-1}). In unpublished observations, the
 authors of Refs.~\cite{copenhagen2021,han2025local} also
@@ -485,18 +480,14 @@ an escape over a fluctuating barrier
 In experiments, although layers form rarely, patches of
 cells are extruded frequently~\cite{copenhagen2021}. One
 source of this out-of-plane motion is the activity of the
-cells. Another could be the roughness of the substrate, but
-other sources are unclear. We therefore simplify the
+cells. Another could be the roughness of the substrate, and
+further sources are unknown. We therefore simplify the
 process: we assume that only single cells are extruded, at
 random and at a constant and uniform rate
 $\calJ_{\!\Acell}$, and we neglect the extrusion of larger
-patches. The rate $\calJ_{\!\Acell}$ thus stands in place
-of the Boltzmann factor for the probability that
-fluctuations extrude a patch. A layer then forms when the
-critical nucleus is smaller than one cell, $A^*<\Acell$,
-since the extruded cell then forms a patch larger than the
-critical nucleus, and this patch grows, so the layering
-rate is\footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$
+patches. A layer then forms when the critical nucleus is
+smaller than one cell, $A^*<\Acell$, so the layering rate
+is\footnote{The rates $\calJ_{\!\Acell}$ and $\calJ$
 are rate densities with units
 $\micron^{-2}\tcdot\minute^{-1}$. They are defined over the
 monolayer, and $\calJ_{\!\Acell}\,\d A\,\d t$ is the
@@ -513,8 +504,6 @@ equivalent to $p>\pcrit$, with the critical pressure
   \label{eq:pcrit}
   \pcrit = (\Ws-\Wc) + \sqrt{\frac{\pi h^2}{\Acell}}\,(\Wc+\gammaw).
 \end{equation}
-% SW-Q(P1,P4) [run 1]: S2.P7.3 "Another could be the roughness of the substrate, but other sources are unclear": all three reads split on 'other sources are unclear'. a) the sources and their weights are not known, which is why you then model extrusion by one rate: "Another could be the roughness of the substrate, but which sources dominate is unknown."; b) beyond activity and roughness there may be further, unidentified sources: "Another could be the roughness of the substrate, and further sources are unknown."; c) keep; other
-% SW-A:
 
 \Cref{eq:layering-rate-approximation} is a simplification,
 but a more detailed model of the extrusion of patches would
@@ -535,9 +524,9 @@ pressure at $\r$. \Cref{eq:layering-rate-approximation}
 underestimates this rate for two reasons: (\textit{i}) it
 does not account for the extrusion of larger patches, which
 grow into a new layer also when the critical nucleus is
-larger than one cell, and (\textit{ii}) it counts partially
-extruded cells, which have a higher rate, with the same
-rate as one extruded cell. Hence
+larger than one cell, and (\textit{ii}) it gives partially
+extruded cells, which are extruded more often than whole
+ones, the rate of a whole extruded cell. Hence
 \begin{align}
   \label{eq:underestimates}
   \calJ(\r) \geq \int_{\pcrit}^\infty \calJ_p(\r)\,\calP_\r(p)\,\d p
@@ -547,8 +536,6 @@ where the second inequality uses that $\calJ_p$ increases
 monotonically with $p$. Since
 $\calJ_{\pcrit}=\calJ_{\!\Acell}$, the lower bound is
 \cref{eq:layering-rate-approximation}.
-% SW-Q(P1,P4) [run 1]: Reason (ii) "it counts partially extruded cells, which have a higher rate, with the same rate as one extruded cell": all three reads asked a higher rate of what (being extruded? growing into a layer?) and how Eq. (2) counts partial cells if only whole cells are extruded. a) "(ii) it gives partially extruded cells, which are extruded more often than whole ones, the rate of a whole extruded cell"; b) say what you mean in one line; other
-% SW-A:
 
 Some remarks:
 \begin{itemize}
@@ -631,7 +618,9 @@ direction of motion along that axis and flips at each
 reversal. Here $\xi_0/\rho_0$ and $\xir/\rho_0$
 are translational and rotational friction coefficients,
 respectively ($\rho_0$ a reference density carried along
-for later convenience), and $\lambda_i$ is Gaussian white
+for later convenience),
+% SW-Q(you) [run 2]: You changed the Fig. 3 caption to "$\rho_0$ the monolayer density". Sec. III A still says "$\rho_0$ a reference density carried along for later convenience". a) same here: "$\rho_0$ the monolayer density, carried along for later convenience"; b) keep "reference density" here and in the caption say "the reference density of the monolayer"; c) keep both as they are now; other [hl: $\rho_0$ a reference density || for later convenience]
+% SW-A: and $\lambda_i$ is Gaussian white
 noise,
 $\langle\lambda_i(t)\lambda_j(t')\rangle
 =2\Lambda\delta_{ij}\delta(t-t')$, with $\Lambda$ the
@@ -714,10 +703,10 @@ density of interacting Langevin processes. Our model
 \eqref{eq:model} adds an orientation, a self-propulsion and
 a reversal noise. The same derivation then gives an exact
 equation for the joint density over the state space
-$(\r,\theta)$; the only approximation it relies on is the
+$(\r,\theta)$; the only simplification it relies on is the
 Gaussian white-noise limit taken in the previous
 subsection.
-% SW-Q(P1,M1) [run 1]: "the only approximation it relies on is the Gaussian white-noise limit" (Sec. III B ¶1): readers then meet a second assumption in ¶5 (Eq. (12) used for a smooth density) and read it as a contradiction (R26 sev 2, R36 sev 2). a) scope it: "the only approximation in the derivation itself is ..." and add in ¶5 "a second assumption"; b) mention the smooth-density assumption already here; c) keep; other
+% SW-Q(you) [run 2]: You asked where the paper says "approximation" instead of "simplification". I changed it here. The other places: Sec. III A "approximate $k_i$ by Gaussian white noise" and "requires this approximation"; Sec. III C "one-constant approximation" and the footnote "the white-noise approximation of Sec. III A"; Sec. IV A "the closure approximation"; Sec. IV B "Relaxing the closure approximation"; Sec. V "carry the approximations of the model"; Apps. C, E, F, H (5 more, technical). a) say "simplification" for the modeling choices (white-noise limit, closure, "approximations of the model"), keep the technical names (Padé approximation, one-constant approximation) and the appendix uses; b) replace every non-technical use, appendices included; c) only the one changed here; other [hl: the only simplification it relies on || white-noise limit]
 % SW-A:
 
 Write the single-particle density
@@ -896,8 +885,7 @@ nematic term,
 \end{align}
 The first term enforces near-incompressibility of the
 monolayer with a large bulk modulus $B$, the stiffness of
-the monolayer against compression and the one parameter
-that we fit (\cref{sec:nucleation-2}); the rest is the
+the monolayer against compression; the rest is the
 standard nematic free energy, with $a<0$ favoring order and
 $K$ penalizing distortion. The single $K$ is the
 one-constant approximation of the Frank free energy, in
@@ -942,9 +930,6 @@ reduces to that of \cref{eq:active-force} when the cells
 reverse much faster than they turn, $\frev\gg\Lambda$, the
 limit of fast reversals on which the white-noise
 approximation of \cref{sec:model-micro} relies.}
-%  \todo{$\Lambda/\frev=1.3$ with the parameters of App.~A.2:
-% separate the white-noise simplification (valid for large $\frev$) from the parameters taken
-% from experiment.}
 Unlike the passive terms, $\bfa$ does not derive from the
 free energy $F$. Since $\bfa\propto\nabla\cdot\Q$, it
 vanishes in a uniform nematic field and is largest where
@@ -1123,14 +1108,15 @@ With the nematic part $\hat\Q(\theta)\!:\!\nabla\H$ of the
 force on a rod, \cref{eq:force-on-cells}, the lowest-order
 closure makes \cref{eq:model-rho,eq:model-Q} ill posed: in
 \cref{app:closure} we show that they become antidiffusive
-wherever the nematic order is strong, $S>1/\sqrt2$. To
-resolve this consistently, we drop this part, which removes
-both $\nabla\H$ terms of the passive fluxes at once
-(\cref{sec:model-closure}): $\Q\!:\!\nabla\H$ from the flux
-of the density and $\nabla\H$ from the flux of $\Q$. The
-passive force density then reduces to its isotropic part,
+wherever the nematic order is strong, $S>1/\sqrt2$. This
+part of the force gives both $\nabla\H$ terms of the
+passive fluxes (\cref{sec:model-closure}),
+$\Q\!:\!\nabla\H$ in the flux of the density and
+$\nabla\H$ in the flux of $\Q$, and we drop it as a whole,
+which removes both terms at once. The passive force
+density then reduces to its isotropic part,
 $\bfp=-B\nabla\rho$.
-% SW-Q(F8,M1) [run 1]: "To resolve this consistently, we drop this part" (Sec. III D): both readers asked why dropping a physical force is the 'consistent' fix, and what it does near the defect core where H does not vanish (R27, R37 sev 2). a) say in one clause why (e.g. it removes the antidiffusive terms without touching the noise or the active terms); b) replace 'consistently' by what is meant; c) keep; other
+% SW-Q(you) [run 2]: Your Q8 answer: the force part gives both $\nabla$H terms, so it is dropped as a whole; the literature that drops them follows in the next paragraph, without saying explicitly that dropping only one would be inconsistent. a) keep; b) say outright that only one term is antidiffusive but both come from the same force; other [hl: This || which removes both terms at once]
 % SW-A:
 
 Both $\nabla\H$ terms are usually dropped in continuum
@@ -1173,46 +1159,30 @@ $\bfp=\langle\rho_0\F\rangle_\varrho
 chemical potentials $\mu_\rho=\delta
 F/\delta\rho=\partial\mathfrak f/\partial\rho$ and
 $\bmu_\Q=\delta F/\delta\Q=-\H$; at $\rho\simeq1$ it
-reduces to \cref{eq:passive-force}. Expanding
-$\partial_\alpha\mathfrak f$ in the derivatives of $\rho$,
-$\Q$ and $\partial_\r\Q$ turns this force density into the
-divergence of a stress, $\bfp=\nabla\cdot\bsigma$, through
-the Gibbs--Duhem relation~\cite{callen1985thermodynamics}
-\begin{align}
-  \label{eq:gibbs-duhem}
-  \rho\,\partial_\alpha\mu_\rho+\Q\!:\!\partial_\alpha\bmu_\Q &= -\partial_\beta\sigma_{\alpha\beta},
-  \nonumber\\
-  \sigma_{\alpha\beta} &= -\bigl(\rho\mu_\rho+\Q\!:\!\bmu_\Q-\mathfrak f\bigr)\,\delta_{\alpha\beta}
-  \nonumber\\
-  &\quad-\partial_\alpha\Q\!:\!\frac{\partial\mathfrak f}{\partial(\partial_\beta\Q)} .
-\end{align}
-
-The free energy density \cref{eq:free-energy-choice} is the
-sum of the compressibility penalty $\mathfrak
-f_B(\rho)=\tfrac B2(\rho-1)^2$ and a nematic part
-$\mathfrak f_\rn(\Q,\partial_\r\Q)$. Since $\mu_\rho$
-depends on $\mathfrak f_B$ alone and $\bmu_\Q$ on
-$\mathfrak f_\rn$ alone, the stress splits into an
-isotropic and a nematic part,
+reduces to \cref{eq:passive-force}. Through the
+Gibbs--Duhem relation~\cite{callen1985thermodynamics}, this
+force density is the divergence of a stress,
+$\bfp=\nabla\cdot\bsigma$. The free energy density
+\cref{eq:free-energy-choice} is the sum of the
+compressibility penalty $\mathfrak f_B(\rho)=\tfrac
+B2(\rho-1)^2$ and a nematic part $\mathfrak
+f_\rn(\Q,\partial_\r\Q)$. Since $\mu_\rho$ depends on
+$\mathfrak f_B$ alone and $\bmu_\Q$ on $\mathfrak f_\rn$
+alone, the stress splits into an isotropic and a nematic
+part,
 \begin{align}
   \bsigma &= -p\,\I+\bsigma^\rn,
   \qquad p=\rho\mu_\rho-\mathfrak f_B,
   \nonumber\\
   \sigma^\rn_{\alpha\beta} &= -\bigl(\Q\!:\!\bmu_\Q-\mathfrak f_\rn\bigr)\,\delta_{\alpha\beta}
-  -K\,\partial_\alpha\Q\!:\!\partial_\beta\Q ,
+  -K\,\partial_\alpha\Q\!:\!\partial_\beta\Q .
 \end{align}
-and \cref{eq:gibbs-duhem} splits into one relation for each
-part. The first, $\rho\nabla\mu_\rho=\nabla p$, is the
-Gibbs--Duhem relation of a simple
-fluid~\cite{callen1985thermodynamics}. In the second,
-$\Q\!:\!\nabla\bmu_\Q=-\nabla\cdot\bsigma^\rn$, the nematic
-stress $\bsigma^\rn$ is the sum of an isotropic nematic
-pressure and the anisotropic Ericksen
-stress~\cite{degennes1993physics,doostmohammadi2018active}.
-Since $\bmu_\Q=-\H$, its divergence is the nematic part of
-the passive force,
-$\nabla\cdot\bsigma^\rn=\Q\!:\!\nabla\H$.
-% SW-Q(G1,F3) [run 1]: Sec. III E ¶1–2 (Gibbs–Duhem, nematic pressure, Ericksen stress): readers skim it because the nematic part was already dropped in Sec. III D (R26 OFF-PATH, R35 WHY-READING sev 2, R37 OFF-PATH sev 2). a) shorten to the isotropic part p and move the nematic stress to an appendix; b) say at the start why it is shown (e.g. to identify p and the stress dropped with Sec. III D); c) keep; other
+The nematic stress $\bsigma^\rn$ is the sum of an isotropic
+nematic pressure and the anisotropic Ericksen
+stress~\cite{degennes1993physics,doostmohammadi2018active},
+and its divergence is the nematic part of the passive
+force, $\nabla\cdot\bsigma^\rn=\Q\!:\!\nabla\H$.
+% SW-Q(you) [run 2]: Sec. III E shortened (your Q9): I removed the general Gibbs-Duhem display (eq:gibbs-duhem, not cited elsewhere) and the "simple fluid" sentence, kept the display of p and the nematic stress, and name the Ericksen stress. a) keep; b) shorter still: drop the display and give the nematic stress in words only; other [hl: Through the || divergence of a stress ;; The nematic stress || Ericksen stress]
 % SW-A:
 
 Dropping the nematic part of the force
@@ -1327,8 +1297,8 @@ a vector field along the defect axis with no transverse
 component. It points along $-x$, toward the head of the
 defect (\cref{fig:defects-layering}(a)). The active force
 moves the cells, not the defect. The cells build up a
-density gradient until the flux driven by the gradient
-cancels the active flux, $B\nabla\rho\simeq\bfa$
+density gradient until the diffusive flux driven by the
+gradient cancels the active flux, $B\nabla\rho\simeq\bfa$
 (cf.~\cref{eq:velocity}). Within the closure of
 \cref{sec:model-closure}, however, the nematic order
 couples to the density gradient and not to the active
@@ -1355,17 +1325,18 @@ experiments.
 
 
 A drifting defect has no steady state in the laboratory
-frame. \Cref{app:comoving} therefore solves the noiseless
-\cref{eq:model-rho,eq:model-Q} numerically in a frame
-comoving with the core, retaining the cross-coupling. The
-closed form \cref{eq:rho-analytic} fixes $\Q$ to the Pad\'e
-profile \cref{eq:pade-approximation} and solves only the
-density equation, whereas the numerics solve both fields
-together and let $\Q$ depart from that profile.
+frame. \Cref{app:comoving} therefore solves
+\cref{eq:model-rho,eq:model-Q} without their noise
+numerically in a frame comoving with the core, retaining
+the cross-coupling. Like the closed form
+\cref{eq:rho-analytic}, the numerics keep the lowest-order
+closure, so that the two can be compared. The closed form
+fixes $\Q$ to the Pad\'e profile
+\cref{eq:pade-approximation} and solves only the density
+equation, whereas the numerics solve both fields together
+and let $\Q$ depart from that profile.
 \Cref{fig:rho1d-dirichlet} shows the resulting density
 along the defect axis against \cref{eq:rho-analytic}.
-% SW-Q(P1,F1,M1) [run 1]: Sec. IV A: both readers ask (sev 2) which equations the comoving numerics solve, the closure-level ones, whose defect drifts toward its tail, or those with the App. E 3 term, and why the direction of motion matters for the variance. Two tested rewordings raised new questions. a) one sentence before the numerics: "The numerics keep the lowest-order closure; the drift direction matters for the variance only through the deformed profile (Sec. IV B)."; b) your own wording; c) keep; other
-% SW-A:
 
 % Source: remote_kernel/plotting_small_core+ln_2.nb (cell exporting rho1d_Dirichlet.pdf)
 \begin{figure}[tbp]
@@ -1706,9 +1677,12 @@ outweighs the head side. Both the head--tail asymmetry and
 the raised core thus come from the motion of the defect,
 whose direction the lowest-order closure of
 \cref{sec:model-closure} sets (\cref{sec:defect-steady}).
-Relaxing the closure approximation should therefore change
-the modulation quantitatively, but we believe not
-qualitatively.
+Relaxing the closure approximation reverses the drift
+(\cref{app:drift}), but in the frame comoving with the
+defect we believe that it changes the modulation
+quantitatively, not qualitatively.
+% SW-Q(you) [run 2]: Your Q12 answer, here: "Relaxing the closure approximation reverses the drift (App. E 3), but in the frame comoving with the defect we believe that it changes the modulation quantitatively, not qualitatively." Sec. VI A still says the dropped terms reverse the drift "on which the head-tail asymmetry of the variance depends", which readers take as: reversed drift, reversed asymmetry. a) Sec. VI A: "... reverse the direction in which the defect drifts (Sec. IV A), which we expect to change the head-tail asymmetry of the variance only quantitatively (Sec. IV B)"; b) Sec. VI A: drop "on which the head-tail asymmetry of the variance depends"; c) keep Sec. VI A; other [hl: Relaxing the closure approximation reverses || not qualitatively ;; reverse the direction in which the defect drifts || asymmetry of the variance depends]
+% SW-A:
 
 
 A modulation of two to three percent is the entire
@@ -1794,13 +1768,7 @@ set it to zero.%
 shifts the exponent by $\pcrit|\langle
 p\rangle|/\sigma_{p,\infty}^2\lesssim0.14$, which changes
 the probability by less than $15\%$, far less than the
-modulation of the variance does. The nematic stresses of
-\cref{sec:pressure}, dropped with the nematic part of the
-force in \cref{sec:model-elastic}, are of the same order as
-$\langle p\rangle$: on the Pad\'e profile
-\cref{eq:pade-approximation}, with the bare $a$, $b$ and
-$K$ (\cref{app:parameters}), every component stays below
-about $6~\Pa\tcdot\micron$.} The probability in
+modulation of the variance does.} The probability in
 \cref{eq:layering-rate-approximation} is then a Gaussian
 tail, and the layering rate is
 \begin{align}
@@ -1826,16 +1794,13 @@ varying prefactor $1/(\sqrt{2\pi}\,z)$ of
     \quad z_\infty \equiv \frac{\pcrit}{\sigma_{p,\infty}}.
 \end{equation}
 Only the \emph{relative} modulation of the variance
-matters, and the large factor $z_\infty^2/2$, with
-$z_\infty\simeq21$ for the parameters of
-\cref{app:parameters} and the bulk modulus $B$ fitted
-below, amplifies it. A modulation of a few percent can
-therefore produce an enhancement of two orders of
-magnitude. The numerical variance of \cref{eq:linearized},
-on the steady state of the moving defect, peaks at
-$\nu_0\simeq2.4\%$, off the core at the head of the defect
-(\cref{fig:variance}), and \cref{eq:R-ratio} then gives the
-peak enhancement
+matters, and the large factor $z_\infty^2/2$ amplifies it.
+A modulation of a few percent can therefore produce an
+enhancement of two orders of magnitude. The numerical
+variance of \cref{eq:linearized}, on the steady state of
+the moving defect, peaks at $\nu_0\simeq2.4\%$, off the
+core at the head of the defect (\cref{fig:variance}), and
+\cref{eq:R-ratio} then gives the peak enhancement
 \begin{equation}
     \label{eq:R-value}
     \frac{\calJ(\r_\mathrm{max})}{\calJ(\infty)}
@@ -1847,8 +1812,6 @@ $\r_\mathrm{max}$. Here we used the parameters of
 that this peak enhancement is close to $2\times10^2$, the
 enhancement that Ref.~\cite{copenhagen2021} measures near
 $+1/2$ defects (its Fig.~3f).
-% SW-Q(P1,G8,M1) [run 1]: Sec. V: both readers ask (sev 2) whether the measured ~2x10^2 (a ratio of distance distributions around a core that Ref. [3] locates itself) and the fitted pointwise peak J(r_max)/J(inf) are the same quantity, and why B is fitted to the r_max-centred value while ¶4 leaves the centre undecided. a) say in one clause which measured bin/value B is matched to and why the pointwise peak is the right comparison; b) fit to the ring-averaged profile instead; c) keep; other
-% SW-A:
 
 \Cref{fig:defects-layering}(c) shows, from the same
 variance, the layering rate averaged over a circle of
@@ -1912,6 +1875,8 @@ single-cell extrusion rate could itself be enhanced near
 topological defects, which
 \cref{eq:layering-rate-approximation} neglects; such an
 enhancement would raise the layering rate there further.
+% SW-Q(you) [run 2]: You asked whether "speculate" suits (Sec. II remark and here). It follows your earlier rule (a speculation, never a fact). It is correct English and used in physics papers, but it can sound weaker than meant. a) keep "we speculate that ... could"; b) "we hypothesize that ... could"; c) "it is possible that the single-cell extrusion rate is itself enhanced ..."; d) "we do not exclude that ... could"; other [hl: speculate that the single-cell extrusion rate could || topological ;; We speculate, moreover, that the || near]
+% SW-A:
 
 
 % Source: plotgen/variance_map/variance_map.wls, run.sh
@@ -2008,8 +1973,6 @@ no noise of its own, no fluctuation--dissipation relation
 ties it to the noise. The equations without the nematic
 part of the force also remain linearly stable in a uniform
 nematic state (\cref{app:closure}).
-% SW-Q(G8,M1) [run 1]: Sec. VI A ¶2 says the terms the closure drops reverse the drift on which the head–tail asymmetry depends; Sec. IV B ¶13 says relaxing the closure changes the modulation 'quantitatively, but we believe not qualitatively'. Both readers (sev 3) read this as a contradiction and ask whether the head-side peak survives. a) state here what the reversal does to the peak (e.g. whether App. E 3's deformation keeps the maximum at the head); b) soften Sec. IV B accordingly; other
-% SW-A:
 
 Like the closure, the white-noise limit of the reversals
 serves to close the theory on the density and the nematic
@@ -2045,14 +2008,16 @@ The white-noise limit, the Gaussian tail and the idealized
 nucleus keep the theory closed and linear and the layering
 criterion simple, so that the variance around the defect,
 and from it the layering rate, can be computed analytically
-and interpreted. They affect the absolute rate of layering
-most, which depends exponentially on $(\pcrit/\sigma_p)^2$,
-with $\sigma_p$ the standard deviation of the pressure
-(\cref{eq:sigma-p}). The ratio of the layering rates at the
-defect and far from it is less sensitive, and this is why
-we compare only this ratio with experiment, although it too
+and interpreted. Their cost falls mainly on the absolute
+rate of layering, which depends exponentially on
+$(\pcrit/\sigma_p)^2$, with $\sigma_p$ the standard
+deviation of the pressure (\cref{eq:sigma-p}): a small
+change of $\sigma_p$ or $\pcrit$ changes it by many orders
+of magnitude (\cref{sec:nucleation-2}). We therefore
+compare only the ratio of the layering rates at the defect
+and far from it with experiment, although this ratio too
 rests on the Gaussian tail of the pressure distribution.
-% SW-Q(F8,G8) [run 1]: "The ratio ... is less sensitive": both readers (sev 2) note that by Eq. (48) the ratio is also exponential in z_inf^2 and was matched by fitting B, so they ask why it is less sensitive. a) say why in one clause (e.g. only the relative modulation enters, and B absorbs errors in sigma_p,inf and p_crit); b) give a number (how much the ratio changes for a given change of z_inf); c) keep; other
+% SW-Q(you) [run 2]: Your Q13: I rewrote this paragraph along the last paragraph of Sec. V, kept your opening sentence and dropped "less sensitive". a) keep; b) add why the ratio is still meaningful, e.g. "it depends only on the relative modulation of the variance (Eq. (48))"; c) shorter: end after "many orders of magnitude"; other [hl: Their cost falls || pressure distribution]
 % SW-A:
 
 \subsection{Outlook and future work}
@@ -2104,10 +2069,11 @@ At $-1/2$ defects, Ref.~\cite{copenhagen2021} finds mainly
 holes opening rather than new layers forming. In the model,
 a $-1/2$ defect also raises the layering rate near its
 core, but less than a $+1/2$ defect does
-(\cref{app:negative,fig:negative-layering}). Why holes open
-there instead needs additional modeling, which we leave
-aside.
-% SW-Q(G6,G8) [run 1]: −1/2 defects: the model raises the layering rate there, whereas Ref. [3] sees mainly holes; both readers (sev 2) ask whether this counts against the model and want it among the limitations (Sec. VI A). a) add one sentence to Sec. VI A naming this mismatch; b) say here why it does not contradict the mechanism; c) keep; other. (Also: the Fig. 17 caption, in App. G, never says which curves are +1/2 and −1/2.)
+(\cref{app:negative,fig:negative-layering}). Other factors,
+absent from the model, may override this enhancement and
+open holes there instead; identifying them needs additional
+modeling, which we leave aside.
+% SW-Q(you) [run 2]: Your Q14 explanation as a sentence. a) keep; b) name the candidates if you have any in mind; c) back to the earlier "Why holes open there instead needs additional modeling, which we leave aside."; other [hl: Other factors || open holes there instead]
 % SW-A:
 
 In future work we will improve the crudest simplifications
@@ -2136,10 +2102,8 @@ through the fluctuations of the pressure rather than
 through its mean, and the self-propulsion and reversals of
 single cells set those fluctuations.
 
-
-\begin{acknowledgments}
-\skel{TODO.}
-\end{acknowledgments}
+% SW-Q(you) [run 2]: You wrote "drop this" on the acknowledgments placeholder; I removed the whole acknowledgments environment. a) fine, I add acknowledgments later; b) restore the empty environment with the placeholder; other
+% SW-A:
 
 \appendix
 \crefalias{section}{appendix}
@@ -3906,7 +3870,6 @@ region.
   \label{fig:ln_curve}
 \end{figure}
 
-\todo{place Fig.~\ref{fig:2examples} (fig:2examples) in the order of its first citation (Sec.~\ref{sec:nucleation-2})}
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=1\linewidth]{figures/handmade/2examples.pdf}
@@ -4007,6 +3970,8 @@ which need additional modeling
     first measured bin, like the core-centered curve of \cref{fig:defects-layering}(c).}
   \label{fig:negative-layering}
 \end{figure}
+% SW-Q(you) [run 2]: Fig. 17 caption (from the earlier fix): "Centered on the core, the +1/2 curve is small at r=0 and lies below the first measured bin". I took "below" from Sec. V; please check against the plot. a) correct; b) it lies above the first bin; other
+% SW-A:
 
 \begin{figure*}[tbp]
   \centering
