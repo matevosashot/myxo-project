@@ -78,19 +78,15 @@ form new layers, the first step toward the fruiting bodies that starving colonie
 Experiments show that these layers form preferentially at $+1/2$ topological defects of
 the cell orientation. However, the mean pressure at a defect falls three to four orders of
 magnitude short of the pressure needed for an extruded cell to grow into a new layer,
-whereas the stress in the monolayer fluctuates strongly: the traction that the cells exert
-on the substrate, which is the divergence of this stress, has a standard deviation about ten
-times its mean around defects. We therefore propose that
+whereas the stress in the monolayer fluctuates strongly. We therefore propose that
 layers form during large, and hence rare, pressure fluctuations, and we compute the statistics of these
 fluctuations. Treating layer formation as nucleation gives a critical pressure, so the
-layering rate is proportional to the probability that the pressure exceeds it. Pressure fluctuations depend on the active noise in the system, and in an active nematic the
-fluctuation-dissipation theorem does not fix that noise. We derive it instead by
-coarse-graining self-propelled rods that reverse their direction of motion, and we keep
-the noise through Dean's equation. As a result, the reversals set the active stress and
+layering rate is proportional to the probability that the pressure exceeds it. The pressure
+fluctuations depend on the activity of the cells, so we systematically derive fluctuating
+active-nematic equations for the monolayer by coarse-graining self-propelled rods that reverse
+their direction of motion, as in the derivation of Dean's equation. As a result, the reversals set the active stress and
 the noise amplitude together. The pressure fluctuates more strongly close to a $+1/2$ defect, which makes pressures above the critical pressure more likely there and so enhances the layering rate. The enhancement
-peaks off the defect core and, once the stiffness of the monolayer against compression is
-fitted, matches
-the measured one.
+peaks off the defect core, and we compare its profile with the measured layering rate.
 \end{abstract}
 
 \maketitle
@@ -182,8 +178,8 @@ This friction anisotropy creates a net inflow of cells at the defect. Cells were
 The measured flows~\cite{copenhagen2021,han2025local} also
 converge at $+1/2$ defects, but a converging
 flow is what layer formation itself requires, since the cells that leave the monolayer must
-be replaced \cite{han2025local}. The measured flows therefore cannot tell whether the inflow
-causes the layers or follows from them. 
+be replaced \cite{han2025local}. The measured inflow is therefore a consequence of layer
+formation, not its cause.
 
 The stress in these monolayers, however, fluctuates strongly. The divergence of this stress
 is the traction that the cells exert on the substrate. Han \textit{et al.}~measured this
@@ -1180,20 +1176,19 @@ fluctuation stays coherent: a correlation length equal to the cutoff $\elln$ and
  \tau_c = \frac{\elln^2}{2 \gamma_0},
 \end{align}
 the time a fluctuation of size $\elln$ takes to diffuse away. 
-Uniform nematic order leaves $\tau_c$ unchanged (\cref{app:variance-uniform}). However, the inhomogeneities around the defect will introduce higher-order corrections.
-
 With the parameters of \cref{app:parameters}, $\tau_c\simeq0.4~\mathrm{ms}$, far shorter
 than the correlation time of the reversal noise, $1/(2\frev)=5~\minute$
-(\cref{eq:k-dichotomous}), so the white-noise limit of \cref{sec:model-micro} does not hold
-at $\elln$, and we keep it as a deliberate simplification. A fluctuation at $\elln$ decays
-within $\tau_c$, and an excursion of the pressure above $\pcrit$ lasts only a fraction of it,
-whereas the bottom layer needs about $\Acell/(2\gamma_0)\simeq5~\mathrm{ms}$ to relax around
-an extruded cell, so within the model the slow limit assumed in \cref{sec:nucleation-1} does
-not hold either. Real cells push in one direction for minutes between reversals and cross
-$\elln$ in about half a minute, so the pressure they build would change slowly enough for
-\cref{eq:layering-rate-approximation} to hold. Lifting the white-noise limit would also change the
-amplitude of the fluctuations;
-\cref{sec:model-assumptions} discusses what these limits mean for the comparison with experiment.
+(\cref{eq:k-dichotomous}), so at the scale $\elln$ the white-noise limit of
+\cref{sec:model-micro} does not hold. \Cref{eq:layering-rate-approximation}, moreover,
+requires the pressure to be a slow variable, which changes slowly compared with the extrusion
+of a cell (\cref{sec:nucleation-1}). With white noise, however, the pressure in the model
+changes within $\tau_c$, whereas the bottom layer needs about
+$\Acell/(2\gamma_0)\simeq5~\mathrm{ms}$ to relax around an extruded cell. Real cells push in
+one direction for minutes between reversals and cross $\elln$ in about half a minute, so the
+pressure they build would change slowly enough. The time scales thus separate for real cells
+but not in the model, as a consequence of the white-noise limit, which we keep as a
+deliberate simplification (\cref{sec:model-assumptions}).
+
 
 Restoring the anisotropic piece of \cref{eq:eta-rho-ss}, the one that
 carries $\Q_\ss$, gives the total density variance (\cref{app:variance})
@@ -1275,8 +1270,12 @@ with experiment in \cref{sec:nucleation-2}.
 
 In \cref{fig:variance} we also show the density variance from the full numerical solution
 of \cref{eq:linearized}, retaining nematic order fluctuations ($\delta\Q\ne0$,
-\cref{app:lyapunov}), and \cref{fig:variance3d}(a) shows its two-dimensional profile. The
-analytic result of \cref{eq:total-gauss} already captures its main features.
+\cref{app:lyapunov}), and \cref{fig:variance3d}(a) shows its two-dimensional profile.
+The solver imposes the cutoff differently: instead of suppressing high wavevectors, it correlates
+the noise in space over the length $\elln$ (\cref{app:lyapunov-cutoff}), which gives the same
+variance when $\delta\Q=0$. Since the width of a cell sets $\elln$ (\cref{eq:cutoff}), the
+correlated noise also models the discreteness of the cells.
+The analytic result of \cref{eq:total-gauss} already captures its main features.
 
 Evaluated on the steady
 state of the moving defect instead of the Pad\'e profile (see \cref{fig:nematicaxis}),
@@ -1352,9 +1351,8 @@ A modulation of two to three percent is the entire position\nobreakdash-dependen
 % dean.tex 1392-1487
 \Cref{sec:nucleation-1} reduced the layering rate \eqref{eq:layering-rate-approximation} to the probability that
 the pressure at a point exceeds the critical pressure $\pcrit$, and \cref{sec:model,sec:defect}
-gave the variance of the density around a $+1/2$ defect (\cref{sec:defect-fluct}). We now turn
-this variance into the statistics of the pressure, compute the layering rate and compare its
-profile with the measurements.
+gave the variance of the density around a $+1/2$ defect (\cref{sec:defect-fluct}). We can
+now compute the layering rate and compare its profile with the measurements.
 
 By \cref{eq:pressure-definition}, a density fluctuation $\delta\rho$ changes the
 pressure by $B\,\delta\rho$. In the linear theory, $\delta\rho$ is Gaussian with the
@@ -1398,10 +1396,7 @@ rates, up to the slowly varying prefactor $1/(\sqrt{2\pi}\,z)$ of \cref{eq:p-lay
 \end{equation}
 Only the \emph{relative} modulation of the variance matters, and the large factor
 $z_\infty^2/2$ amplifies it.
-With the bulk modulus $B=90~\kPa\tcdot\micron$, fitted below, the cutoff $\elln=0.5~\micron$ and the parameters of
-\cref{app:parameters}, $\sigma_{p,\infty}=1.7~\kPa\tcdot\micron$ and
-$z_\infty=20.8$. 
-A modulation of a few percent therefore produces an enhancement of two
+A modulation of a few percent can therefore produce an enhancement of two
 orders of magnitude. The numerical variance of \cref{eq:linearized}, on the steady state of
 the moving defect, peaks at
 $\nu_0\simeq2.4\%$, off the core at the head of the defect
@@ -1411,7 +1406,8 @@ $\nu_0\simeq2.4\%$, off the core at the head of the defect
     \frac{\calJ(\r_\mathrm{max})}{\calJ(\infty)}
     = \exp\!\left[\frac{z_\infty^2}2\,\frac{\nu_0}{1+\nu_0}\right] \simeq 1.7\times10^2 ,
 \end{equation}
-since the layering rate, like the variance, is largest at $\r_\mathrm{max}$. We chose
+since the layering rate, like the variance, is largest at $\r_\mathrm{max}$. Here we used the
+parameters of \cref{app:parameters} and chose the bulk modulus
 $B$ so that this peak enhancement is close to $2\times10^2$, the
 enhancement that Ref.~\cite{copenhagen2021} measures near $+1/2$ defects (its Fig.~3f).
 
@@ -1442,15 +1438,19 @@ measured for bacterial colonies and of the order of the stiffness of single cell
 (\cref{app:parameters-choice}). The rest of the profile is not fitted; it follows from the steady state $\Q_\ss$ of the defect
 and the cutoff $\elln$, as \cref{eq:total-gauss} shows.
 
-The absolute rate of layering, in contrast, is beyond the reach of the model. 
-The rate predicted by the model is far below the observed one.
-It depends
-exponentially on $z_\infty^2$, so a small variation in $\sigma_{p,\infty}$ or $\pcrit$ changes it by
-many orders of magnitude. 
-Both quantities carry the approximations of the model: the
-white-noise limit of the reversals, Gaussian statistics at the scale of a cell, and the
-idealized nucleus. The model also stops at the threshold and leaves the extrusion of single
-cells unmodeled (\cref{sec:nucleation-1}). 
+The absolute rate of layering, in contrast, is beyond the reach of the model, because it
+requires a model of the extrusion of patches, which would give the single-cell extrusion rate
+$\calJ_{\!\Acell}$ that \cref{sec:nucleation-1} leaves unmodeled. With the parameters of
+\cref{app:parameters}, $z_\infty\simeq21$, so the Gaussian tail of \cref{eq:p-layer} makes the
+layering rate a tiny fraction of $\calJ_{\!\Acell}$. The large exponent
+$z_\infty^2/2$ that amplifies a modulation of a few percent into an enhancement of two orders
+of magnitude also makes the absolute rate so sensitive that a small variation in
+$\sigma_{p,\infty}$ or $\pcrit$ changes it by many orders of magnitude. Both quantities carry
+the approximations of the model: the white-noise limit of the reversals, Gaussian statistics
+at the scale of a cell, and the idealized nucleus. We speculate, moreover, that the
+single-cell extrusion rate could itself be enhanced near topological defects, which
+\cref{eq:layering-rate-approximation} neglects; such an enhancement would raise the layering
+rate there further.
 
 
 % Source: plotgen/variance_map/variance_map.wls, run.sh
@@ -1473,12 +1473,13 @@ cells unmodeled (\cref{sec:nucleation-1}).
 \label{sec:discussion}
 
 Layers in \textit{M.\ xanthus} monolayers form preferentially at $+1/2$
-defects~\cite{copenhagen2021}. Above a critical pressure $\pcrit$ (\cref{eq:pcrit}) a new
-layer grows from a single extruded cell, whereas below it the extruded cell returns to the monolayer. This threshold is the same
-everywhere in the monolayer, and the mean pressure at a defect stays three to four orders of
-magnitude below it. We have therefore proposed that layers form when fluctuations of the
-pressure exceed $\pcrit$. A defect then favors layers only because the pressure fluctuates
-differently around it. We derived these fluctuations by coarse-graining self-propelled rods
+defects~\cite{copenhagen2021}. 
+We described layer formation as nucleation: the energy cost of extruding a patch of cells sets
+a critical area, above which an extruded patch grows into a new layer, and this cost depends
+on the fluctuating pressure in the monolayer. In our simplified picture, only single cells are
+extruded, and a layer forms when the pressure exceeds the critical pressure $\pcrit$, above
+which the critical area is smaller than one cell. Since $\pcrit$ and the single-cell extrusion rate are the same everywhere in the monolayer, a
+defect favors layers only because the pressure fluctuates differently around it. We derived these fluctuations by coarse-graining self-propelled rods
 that reverse, keeping their noise in Dean's equation. The density variance
 (\cref{fig:variance,fig:variance3d}) is raised by a few percent at the head of a $+1/2$
 defect (\cref{fig:defects-layering}(a)) and lowered at its tail. In the far tail of the pressure
@@ -1502,16 +1503,16 @@ We have aimed at the simplest description that still captures the mechanism. It 
 coarse-grained Landau--de Gennes free energy with a single Frank constant in place of the
 unknown pair potential of the cells (\cref{sec:model-closure}), on Dean's equation applied to
 a smooth density (\cref{sec:model-coarse}), and on a friction with the substrate that is the
-same along and across the cells (\cref{sec:model-micro}). Several other assumptions hold only
-approximately, and correcting them would make the model more elaborate, so we keep them as
-deliberate simplifications.
+same along and across the cells (\cref{sec:model-micro}), unlike the anisotropic friction of
+Ref.~\cite{copenhagen2021}. Several other simplifications are crude, but improving them would
+make the model more elaborate, so we keep them deliberately.
 
 The first is the lowest-order closure of the angular moments in the field equations. It is
 inaccurate where the nematic order is strong, away from the defect core (\cref{app:closure}),
 and the higher-order terms it drops reverse the direction in which the defect drifts
 (\cref{sec:defect-steady}), on which the head--tail asymmetry of the variance depends
 (\cref{sec:defect-fluct}). The closure also requires us to drop the nematic part of the force
-that moves the cells, so that the pressure is the only passive stress (\cref{sec:model-elastic,sec:pressure}). This
+on the cells, so that the pressure is the only passive stress (\cref{sec:model-elastic,sec:pressure}). This
 breaks the Onsager symmetry of the passive transport: the pressure-driven flow still carries
 the alignment of the cells, but gradients of the nematic force field no longer move the
 cells. Despite the broken symmetry, the model stays consistent: since it is active, its free
@@ -1520,27 +1521,29 @@ no fluctuation--dissipation relation ties it to the noise. The equations without
 part of the force also remain linearly stable in a uniform nematic state (\cref{app:closure}).
 
 Like the closure, the white-noise limit of the reversals serves to close the theory on the
-density and the nematic order (\cref{sec:model-micro}), and the dichotomous noise behind it
-makes the reversals a Poisson process, without the refractory period of real cells. The
+density and the nematic order (\cref{sec:model-micro}). The
 limit requires the cells to reverse faster than the density relaxes, but at the scale of a
-cell the density relaxes within a millisecond, whereas the cells reverse every few minutes
-(\cref{sec:defect-fluct}). The same limit makes an excursion of the pressure shorter than the
-time the bottom layer needs to relax around an extruded cell, so within the model the slow
-limit assumed in \cref{sec:nucleation-1} does not hold. Real cells, in contrast, push
-in one direction for minutes, so the pressure they build would change slowly enough.
+cell the density relaxes within a millisecond, whereas the cells reverse every few minutes.
+As a result, the pressure in the model changes before the bottom layer can relax around an
+extruded cell, although \cref{eq:layering-rate-approximation} requires it to change slowly
+compared with the extrusion of a cell (\cref{sec:nucleation-1}). Real cells, in
+contrast, push in one direction for minutes, so the pressure they build would change slowly
+enough (\cref{sec:defect-fluct}).
 
 The linear theory makes the density Gaussian, and we use this Gaussian even far in its tail,
 at the scale $\elln$ of a cell. The central limit theorem would make the density Gaussian
-only over an area that holds many cells, whereas $\elln^2$ holds on average much less than
+only over an area that holds many cells, whereas $\elln^2$ holds on average less than
 one~\cite{velenich2008brownian}. Even over an area with many cells, it describes fluctuations
-near the mean, not far in the tail. Finally, the layering criterion idealizes the nucleus as
+near the mean, not far in the tail.
+
+Finally, the layering criterion idealizes the nucleus as
 a disc of one cell area, which keeps it independent of the orientation of the rod-shaped
 cells, and it assumes that single cells are extruded at a uniform rate and grow into a layer
 whenever the pressure at a point exceeds $\pcrit$ (\cref{sec:nucleation-1}).
 
 The white-noise limit, the Gaussian tail and the idealized nucleus keep the theory closed and
 linear and the layering criterion simple, so that the variance around the defect, and from
-it the layering rate, can be computed analytically. They affect the absolute rate of
+it the layering rate, can be computed analytically and interpreted. They affect the absolute rate of
 layering most, which depends exponentially on $(\pcrit/\sigma_p)^2$,
 with $\sigma_p$ the standard deviation of the pressure (\cref{eq:sigma-p}). The ratio of the
 layering rates at the defect and far from it is less sensitive, and this is why we
@@ -1584,35 +1587,26 @@ measured, and layering around defects at several reversal rates would test it.
 % peruani2012collective: the non-reversing SA2407 forms multilayers above packing fraction 0.26.
 
 
-Three observables beyond the radial profile of the layering rate in
-\cref{fig:defects-layering}(c) could test the mechanism. The first is the angular profile
-of layer formation, which would test the predicted maximum off the core, at the head of the defect. 
-The second observable is the traction.
-Han \textit{et al.}~\cite{han2025local} measured traction fluctuations about ten times the
-mean around defects, and the fluctuations of the active force in our model also exceed its
-mean everywhere
-(\cref{app:lyapunov-results}). The traction is the divergence of the full stress, which
-includes the pressure. A quantitative comparison therefore needs the traction variance at
-the resolution of the measurement, which we have not computed. The third observable, the
-density variance itself, is the most direct. However, at the scale of a cell, where the model
-predicts the modulation, an estimate of the variance is noisy, so resolving a modulation of
-a few percent requires an average over many defects. The predicted size of the modulation
-also depends on the scale $\elln$ at which the density is resolved (\cref{app:variance-neighbors}).
-
 At $-1/2$ defects, Ref.~\cite{copenhagen2021} finds mainly holes opening rather than new
 layers forming. In the model, a $-1/2$ defect also raises the layering rate near
 its core, but less than a $+1/2$ defect does (\cref{app:negative,fig:negative-layering}).
 Why holes open there instead needs additional modeling, which we leave aside.
 
-In future work we will relax the simplifications listed in \cref{sec:model-assumptions} within the same framework, with the exact
-moments of the angular distribution in place of the lowest-order closure, a finite
-correlation time and a refractory period of the reversals, the discreteness of the cells in
-the far tail of the density distribution, and the extrusion of a cell followed in time, and
-investigate how each of them changes the results. With one parameter fitted to the height of the peak, the minimal model reproduces the
-measured enhancement. It
-shows that a defect can set where layers form without raising the mean pressure to the
-threshold, only by reshaping the fluctuations that the self-propulsion and reversals of
-single cells produce.
+In future work we will improve the crudest simplifications of \cref{sec:model-assumptions}. With the approach of
+Refs.~\cite{bressloff2024global,spinney2025dean}, the model can keep the dichotomous noise of
+the reversals, with its finite correlation time, instead of its white-noise limit, which
+would also change the amplitude of the fluctuations. We also plan to model the extrusion of
+patches of cells instead of assuming single cells extruded at the rate $\calJ_{\!\Acell}$, for
+example with a Langevin equation for the area of an extruded patch that moves over the
+fluctuating barrier of \cref{fig:nucleation}(b).
+
+Further experiments can test the model. We plan to measure the angular profile of layer
+formation around $+1/2$ defects and compare it with the profile that the model predicts
+(\cref{fig:variance3d}), with its maximum off the core, at the head of the defect. Traction
+measurements could also test the stress fluctuations of the model, but the current ones are
+not accurate enough for a quantitative comparison.
+
+A topological defect may thus select where new layers form through the fluctuations of the pressure rather than through its mean, and the self-propulsion and reversals of single cells set those fluctuations.
 
 
 \begin{acknowledgments}
