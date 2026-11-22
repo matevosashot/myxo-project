@@ -1,8 +1,9 @@
 #!/usr/bin/env wolframscript
 (* layering_profile.wls -- panel (c) of fig:defects-layering (manuscript/figures/final.pdf,
    placed by hand into the Illustrator composite figures/handmade/main.pdf, page 2): the
-   layering probability averaged over a circle of radius r, eq:p-layer-radial, relative to
-   its far-field value, about the point of maximum probability r_max (blue) and about the
+   layering rate (P, the probability that p exceeds pcrit, until 2026-11-22) averaged over a
+   circle of radius r, eq:p-layer-radial, relative to its far-field value, about the point of
+   maximum rate r_max (blue) and about the
    defect core (orange), with the measured points of Fig. 3f of Copenhagen et al. 2021 (red,
    error bars as given there). Written 2026-10-26 to regenerate the panel from the N_int = 200
    Lyapunov run.
@@ -91,7 +92,16 @@
    pt (0.45 of the tick font size, as in the restyled figures) from the tick labels, placed by
    plotgen/frame_labels.wl instead of FrameLabel. The page and the frame stay where they were,
    so the panel still drops into main.pdf at the same place; the space the labels free stays
-   white at the left and bottom of the page. *)
+   white at the left and bottom of the page.
+   2026-11-22, the author's request, as the text now calls the quantity the layering rate J:
+   the y label reads "Layering rate J(r)/J(inf)" (was "Layering probability P(r)/P(inf)") and
+   the legend "Center at r_max" (bold r, the point of Sec. V; was "Center at P_max", and P now
+   denotes the pressure distribution in Sec. II). J and P differ by the constant J_Acell of
+   eq:layering-rate-approximation, so the curves, normalised by their far-field value, are
+   unchanged. The plot data (the variance diagonal, its grid, modelParams, the experimental
+   points) are cached next to this script in plotdata_<tag>.wxf and plotdata_top_plot.wxf
+   (plotgen/plot_data_cache.wl): the script reads data/ only when the run is there and new or
+   changed, and runs from the cache without data/. *)
 
 SetEnvironment["QT_QPA_PLATFORM" -> "offscreen"];
 
@@ -108,23 +118,33 @@ name = "layering_profile" <> If[nInt === "200", "", "_N" <> nInt] <>
 t0 = AbsoluteTime[];
 
 (* ---------------------------------------------------------------- data *)
+(* the plot data are cached next to this script (plotgen/plot_data_cache.wl): read from data/
+   when the run is there and new or changed, from plotdata_<tag>.wxf otherwise *)
+Get[FileNameJoin[{repoRoot, "plotgen", "plot_data_cache.wl"}]];
 tag = "box20_N" <> nInt <> "_Dir_lN0.5_z12.5_ld1_B90000_ss20";
 dataDir = FileNameJoin[{repoRoot, "data", "fluctuations-set2_2_comove_optimized_2_ssDir"}];
-sig = Import[FileNameJoin[{dataDir, "sigma_rho_" <> tag <> ".m"}]];
-modelParams = Import[FileNameJoin[{dataDir, "steady_" <> tag <> ".m"}]]["modelParams"];
-If[Sort[N@modelParams] =!= Sort[N@sig["modelParams"]],
-  Print["*** WARNING: the steady state's parameters differ from the companion file's"]];
-grid = N@sig["gridInt"];
+sigFile = FileNameJoin[{dataDir, "sigma_rho_" <> tag <> ".m"}];
+steadyFile = FileNameJoin[{dataDir, "steady_" <> tag <> ".m"}];
+plotData = plotDataCache[FileNameJoin[{here, "plotdata_" <> tag <> ".wxf"}], {sigFile, steadyFile},
+   Function[Module[{sig = Import[sigFile], mp = Import[steadyFile]["modelParams"]},
+     If[Sort[N@mp] =!= Sort[N@sig["modelParams"]],
+      Print["*** WARNING: the steady state's parameters differ from the companion file's"]];
+     <|"gridInt" -> sig["gridInt"], "sigmaRho" -> sig["sigmaRho"], "modelParams" -> mp|>]]];
+modelParams = plotData["modelParams"];
+grid = N@plotData["gridInt"];
 (* readCovRho[...]["rho"]: covFn = ListInterpolation[mat, {grid, grid}, InterpolationOrder -> 2],
    mat x first; the companion file stores it y first *)
-sigRhoFnDirichlet = ListInterpolation[Transpose[sig["sigmaRho"]], {grid, grid},
+sigRhoFnDirichlet = ListInterpolation[Transpose[plotData["sigmaRho"]], {grid, grid},
    InterpolationOrder -> 2];
 Print["run ", FileNameTake[dataDir], "/", tag, ": grid ", Length[grid], " x ", Length[grid],
   " on ", MinMax[grid], ", B = ", B /. modelParams];
 
+(* Fig. 3f of Copenhagen et al. 2021: r, lower end, mean, upper end *)
+expFile = FileNameJoin[{repoRoot, "top_plot.csv"}];
 dataExperiment = Apply[Function[{r, low, mean, high},
      {r, Around[mean, {mean - low, high - mean}]}],
-    Rest@Import[FileNameJoin[{repoRoot, "top_plot.csv"}]], 1];
+    Rest@plotDataCache[FileNameJoin[{here, "plotdata_top_plot.wxf"}], {expFile},
+      Function[Import[expFile]]], 1];
 
 (* ---------------------------------------------------------------- the notebook's functions *)
 (* pcrit has no value here, so the compiled p uses its argument (see the header) *)
@@ -228,7 +248,7 @@ curves = LogPlot[{blue[r], orange[r]}, {r, 0.1, 12}, PlotRange -> All,
       {Directive[colors[[1]], Thickness[0.004]],
        Directive[colors[[2]], Thickness[0.004]],
        Directive[darkred, Dashed]},
-      {tex["\\text{Center at }{\\cal P}_\\text{max}", legFS], tex["\\text{Center at the core}", legFS],
+      {tex["\\text{Center at }\\mathbf r_\\text{max}", legFS], tex["\\text{Center at the core}", legFS],
        tex["\\text{Experiment}", legFS]},
       LegendMarkers -> {None, None,
         Graphics[{darkred, EdgeForm[None], Disk[{0, 0}, 0.3]}, PlotRange -> {{-1, 1}, {-1, 1}}]},
@@ -263,7 +283,7 @@ labelDist = {13.3, 17.5};
 fig = Show[curves, points, ImageSize -> w,
    FrameTicks -> {{yTicks, None}, {xTicks, None}},
    Epilog -> frameLabels[{tex["\\text{Distance from the center}~~r~(\\upmu \\rm{m})"],
-       tex["\\text{Layering probability}~~{\\cal P}(r) / {\\cal P}(\\infty)"]}, labelDist],
+       tex["\\text{Layering rate}~~{\\cal J}(r) / {\\cal J}(\\infty)"]}, labelDist],
    PlotRangeClipping -> False,      (* the labels lie outside the frame; the data stay inside *)
    ImagePadding -> pad];
 

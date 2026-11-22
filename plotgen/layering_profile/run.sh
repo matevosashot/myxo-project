@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Regenerates layering_profile.pdf and layering_profile.png (fig:defects-layering(c): the
-# circle-averaged layering probability about r_max and about the core, with the points of
-# Copenhagen et al. 2021 Fig. 3f) next to this script, from the N_int = 200 ssDir Lyapunov run.
+# circle-averaged layering rate about r_max and about the core, with the points of
+# Copenhagen et al. 2021 Fig. 3f) next to this script, from the N_int = 200 ssDir Lyapunov run (data/ or, without it, the
+# cached plot data plotdata_*.wxf next to this script).
 # Without arguments it also copies the pdf to manuscript/figures/final.pdf, which the author
 # places by hand into figures/handmade/main.pdf (page 2).
 # Arguments are passed on: N=<n>, pcrit=<Pa um>, norm=pedestal, out=<dir> (see

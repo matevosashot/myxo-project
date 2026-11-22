@@ -27,7 +27,13 @@
    ticks print at 0.75 pt (0.17 pt before), the grid line gray at 0.75 pt (frame_labels.wl);
    the legend, which touched the right frame, anchored in the upper right corner.
    2026-11-02, the author's later request: in layering_pm the grid line prints at 0.6 pt in a
-   darker gray (gridStyle of frame_labels.wl). *)
+   darker gray (gridStyle of frame_labels.wl).
+   2026-11-22, the author's request, as the text now calls the quantity the layering rate J: in
+   layering_pm the y label reads "Layering rate J(r)/J(inf)" (was "Layering probability
+   P(r)/P(inf)"); the curves are unchanged. modelParams and the experimental points are cached
+   next to this script (plotdata_<tag>.wxf, plotdata_top_plot.wxf; plotgen/plot_data_cache.wl),
+   so the script runs without data/ and top_plot.csv. repoRoot is now found from the script's
+   location instead of the machine name. *)
 
 SetEnvironment["QT_QPA_PLATFORM" -> "offscreen"];
 SetEnvironment["GALLIUM_DRIVER" -> "softpipe"];   (* llvmpipe crashes the front end on 3D export (Illegal instruction) *)
@@ -39,9 +45,9 @@ tex[s_, fs_ : 11] :=
    "Preamble" -> {"\\usepackage{amsmath,siunitx,newtxtext,newtxmath}"}];
 colors = ColorData[97, "ColorList"];
 
-repoRoot = If[$MachineName == "AMatevosyanL1M",
-  "/Users/ashmat/Desktop/fluctuation-solver",
-  "/home/ashmat/Projects/myxo-project-dean"];
+(* the repository root, two levels above this script (2026-11-22; it was the path of each
+   machine, /home/ashmat/Projects/myxo-project-dean or /Users/ashmat/Desktop/fluctuation-solver) *)
+repoRoot = ParentDirectory[ParentDirectory[DirectoryName[$InputFileName]]];
 figDir = FileNameJoin[{repoRoot, "figures"}];
 outDir = FileNameJoin[{repoRoot, "negative-defect"}];
 Scan[If[StringStartsQ[#, "out="], figDir = outDir = StringDrop[#, 4]] &, $ScriptCommandLine];
@@ -66,9 +72,16 @@ export[name_, fig_, pdf_ : True] := If[draft,
 (* 2026-10-26: parameters from the N200 ssDir production run (same values as the N180 run used
    before); pcrit from eq:pcrit, Ws - Wc + (gamma_w + Wc) h Sqrt[Pi/Acell] = 35258 Pa um, the
    value of the manuscript (it was hard-coded as 35000) *)
-dataPath = FileNameJoin[{repoRoot,
-   "data/fluctuations-set2_2_comove_optimized_2_ssDir/covariance_box20_N200_Dir_lN0.5_z12.5_ld1_B90000_ss20.bin"}];
-modelParams = readSteady[dataPath]["modelParams"];
+(* 2026-11-22: modelParams are cached next to this script in plotdata_<tag>.wxf
+   (plotgen/plot_data_cache.wl): read from the steady state in data/ when it is there and new or
+   changed, from the cache otherwise *)
+Get[FileNameJoin[{repoRoot, "plotgen", "plot_data_cache.wl"}]];
+here = DirectoryName[$InputFileName];
+tag = "box20_N200_Dir_lN0.5_z12.5_ld1_B90000_ss20";
+steadyFile = FileNameJoin[{repoRoot,
+   "data", "fluctuations-set2_2_comove_optimized_2_ssDir", "steady_" <> tag <> ".m"}];
+modelParams = plotDataCache[FileNameJoin[{here, "plotdata_" <> tag <> ".wxf"}], {steadyFile},
+    Function[<|"modelParams" -> readSteady[steadyFile]["modelParams"]|>]]["modelParams"];
 {lN, Bv, zetav, rho0v} = {lNoise, B, \[Zeta], \[Rho]0} /. modelParams;
 pcrit = 2000. + 65000.*0.5*Sqrt[Pi/3.];
 
@@ -235,9 +248,11 @@ fig = Grid[{{
 export["varrho3D_pm", fig, False]];
 
 If[want["layering_pm"],
+expFile = FileNameJoin[{repoRoot, "top_plot.csv"}];   (* Fig. 3f of Copenhagen et al. 2021 *)
 dataExperiment = Apply[Function[{r, low, mean, high},
      {r, Around[mean, {mean - low, high - mean}]}],
-    Rest@Import[FileNameJoin[{repoRoot, "top_plot.csv"}]], 1];
+    Rest@plotDataCache[FileNameJoin[{here, "plotdata_top_plot.wxf"}], {expFile},
+      Function[Import[expFile]]], 1];
 (* 2026-10-26: the core-centred +1/2 curve takes the orange of the core-centred curve of
    Fig. 2(c) (colors[[2]]), and the -1/2 curve a colour Fig. 2(c) does not use (colors[[3]]);
    labels 8 -> 10 pt, error bars 0.004 -> 0.006.
@@ -261,7 +276,7 @@ fig = Show[
     GridLinesStyle -> gridStyle[w/(0.85*246.)],
     Frame -> True, FrameStyle -> frameStyle[w/(0.85*246.)], FrameTicks -> layerTicks,
     Epilog -> frameLabels[{texCM["\\text{Distance from the core}~~r~(\\upmu \\rm{m})"],
-       texCM["\\text{Layering probability}~~\\mathcal P(r) / \\mathcal P(\\infty)"]}, {15.8, 25.4}],
+       texCM["\\text{Layering rate}~~\\mathcal J(r) / \\mathcal J(\\infty)"]}, {15.8, 25.4}],
     PlotStyle -> {Directive[colors[[2]], Thickness[0.006]],
       Directive[colors[[3]], Thickness[0.006]]},
     PlotLegends -> Placed[LineLegend[{Directive[colors[[2]], Thickness[0.004]],
