@@ -3,10 +3,10 @@
 # circle-averaged layering rate about r_max and about the core, with the points of
 # Copenhagen et al. 2021 Fig. 3f) next to this script, from the N_int = 200 ssDir Lyapunov run (data/ or, without it, the
 # cached plot data plotdata_*.wxf next to this script).
-# Without arguments it also copies the pdf to manuscript/figures/final.pdf, which the author
-# places by hand into figures/handmade/main.pdf (page 2).
+# plotgen/figure_panels/fig:defects-layering/build.sh places the pdf in the row; run that
+# next.
 # Arguments are passed on: N=<n>, pcrit=<Pa um>, norm=pedestal, out=<dir> (see
-# layering_profile.wls); with any argument nothing is copied.
+# layering_profile.wls).
 # Runs from any directory; about 30 s.
 set -eo pipefail                   # no -u: lmod.sh reads unset variables
 
@@ -18,8 +18,3 @@ unset DISPLAY                       # headless export
 export QT_QPA_PLATFORM=offscreen
 
 wolframscript -file "$here/layering_profile.wls" "$@"
-
-if [[ $# == 0 ]]; then
-  cp "$here/layering_profile.pdf" "$here/../../manuscript/figures/final.pdf"
-  echo "copied layering_profile.pdf to manuscript/figures/final.pdf"
-fi

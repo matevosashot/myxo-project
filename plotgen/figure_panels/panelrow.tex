@@ -1,0 +1,80 @@
+% Layout of one figure row, \input by fig:*/<name>.tex.
+% \panel{<content>} once per panel, then \panelrow. Every panel is scaled to one
+% common height, chosen so that the row with its labels (a), (b), ... is exactly
+% \rowwidth wide; the labels sit left of their panels, tops aligned. The log
+% (and terminal) gives the common height and the scale of every panel.
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage{graphicx}
+
+\newcommand\rowwidth{510pt}% \textwidth of revtex4-2 aps,reprint
+\newcommand\panelgap{8pt}
+\newcommand\panellabelsep{2pt}
+\newcommand\panellabelfont{\fontsize{14pt}{14pt}\selectfont}
+
+\ExplSyntaxOn
+\int_new:N \g__pr_n_int
+\fp_new:N \l__pr_aspect_fp
+\dim_new:N \l__pr_fixed_dim
+\dim_new:N \l__pr_h_dim
+\box_new:N \l__pr_label_box
+\box_new:N \l__pr_panel_box
+
+\cs_new_protected:Npn \__pr_label:n #1
+  { \hbox_set:Nn \l__pr_label_box { \panellabelfont ( \int_to_alph:n {#1} ) } }
+
+\NewDocumentCommand \panel { +m }
+  {
+    \int_gincr:N \g__pr_n_int
+    \box_if_exist:cF { g__pr_ \int_use:N \g__pr_n_int _box }
+      { \box_new:c { g__pr_ \int_use:N \g__pr_n_int _box } }
+    \hbox_gset:cn { g__pr_ \int_use:N \g__pr_n_int _box }
+      { \raisebox { \depth } {#1} }
+    \ignorespaces
+  }
+
+\NewDocumentCommand \panelrow { }
+  {
+    \fp_zero:N \l__pr_aspect_fp
+    \dim_set:Nn \l__pr_fixed_dim
+      { \panelgap * \int_eval:n { \g__pr_n_int - 1 } }
+    \int_step_inline:nn { \g__pr_n_int }
+      {
+        \fp_add:Nn \l__pr_aspect_fp
+          { \box_wd:c { g__pr_ ##1 _box } / \box_ht:c { g__pr_ ##1 _box } }
+        \__pr_label:n {##1}
+        \dim_add:Nn \l__pr_fixed_dim
+          { \box_wd:N \l__pr_label_box + \panellabelsep }
+      }
+    \dim_set:Nn \l__pr_h_dim
+      { \fp_to_dim:n { ( \rowwidth - \l__pr_fixed_dim ) / \l__pr_aspect_fp } }
+    \iow_term:x
+      { panelrow:~ common~ height~ \dim_use:N \l__pr_h_dim ,~
+        width~ \rowwidth }
+    \hbox_to_wd:nn { \rowwidth }
+      {
+        \int_step_inline:nn { \g__pr_n_int }
+          {
+            \int_compare:nNnT {##1} > { 1 }
+              { \skip_horizontal:n { \panelgap } }
+            \__pr_label:n {##1}
+            \box_move_up:nn { \l__pr_h_dim - \box_ht:N \l__pr_label_box }
+              { \box_use:N \l__pr_label_box }
+            \skip_horizontal:n { \panellabelsep }
+            \box_set_eq:Nc \l__pr_panel_box { g__pr_ ##1 _box }
+            \iow_term:x
+              {
+                panelrow:~ ( \int_to_alph:n {##1} )~
+                \dim_eval:n { \box_wd:N \l__pr_panel_box } ~ x~
+                \dim_eval:n { \box_ht:N \l__pr_panel_box } ~ scaled~ by~
+                \fp_eval:n
+                  { round ( \l__pr_h_dim / \box_ht:N \l__pr_panel_box , 3 ) }
+              }
+            \box_resize_to_ht:Nn \l__pr_panel_box { \l__pr_h_dim }
+            \box_use:N \l__pr_panel_box
+          }
+        \tex_hss:D
+      }
+    \ignorespaces
+  }
+\ExplSyntaxOff

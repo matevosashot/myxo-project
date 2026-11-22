@@ -44,7 +44,8 @@ import argparse
 import math
 import os
 
-# House style, measured off figures/final.pdf, ln_curve.pdf, strength.pdf:
+# House style, measured off plotgen/layering_profile/layering_profile.pdf (then
+# figures/final.pdf), ln_curve.pdf, strength.pdf:
 # a 176 pt wide Mathematica export, every glyph at 6 pt (4 pt subscripts),
 # data curves at 1.44 pt, a full inward-tick frame, no title, no grid, and the
 # ColorData[97] palette.  Sizes below are in points on that 176 pt canvas, so
@@ -52,7 +53,7 @@ import os
 BLUE, GOLD, GREEN, RED = "#5e81b5", "#e19c24", "#8fb131", "#ff0000"
 INK, SURF = "#000000", "#ffffff"
 
-WIDTH_PT, HEIGHT_PT = 126.0, 126.0   # figures/final.pdf page size
+WIDTH_PT, HEIGHT_PT = 130.0, 110.0   # fills fig:nucleation next to manual.pdf p.2 at 1:1 (126 x 126 until 2026-11-22)
 ARROW_TAIL = (12.75, 56.25)             # "increasing p" arrow, data coords
 ARROW_HEAD = (6.75, 14.25)
 LEGEND_XY = (0.99, 0.99)             # top-right corner, in axes fraction
@@ -65,10 +66,10 @@ LW_CURVE, LW_FRAME = 1.044, 0.8
 MARK, LW_MARK = "#737373", 0.7          # the A* = A_cell drop line (2026-10-26)
 # 2026-11-02 (the author's request: the line at Delta E = 0 was too thin; 0.144 pt in #cccccc,
 # 0.21 pt in print): the grid-line style of the other figures (plotgen/frame_labels.wl,
-# gridStyle), 0.6 pt in print and gray 0.5. The panel is placed by hand into
-# figures/handmade/main.pdf p.3 at 1.47 times this canvas (measured), so 0.6 pt there is
-# 0.41 pt here.
-PRINT_SCALE = 1.47
+# gridStyle), 0.6 pt in print and gray 0.5. plotgen/figure_panels/fig:nucleation scales
+# this canvas by 1.24 (its build log; 1.47 by hand in figures/handmade/main.pdf p.3 before
+# 2026-11-22), so 0.6 pt there is 0.48 pt here.
+PRINT_SCALE = 1.24
 GRID, LW_GRID = "#808080", 0.6 / PRINT_SCALE
 
 # manuscript.tex, tab:pcrit: energies in kPa um (= mN/m), lengths in um, so

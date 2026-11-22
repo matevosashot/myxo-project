@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Regenerates the +1/2 and -1/2 defect icons (defect_plus/minus.{pdf,png}) next to this
-# script. Runs from any directory.
+# script: fig:defects-layering(a), placed by plotgen/figure_panels/fig:defects-layering/
+# build.sh. Runs from any directory.
 set -eo pipefail                   # no -u: lmod.sh reads unset variables
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

@@ -174,10 +174,9 @@ defects collide \cite{meacock2021bacteria}. In chaining
 \textit{Bacillus subtilis} biofilms, cells instead lift off
 near $-1/2$ defects, where simulations show stress
 accumulating \cite{yaman2019emergence}.
-% Source of (c): plotgen/layering_profile/layering_profile.wls, run.sh; placed by hand into
-% figures/handmade/main.pdf
+% Built by plotgen/figure_panels/fig:defects-layering/build.sh
 \begin{figure*}[t]
-  \includegraphics[width=\textwidth,page=2]{figures/handmade/main.pdf}
+  \includegraphics[width=\textwidth]{defects-layering.pdf}
   \caption{Half-integer defects and layer formation in \textit{M.\ xanthus} monolayers.
   \textbf{(a)} The $+1/2$ and $-1/2$ defects; black lines follow the director. The head of the $+1/2$ defect is the side on which the director bends around
   the core, and the tail is the opposite side. \textbf{(b)} Snapshots of a new layer (dark
@@ -316,9 +315,10 @@ then take moments of their distribution over orientations,
 so that the noise and the deterministic terms follow from
 the same coarse-graining.
 
+% Page 1 of plotgen/manual/manual.pdf (pdfseparate -f 1 -l 1)
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.65\linewidth,page=1]{figures/handmade/main.pdf}
+  \includegraphics[width=0.65\linewidth]{model-micro.pdf}
   \caption{The microscopic model of \cref{sec:model-micro}: a self-propelled
   rod (blue) in the nematic field around a $+1/2$ defect, whose core is the red dot;
   red lines denote the nematic axis. The rod, with orientation $\theta_i$, glides along
@@ -421,8 +421,8 @@ the monolayer, a force per unit length.
 the bottom layer releases.
 
 \begin{figure*}[t]
-  \includegraphics[width=\textwidth,page=3]{figures/handmade/main.pdf}
-  % Source of (b): plotgen/fluctuating_barier/plot_fluctuating_barier.py
+  \includegraphics[width=\textwidth]{nucleation.pdf}
+  % Built by plotgen/figure_panels/fig:nucleation/build.sh
   \caption{Layer formation as a nucleation event. \textbf{(a)} Top: the monolayer of cells
   (yellow). Middle: a patch of area $A$ and perimeter $\ell$ detaches and forms a second
   layer, at the cost in green. Here $\Ws$ and $\Wc$ are the cell-substrate and cell-cell

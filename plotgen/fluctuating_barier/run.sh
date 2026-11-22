@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds fluctuating_barrier.pdf (fig:nucleation(b)) next to this script. Runs from any
 # directory; extra arguments go to the Python script (e.g. --n 200 --seed 3).
-# The panel lives inside figures/handmade/main_v2.pdf, so it is not copied anywhere.
+# plotgen/figure_panels/fig:nucleation/build.sh places it in the row; run that next.
 set -eo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
